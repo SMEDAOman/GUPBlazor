@@ -1,0 +1,322 @@
+@page "/demo/forms"
+
+<PageTitle>Forms — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Form Components">
+        <PageSummary>Input fields, form sections, checkboxes, radio buttons, and dropdowns.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ INPUT FIELDS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Input Field (GupInputField)</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="demo-text" Type="text">Full name</GupInputField>
+                            <GupInputField Name="demo-email" Type="email">Email address</GupInputField>
+                            <GupInputField Name="demo-tel" Type="tel">Phone number</GupInputField>
+                            <GupInputField Name="demo-date" Type="date">Date of birth</GupInputField>
+                            <GupInputField Name="demo-password" Type="password">Password</GupInputField>
+                            <GupInputField Name="demo-readonly" Type="text" Value="Read-only value" Readonly="true">Read-only field</GupInputField>
+                            <GupInputField Name="demo-disabled" Type="text" Disabled="true">Disabled field</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ FORM SECTION ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Form Section (GupFormSection)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="background: var(--gup-color-background-canvas);">
+                    <GupFormSection>
+                        <Title>Personal Information</Title>
+                        <ChildContent>
+                            <GupFormList>
+                                <GupInputField Name="first-name" Type="text">First name</GupInputField>
+                                <GupInputField Name="last-name" Type="text">Last name</GupInputField>
+                                <GupInputField Name="national-id" Type="text">National ID</GupInputField>
+                            </GupFormList>
+                        </ChildContent>
+                    </GupFormSection>
+                    <GupFormSection>
+                        <Title>Contact Details</Title>
+                        <ChildContent>
+                            <GupFormList>
+                                <GupInputField Name="contact-email" Type="email">Email</GupInputField>
+                                <GupInputField Name="contact-phone" Type="tel">Mobile number</GupInputField>
+                            </GupFormList>
+                        </ChildContent>
+                    </GupFormSection>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CHECKBOXES ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Checkboxes (GupCheckbox)</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupCheckbox Name="terms" Value="accepted">
+                            <ChildContent>I accept the terms and conditions</ChildContent>
+                            <Hint>Please read the terms before accepting.</Hint>
+                        </GupCheckbox>
+                        <GupCheckbox Name="newsletter" Checked="true">
+                            <ChildContent>Subscribe to newsletter</ChildContent>
+                        </GupCheckbox>
+                        <GupCheckbox Name="unavailable" Disabled="true">
+                            <ChildContent>This option is disabled</ChildContent>
+                        </GupCheckbox>
+                        <GupCheckbox Name="checked-disabled" Checked="true" Disabled="true">
+                            <ChildContent>Checked &amp; disabled</ChildContent>
+                        </GupCheckbox>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Small / Circle</span>
+                    <div class="demo-surface">
+                        <GupCheckbox Name="small-1" Size="s">
+                            <ChildContent>Small checkbox</ChildContent>
+                        </GupCheckbox>
+                        <GupCheckbox Name="small-2" Size="s" Checked="true">
+                            <ChildContent>Small checked</ChildContent>
+                        </GupCheckbox>
+                        <GupCheckbox Name="circle-1" Appearance="circle">
+                            <ChildContent>Circle checkbox</ChildContent>
+                        </GupCheckbox>
+                        <GupCheckbox Name="circle-2" Appearance="circle" Checked="true">
+                            <ChildContent>Circle checked</ChildContent>
+                        </GupCheckbox>
+                        <GupCheckbox Name="small-circle" Size="s" Appearance="circle" Checked="true">
+                            <ChildContent>Small circle checked</ChildContent>
+                        </GupCheckbox>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RADIO BUTTONS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Radio Buttons (GupRadioButton / GupRadioButtonGroup)</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default group</span>
+                    <div class="demo-surface">
+                        <GupRadioButtonGroup Label="Preferred contact method" Name="contact-method">
+                            <GupRadioButton Name="contact-method" Value="email">
+                                <ChildContent>Email</ChildContent>
+                                <Hint>We'll send updates to your inbox.</Hint>
+                            </GupRadioButton>
+                            <GupRadioButton Name="contact-method" Value="sms">
+                                <ChildContent>SMS</ChildContent>
+                                <Hint>We'll send a text to your phone.</Hint>
+                            </GupRadioButton>
+                            <GupRadioButton Name="contact-method" Value="none">
+                                <ChildContent>Do not contact</ChildContent>
+                            </GupRadioButton>
+                        </GupRadioButtonGroup>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">With pre-selected item</span>
+                    <div class="demo-surface">
+                        <GupRadioButtonGroup Label="Application type" Name="app-type">
+                            <GupRadioButton Name="app-type" Value="new" Selected="true">
+                                <ChildContent>New application</ChildContent>
+                                <Hint>Apply for the first time.</Hint>
+                            </GupRadioButton>
+                            <GupRadioButton Name="app-type" Value="renewal">
+                                <ChildContent>Renewal</ChildContent>
+                                <Hint>Renew an existing permit.</Hint>
+                            </GupRadioButton>
+                            <GupRadioButton Name="app-type" Value="replacement" Disabled="true">
+                                <ChildContent>Replacement (unavailable)</ChildContent>
+                            </GupRadioButton>
+                        </GupRadioButtonGroup>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ DROPDOWN ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Dropdown Field (GupDropdownField)</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Single select</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="governorate" Placeholder="Select a governorate">
+                            <Label>Governorate</Label>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="Muscat" Value="muscat" />
+                                    <GupDropdownMenuItem Label="Dhofar" Value="dhofar" />
+                                    <GupDropdownMenuItem Label="Musandam" Value="musandam" />
+                                    <GupDropdownMenuItem Label="Al Buraimi" Value="buraimi" />
+                                    <GupDropdownMenuItem Label="Ad Dakhiliyah" Value="dakhiliyah" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">With hint &amp; pre-selected</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="doc-type" Placeholder="Select document type" DisplayValue="Passport">
+                            <Label>Document type</Label>
+                            <Hint>Choose the type of document to upload (Top Hint).</Hint>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="National ID" Value="national-id" />
+                                    <GupDropdownMenuItem Label="Passport" Value="passport" Selected="true" />
+                                    <GupDropdownMenuItem Label="Driving License" Value="driving-license" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                            <Hint>Choose the type of document to upload (Down Hint).</Hint>
+                        </GupDropdownField>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">With search</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="country" Placeholder="Search and select">
+                            <Label>Country</Label>
+                            <ChildContent>
+                                <GupDropdownMenu SearchEnabled="true">
+                                    <GupDropdownMenuItem Label="Oman" Value="oman" />
+                                    <GupDropdownMenuItem Label="United Arab Emirates" Value="uae" />
+                                    <GupDropdownMenuItem Label="Saudi Arabia" Value="saudi-arabia" />
+                                    <GupDropdownMenuItem Label="Bahrain" Value="bahrain" />
+                                    <GupDropdownMenuItem Label="Kuwait" Value="kuwait" />
+                                    <GupDropdownMenuItem Label="Qatar" Value="qatar" />
+                                    <GupDropdownMenuItem Label="Jordan" Value="jordan" />
+                                    <GupDropdownMenuItem Label="Egypt" Value="egypt" />
+                                    <GupDropdownMenuItem Label="India" Value="india" />
+                                    <GupDropdownMenuItem Label="Pakistan" Value="pakistan" />
+                                    <GupDropdownMenuItem Label="United Kingdom" Value="uk" />
+                                    <GupDropdownMenuItem Label="United States" Value="us" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled &amp; error states</span>
+                    <div class="demo-surface">
+                        <div style="display:flex; flex-direction:column; gap:16px;">
+                            <GupDropdownField Name="disabled-dd" Placeholder="Cannot select" Disabled="true">
+                                <Label>Disabled dropdown</Label>
+                                <ChildContent>
+                                    <GupDropdownMenu>
+                                        <GupDropdownMenuItem Label="Item 1" Value="1" />
+                                    </GupDropdownMenu>
+                                </ChildContent>
+                            </GupDropdownField>
+
+                            <GupDropdownField Name="error-dd" Placeholder="Select an option" ErrorMessage="This field is required.">
+                                <Label>Required field</Label>
+                                <ChildContent>
+                                    <GupDropdownMenu>
+                                        <GupDropdownMenuItem Label="Option A" Value="a" />
+                                        <GupDropdownMenuItem Label="Option B" Value="b" />
+                                    </GupDropdownMenu>
+                                </ChildContent>
+                            </GupDropdownField>
+
+                            <GupDropdownField Name="loading-dd" Placeholder="Select an option">
+                                <Label>Loading dropdown</Label>
+                                <ChildContent>
+                                    <GupDropdownMenu>
+                                        <GupDropdownMenuItem Label="Option A" Value="a" />
+                                    </GupDropdownMenu>
+                                </ChildContent>
+                            </GupDropdownField>
+                            <div class="gup-button gup-button--secondary">
+                                <button class="button" type="button" onclick="window.__gupDropdownLoadingDemo('gup-dd-loading-dd')">
+                                    Simulate loading
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">In form (multiple + clearable)</span>
+                    <div class="demo-surface">
+                        <form novalidate onsubmit="event.preventDefault(); var fd = new FormData(event.target); console.log('Form data:', Object.fromEntries(fd));">
+                            <GupFormList>
+                                <GupDropdownField Name="dropdown" Placeholder="Select items" Clearable="true">
+                                    <Label>Select items</Label>
+                                    <ChildContent>
+                                        <GupDropdownMenu Multiple="true">
+                                            <GupDropdownMenuItem Label="Item number 1" Value="item1" />
+                                            <GupDropdownMenuItem Label="Item number 2" Value="item2" />
+                                            <GupDropdownMenuItem Label="Item 3" Value="item3" />
+                                            <GupDropdownMenuItem Label="Item number 4" Value="item4" />
+                                            <GupDropdownMenuItem Label="Item number 5" Value="item5" />
+                                            <GupDropdownMenuItem Label="Item number 6" Value="item6" />
+                                            <GupDropdownMenuItem Label="Item number 7" Value="item7" />
+                                            <GupDropdownMenuItem Label="Item number 8" Value="item8" />
+                                        </GupDropdownMenu>
+                                    </ChildContent>
+                                </GupDropdownField>
+                            </GupFormList>
+                            <div style="margin-top: 16px;">
+                                <GupButton Type="GupButtonType.Submit">Submit</GupButton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Multiple with search</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="multi-search" Placeholder="Search and select multiple">
+                            <Label>Services</Label>
+                            <Hint>Select all applicable services.</Hint>
+                            <ChildContent>
+                                <GupDropdownMenu Multiple="true" SearchEnabled="true">
+                                    <GupDropdownMenuItem Label="Civil status" Value="civil-status" />
+                                    <GupDropdownMenuItem Label="Business registration" Value="business-reg" />
+                                    <GupDropdownMenuItem Label="Vehicle licensing" Value="vehicle-lic" />
+                                    <GupDropdownMenuItem Label="Property registration" Value="property-reg" />
+                                    <GupDropdownMenuItem Label="Education services" Value="education" />
+                                    <GupDropdownMenuItem Label="Health services" Value="health" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

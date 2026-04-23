@@ -1,0 +1,42 @@
+@* Equivalent of <gup-track direction="horizontal|vertical" gap="N" horizontal-alignment="..." vertical-alignment="...">
+   Gap is in multiples of --unit (4px), so gap=7 → 28px.
+*@
+<div class="gup-track" style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public int Gap { get; set; } = 2;
+    [Parameter] public string Direction { get; set; } = "horizontal";
+    [Parameter] public string HorizontalAlignment { get; set; } = "normal";
+    [Parameter] public string VerticalAlignment { get; set; } = "normal";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string FlexDirection => Direction switch
+    {
+        "vertical"                  => "column",
+        "vertical-on-mobile"        => "column",
+        "vertical-reverse-on-mobile"=> "column-reverse",
+        _                           => "row",
+    };
+
+    private string JustifyContent => HorizontalAlignment switch
+    {
+        "right"   => "flex-end",
+        "left"    => "flex-start",
+        "center"  => "center",
+        "justify" => "space-between",
+        _         => "normal",
+    };
+
+    private string AlignItems => VerticalAlignment switch
+    {
+        "top"    => "flex-start",
+        "center" => "center",
+        "bottom" => "flex-end",
+        _        => "normal",
+    };
+
+    private string Style =>
+        $"flex-direction:{FlexDirection}; gap:calc({Gap} * var(--unit)); justify-content:{JustifyContent}; align-items:{AlignItems};";
+}

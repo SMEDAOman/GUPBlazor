@@ -1,0 +1,29 @@
+@* Equivalent of <gup-content-header page-title="..." page-subtitle="...">
+   Slots: PageSummary (below title)
+*@
+<div class="gup-content-header @(PageSubtitle != null ? "has-subtitle" : "")">
+    <div class="inner-wrapper">
+        <div class="inner">
+            <div class="header">
+                @if (PageSubtitle != null)
+                {
+                    <h2 class="subtitle">@PageSubtitle</h2>
+                }
+                @if (!string.IsNullOrEmpty(PageTitle))
+                {
+                    <h1 class="title">@PageTitle</h1>
+                }
+            </div>
+            @if (PageSummary != null)
+            {
+                <div class="slot-page-summary">@PageSummary</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string PageTitle { get; set; } = "";
+    [Parameter] public string? PageSubtitle { get; set; }
+    [Parameter] public RenderFragment? PageSummary { get; set; }
+}

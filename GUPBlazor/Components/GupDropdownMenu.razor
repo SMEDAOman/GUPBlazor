@@ -1,0 +1,48 @@
+@* Equivalent of <gup-dropdown-menu search-enabled multiple> *@
+<div class="gup-dropdown-menu" data-multiple="@Multiple.ToString().ToLowerInvariant()">
+    <div class="inner">
+        @if (SearchEnabled)
+        {
+            <div class="search-container" onclick="event.stopPropagation()">
+                <GupIcon IconName="search" Width="20" Height="20" />
+                <input type="text"
+                       class="search"
+                       placeholder="@SearchPlaceholder"
+                       oninput="window.__gupDropdown.filterItems(this)" />
+            </div>
+        }
+        <div class="dropdown-items" role="listbox" aria-label="@AriaLabel">
+            <CascadingValue Value="Multiple" Name="IsMultiple">
+                @ChildContent
+            </CascadingValue>
+        </div>
+        <div class="no-results" style="display:none;">
+            <span>@NoItemsLabel</span>
+        </div>
+        <div class="controls">
+            <div class="controls-track">
+                <button type="button"
+                        class="gup-dropdown-apply-btn"
+                        data-items-label="@ItemsSelectedButtonLabel"
+                        data-no-sel-label="@NoSelectionButtonLabel"
+                        onclick="window.__gupDropdown.applySelection(this)">
+                    @ApplyButtonLabel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool SearchEnabled { get; set; }
+    [Parameter] public bool Multiple { get; set; }
+    [Parameter] public string AriaLabel { get; set; } = "Options";
+    [Parameter] public string NoItemsLabel { get; set; } = "No items";
+    [Parameter] public string SearchNoResultsLabel { get; set; } = "No results for";
+    [Parameter] public string SearchPlaceholder { get; set; } = "Search...";
+    [Parameter] public string ItemsSelectedButtonLabel { get; set; } = "Apply";
+    [Parameter] public string NoSelectionButtonLabel { get; set; } = "Done";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string ApplyButtonLabel => NoSelectionButtonLabel;
+}

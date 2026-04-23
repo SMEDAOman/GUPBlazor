@@ -1,0 +1,174 @@
+@page "/demo/layout"
+
+<PageTitle>Layout — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Layout Components">
+    <PageSummary>Track, header, content header, and wizard footer.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ TRACK ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Track (GupTrack) — Flex layout utility</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Horizontal (default) · gap=3</span>
+          <div class="demo-surface">
+            <GupTrack Direction="horizontal" Gap="3">
+              <GupButton Appearance="@GupButtonAppearance.Primary">Item 1</GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Secondary">Item 2</GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Secondary">Item 3</GupButton>
+            </GupTrack>
+          </div>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Horizontal · horizontal-alignment=right</span>
+          <div class="demo-surface">
+            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="3">
+              <GupButton Appearance="@GupButtonAppearance.Secondary">Cancel</GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Primary">Confirm</GupButton>
+            </GupTrack>
+          </div>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Vertical · gap=4</span>
+          <div class="demo-surface">
+            <GupTrack Direction="vertical" Gap="4">
+              <GupButton Appearance="@GupButtonAppearance.Primary">Action 1</GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Secondary">Action 2</GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Text">Action 3</GupButton>
+            </GupTrack>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ HEADER VARIANTS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Header (GupHeader) — previews</h2>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Save &amp; exit / Help</span>
+        <div class="demo-header-preview">
+          <GupHeader NavAriaLabel="Service header">
+            <Start>
+              <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text">
+                  <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                  <ChildContent>Save &amp; exit</ChildContent>
+                </GupButton>
+              </GupTrack>
+            </Start>
+            <End>
+              <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text">
+                  <IconStart><GupIcon IconName="live-help" Width="24" Height="24" /></IconStart>
+                  <ChildContent>Do you need help?</ChildContent>
+                </GupButton>
+              </GupTrack>
+            </End>
+          </GupHeader>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Cancel / Language switch</span>
+        <div class="demo-header-preview">
+          <GupHeader NavAriaLabel="Service header">
+            <Start>
+              <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text">
+                  <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                  <ChildContent>Cancel</ChildContent>
+                </GupButton>
+              </GupTrack>
+            </Start>
+            <End>
+              <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text">
+                  <IconStart><GupIcon IconName="language" Width="24" Height="24" /></IconStart>
+                  <ChildContent>العربية</ChildContent>
+                </GupButton>
+              </GupTrack>
+            </End>
+          </GupHeader>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CONTENT HEADER ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Content Header (GupContentHeader)</h2>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Title only</span>
+        <div class="demo-header-preview">
+          <GupContentHeader PageTitle="Service name" />
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Title + page summary</span>
+        <div class="demo-header-preview">
+          <GupContentHeader PageTitle="Service name">
+            <PageSummary>Reference Number: <strong>GOV-2026-004412</strong></PageSummary>
+          </GupContentHeader>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ WIZARD FOOTER ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Wizard Footer (GupWizardFooter)</h2>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Back + Continue</span>
+        <div class="demo-header-preview">
+          <GupWizardFooter>
+            <Start>
+              <GupButton Appearance="@GupButtonAppearance.Secondary">
+                <IconStart><GupIcon IconName="arrow-back" Width="24" Height="24" /></IconStart>
+                <ChildContent>Back</ChildContent>
+              </GupButton>
+            </Start>
+            <End>
+              <GupButton Appearance="@GupButtonAppearance.Primary">
+                <ChildContent>Continue</ChildContent>
+                <IconEnd><GupIcon IconName="arrow-forward" Width="24" Height="24" /></IconEnd>
+              </GupButton>
+            </End>
+          </GupWizardFooter>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Continue only (disabled)</span>
+        <div class="demo-header-preview">
+          <GupWizardFooter>
+            <End>
+              <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true">
+                <ChildContent>Continue</ChildContent>
+                <IconEnd><GupIcon IconName="arrow-forward" Width="24" Height="24" /></IconEnd>
+              </GupButton>
+            </End>
+          </GupWizardFooter>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

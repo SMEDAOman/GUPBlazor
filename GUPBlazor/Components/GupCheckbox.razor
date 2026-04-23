@@ -1,0 +1,36 @@
+@* Equivalent of <gup-checkbox name="..." checked disabled>
+   Class-based approach using gup-checkbox CSS.
+   Named slots: ChildContent (label text), Hint
+*@
+<label class="gup-checkbox @SizeClass @AppearanceClass">
+    <input type="checkbox"
+           class="gup-checkbox__input"
+           name="@Name"
+           value="@Value"
+           checked="@(Checked ? true : null)"
+           disabled="@(Disabled ? true : null)" />
+    <div class="gup-checkbox__check-mark">
+        <div class="gup-checkbox__check-mark-inner"></div>
+    </div>
+    <div class="gup-checkbox__text-container">
+        <div>@ChildContent</div>
+        @if (Hint != null)
+        {
+            <span class="gup-checkbox__hint">@Hint</span>
+        }
+    </div>
+</label>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Value { get; set; } = "on";
+    [Parameter] public bool Checked { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string Size { get; set; } = "m";
+    [Parameter] public string Appearance { get; set; } = "default";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Hint { get; set; }
+
+    private string SizeClass => Size == "s" ? "gup-checkbox--small" : "";
+    private string AppearanceClass => Appearance == "circle" ? "gup-checkbox--circle" : "";
+}

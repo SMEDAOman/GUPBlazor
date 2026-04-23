@@ -1,0 +1,375 @@
+@page "/demo/file-upload"
+
+<PageTitle>File Upload — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="File Upload">
+        <PageSummary>Single &amp; multi-file upload, with hints, validation, thumbnails, file library, and required states.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Single file, no hint</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="default">
+                            <ChildContent>Upload a file</ChildContent>
+                        </GupFileUpload>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">With hint</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="with-hint">
+                            <ChildContent>Upload a file</ChildContent>
+                            <Hint>Only .pdf .jpg or .png files at <strong>5 MB</strong> or less.</Hint>
+                        </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ IN FORM ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">In form</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <span class="demo-card-label">Plain form submit</span>
+                    <div class="demo-surface">
+                        <form id="demo-form-basic" onsubmit="event.preventDefault(); var fd = new FormData(event.target); console.log('form data', Object.fromEntries(fd));">
+                            <GupFileUpload Name="form-file">
+                                <ChildContent>Upload a file</ChildContent>
+                            </GupFileUpload>
+                            <div style="margin-top: var(--gup-spacing-text-to-component);">
+                                <GupButton Type="GupButtonType.Submit">Submit</GupButton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ MULTIPLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Upload multiple files</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <form onsubmit="event.preventDefault(); var fd = new FormData(event.target); console.log('form data', Array.from(fd.entries()));">
+                            <GupFileUpload Name="multi-upload" Multiple="true">
+                                <ChildContent>Upload files</ChildContent>
+                                <Hint>Pick any number of files.</Hint>
+                            </GupFileUpload>
+                            <div style="margin-top: var(--gup-spacing-text-to-component);">
+                                <GupButton Type="GupButtonType.Submit">Submit</GupButton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ VALIDATION ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Validation</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">With error</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="error-only" ErrorMessage="File is too large">
+                            <ChildContent>Upload a file</ChildContent>
+                        </GupFileUpload>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">With error &amp; hint</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="error-hint" ErrorMessage="File is too large">
+                            <ChildContent>Upload a file</ChildContent>
+                            <Hint>Select files up to 5 MB</Hint>
+                        </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Size validation (max 5 MB)</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="size-limited"
+                                       MaxFileSize="5"
+                                       SizeValidationMessage="File exceeds maximum size limit">
+                            <ChildContent>Upload a file</ChildContent>
+                            <Hint>Select files up to 5 MB</Hint>
+                        </GupFileUpload>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Required</span>
+                    <div class="demo-surface">
+                        <form onsubmit="event.preventDefault(); if (!event.target.checkValidity()) { event.target.reportValidity(); return; } console.log('form valid');">
+                            <GupFileUpload Name="required-file" Required="true">
+                                <ChildContent>Upload a file *</ChildContent>
+                            </GupFileUpload>
+                            <div style="margin-top: var(--gup-spacing-text-to-component);">
+                                <GupButton Type="GupButtonType.Submit">Submit</GupButton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <span class="demo-card-label">Error + size validation + required</span>
+                    <div class="demo-surface">
+                        <form onsubmit="event.preventDefault();">
+                            <GupFileUpload Name="all-validation"
+                                           ErrorMessage="Error occurred"
+                                           MaxFileSize="5"
+                                           SizeValidationMessage="File exceeds maximum size limit"
+                                           Required="true">
+                                <ChildContent>Upload a file *</ChildContent>
+                                <Hint>Select files up to 5 MB</Hint>
+                            </GupFileUpload>
+                            <div style="margin-top: var(--gup-spacing-text-to-component);">
+                                <GupButton Type="GupButtonType.Submit">Submit</GupButton>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ FULL WIDTH ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Full width</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupFileUpload Name="full-width-upload" IsFullWidth="true">
+                            <ChildContent>Upload a file</ChildContent>
+                        </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ PRE-POPULATED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Pre-populated files</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">With value (single file seeded)</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="with-value">
+                            <ChildContent>Upload a file</ChildContent>
+                        </GupFileUpload>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">With file + thumbnail seeded</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="with-files" AllowThumbnails="true">
+                            <ChildContent>Upload a file</ChildContent>
+                        </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <span class="demo-card-label">Multiple with thumbnails</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="multi-thumbs" Multiple="true" AllowThumbnails="true">
+                            <ChildContent>Upload files</ChildContent>
+                            <Hint>Try selecting an image file</Hint>
+                        </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EXTRA ACTION / FILE LIBRARY ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With extra action &amp; file library</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Extra action slot</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="with-extra">
+                            <ChildContent>Upload a file</ChildContent>
+                            <ExtraAction>
+                                <GupButton Appearance="@GupButtonAppearance.Text">
+                                    <ChildContent>Saved files</ChildContent>
+                                </GupButton>
+                            </ExtraAction>
+                        </GupFileUpload>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">File library (saved files list)</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="library" Multiple="true">
+                            <ChildContent>Upload files</ChildContent>
+                            <ExtraAction>
+                                <GupButton Appearance="@GupButtonAppearance.Text">
+                                    <ChildContent>Saved files</ChildContent>
+                                </GupButton>
+                            </ExtraAction>
+                        </GupFileUpload>
+                        <div style="margin-top: var(--gup-spacing-text-to-component);">
+                            <GupFileItem FileName="file.png" Subtitle="09.02.2021, 2 MB" Url="/file.png">
+                                <GupButton Appearance="@GupButtonAppearance.Text">
+                                    <ChildContent>Select</ChildContent>
+                                </GupButton>
+                            </GupFileItem>
+                            <GupFileItem FileName="file2.png" Subtitle="09.02.2021, 2 MB" Url="/file2.png">
+                                <GupButton Appearance="@GupButtonAppearance.Text">
+                                    <ChildContent>Select</ChildContent>
+                                </GupButton>
+                            </GupFileItem>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ GupFileItem ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">GupFileItem (standalone)</h2>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupFileItem FileName="file.png"
+                                     Subtitle="09.02.2021, 2 MB"
+                                     ThumbnailSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC"
+                                     ThumbnailAlt="Thumbnail" />
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">With download link</span>
+                    <div class="demo-surface">
+                        <GupFileItem FileName="designers-card.png"
+                                     Subtitle="09.02.2021, 2 MB"
+                                     Url="https://example.com/documents/designers-card.png"
+                                     ThumbnailSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC"
+                                     ThumbnailAlt="Thumbnail" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">With delete icon button</span>
+                    <div class="demo-surface">
+                        <GupFileItem FileName="file.png" Subtitle="09.02.2021, 2 MB"
+                                     ThumbnailSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC"
+                                     ThumbnailAlt="Thumbnail">
+                            <div class="gup-button gup-button--text">
+                                <button type="button" class="button" aria-label="Remove the file" title="Remove the file">
+                                    <GupIcon IconName="delete-forever" Width="24" Height="24" />
+                                </button>
+                            </div>
+                        </GupFileItem>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Multiple items (grouped)</span>
+                    <div class="demo-surface">
+                        <GupFileItem FileName="report-2024-q1.pdf" Subtitle="01.03.2024, 1.2 MB" />
+                        <GupFileItem FileName="report-2024-q2.pdf" Subtitle="01.06.2024, 1.4 MB" />
+                        <GupFileItem FileName="report-2024-q3.pdf" Subtitle="01.09.2024, 1.3 MB" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<script>
+    (function () {
+        function seedOnce() {
+            if (!window.__gupFileUpload) return false;
+
+            // WithValue: single seeded file
+            window.__gupFileUpload.seed('gup-fu-with-value', [
+                { fileName: 'file.png', lastModified: new Date(2017, 1, 26).getTime() }
+            ]);
+
+            // WithFiles: single file with thumbnail
+            window.__gupFileUpload.seed('gup-fu-with-files', [
+                {
+                    fileName: 'another-file.png',
+                    lastModified: new Date(2025, 8, 10).getTime(),
+                    thumbnail: {
+                        src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC',
+                        alt: 'Thumbnail'
+                    }
+                }
+            ]);
+
+            // WithMultipleFiles + thumbnails
+            window.__gupFileUpload.seed('gup-fu-multi-thumbs', [
+                {
+                    fileName: 'file.png',
+                    lastModified: new Date(2017, 1, 26).getTime(),
+                    thumbnail: {
+                        src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC',
+                        alt: 'Thumbnail'
+                    }
+                },
+                {
+                    fileName: 'file.pdf',
+                    lastModified: new Date(2017, 1, 26).getTime(),
+                    thumbnail: {
+                        src: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAwCAMAAACG9cLxAAABOFBMVEUVGyOOFRnw9vx+54deqGg0V0AyVT9yz3vu8/l6gIcZIycWHSTg5uzP1dt0eoEuNDwqRTckODHL0dfLoaaOlJu+g4h85IV64IN424F01X5txXZqwHRUl2BSkl1EdlA/bkukRkubMzcmPTMhMi6XKi4eKSzt7/Xq7fPo4+jc4ujl3eLR193i1dvM0tjezdPYvsTQrbLEkZa6en9y0Hxtc3pwy3m3cndqcHe0bHFktm5grWqxZGlaoWRXnGJQj1tNiFhIflNFS1OnTVI7ZUc3XkQ0OkIxUj6eOj4pLzcZHyeUISaQGR3o5Oro5Onn4ujaw8jVuL7Utbqgpq3Imp/CjJGAhYx+hIt43YG5eH1vdXxrwnVnunFhrmtdp2daYGesWV6pUlZGe1I+akqgPkKYLDCVJioXICWRGx8YnADUAAABiElEQVRIx+2WZ1PCQBCGjztAkgDSq/SOdKRLB1Gx997L//8HSm5GcwHO5IMzzsj7ZWd232cuu5sPC/63GJ22O6fkWlc7NmZWtjQ6/XAOtaRUIfXMyjJkxCl20PSoCOpUaxFTejG1gmpXSCWkVqGWtKzBSzFVvAZcqz/BvQZlcJI5SxBvDdPQtCmmlKj2aAQUddNQF5nqq+1CtidAUwVWxClDCBidbqINE/PTNN6Kpb7PXhem8DTok1e7ka1ONGaJHU1tmZmaR4QVJTixQ29K3IGFZEsxX79DVXcDfAzHCzKoTHLMRyv0S6f80Ip9yYyMLzRrwrztHpalU6/RHLYdxrYFUI9OFWCPtwU0x8Kn8nQqlcK2E/gspKpU6gFe8K5xfF/GvnJR3E0DNghoRKNeNGbsyu68E5SZQn1tdgTzCkJhGnWQxabyXkBB6o/88wtJkwoHmUeBEge5R4EkKtS+7QQ/I+tregZSqYgTlew2I+BukPMcdajI91HgRT4QsreAAXk41u3gAPgACc4ljWLtDUwAAAAASUVORK5CYII=',
+                        alt: 'Thumbnail'
+                    }
+                },
+                {
+                    fileName: 'file2 bet slide where she measure happened parts enjoy whose stream brave angry watch fighting late brush exist smaller carefully society vegetable sit writer simplest.pdf',
+                    lastModified: new Date(2017, 1, 26).getTime(),
+                    thumbnail: null
+                }
+            ]);
+            return true;
+        }
+
+        if (!seedOnce()) {
+            // Wait for App.razor's script to register window.__gupFileUpload
+            var tries = 0;
+            var iv = setInterval(function () {
+                if (seedOnce() || ++tries > 50) clearInterval(iv);
+            }, 50);
+        }
+    })();
+</script>

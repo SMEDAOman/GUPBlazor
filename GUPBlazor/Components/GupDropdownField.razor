@@ -1,0 +1,93 @@
+@* Equivalent of <gup-dropdown-field name="..." placeholder="..." required disabled clearable loading>
+   Named slots: Label, Hint
+   Default slot: ChildContent (gup-dropdown-menu)
+   Uses plain JS for interactivity (no interactive render mode required).
+*@
+<div class="gup-dropdown-field @DisabledClass @InvalidClass"
+     id="@Id"
+     data-clearable="@Clearable.ToString().ToLowerInvariant()"
+     data-multiple-values-label="@MultipleValuesLabel">
+    <label class="label" for="@InputId">@Label</label>
+    @if (Hint != null)
+    {
+        <span class="hint">@Hint</span>
+    }
+    <div class="field-wrapper"
+         onclick="@(Disabled || Loading ? "" : $"window.__gupDropdown.toggle('{Id}')")">
+        <div class="field-inner-wrapper">
+            <div class="input-wrapper">
+                <input class="input"
+                       id="@InputId"
+                       name="@Name"
+                       type="text"
+                       readonly
+                       role="combobox"
+                       aria-haspopup="listbox"
+                       aria-expanded="false"
+                       placeholder="@(Loading ? LoadingLabel : Placeholder)"
+                       value="@DisplayValue"
+                       disabled="@(Disabled ? true : null)" />
+            </div>
+            <div class="field-end-slot">
+                @if (Loading)
+                {
+                    <div class="gup-dropdown-spinner-wrapper">
+                        <svg class="gup-dropdown-spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" width="20" height="20" role="status" aria-label="@LoadingLabel">
+                            <mask id="mask-spinner-@Id" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0">
+                                <path d="M40 20C40 31.0457 31.0457 40 20 40C8.9543 40 -5.4282e-06 31.0457 -3.49691e-06 20C-1.56562e-06 8.9543 8.9543 1.56562e-06 20 3.49691e-06C31.0457 5.4282e-06 40 8.95431 40 20ZM6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20C34 12.268 27.732 6 20 6C12.268 6 6 12.268 6 20Z" />
+                            </mask>
+                            <g mask="url(#mask-spinner-@Id)">
+                                <circle class="gup-dropdown-spinner-circle" cx="20" cy="20" r="20" />
+                                <path class="gup-dropdown-spinner-indicator" d="M40 20C40 25.3043 37.8929 30.3914 34.1421 34.1421C30.3914 37.8929 25.3043 40 20 40L20 20L40 20Z"/>
+                            </g>
+                        </svg>
+                    </div>
+                }
+                else
+                {
+                    @if (Clearable)
+                    {
+                        <button type="button"
+                                class="gup-dropdown-clear-btn"
+                                style="display:none;"
+                                aria-label="@ClearLabel"
+                                title="@ClearLabel"
+                                onclick="event.stopPropagation(); window.__gupDropdown.clearSelection('@Id')">
+                            <GupIcon IconName="close" Width="20" Height="20" />
+                        </button>
+                    }
+                    <span class="arrow-icon">
+                        <GupIcon IconName="keyboard-arrow-down" Width="20" Height="20" />
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="error-message">@ErrorMessage</div>
+    }
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Placeholder { get; set; } = "";
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public bool Loading { get; set; }
+    [Parameter] public bool Clearable { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
+    [Parameter] public string? DisplayValue { get; set; }
+    [Parameter] public string ClearLabel { get; set; } = "Clear";
+    [Parameter] public string LoadingLabel { get; set; } = "Loading...";
+    [Parameter] public string MultipleValuesLabel { get; set; } = " selected";
+    [Parameter] public RenderFragment? Label { get; set; }
+    [Parameter] public RenderFragment? Hint { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Id => $"gup-dd-{Name}";
+    private string InputId => $"dropdown-{Name}";
+    private string DisabledClass => Disabled ? "gup-dropdown-field--disabled" : "";
+    private string InvalidClass => !string.IsNullOrEmpty(ErrorMessage) ? "gup-dropdown-field--invalid" : "";
+}

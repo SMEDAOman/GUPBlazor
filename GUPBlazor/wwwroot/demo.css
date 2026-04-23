@@ -1,0 +1,183 @@
+/* ── Demo page shell ── */
+.demo-page {
+  font-family: var(--font-base, 'Readex Pro', sans-serif);
+  background: var(--gup-color-background-canvas);
+  min-height: 100vh;
+}
+
+.demo-body {
+  max-width: 1024px;
+  margin-inline: auto;
+  padding: 48px 32px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+/* ── Section wrapper ── */
+.demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.demo-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gup-color-content-primary);
+  border-bottom: 2px solid var(--gup-color-brand-medium);
+  padding-bottom: 8px;
+}
+
+/* ── Row of variants ── */
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* ── Individual variant card ── */
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.demo-card-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gup-color-content-tertiary);
+}
+
+/* ── Full-width card ── */
+.demo-card--full {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+/* ── Colored swatch background ── */
+.demo-surface {
+  background: var(--gup-color-background-elevated-container);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+  padding: 24px;
+}
+
+/* ── Dark surface for inverted/logo ── */
+.demo-surface--dark {
+  background: var(--gup-color-background-footer);
+  border-radius: var(--gup-radius-component-default);
+  padding: 24px;
+}
+
+/* ── Color swatch grid ── */
+.demo-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.demo-swatch {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--gup-radius-component-small);
+  border: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  align-items: flex-end;
+  padding: 4px;
+}
+
+.demo-swatch span {
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  line-height: 1.2;
+  word-break: break-all;
+}
+
+/* ── Icon grid ── */
+.demo-icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.demo-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 72px;
+}
+
+.demo-icon-item span {
+  font-size: 10px;
+  color: var(--gup-color-content-tertiary);
+  text-align: center;
+  word-break: break-all;
+}
+
+/* ── Header preview ── */
+.demo-header-preview {
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+  overflow: hidden;
+}
+
+/* ── Wizard preview strip ── */
+.demo-wizard-strip {
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+  overflow: hidden;
+  background: var(--gup-color-background-canvas);
+}
+
+.demo-wizard-strip .gup-wizard-main {
+  padding-block: 24px;
+}
+
+.demo-wizard-strip .gup-wizard-main .inner {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ── Demo index cards ── */
+.demo-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.demo-index-card {
+  display: block;
+  padding: 24px;
+  background: var(--gup-color-background-elevated-container);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s;
+}
+
+.demo-index-card:hover {
+  border-color: var(--gup-color-brand-medium);
+}
+
+.demo-index-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gup-color-content-primary);
+  margin: 0 0 8px;
+}
+
+.demo-index-card p {
+  font-size: 14px;
+  color: var(--gup-color-content-secondary);
+  margin: 0;
+}

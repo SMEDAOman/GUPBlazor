@@ -1,0 +1,65 @@
+@* Equivalent of <gup-button appearance="primary|secondary|text|danger" kind="button|link" ...>
+   Named slots: IconStart, IconEnd
+   Default slot: ChildContent (button label)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-button gup-button--@Appearance.ToString().ToLowerInvariant() @(Disabled ? "is-disabled" : "")">
+    @if (Kind == GupButtonKind.Link)
+    {
+        <a class="button"
+           href="@(Disabled ? null : Href)"
+           aria-disabled="@(Disabled ? "true" : null)"
+           tabindex="@(Disabled ? "-1" : null)"
+           @onclick="HandleClick"
+           @onclick:preventDefault="Disabled">
+            @if (IconStart != null)
+            {
+                <span class="btn-icon-start">@IconStart</span>
+            }
+            @ChildContent
+            @if (IconEnd != null)
+            {
+                <span class="btn-icon-end">@IconEnd</span>
+            }
+        </a>
+    }
+    else
+    {
+        <button class="button"
+                type="@Type.ToString().ToLowerInvariant()"
+                disabled="@(Disabled ? true : null)"
+                @onclick="HandleClick">
+            @if (IconStart != null)
+            {
+                <span class="btn-icon-start">@IconStart</span>
+            }
+            @ChildContent
+            @if (IconEnd != null)
+            {
+                <span class="btn-icon-end">@IconEnd</span>
+            }
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public GupButtonAppearance Appearance { get; set; } = GupButtonAppearance.Primary;
+    [Parameter] public GupButtonKind Kind { get; set; } = GupButtonKind.Button;
+    [Parameter] public GupButtonType Type { get; set; } = GupButtonType.Button;
+    [Parameter] public string? Href { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? IconStart { get; set; }
+    [Parameter] public RenderFragment? IconEnd { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private Task HandleClick(MouseEventArgs args)
+    {
+        if (Disabled)
+        {
+            return Task.CompletedTask;
+        }
+        return OnClick.InvokeAsync(args);
+    }
+}

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="GUPBlazor/GUPBlazor.csproj" />
+  <Project Path="GUPBlazorDemo/GUPBlazorDemo.csproj" />
+</Solution>

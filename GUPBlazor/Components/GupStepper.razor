@@ -1,0 +1,11 @@
+@* Equivalent of <gup-stepper static-mode> — container for stepper items *@
+<div class="gup-stepper" role="list">
+    <div class="list">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool StaticMode { get; set; } = false;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

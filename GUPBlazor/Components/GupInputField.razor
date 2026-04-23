@@ -1,0 +1,30 @@
+@* Equivalent of <gup-input-field name="..." type="text|email|...">Label</gup-input-field> *@
+<div class="gup-input-field">
+    <label class="label" for="@Id">@ChildContent</label>
+    <div class="field-wrapper">
+        <div class="field-inner-wrapper">
+            <div class="input-wrapper">
+                <input class="input"
+                       id="@Id"
+                       name="@Name"
+                       type="@Type"
+                       placeholder="@Placeholder"
+                       value="@Value"
+                       disabled="@(Disabled ? true : null)"
+                       readonly="@(Readonly ? true : null)" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Type { get; set; } = "text";
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Readonly { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Id => $"input-{Name}";
+}

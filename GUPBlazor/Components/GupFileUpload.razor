@@ -1,0 +1,85 @@
+@* Equivalent of <gup-file-upload name="..." accept="..." multiple required full-width error-message="..." allow-thumbnails max-file-size="50">
+   Named slots: ChildContent (label), Hint, ExtraAction
+   Uses plain JS (window.__gupFileUpload) for interactivity.
+*@
+<div class="gup-file-upload @(IsFullWidth ? "gup-file-upload--full-width" : "") @(HasError ? "gup-file-upload--invalid" : "")"
+     id="@Id"
+     data-accept="@Accept"
+     data-max-file-size="@MaxFileSize"
+     data-allow-thumbnails="@AllowThumbnails.ToString().ToLowerInvariant()"
+     data-multiple="@Multiple.ToString().ToLowerInvariant()"
+     data-size-validation-message="@SizeValidationMessage"
+     data-item-delete-label="@ItemDeleteLabel">
+    <label for="@InputId" class="label @(HasError ? "has-error" : "")">
+        <div>@ChildContent</div>
+    </label>
+    @if (Hint != null)
+    {
+        <div class="gup-form-hint hint" id="@HintId">@Hint</div>
+    }
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="gup-form-validation-message error-message" id="@ErrorId" role="alert">@ErrorMessage</div>
+    }
+    <div class="size-error-message" style="display:none;" role="alert"></div>
+
+    <div class="gup-track actions"
+         style="flex-direction:row; gap:calc(3 * var(--unit)); justify-content:normal; align-items:normal;">
+        <div class="input-wrapper">
+            <span class="file-input">
+                <GupIcon IconName="upload" Width="20" Height="20" />
+                <span class="file-input-button">@FileInputLabel</span>
+            </span>
+            <input id="@InputId"
+                   type="file"
+                   class="native-input"
+                   name="@Name"
+                   accept="@Accept"
+                   multiple="@(Multiple ? true : null)"
+                   required="@(Required ? true : null)"
+                   aria-describedby="@AriaDescribedBy"
+                   onchange="window.__gupFileUpload.handleChange(this)" />
+        </div>
+        @if (ExtraAction != null)
+        {
+            <div class="extra-action-slot">@ExtraAction</div>
+        }
+    </div>
+
+    <div class="uploaded-files" style="display:none;"></div>
+</div>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string FileInputLabel { get; set; } = "Choose file";
+    [Parameter] public string ItemDeleteLabel { get; set; } = "Remove the file";
+    [Parameter] public string Accept { get; set; } = "";
+    [Parameter] public bool Multiple { get; set; }
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public bool IsFullWidth { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
+    [Parameter] public bool AllowThumbnails { get; set; }
+    [Parameter] public string SizeValidationMessage { get; set; } = "Maximum file size exceeded!";
+    [Parameter] public int MaxFileSize { get; set; } = 50;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Hint { get; set; }
+    [Parameter] public RenderFragment? ExtraAction { get; set; }
+
+    private string Id => $"gup-fu-{Name}";
+    private string InputId => $"file-upload-{Name}";
+    private string HintId => $"hint-{Name}";
+    private string ErrorId => $"error-{Name}";
+    private bool HasError => !string.IsNullOrEmpty(ErrorMessage);
+
+    private string AriaDescribedBy
+    {
+        get
+        {
+            var ids = new List<string>();
+            if (Hint != null) ids.Add(HintId);
+            if (HasError) ids.Add(ErrorId);
+            return string.Join(" ", ids);
+        }
+    }
+}

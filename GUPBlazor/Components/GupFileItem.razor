@@ -1,0 +1,34 @@
+@* Equivalent of <gup-file-item file-name="..." subtitle="..." url="..." thumbnail-src="..." thumbnail-alt="...">
+   Default slot: ChildContent (action button)
+*@
+<div class="gup-file-item">
+    <div class="inner">
+        @if (!string.IsNullOrEmpty(ThumbnailSrc))
+        {
+            <img src="@ThumbnailSrc" alt="@(ThumbnailAlt ?? "")" class="thumbnail" />
+        }
+        <div class="meta">
+            <h2 class="title">
+                @if (!string.IsNullOrEmpty(Url))
+                {
+                    <a href="@Url" download="@FileName" class="link">@FileName</a>
+                }
+                else
+                {
+                    @FileName
+                }
+            </h2>
+            <small class="subtitle">@Subtitle</small>
+        </div>
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public string FileName { get; set; } = "";
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter] public string? Url { get; set; }
+    [Parameter] public string? ThumbnailSrc { get; set; }
+    [Parameter] public string? ThumbnailAlt { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

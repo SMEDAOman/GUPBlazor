@@ -1,0 +1,60 @@
+@page "/help"
+
+<PageTitle>Help — Gov.om Templates</PageTitle>
+
+<div style="display: flex; flex-direction: column; height: 100vh;">
+
+    <GupHeader NavAriaLabel="Service Navigation Header">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                    <ChildContent>Cancel</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+        <End>
+            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="language" Width="24" Height="24" /></IconStart>
+                    <ChildContent>العربية</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </End>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Get help using our service" />
+
+    <div style="background-color: var(--gup-color-background-canvas); flex: 1;">
+        <div style="max-width: 1024px; margin-inline: auto; padding: 32px; padding-bottom: 80px;">
+
+            <GupTrack Direction="vertical" Gap="9" style="max-width: 632px;">
+
+                <GupTrack Direction="vertical" Gap="4">
+                    <h2 style="font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: -0.4px; margin: 0; color: var(--gup-color-content-primary);">
+                        What types of assistance are available for navigating the Gov.om platform?
+                    </h2>
+                    <p style="font-size: 16px; line-height: 24px; margin: 0; color: var(--gup-color-content-primary);">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id ipsum et lorem congue pulvinar.
+                        Phasellus iaculis id dolor ut porta. Nulla volutpat varius tortor, in scelerisque mi placerat at.
+                        Curabitur quis iaculis ex.
+                    </p>
+                </GupTrack>
+
+                <GupTrack Direction="vertical" Gap="4">
+                    <h2 style="font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: -0.4px; margin: 0; color: var(--gup-color-content-primary);">
+                        How can users access customer support if they encounter issues while using Gov.om?
+                    </h2>
+                    <p style="font-size: 16px; line-height: 24px; margin: 0; color: var(--gup-color-content-primary);">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id ipsum et lorem congue pulvinar.
+                        Phasellus iaculis id dolor ut porta. Nulla volutpat varius tortor, in scelerisque mi placerat at.
+                        Curabitur quis iaculis ex.
+                    </p>
+                </GupTrack>
+
+            </GupTrack>
+
+        </div>
+    </div>
+
+</div>

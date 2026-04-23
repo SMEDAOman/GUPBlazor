@@ -1,0 +1,30 @@
+@* Equivalent of <gup-stepper-item step-number="1" step-type="default|done|selected">
+   Named slot: Label
+*@
+<div class="gup-stepper-item gup-stepper-item--@StepType" role="listitem">
+    <div class="track">
+        <div class="step-number">
+            <div class="step-number-inner">
+                @if (StepType == "done")
+                {
+                    <GupIcon IconName="check" Width="20" Height="20" />
+                }
+                else
+                {
+                    @StepNumber
+                }
+            </div>
+        </div>
+        <div class="static-content">
+            <span class="label">@LabelContent</span>
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string StepNumber { get; set; } = "";
+    [Parameter] public string StepType { get; set; } = "default";
+    [Parameter] public RenderFragment? LabelContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

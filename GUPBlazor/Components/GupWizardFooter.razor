@@ -1,0 +1,22 @@
+@* Equivalent of <gup-wizard-footer>
+   Slots: Start (left/back button), End (right/forward button)
+*@
+<footer class="gup-wizard-footer">
+    <div class="inner">
+        <div class="track">
+            @if (Start != null)
+            {
+                <div class="slot-start">@Start</div>
+            }
+            @if (End != null)
+            {
+                <div class="slot-end">@End</div>
+            }
+        </div>
+    </div>
+</footer>
+
+@code {
+    [Parameter] public RenderFragment? Start { get; set; }
+    [Parameter] public RenderFragment? End { get; set; }
+}

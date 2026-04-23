@@ -1,0 +1,70 @@
+@* Equivalent of <gup-dropdown-menu-item label="..." value="..." selected disabled> *@
+<div class="gup-dropdown-menu-item @SelectedClass @DisabledClass"
+     data-value="@Value" data-label="@Label">
+    @if (IsMultiple)
+    {
+        <div role="option" aria-selected="@Selected.ToString().ToLowerInvariant()"
+             class="gup-checkbox gup-checkbox--small gup-dropdown-menu-item__checkbox"
+             tabindex="-1"
+             onclick="@(Disabled ? "" : "window.__gupDropdown.selectItem(this)")">
+            <input type="checkbox"
+                   class="gup-checkbox__input"
+                   value="@Value"
+                   checked="@(Selected ? true : null)"
+                   disabled="@(Disabled ? true : null)"
+                   style="pointer-events:none" />
+            <div class="gup-checkbox__check-mark">
+                <div class="gup-checkbox__check-mark-inner"></div>
+            </div>
+            <div class="item-content">
+                @if (ChildContent != null)
+                {
+                    @ChildContent
+                }
+                else
+                {
+                    @Label
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <button class="button"
+                type="button"
+                role="option"
+                aria-selected="@Selected.ToString().ToLowerInvariant()"
+                tabindex="-1"
+                disabled="@(Disabled ? true : null)"
+                onclick="@(Disabled ? "" : "window.__gupDropdown.selectItem(this)")">
+            <div class="item-inner">
+                <div class="item-content">
+                    @if (ChildContent != null)
+                    {
+                        @ChildContent
+                    }
+                    else
+                    {
+                        @Label
+                    }
+                </div>
+                <div class="check-icon-wrapper" style="@(Selected ? "" : "display:none")">
+                    <GupIcon IconName="check" Width="20" Height="20" />
+                </div>
+            </div>
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public bool Selected { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [CascadingParameter(Name = "IsMultiple")] public bool IsMultiple { get; set; }
+
+    private string SelectedClass => Selected ? "gup-dropdown-menu-item--selected" : "";
+    private string DisabledClass => Disabled ? "gup-dropdown-menu-item--disabled" : "";
+}

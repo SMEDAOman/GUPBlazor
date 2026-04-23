@@ -1,0 +1,1808 @@
+/* ============================================================
+   Gov.om Design System - Bundled CSS
+   Converted from @govom/tokens + @govom/components (Lit/Shadow DOM)
+   to plain CSS for use in Blazor without npm.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. FONT FACES
+   Place woff2 files in wwwroot/fonts/ or run download-fonts.ps1
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: 'Readex Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('/fonts/readex-pro-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Readex Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url('/fonts/readex-pro-latin-700-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Readex Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('/fonts/readex-pro-arabic-400-normal.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891,
+    U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
+    U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+@font-face {
+  font-family: 'Readex Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url('/fonts/readex-pro-arabic-700-normal.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891,
+    U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
+    U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+
+/* ------------------------------------------------------------
+   2. CSS CUSTOM PROPERTIES — Design Tokens
+   ------------------------------------------------------------ */
+:root {
+  /* Unit */
+  --unit: 4px;
+
+  /* --- Color Palette --- */
+  --gup-color-brand-xhigh: #132459;
+  --gup-color-brand-high: #243d89;
+  --gup-color-brand-medium: #2f57cd;
+  --gup-color-brand-medium-low: #4d78ff;
+  --gup-color-brand-low: #bfd8ff;
+  --gup-color-brand-xlow: #dde9ff;
+  --gup-color-brand-contrast: #ffffff;
+  --gup-color-neutral-xhigh: #202024;
+  --gup-color-neutral-high: #27272a;
+  --gup-color-neutral-medium: #3f3f46;
+  --gup-color-neutral-low: #d0d0d4;
+  --gup-color-neutral-xlow: #fcfcfc;
+  --gup-color-neutral-contrast: #ffffff;
+  --gup-color-positive-xhigh: #114c29;
+  --gup-color-positive-high: #157f3c;
+  --gup-color-positive-medium: #16a249;
+  --gup-color-positive-low: #85efac;
+  --gup-color-positive-xlow: #f2fdf5;
+  --gup-color-positive-contrast: #ffffff;
+  --gup-color-warning-xhigh: #733f12;
+  --gup-color-warning-high: #a26107;
+  --gup-color-warning-medium: #ca8511;
+  --gup-color-warning-low: #ffe771;
+  --gup-color-warning-xlow: #fefce7;
+  --gup-color-warning-contrast: #ffffff;
+  --gup-color-negative-xhigh: #811d1d;
+  --gup-color-negative-high: #ba1c1c;
+  --gup-color-negative-medium: #dc2828;
+  --gup-color-negative-low: #ffa0a0;
+  --gup-color-negative-xlow: #fef1f1;
+  --gup-color-negative-contrast: #ffffff;
+  --gup-color-brand-accent-xhigh: #11111e;
+  --gup-color-brand-accent-high: #2a324c;
+  --gup-color-brand-accent-medium: #414e77;
+  --gup-color-brand-accent-low: #c9ccdd;
+  --gup-color-brand-accent-xlow: #eceef4;
+  --gup-color-brand-accent-contrast: #ffffff;
+
+  /* --- Semantic Colors --- */
+  --gup-color-states-base-border: #7a7a83;
+  --gup-color-states-primary-hover: rgba(26 26 26 / 26%);
+  --gup-color-states-secondary-hover: rgba(26 26 26 / 8%);
+  --gup-color-states-secondary-active: rgba(26 26 26 / 18%);
+  --gup-color-states-primary-active: rgba(26 26 26 / 70%);
+  --gup-color-states-base-bg: #ffffff;
+  --gup-color-states-base-bg-secondary: #f4f4f5;
+  --gup-color-states-base-bg-control: #eceef4;
+  --gup-color-states-disabled-medium: #a1a1aa;
+  --gup-color-states-disabled-low: #d0d0d4;
+  --gup-color-states-base-focus-ring: #9747ff;
+  --gup-color-states-inverted-primary-hover: rgba(255 255 255 / 80%);
+  --gup-color-states-inverted-primary-active: rgba(255 255 255 / 60%);
+
+  /* --- Content Colors --- */
+  --gup-color-content-primary: #27272a;
+  --gup-color-content-secondary: #52525b;
+  --gup-color-content-tertiary: #7a7a83;
+  --gup-color-content-on-fill: #ffffff;
+  --gup-color-content-inverted-primary: #ffffff;
+  --gup-color-content-inverted-secondary: rgba(255 255 255 / 70%);
+  --gup-color-content-link: #132459;
+
+  /* --- Border Colors --- */
+  --gup-color-border-medium: #d0d0d4;
+  --gup-color-border-low: #e1e1e2;
+  --gup-color-border-xlow: #f4f4f5;
+  --gup-color-border-inverted-medium: rgba(255 255 255 / 26%);
+
+  /* --- Background Colors --- */
+  --gup-color-background-base: #ffffff;
+  --gup-color-background-canvas: #fefcf9;
+  --gup-color-background-overcanvas: #eceef4;
+  --gup-color-background-elevated-container: #ffffff;
+  --gup-color-background-accent-container: #eceef4;
+  --gup-color-background-navigation-bar: rgba(255 255 255 / 48%);
+  --gup-color-background-footer: #1c2133;
+  --gup-color-background-wizard-bar: #eceef4;
+  --gup-color-background-gradient-1-start: #eff5ff;
+  --gup-color-background-gradient-1-end: #f7f5f1;
+
+  /* --- Legacy color aliases used in components --- */
+  --color-blue-700: #2c64b9;
+  --color-blue-600: #377de6;
+  --color-grey-0: #ffffff;
+  --color-grey-100: #f5f5f5;
+  --color-grey-400: #a9a9a9;
+  --color-grey-600: #7e7e7e;
+  --color-grey-900: #2d2d2d;
+  --color-grey-999: #000000;
+  --color-body: var(--color-grey-999);
+
+  /* --- Spacing & Layout Tokens --- */
+  --gup-component-0: 0px;
+  --gup-component-1: 2px;
+  --gup-component-2: 4px;
+  --gup-component-3: 8px;
+  --gup-component-4: 12px;
+  --gup-component-5: 16px;
+  --gup-component-6: 20px;
+  --gup-component-7: 24px;
+  --gup-component-8: 32px;
+  --gup-component-9: 40px;
+  --gup-universal-space-4: 20px;
+  --gup-universal-space-5: 24px;
+  --gup-universal-space-7: 40px;
+  --gup-universal-space-9: 64px;
+  --gup-universal-space-10: 80px;
+  --gup-padding-xs: 8px;
+  --gup-padding-sm: 16px;
+  --gup-padding-md: 24px;
+  --gup-padding-lg: 32px;
+  --gup-padding-xl: 40px;
+  --gup-icon-xs: 16px;
+  --gup-icon-sm: 20px;
+  --gup-icon-md: 24px;
+  --gup-icon-lg: 28px;
+  --gup-icon-xl: 32px;
+
+  /* --- Semantic Spacing --- */
+  --gup-spacing-component-default: 12px;
+  --gup-spacing-content-to-cta: 32px;
+  --gup-spacing-between-content: 24px;
+  --gup-spacing-between-form-fields: 20px;
+  --gup-spacing-between-items: 8px;
+  --gup-spacing-between-options: 0px;
+  --gup-spacing-between-sections: 48px;
+  --gup-spacing-between-text: 16px;
+  --gup-spacing-horizontal-between-columns: 24px;
+  --gup-spacing-image-bottom: 8px;
+  --gup-spacing-text-to-component: 16px;
+
+  /* --- Border Radius --- */
+  --gup-radius-button: 999px;
+  --gup-radius-component-default: 8px;
+  --gup-radius-component-small: 4px;
+  --gup-radius-component-full: 999px;
+  --gup-radius-card: 12px;
+
+  /* --- Focus Ring --- */
+  --gup-stroke-focus-ring: 6px;
+
+  /* --- Shadow Colors --- */
+  --gup-color-shadow-color-1: rgba(28 33 51 / 1%);
+  --gup-color-shadow-color-2: rgba(28 33 51 / 2%);
+  --gup-color-shadow-color-5: rgba(28 33 51 / 6%);
+
+  /* --- Typography --- */
+  --font-base-ltr: 'Readex Pro', sans-serif;
+  --font-base-rtl: var(--font-base-ltr);
+  --font-base: var(--font-base-ltr);
+  --font-size-90: 8px;
+  --font-size-200: 12px;
+  --font-size-250: 13px;
+  --font-size-300: 14px;
+  --font-size-400: 16px;
+  --font-size-525: 19px;
+  --font-size-550: 20px;
+  --font-size-600: 24px;
+  --font-size-700: 32px;
+  --line-height-400: 1.4;
+  --line-height-500: 1.5;
+  --font-weight-base-beta: bold;
+  --font-size-body: var(--font-size-400);
+  --line-height-body: var(--line-height-500);
+
+  /* --- Directional --- */
+  --gup--is-ltr: 1;
+}
+
+[dir="rtl"] {
+  --gup--is-ltr: -1;
+  --font-base: var(--font-base-rtl);
+}
+
+/* ------------------------------------------------------------
+   3. NORMALIZE & RESET
+   ------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { box-sizing: border-box; }
+
+h1, h2, h3, h4, h5, h6, p, dl, dd, ul, ol, li, figure {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  font-size: 100%;
+}
+
+button {
+  border: none;
+  background: none;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: inherit;
+  text-align: inherit;
+}
+
+button, input, optgroup, select, textarea {
+  line-height: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+img, video { max-width: 100%; height: auto; }
+
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  vertical-align: middle;
+}
+
+a { text-decoration: none; }
+svg { fill: currentColor; }
+th { text-align: start; }
+fieldset { border: none; margin: 0; padding: 0; }
+:disabled { cursor: default; }
+table { text-indent: 0; border-color: inherit; border-collapse: collapse; }
+ol, ul, menu { list-style: none; }
+textarea { resize: vertical; }
+
+/* ------------------------------------------------------------
+   4. GLOBAL BASE
+   ------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-body);
+  margin: 0;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------------
+   5. COMPONENT: gup-logo
+   ------------------------------------------------------------ */
+.gup-logo svg {
+  fill: var(--gup-logo--color, var(--gup-color-neutral-contrast));
+  width: var(--gup-logo--size, 45px);
+  height: auto;
+}
+
+/* ------------------------------------------------------------
+   6. COMPONENT: gup-icon
+   ------------------------------------------------------------ */
+.gup-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gup-icon svg {
+  fill: var(--gup-icon--fill-color, currentColor);
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   7. COMPONENT: gup-header
+   ------------------------------------------------------------ */
+.gup-header {
+  position: relative;
+}
+
+.gup-header .inner {
+  background: var(--gup-color-background-navigation-bar)
+    linear-gradient(180deg, #eff5ff -66.34%, #f7f5f1 100%);
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--gup-color-border-low);
+}
+
+.gup-header .navigation {
+  max-width: 1024px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  min-height: 60px;
+  width: 100%;
+  font-size: 16px;
+  color: var(--gup-color-brand-xhigh);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.gup-header .logo-wrapper {
+  --overhang: 10px;
+  display: flex;
+  margin-bottom: calc(var(--overhang) * -1);
+  width: 72px;
+  height: calc(60px + var(--overhang));
+  padding: 11px 18px 13px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 0 var(--gup-radius-component-default)
+    var(--gup-radius-component-default);
+  background-color: var(--gup-color-brand-medium);
+}
+
+.gup-header .slot-start,
+.gup-header .slot-end {
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  align-items: center;
+}
+
+.gup-header .slot-end {
+  justify-content: flex-end;
+}
+
+/* Override button underline inside header */
+.gup-header .gup-button--text .button {
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------
+   8. COMPONENT: gup-content-header
+   ------------------------------------------------------------ */
+.gup-content-header .inner-wrapper {
+  display: flex;
+  width: 100%;
+  background: var(--gup-color-states-base-bg-secondary);
+  border-bottom: 1px solid var(--gup-color-border-low);
+  font-size: var(--font-size-550);
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-content-header .inner {
+  max-width: 1024px;
+  min-height: 100px;
+  margin-inline: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--gup-component-6);
+  padding: 32px;
+}
+
+.gup-content-header .header {
+  color: var(--gup-color-content-primary);
+}
+
+.gup-content-header .title {
+  width: 100%;
+  font-size: var(--font-size-700);
+  font-weight: var(--font-weight-base-beta);
+  letter-spacing: -0.64px;
+  line-height: 1;
+  margin-top: var(--gup-component-9);
+}
+
+.gup-content-header.has-subtitle .title {
+  margin-top: 0;
+}
+
+.gup-content-header .subtitle {
+  margin-bottom: var(--gup-spacing-between-items);
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-400);
+}
+
+.gup-content-header .slot-page-summary {
+  margin-top: var(--gup-component-6);
+  font-size: var(--font-size-400);
+  color: var(--gup-color-content-secondary);
+}
+
+/* ------------------------------------------------------------
+   9. COMPONENT: gup-wizard-main
+   ------------------------------------------------------------ */
+.gup-wizard-main {
+  display: block;
+  background-color: var(--gup-color-background-canvas);
+  flex: 1;
+  padding-inline: var(--gup-component-8);
+  overflow-y: auto;
+}
+
+.gup-wizard-main .inner {
+  max-width: 632px;
+  margin-inline: auto;
+  padding-top: var(--gup-component-9);
+  padding-bottom: 64px;
+}
+
+/* ------------------------------------------------------------
+   10. COMPONENT: gup-wizard-footer
+   ------------------------------------------------------------ */
+.gup-wizard-footer {
+  display: block;
+  width: 100%;
+  border-top: 1px solid var(--gup-color-border-low);
+  background-color: var(--gup-color-background-wizard-bar);
+  padding-inline: var(--gup-component-8);
+  padding-block: var(--gup-component-5);
+}
+
+.gup-wizard-footer .inner {
+  max-width: 1024px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+}
+
+.gup-wizard-footer .track {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+}
+
+.gup-wizard-footer .slot-start {
+  margin-inline-end: auto;
+  display: flex;
+  gap: var(--gup-spacing-component-default);
+}
+
+.gup-wizard-footer .slot-end {
+  margin-inline-start: auto;
+  display: flex;
+  gap: var(--gup-spacing-component-default);
+}
+
+/* ------------------------------------------------------------
+   11. COMPONENT: gup-button
+   ------------------------------------------------------------ */
+.gup-button {
+  display: inline-block;
+}
+
+.gup-button .button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gup-component-4);
+  border: 1px solid transparent;
+  border-radius: var(--gup-radius-button);
+  padding-block: 8px;
+  padding-inline: var(--gup-component-5);
+  line-height: var(--line-height-500);
+  text-align: center;
+  font-size: var(--font-size-400);
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+}
+
+.gup-button .button:focus-visible {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Primary */
+.gup-button--primary .button {
+  background: var(--gup-color-brand-medium);
+  color: var(--gup-color-neutral-contrast);
+  border-color: transparent;
+}
+
+.gup-button--primary .button:hover {
+  background: linear-gradient(
+      0deg,
+      var(--gup-color-states-primary-hover) 0%,
+      var(--gup-color-states-primary-hover) 100%
+    ),
+    var(--gup-color-brand-medium);
+}
+
+.gup-button--primary .button .gup-icon svg {
+  fill: var(--gup-color-brand-contrast);
+}
+
+/* Secondary */
+.gup-button--secondary .button {
+  background: transparent;
+  border-color: var(--gup-color-brand-xhigh);
+  color: var(--gup-color-brand-xhigh);
+}
+
+.gup-button--secondary .button:hover {
+  background: var(--gup-color-brand-medium);
+  border-color: transparent;
+  color: var(--gup-color-brand-contrast);
+}
+
+.gup-button--secondary .button .gup-icon svg {
+  fill: var(--gup-color-brand-xhigh);
+}
+
+.gup-button--secondary .button:hover .gup-icon svg {
+  fill: var(--gup-color-brand-contrast);
+}
+
+/* Text */
+.gup-button--text .button {
+  background: transparent;
+  color: var(--gup-color-brand-xhigh);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  border-color: transparent;
+}
+
+.gup-button--text .button:hover {
+  background: var(--gup-color-states-secondary-hover);
+  text-decoration: none;
+}
+
+.gup-button--text .button .gup-icon svg {
+  fill: var(--gup-color-brand-xhigh);
+}
+
+/* Danger */
+.gup-button--danger .button {
+  background: var(--gup-color-negative-medium);
+  color: var(--gup-color-neutral-contrast);
+  border-color: transparent;
+}
+
+/* Disabled */
+.gup-button.is-disabled .button,
+.gup-button .button:disabled {
+  background: var(--gup-color-states-disabled-low);
+  color: var(--gup-color-states-disabled-medium);
+  border-color: transparent;
+  pointer-events: none;
+}
+
+.gup-button.is-disabled .button .gup-icon svg,
+.gup-button .button:disabled .gup-icon svg {
+  fill: var(--gup-color-states-disabled-medium);
+}
+
+/* ------------------------------------------------------------
+   12. COMPONENT: gup-button-group
+   ------------------------------------------------------------ */
+.gup-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gup-component-4);
+}
+
+/* ------------------------------------------------------------
+   13. COMPONENT: gup-track
+   ------------------------------------------------------------ */
+.gup-track {
+  display: flex;
+}
+
+/* ------------------------------------------------------------
+   14. COMPONENT: gup-form-list
+   ------------------------------------------------------------ */
+.gup-form-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-form-fields);
+}
+
+/* ------------------------------------------------------------
+   15. COMPONENT: gup-form-section
+   ------------------------------------------------------------ */
+.gup-form-section {
+  display: block;
+  margin-block: var(--gup-spacing-between-sections);
+}
+
+.gup-form-section .title {
+  color: var(--gup-color-content-primary);
+  font-size: var(--font-size-600);
+  line-height: var(--line-height-500);
+  margin-bottom: var(--gup-spacing-text-to-component);
+}
+
+/* ------------------------------------------------------------
+   16. COMPONENT: gup-input-field
+   ------------------------------------------------------------ */
+.gup-input-field {
+  display: block;
+}
+
+.gup-input-field .label {
+  color: var(--gup-color-content-primary);
+  font-weight: var(--font-weight-base-beta);
+  display: block;
+  margin-bottom: var(--gup-spacing-component-default);
+}
+
+.gup-input-field .field-wrapper {
+  border-radius: var(--gup-radius-component-default);
+  border: 1px solid transparent;
+}
+
+.gup-input-field .field-inner-wrapper {
+  border-radius: inherit;
+  display: flex;
+  line-height: 1;
+  overflow: hidden;
+  border: 1px solid var(--gup-color-states-base-border);
+}
+
+.gup-input-field .input-wrapper {
+  display: flex;
+  width: 100%;
+  background-color: var(--gup-color-states-base-bg);
+}
+
+.gup-input-field .input {
+  appearance: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  flex-grow: 1;
+  padding-inline: var(--gup-component-4);
+  padding-block: var(--gup-component-3);
+  color: var(--gup-color-content-primary);
+  line-height: 1.4;
+  font-size: var(--font-size-400);
+  font-family: inherit;
+  width: 100%;
+}
+
+.gup-input-field .input::placeholder {
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-input-field .input:focus {
+  outline: none;
+}
+
+.gup-input-field .field-wrapper:focus-within {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------
+   17. COMPONENT: gup-stepper
+   ------------------------------------------------------------ */
+.gup-stepper {
+  display: block;
+  overflow: hidden;
+}
+
+.gup-stepper .list {
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   18. COMPONENT: gup-stepper-item
+   ------------------------------------------------------------ */
+.gup-stepper-item {
+  position: relative;
+  display: block;
+}
+
+.gup-stepper-item .track {
+  display: flex;
+  gap: var(--gup-component-6);
+  margin-top: 0; /* static-mode: no top margin */
+}
+
+.gup-stepper-item .step-number {
+  position: relative;
+  top: var(--gup-component-4);
+  flex-shrink: 0;
+}
+
+.gup-stepper-item .step-number::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  height: 100%;
+  top: 32px; /* step-size */
+  border-inline-start: 1px solid var(--gup-color-border-medium);
+}
+
+.gup-stepper-item:last-child .step-number::before {
+  display: none;
+}
+
+.gup-stepper-item .step-number-inner {
+  width: 32px; /* --step-size */
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--font-weight-base-beta);
+  color: var(--gup-color-content-primary);
+  border-radius: var(--gup-radius-component-full);
+  border: 1px solid var(--gup-color-border-medium);
+}
+
+/* Step type: selected */
+.gup-stepper-item--selected .step-number-inner {
+  color: var(--gup-color-content-inverted-primary);
+  border-color: var(--gup-color-brand-high);
+  background-color: var(--gup-color-brand-high);
+}
+
+/* Step type: done */
+.gup-stepper-item--done .step-number-inner {
+  color: var(--gup-color-positive-high);
+  border-color: var(--gup-color-positive-high);
+  background: var(--gup-color-positive-xlow);
+}
+
+.gup-stepper-item--done .step-number-inner .gup-icon svg {
+  fill: var(--gup-color-positive-high);
+}
+
+.gup-stepper-item .label {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--gup-color-content-tertiary);
+}
+
+.gup-stepper-item--selected .label {
+  color: var(--gup-color-content-primary);
+}
+
+.gup-stepper-item .static-content {
+  padding-block: var(--gup-component-4);
+}
+
+/* ------------------------------------------------------------
+   19. COMPONENT: gup-details (disclosure)
+   ------------------------------------------------------------ */
+.gup-details {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+.gup-details .inner {
+  /* <details> element */
+}
+
+.gup-details .inner summary.label {
+  cursor: pointer;
+  color: var(--gup-color-content-link);
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-3);
+  list-style: none;
+}
+
+.gup-details .inner summary.label::-webkit-details-marker {
+  display: none;
+}
+
+.gup-details .inner summary.label::marker {
+  display: none;
+}
+
+.gup-details .inner summary.label .gup-icon svg {
+  fill: var(--gup-color-content-link);
+}
+
+.gup-details .label-inner {
+  text-decoration: underline;
+  line-height: var(--line-height-500);
+}
+
+.gup-details .label-inner:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* content-appearance: sink */
+.gup-details .content {
+  margin-block-start: var(--gup-spacing-component-default);
+}
+
+.gup-details.sink .content {
+  background-color: var(--gup-color-states-base-bg-secondary);
+  padding: var(--gup-padding-md);
+  width: 100%;
+  border-bottom: 1px solid var(--gup-color-border-medium);
+  margin-bottom: var(--gup-spacing-between-text);
+}
+
+.gup-details.sink .content-inner {
+  position: relative;
+  padding-inline-end: 24px;
+  --gup-stepper-item--label--color: var(--gup-color-content-tertiary);
+}
+
+.gup-details.sink .close-button {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gup-details.sink .close-button .gup-icon svg {
+  fill: var(--gup-color-content-link);
+}
+
+/* ------------------------------------------------------------
+   20. COMPONENT: gup-radio-button-group
+   ------------------------------------------------------------ */
+.gup-radio-button-group {
+  display: block;
+}
+
+.gup-radio-button-group .group-label {
+  display: block;
+  padding-bottom: var(--gup-component-5);
+  font-weight: var(--font-weight-base-beta);
+  color: var(--gup-color-content-primary);
+}
+
+.gup-radio-button-group .options {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------------------------------
+   21. COMPONENT: gup-radio-button
+   ------------------------------------------------------------ */
+.gup-radio-button {
+  display: block;
+}
+
+.gup-radio-button .wrapper {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  gap: var(--gup-component-4);
+  padding: var(--gup-component-3) 0;
+}
+
+/* Hide native input, show custom */
+.gup-radio-button input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.gup-radio-button .box {
+  flex-shrink: 0;
+  background-color: var(--gup-color-states-base-bg);
+  border: 1px solid var(--gup-color-states-base-border);
+  width: var(--gup-icon-xl); /* 32px - size "m" */
+  height: var(--gup-icon-xl);
+  border-radius: var(--gup-radius-component-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gup-radio-button .box-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--gup-radius-component-full);
+}
+
+.gup-radio-button .box-pupil {
+  width: var(--gup-icon-sm); /* 20px */
+  height: var(--gup-icon-sm);
+  border-radius: var(--gup-radius-component-full);
+  background-color: var(--gup-color-brand-high);
+  visibility: hidden;
+}
+
+.gup-radio-button input[type="radio"]:checked ~ .box .box-inner .box-pupil {
+  visibility: visible;
+}
+
+.gup-radio-button.selected .box-pupil {
+  visibility: visible;
+}
+
+.gup-radio-button .labels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-component-1);
+}
+
+.gup-radio-button .radio-label {
+  min-height: var(--gup-icon-xl);
+  display: flex;
+  align-items: center;
+  color: var(--gup-color-content-primary);
+}
+
+.gup-radio-button .radio-hint {
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-400);
+}
+
+.gup-radio-button .wrapper:focus-within .box {
+  box-shadow: 0 0 0 2px var(--gup-color-neutral-contrast),
+    0 0 0 6px var(--gup-color-states-base-focus-ring);
+}
+
+/* ------------------------------------------------------------
+   22. COMPONENT: gup-banner
+   ------------------------------------------------------------ */
+.gup-banner {
+  display: block;
+  max-width: 600px;
+  padding: var(--gup-padding-md);
+  border-radius: var(--gup-radius-card);
+  border: 1px solid var(--gup-color-neutral-low);
+  color: var(--gup-color-content-primary);
+  line-height: var(--line-height-500);
+}
+
+.gup-banner .inner {
+  position: relative;
+}
+
+/* hide-icon = flex column */
+.gup-banner.hide-icon .track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-text);
+}
+
+/* with icon = grid */
+.gup-banner:not(.hide-icon) .track {
+  display: grid;
+  grid-template-areas: 'icon title' '. body';
+  grid-template-columns: 0fr auto;
+  gap: var(--gup-spacing-between-text);
+}
+
+.gup-banner .banner-icon { grid-area: icon; }
+.gup-banner .banner-title {
+  grid-area: title;
+  font-weight: var(--font-weight-base-beta);
+  padding-inline-end: 24px;
+}
+.gup-banner .banner-content { grid-area: body; }
+
+.gup-banner .close-button {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gup-banner .close-button .gup-icon svg {
+  fill: var(--gup-color-brand-xhigh);
+}
+
+/* ------------------------------------------------------------
+   23. COMPONENT: gup-rich-text
+   ------------------------------------------------------------ */
+.gup-rich-text {
+  display: block;
+}
+
+.gup-rich-text p {
+  margin: 0;
+  line-height: var(--line-height-500);
+}
+
+.gup-rich-text p + p {
+  margin-top: 0.75em;
+}
+
+.gup-rich-text ol,
+.gup-rich-text ul {
+  padding-inline-start: 1.5em;
+  list-style: revert;
+  margin: 0.5em 0;
+}
+
+.gup-rich-text li {
+  margin-block: 0.25em;
+}
+
+/* ------------------------------------------------------------
+   24. COMPONENT: gup-link
+   ------------------------------------------------------------ */
+.gup-link a {
+  color: var(--gup-color-content-link);
+  border-bottom: 1px solid currentColor;
+  padding-block: 2px;
+  line-height: var(--line-height-500);
+}
+
+.gup-link a:hover {
+  color: var(--color-blue-600);
+  background-color: var(--color-grey-100);
+}
+
+/* ------------------------------------------------------------
+   25. COMPONENT: gup-table
+   ------------------------------------------------------------ */
+.gup-table {
+  display: block;
+  width: 100%;
+}
+
+.gup-table table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+}
+
+/* ------------------------------------------------------------
+   26. COMPONENT: gup-table-row
+   ------------------------------------------------------------ */
+.gup-table-row {
+  display: table-row;
+}
+
+/* ------------------------------------------------------------
+   27. COMPONENT: gup-table-cell
+   ------------------------------------------------------------ */
+.gup-table-cell {
+  display: table-cell;
+  border-bottom: 1px solid var(--gup-color-border-low);
+}
+
+.gup-table-cell .wrapper {
+  padding-block: var(--gup-component-3);
+  padding-inline-end: var(--gup-component-7);
+  min-width: 60px;
+  color: var(--gup-color-content-primary);
+  text-align: start;
+}
+
+.gup-table-cell--header .wrapper,
+.gup-table-cell--rowheader .wrapper {
+  font-weight: var(--font-weight-base-beta);
+}
+
+/* ────────────────────────────────────────────────────────────
+   CHECKBOX  (.gup-checkbox)
+   Converted from @govom/components checkbox class-based CSS
+   ──────────────────────────────────────────────────────────── */
+
+.gup-checkbox {
+  --_border-color: var(--gup-color-states-base-border);
+  --_second-border-color: transparent;
+  --_size: 32px;
+  --_icon-color: var(--gup-color-neutral-contrast);
+
+  display: flex;
+  position: relative;
+  gap: var(--gup-spacing-component-default);
+  padding: var(--gup-component-3) 0;
+  cursor: pointer;
+  user-select: none;
+  color: var(--gup-color-content-primary);
+}
+
+.gup-checkbox__input {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: none;
+  white-space: nowrap;
+}
+
+.gup-checkbox__check-mark {
+  flex-shrink: 0;
+  border: 1px solid var(--_border-color);
+  background-color: var(--_border-color);
+  border-radius: var(--gup-checkbox--check-mark--border-radius, var(--gup-radius-component-default));
+  color: var(--gup-color-content-primary);
+  width: var(--_size);
+  height: var(--_size);
+}
+
+.gup-checkbox__check-mark-inner {
+  background-color: var(--gup-color-states-base-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--_second-border-color);
+  border-radius: inherit;
+  height: 100%;
+}
+
+.gup-checkbox__check-mark-inner::after {
+  content: "";
+  display: none;
+  width: 20px;
+  height: 20px;
+  background-color: var(--_icon-color);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.gup-checkbox__text-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-component-2);
+  text-wrap: balance;
+  line-height: var(--line-height-500);
+  padding-top: 3px;
+}
+
+.gup-checkbox__hint {
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+}
+
+/* ── Hover ── */
+.gup-checkbox:hover:has(.gup-checkbox__input:not(:disabled):not(:checked):not(:indeterminate)) {
+  --_second-border-color: var(--gup-color-states-base-border);
+}
+
+/* ── Checked ── */
+.gup-checkbox:has(.gup-checkbox__input:checked) {
+  --_border-color: transparent;
+}
+
+.gup-checkbox__input:checked + .gup-checkbox__check-mark .gup-checkbox__check-mark-inner {
+  background-color: var(--gup-color-brand-high);
+}
+
+.gup-checkbox__input:checked + .gup-checkbox__check-mark .gup-checkbox__check-mark-inner::after {
+  display: block;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+}
+
+/* ── Indeterminate ── */
+.gup-checkbox:has(.gup-checkbox__input:indeterminate) {
+  --_border-color: transparent;
+}
+
+.gup-checkbox__input:indeterminate + .gup-checkbox__check-mark .gup-checkbox__check-mark-inner {
+  background-color: var(--gup-color-brand-high);
+}
+
+.gup-checkbox__input:indeterminate + .gup-checkbox__check-mark .gup-checkbox__check-mark-inner::after {
+  display: block;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 13H5v-2h14v2z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 13H5v-2h14v2z'/%3E%3C/svg%3E");
+}
+
+/* ── Disabled ── */
+.gup-checkbox:has(.gup-checkbox__input:disabled) {
+  --_border-color: transparent;
+  pointer-events: none;
+}
+
+.gup-checkbox__input:disabled + .gup-checkbox__check-mark .gup-checkbox__check-mark-inner {
+  background-color: var(--gup-color-states-disabled-low);
+}
+
+.gup-checkbox__input:disabled + .gup-checkbox__check-mark .gup-checkbox__check-mark-inner::after {
+  --_icon-color: var(--gup-color-states-disabled-medium);
+}
+
+/* ── Small ── */
+.gup-checkbox--small {
+  --_size: 24px;
+  font-size: var(--font-size-300);
+}
+
+.gup-checkbox--small .gup-checkbox__check-mark {
+  border-radius: var(--gup-radius-component-small);
+}
+
+.gup-checkbox--small .gup-checkbox__check-mark-inner::after {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Circle ── */
+.gup-checkbox--circle .gup-checkbox__check-mark {
+  border-radius: var(--gup-radius-component-full);
+}
+
+.gup-checkbox--small.gup-checkbox--circle .gup-checkbox__check-mark {
+  border-radius: var(--gup-radius-component-full);
+}
+
+/* ── Focus ── */
+.gup-checkbox__input:focus {
+  outline: none;
+}
+
+.gup-checkbox__input:not(:disabled):focus-visible + .gup-checkbox__check-mark {
+  outline: 4px solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------
+   COMPONENT: gup-dropdown-field
+   ------------------------------------------------------------ */
+.gup-dropdown-field {
+  display: block;
+  position: relative;
+}
+
+.gup-dropdown-field .label {
+  color: var(--gup-color-content-primary);
+  font-weight: var(--font-weight-base-beta);
+  display: block;
+  margin-bottom: var(--gup-spacing-component-default);
+}
+
+.gup-dropdown-field .hint {
+  display: block;
+  font-size: var(--font-size-300);
+  color: var(--gup-color-content-secondary);
+  margin-top: var(--gup-spacing-component-default);
+}
+
+.gup-dropdown-field .field-wrapper {
+  border-radius: var(--gup-radius-component-default);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.gup-dropdown-field .field-inner-wrapper {
+  border-radius: inherit;
+  display: flex;
+  line-height: 1;
+  overflow: hidden;
+  border: 1px solid var(--gup-color-states-base-border);
+}
+
+.gup-dropdown-field .input-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  background-color: var(--gup-color-states-base-bg);
+}
+
+.gup-dropdown-field .input {
+  appearance: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  flex-grow: 1;
+  padding-inline: var(--gup-component-4);
+  padding-block: var(--gup-component-3);
+  color: var(--gup-color-content-primary);
+  line-height: 1.4;
+  font-size: var(--font-size-400);
+  font-family: inherit;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gup-dropdown-field .input::placeholder {
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-dropdown-field .input:focus {
+  outline: none;
+}
+
+.gup-dropdown-field .field-wrapper:focus-within {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+.gup-dropdown-field .arrow-icon {
+  display: flex;
+  align-items: center;
+  padding-inline-end: var(--gup-component-4);
+  --gup-icon--fill-color: var(--gup-color-content-secondary);
+  transition: transform 0.2s ease;
+}
+
+.gup-dropdown-field--open .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.gup-dropdown-field--disabled .field-wrapper {
+  cursor: not-allowed;
+}
+
+.gup-dropdown-field--disabled .input {
+  cursor: not-allowed;
+  color: var(--gup-color-content-tertiary);
+}
+
+.gup-dropdown-field--disabled .field-inner-wrapper {
+  background-color: var(--gup-color-input-bg-default);
+}
+
+.gup-dropdown-field .error-message {
+  color: var(--gup-color-negative-medium);
+  font-size: var(--font-size-300);
+  margin-top: 4px;
+}
+
+.gup-dropdown-field--invalid .label {
+  color: var(--gup-color-negative-medium);
+}
+
+.gup-dropdown-field--invalid .field-inner-wrapper {
+  border-color: var(--gup-color-negative-medium);
+}
+
+/* ── Dropdown spinner (loading state) ── */
+.gup-dropdown-spinner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 2px;
+  padding-inline-end: var(--gup-component-4);
+}
+
+.gup-dropdown-spinner {
+  animation: gup-dropdown-spin 1s infinite linear;
+}
+
+.gup-dropdown-spinner-circle {
+  fill: var(--gup-color-brand-accent-low);
+}
+
+.gup-dropdown-spinner-indicator {
+  fill: var(--gup-color-brand-high);
+}
+
+@keyframes gup-dropdown-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ── Dropdown menu ── */
+.gup-dropdown-menu {
+  display: none;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  margin-top: 4px;
+}
+
+.gup-dropdown-field--open .gup-dropdown-menu {
+  display: block;
+}
+
+.gup-dropdown-menu .inner {
+  display: flex;
+  width: 100%;
+  max-height: var(--gup-dropdown-menu--max-height, 280px);
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-radius: var(--gup-radius-component-default);
+  padding: 4px;
+  background: var(--gup-color-states-base-bg);
+  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.05),
+              0 8px 16px 0 rgba(0,0,0,0.04),
+              0 3px 6px 0 rgba(0,0,0,0.03),
+              0 1px 2px 0 rgba(0,0,0,0.02);
+}
+
+.gup-dropdown-menu .search-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-4);
+  border-bottom: 1px solid var(--gup-color-border-low);
+  padding: var(--gup-component-4);
+}
+
+.gup-dropdown-menu .search-container .gup-icon {
+  --gup-icon--fill-color: var(--gup-color-content-secondary);
+}
+
+.gup-dropdown-menu .search {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--font-size-400);
+  color: var(--gup-color-content-primary);
+}
+
+.gup-dropdown-menu .search::placeholder {
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-dropdown-menu .search:focus {
+  border: none;
+  outline: none;
+}
+
+.gup-dropdown-menu .dropdown-items {
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.gup-dropdown-menu .no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-inline: 48px;
+  margin-block: 18px;
+  text-align: center;
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+}
+
+.gup-dropdown-menu .controls {
+  width: 100%;
+  padding: var(--gup-component-3) var(--gup-component-4);
+  border-top: 1px solid var(--gup-color-border-low);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gup-component-3);
+}
+
+/* ── Dropdown menu item ── */
+.gup-dropdown-menu-item {
+  display: block;
+  width: 100%;
+  padding: var(--gup-component-4);
+}
+
+.gup-dropdown-menu-item--hidden {
+  display: none;
+}
+
+.gup-dropdown-menu-item--highlighted {
+  background-color: var(--gup-color-input-bg-secondary);
+}
+
+.gup-dropdown-menu-item .button {
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-size-400);
+  color: var(--gup-color-text-strong, var(--gup-color-content-primary));
+  text-align: start;
+}
+
+.gup-dropdown-menu-item .button:hover {
+  background-color: var(--gup-color-input-bg-secondary);
+  border-radius: var(--gup-radius-component-small);
+}
+
+.gup-dropdown-menu-item--selected .button {
+  font-weight: var(--font-weight-base-beta);
+}
+
+.gup-dropdown-menu-item .item-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-4);
+}
+
+.gup-dropdown-menu-item .item-content {
+  flex-grow: 1;
+  overflow-wrap: anywhere;
+}
+
+.gup-dropdown-menu-item .check-icon-wrapper {
+  height: 20px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --gup-icon--fill-color: var(--gup-color-brand-medium);
+}
+
+.gup-dropdown-menu-item--disabled {
+  cursor: not-allowed;
+  background-color: var(--gup-color-input-bg-default);
+  color: var(--gup-color-brand-tertiary);
+}
+
+.gup-dropdown-menu-item--disabled .button {
+  cursor: not-allowed;
+  color: var(--gup-color-content-tertiary);
+}
+
+/* ── Dropdown field end slot (clear + arrow) ── */
+.gup-dropdown-field .field-end-slot {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding-inline-end: var(--gup-component-4);
+}
+
+.gup-dropdown-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: var(--gup-radius-component-small);
+  --gup-icon--fill-color: var(--gup-color-content-secondary);
+}
+
+.gup-dropdown-clear-btn:hover {
+  --gup-icon--fill-color: var(--gup-color-content-primary);
+}
+
+/* ── Dropdown apply button ── */
+.gup-dropdown-apply-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-size-400);
+  color: var(--gup-color-content-secondary);
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+
+.gup-dropdown-apply-btn--primary {
+  background-color: var(--gup-color-brand-medium);
+  color: var(--gup-color-content-on-fill);
+}
+
+.gup-dropdown-apply-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Dropdown menu item checkbox (multiple mode) ── */
+.gup-dropdown-menu-item .gup-dropdown-menu-item__checkbox {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-3);
+  padding: 0;
+  margin: 0;
+}
+
+.gup-dropdown-menu-item .gup-dropdown-menu-item__checkbox:hover {
+  background-color: var(--gup-color-input-bg-secondary);
+  border-radius: var(--gup-radius-component-small);
+}
+
+/* ------------------------------------------------------------
+   N. COMPONENT: gup-file-upload
+   ------------------------------------------------------------ */
+.gup-file-upload {
+  display: block;
+  --file-input-width: fit-content;
+}
+
+.gup-file-upload--full-width {
+  --file-input-width: 100%;
+}
+
+.gup-file-upload .label {
+  color: var(--gup-color-content-primary);
+  font-weight: var(--font-weight-base-beta);
+  display: block;
+}
+
+.gup-file-upload .label.has-error {
+  color: var(--gup-color-negative-medium);
+}
+
+.gup-file-upload .hint,
+.gup-file-upload .error-message,
+.gup-file-upload .size-error-message {
+  margin-top: 4px;
+  font-size: var(--font-size-300);
+}
+
+.gup-file-upload .hint {
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-file-upload .error-message,
+.gup-file-upload .size-error-message {
+  color: var(--gup-color-negative-medium);
+}
+
+.gup-file-upload .actions {
+  margin-top: var(--gup-spacing-text-to-component);
+  display: flex;
+  align-items: center;
+}
+
+.gup-file-upload .input-wrapper {
+  position: relative;
+  border: 1px solid var(--gup-color-brand-xhigh);
+  display: flex;
+  padding: var(--gup-component-0) var(--gup-component-5);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gup-component-4);
+  border-radius: var(--gup-radius-button);
+  width: var(--file-input-width);
+}
+
+.gup-file-upload .input-wrapper:focus-within {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+.gup-file-upload .file-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: var(--gup-component-3) var(--gup-component-0);
+  border-radius: var(--gup-radius-component-full);
+  gap: var(--gup-component-4);
+  color: var(--gup-color-brand-xhigh);
+  font-weight: var(--font-weight-base-beta);
+}
+
+.gup-file-upload .file-input .gup-icon svg {
+  fill: var(--gup-color-brand-xhigh);
+}
+
+.gup-file-upload .file-input-button {
+  display: inline-block;
+}
+
+.gup-file-upload .native-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.gup-file-upload .uploaded-files {
+  margin-top: var(--gup-spacing-text-to-component);
+}
+
+.gup-file-upload--invalid .input-wrapper {
+  border-color: var(--gup-color-negative-medium);
+}
+
+/* ------------------------------------------------------------
+   N+1. COMPONENT: gup-file-item
+   ------------------------------------------------------------ */
+.gup-file-item {
+  display: block;
+  padding-inline: var(--gup-padding-sm);
+  background: var(--gup-color-background-overcanvas);
+}
+
+.gup-file-item:first-of-type {
+  border-start-start-radius: var(--gup-component-3);
+  border-start-end-radius: var(--gup-component-3);
+  padding-top: var(--gup-padding-xs);
+}
+
+.gup-file-item:last-of-type {
+  border-end-start-radius: var(--gup-component-3);
+  border-end-end-radius: var(--gup-component-3);
+  padding-bottom: var(--gup-padding-xs);
+}
+
+.gup-file-item .inner {
+  display: flex;
+  align-items: center;
+  gap: var(--gup-spacing-component-default);
+  align-self: stretch;
+}
+
+.gup-file-item:not(:first-of-type) .inner {
+  padding-top: var(--gup-spacing-component-default);
+}
+
+.gup-file-item:not(:last-of-type) .inner {
+  border-bottom: 1px solid var(--gup-color-border-medium);
+  padding-bottom: var(--gup-spacing-component-default);
+}
+
+.gup-file-item .meta {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.gup-file-item .link {
+  color: var(--gup-color-content-link);
+  text-decoration: underline;
+}
+
+.gup-file-item .thumbnail {
+  border-radius: var(--gup-component-2);
+  max-height: 40px;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.gup-file-item .title {
+  color: var(--gup-color-content-primary);
+  font-weight: var(--font-weight-base-beta);
+  font-size: var(--font-size-400);
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.gup-file-item .subtitle {
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+}
+
+.gup-file-item .inner .gup-button svg {
+  fill: var(--gup-color-brand-xhigh);
+}
+
+/* ============================================================
+   END OF BUNDLED STYLES
+   ============================================================ */

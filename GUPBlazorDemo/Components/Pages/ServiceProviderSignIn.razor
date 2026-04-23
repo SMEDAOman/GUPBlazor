@@ -1,0 +1,71 @@
+@page "/sign-in"
+
+<PageTitle>Sign In — Gov.om Templates</PageTitle>
+
+<div style="display: flex; flex-direction: column; height: 100vh;">
+
+    <GupHeader NavAriaLabel="Service Navigation Header">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                    <ChildContent>Cancel</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+        <End>
+            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="language" Width="24" Height="24" /></IconStart>
+                    <ChildContent>العربية</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </End>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Sign in to your account" />
+
+    <GupWizardMain>
+
+        <GupTrack Direction="vertical" Gap="7">
+
+            <GupBanner HideIcon="true" ShowClose="true" CloseLabel="Close">
+                <TitleContent>Supported services</TitleContent>
+                <ChildContent>
+                    <GupRichText>
+                        <p>These login options support only the following services:</p>
+                        <ol>
+                            <li>Continue study</li>
+                            <li>Certificate attestation and equivalence</li>
+                            <li>Appeal application</li>
+                        </ol>
+                        <p><br /> For other services visit: <GupLink Href="https://gov.om/">https://gov.om/</GupLink></p>
+                    </GupRichText>
+                </ChildContent>
+            </GupBanner>
+
+            <GupRadioButtonGroup Label="Choose a way to sign in" Name="sign-in-method">
+                <GupRadioButton Name="sign-in-method" Value="mobile-phone">
+                    <ChildContent>Mobile phone</ChildContent>
+                    <Hint>You'll need your phone number.</Hint>
+                </GupRadioButton>
+                <GupRadioButton Name="sign-in-method" Value="identity-card">
+                    <ChildContent>Identity card</ChildContent>
+                    <Hint>You'll need the card reader.</Hint>
+                </GupRadioButton>
+            </GupRadioButtonGroup>
+
+        </GupTrack>
+
+    </GupWizardMain>
+
+    <GupWizardFooter>
+        <End>
+            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button" Disabled="true">
+                <ChildContent>Continue</ChildContent>
+                <IconEnd><GupIcon IconName="arrow-forward" Width="24" Height="24" /></IconEnd>
+            </GupButton>
+        </End>
+    </GupWizardFooter>
+
+</div>

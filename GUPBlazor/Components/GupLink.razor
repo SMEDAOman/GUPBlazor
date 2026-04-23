@@ -1,0 +1,10 @@
+@* Equivalent of <gup-link href="..."> *@
+<span class="gup-link">
+    <a href="@Href" target="@Target">@ChildContent</a>
+</span>
+
+@code {
+    [Parameter] public string Href { get; set; } = "#";
+    [Parameter] public string Target { get; set; } = "";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

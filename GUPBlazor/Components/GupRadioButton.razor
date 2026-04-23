@@ -1,0 +1,31 @@
+@* Equivalent of <gup-radio-button name="..." value="..." selected>
+   Named slots: ChildContent (label text), Hint
+*@
+<div class="gup-radio-button @(Selected ? "selected" : "")">
+    <label class="wrapper">
+        <input type="radio" name="@Name" value="@Value"
+               checked="@(Selected ? true : null)"
+               disabled="@(Disabled ? true : null)" />
+        <div class="box">
+            <div class="box-inner">
+                <div class="box-pupil"></div>
+            </div>
+        </div>
+        <div class="labels">
+            <span class="radio-label">@ChildContent</span>
+            @if (Hint != null)
+            {
+                <span class="radio-hint">@Hint</span>
+            }
+        </div>
+    </label>
+</div>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public bool Selected { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Hint { get; set; }
+}

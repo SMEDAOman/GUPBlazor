@@ -1,0 +1,70 @@
+@page "/"
+@inject NavigationManager Nav
+
+<PageTitle>Component Demo — Gov.om Design System</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Primary"
+                           Kind="@GupButtonKind.Button"
+                           OnClick="@(() => Nav.NavigateTo("/"))">
+                    <ChildContent>← Back to templates</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Component Demo">
+        <PageSummary>All Gov.om design-system Blazor components, organized by category.</PageSummary>
+    </GupContentHeader>
+  
+    <div class="demo-body">
+        <div class="demo-index-grid">
+
+            <a href="/service-start" class="demo-index-card">
+                <h3>Service Start</h3>
+                <p>Service Start Demo.</p>
+            </a>
+
+            <a href="/demo/branding" class="demo-index-card">
+                <h3>Branding</h3>
+                <p>Logo, icons, color tokens, and typography scale.</p>
+            </a>
+
+            <a href="/demo/buttons" class="demo-index-card">
+                <h3>Buttons</h3>
+                <p>Button appearances, icons, disabled states, and button groups.</p>
+            </a>
+
+            <a href="/demo/forms" class="demo-index-card">
+                <h3>Form Components</h3>
+                <p>Input fields, form sections, checkboxes, radio buttons, and dropdowns.</p>
+            </a>
+
+            <a href="/demo/file-upload" class="demo-index-card">
+                <h3>File Upload</h3>
+                <p>Single &amp; multi-file upload with thumbnails, size validation, and file library.</p>
+            </a>
+
+            <a href="/demo/layout" class="demo-index-card">
+                <h3>Layout</h3>
+                <p>Track, header, content header, and wizard footer.</p>
+            </a>
+
+            <a href="/demo/feedback" class="demo-index-card">
+                <h3>Feedback</h3>
+                <p>Banners, steppers, and disclosure/details.</p>
+            </a>
+
+            <a href="/demo/data-display" class="demo-index-card">
+                <h3>Data Display</h3>
+                <p>Tables, rich text, and links.</p>
+            </a>
+
+        </div>
+    </div>
+
+</div>

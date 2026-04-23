@@ -1,0 +1,26 @@
+@* Equivalent of <gup-table-cell type="header|rowheader|data">
+   type="rowheader" renders as <th scope="row">, "header" as <th scope="col">, default as <td>
+*@
+@if (Type == "header")
+{
+    <th class="gup-table-cell gup-table-cell--header" scope="col">
+        <div class="wrapper">@ChildContent</div>
+    </th>
+}
+else if (Type == "rowheader")
+{
+    <th class="gup-table-cell gup-table-cell--rowheader" scope="row">
+        <div class="wrapper">@ChildContent</div>
+    </th>
+}
+else
+{
+    <td class="gup-table-cell">
+        <div class="wrapper">@ChildContent</div>
+    </td>
+}
+
+@code {
+    [Parameter] public string Type { get; set; } = "data";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

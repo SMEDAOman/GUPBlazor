@@ -1,0 +1,8 @@
+@* Equivalent of <gup-table-row> *@
+<tr class="gup-table-row">
+    @ChildContent
+</tr>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

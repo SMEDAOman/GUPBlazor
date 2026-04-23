@@ -1,0 +1,12 @@
+@* Equivalent of <gup-table> *@
+<div class="gup-table">
+    <table>
+        <tbody>
+            @ChildContent
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

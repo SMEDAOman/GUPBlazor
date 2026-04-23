@@ -1,0 +1,109 @@
+@page "/demo/buttons"
+@rendermode RenderMode.InteractiveServer
+@using Microsoft.JSInterop
+@using System.Diagnostics
+@inject IJSRuntime JS
+
+<PageTitle>Buttons — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/" OnClick="ButtonClicked">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Buttons">
+    <PageSummary>Button appearances, icons, states, and button groups.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ BUTTON ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Button (GupButton)</h2>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Appearances</span>
+        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
+          <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">Primary</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">Secondary</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">Text</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Danger" OnClick="ButtonClicked">Danger</GupButton>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">With icons</span>
+        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
+          <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">
+            <IconStart><GupIcon IconName="arrow-back" Width="20" Height="20" /></IconStart>
+            <ChildContent>Icon Start</ChildContent>
+          </GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">
+            <ChildContent>Icon End</ChildContent>
+            <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
+          </GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">
+            <IconStart><GupIcon IconName="close" Width="20" Height="20" /></IconStart>
+            <ChildContent>Cancel</ChildContent>
+          </GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">
+            <IconStart><GupIcon IconName="live-help" Width="20" Height="20" /></IconStart>
+            <ChildContent>Need help?</ChildContent>
+          </GupButton>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Disabled state</span>
+        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
+          <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true" OnClick="ButtonClicked">Primary disabled</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Secondary" Disabled="true" OnClick="ButtonClicked">Secondary disabled</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Text" Disabled="true" OnClick="ButtonClicked">Text disabled</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true" OnClick="ButtonClicked">
+            <ChildContent>Disabled with icon</ChildContent>
+            <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
+          </GupButton>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Kind=link (renders as &lt;a&gt;)</span>
+        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
+          <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Link" Href="#" OnClick="ButtonClicked">Link Primary</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Link" Href="#" OnClick="ButtonClicked">Link Secondary</GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link"  OnClick="ButtonClicked">Link Text</GupButton>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ BUTTON GROUP ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Button Group (GupButtonGroup)</h2>
+      <div class="demo-card--full">
+        <div class="demo-surface">
+          <GupButtonGroup>
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">Submit Application</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">Save Draft</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">Cancel</GupButton>
+          </GupButtonGroup>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private async Task ButtonClicked(MouseEventArgs args)
+    {
+        Console.WriteLine("Button clicked!");
+        Debug.WriteLine("Button clicked!");
+    }
+}

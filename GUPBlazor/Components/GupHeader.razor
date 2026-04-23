@@ -1,0 +1,24 @@
+@* Equivalent of <gup-header nav-aria-label="...">
+   Slots: Start (left side), End (right side)
+*@
+<header class="gup-header">
+    <div class="inner">
+        <nav class="navigation" aria-label="@NavAriaLabel">
+            <div class="slot-start">
+                @Start
+            </div>
+            <div class="logo-wrapper">
+                <GupLogo Size="45" />
+            </div>
+            <div class="slot-end">
+                @End
+            </div>
+        </nav>
+    </div>
+</header>
+
+@code {
+    [Parameter] public string NavAriaLabel { get; set; } = "Navigation";
+    [Parameter] public RenderFragment? Start { get; set; }
+    [Parameter] public RenderFragment? End { get; set; }
+}

@@ -1,0 +1,94 @@
+@page "/application-completed"
+
+<PageTitle>Application Completed — Gov.om Templates</PageTitle>
+
+<div style="display: flex; flex-direction: column; height: 100vh;">
+
+    <GupHeader NavAriaLabel="Service Navigation Header">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                    <ChildContent>Cancel</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+        <End>
+            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="help-outline" Width="24" Height="24" /></IconStart>
+                    <ChildContent>Do you need help?</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </End>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Service name">
+        <PageSummary>
+            Reference Number: <strong>0000000000</strong>
+        </PageSummary>
+    </GupContentHeader>
+
+    <GupWizardMain>
+
+        <GupTrack Direction="vertical" Gap="9">
+
+            <GupTrack Direction="vertical" Gap="4">
+                <h2 style="font-size: 28px; font-weight: 700; line-height: 40px; letter-spacing: -0.56px; color: var(--gup-color-content-primary);">
+                    Application Completed
+                </h2>
+                <p style="font-size: 24px; line-height: 32px; color: var(--gup-color-content-primary);">
+                    Your application has been successfully completed. Thank you for your submission.
+                </p>
+            </GupTrack>
+
+            <GupTrack Direction="vertical" Gap="4">
+                <h3 style="font-size: 20px; font-weight: 700; line-height: 28px; color: var(--gup-color-content-primary);">
+                    Owner Details
+                </h3>
+                <GupTable>
+                    <GupTableRow>
+                        <GupTableCell Type="rowheader">Civil ID</GupTableCell>
+                        <GupTableCell>123456</GupTableCell>
+                    </GupTableRow>
+                    <GupTableRow>
+                        <GupTableCell Type="rowheader">Owner Name</GupTableCell>
+                        <GupTableCell>Abdullah Al Busaidi</GupTableCell>
+                    </GupTableRow>
+                    <GupTableRow>
+                        <GupTableCell Type="rowheader">Phone No.</GupTableCell>
+                        <GupTableCell>91234567</GupTableCell>
+                    </GupTableRow>
+                    <GupTableRow>
+                        <GupTableCell Type="rowheader">Email</GupTableCell>
+                        <GupTableCell>abdullah@email.com</GupTableCell>
+                    </GupTableRow>
+                </GupTable>
+            </GupTrack>
+
+            <GupTrack Direction="vertical" Gap="4">
+                <h3 style="font-size: 20px; font-weight: 700; line-height: 28px; color: var(--gup-color-content-primary);">
+                    Request Details
+                </h3>
+                <GupTable>
+                    <GupTableRow>
+                        <GupTableCell Type="rowheader">Request No.</GupTableCell>
+                        <GupTableCell>150288188</GupTableCell>
+                    </GupTableRow>
+                    <GupTableRow>
+                        <GupTableCell Type="rowheader">Plate No. &amp; Code</GupTableCell>
+                        <GupTableCell>123 A B</GupTableCell>
+                    </GupTableRow>
+                </GupTable>
+            </GupTrack>
+
+            <GupButtonGroup>
+                <GupButton Appearance="@GupButtonAppearance.Primary">Go to Gov.om Dashboard</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Secondary">Download Certificate</GupButton>
+            </GupButtonGroup>
+
+        </GupTrack>
+
+    </GupWizardMain>
+
+</div>

@@ -1,0 +1,46 @@
+@* Equivalent of <gup-banner hide-icon type="default|success|warning|error">
+   Named slots: Title, ChildContent (body)
+*@
+<div class="gup-banner @(HideIcon ? "hide-icon" : "") @Type">
+    <div class="inner">
+        <div class="track">
+            @if (!HideIcon)
+            {
+                <div class="banner-icon">
+                    <GupIcon IconName="@IconForType()" Width="24" Height="24" />
+                </div>
+            }
+            @if (TitleContent != null)
+            {
+                <div class="banner-title">@TitleContent</div>
+            }
+            @if (ChildContent != null)
+            {
+                <div class="banner-content">@ChildContent</div>
+            }
+        </div>
+        @if (ShowClose)
+        {
+            <button class="close-button" aria-label="@CloseLabel" type="button">
+                <GupIcon IconName="close" Width="24" Height="24" />
+            </button>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool HideIcon { get; set; }
+    [Parameter] public string Type { get; set; } = "";
+    [Parameter] public bool ShowClose { get; set; } = true;
+    [Parameter] public string CloseLabel { get; set; } = "Close";
+    [Parameter] public RenderFragment? TitleContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string IconForType() => Type switch
+    {
+        "success" => "check",
+        "warning" => "help-outline",
+        "error"   => "close",
+        _         => "help-outline",
+    };
+}

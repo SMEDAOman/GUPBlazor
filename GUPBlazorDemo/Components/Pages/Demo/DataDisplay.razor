@@ -1,0 +1,121 @@
+@page "/demo/data-display"
+
+<PageTitle>Data Display — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Data Display">
+    <PageSummary>Tables, rich text, and links.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ TABLE ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Table (GupTable / GupTableRow / GupTableCell)</h2>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Row headers (key-value summary)</span>
+        <div class="demo-surface">
+          <GupTable>
+            <GupTableRow>
+              <GupTableCell Type="rowheader">Applicant name</GupTableCell>
+              <GupTableCell>Mohammed Al Rashdi</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell Type="rowheader">Civil ID</GupTableCell>
+              <GupTableCell>78345612</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell Type="rowheader">Application date</GupTableCell>
+              <GupTableCell>09 April 2026</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell Type="rowheader">Status</GupTableCell>
+              <GupTableCell>Under review</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell Type="rowheader">Reference number</GupTableCell>
+              <GupTableCell>GOV-2026-004412</GupTableCell>
+            </GupTableRow>
+          </GupTable>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Column headers</span>
+        <div class="demo-surface">
+          <GupTable>
+            <GupTableRow>
+              <GupTableCell Type="header">Service</GupTableCell>
+              <GupTableCell Type="header">Reference</GupTableCell>
+              <GupTableCell Type="header">Date</GupTableCell>
+              <GupTableCell Type="header">Status</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>Business registration</GupTableCell>
+              <GupTableCell>BIZ-20240101</GupTableCell>
+              <GupTableCell>01 Jan 2024</GupTableCell>
+              <GupTableCell>Approved</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>Driving license renewal</GupTableCell>
+              <GupTableCell>DRV-20240215</GupTableCell>
+              <GupTableCell>15 Feb 2024</GupTableCell>
+              <GupTableCell>Pending</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>Passport application</GupTableCell>
+              <GupTableCell>PAS-20240310</GupTableCell>
+              <GupTableCell>10 Mar 2024</GupTableCell>
+              <GupTableCell>Under review</GupTableCell>
+            </GupTableRow>
+          </GupTable>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RICH TEXT & LINK ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Rich Text (GupRichText) &amp; Link (GupLink)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">Rich text with lists</span>
+          <div class="demo-surface">
+            <GupRichText>
+              <p>These services are available to Omani nationals and residents:</p>
+              <ol>
+                <li>Visa and residency permits</li>
+                <li>Business licensing</li>
+                <li>Civil registration</li>
+              </ol>
+              <p>For more information visit <GupLink Href="https://gov.om/">gov.om</GupLink>.</p>
+            </GupRichText>
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Link variants</span>
+          <div class="demo-surface">
+            <GupTrack Direction="vertical" Gap="4">
+              <div><GupLink Href="#">Default link</GupLink></div>
+              <div><GupLink Href="#">Visit the Gov.om portal for a full list of available e-services</GupLink></div>
+              <div style="font-size: 14px;"><GupLink Href="#">Smaller context link</GupLink></div>
+            </GupTrack>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

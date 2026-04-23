@@ -1,0 +1,175 @@
+@page "/demo/feedback"
+
+<PageTitle>Feedback — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Feedback Components">
+    <PageSummary>Banners, steppers, and disclosure/details.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ BANNER ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Banner (GupBanner)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Default · hide-icon</span>
+          <GupBanner HideIcon="true" ShowClose="true" CloseLabel="Close">
+            <TitleContent>Important notice</TitleContent>
+            <ChildContent>
+              <GupRichText>
+                <p>Please review all information before submitting. Changes cannot be made after submission.</p>
+              </GupRichText>
+            </ChildContent>
+          </GupBanner>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">With icon</span>
+          <GupBanner HideIcon="false" ShowClose="false">
+            <TitleContent>System information</TitleContent>
+            <ChildContent>
+              <GupRichText>
+                <p>The system will be under maintenance on Friday from 10pm to 2am.</p>
+              </GupRichText>
+            </ChildContent>
+          </GupBanner>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Success</span>
+          <GupBanner Type="success" HideIcon="false" ShowClose="false">
+            <TitleContent>Application submitted</TitleContent>
+            <ChildContent>Your reference number is <strong>REF-20240001</strong>.</ChildContent>
+          </GupBanner>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Warning</span>
+          <GupBanner Type="warning" HideIcon="false" ShowClose="false">
+            <TitleContent>Session expiring</TitleContent>
+            <ChildContent>Your session will expire in 5 minutes. Please save your progress.</ChildContent>
+          </GupBanner>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Error</span>
+          <GupBanner Type="error" HideIcon="false" ShowClose="false">
+            <TitleContent>Submission failed</TitleContent>
+            <ChildContent>There was a problem processing your request. Please try again later.</ChildContent>
+          </GupBanner>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ STEPPER ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Stepper (GupStepper / GupStepperItem)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">Static mode — all step types</span>
+          <div class="demo-surface">
+            <GupStepper StaticMode="true">
+              <GupStepperItem StepNumber="1" StepType="done">
+                <LabelContent>Personal details</LabelContent>
+              </GupStepperItem>
+              <GupStepperItem StepNumber="2" StepType="done">
+                <LabelContent>Contact information</LabelContent>
+              </GupStepperItem>
+              <GupStepperItem StepNumber="3" StepType="selected">
+                <LabelContent>Document upload</LabelContent>
+              </GupStepperItem>
+              <GupStepperItem StepNumber="4" StepType="default">
+                <LabelContent>Review &amp; submit</LabelContent>
+              </GupStepperItem>
+              <GupStepperItem StepNumber="5" StepType="default">
+                <LabelContent>Confirmation</LabelContent>
+              </GupStepperItem>
+            </GupStepper>
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Step types close-up</span>
+          <div class="demo-surface">
+            <GupTrack Direction="vertical" Gap="5">
+              <div>
+                <div class="demo-card-label" style="margin-bottom:8px;">done</div>
+                <GupStepper StaticMode="true">
+                  <GupStepperItem StepNumber="1" StepType="done">
+                    <LabelContent>Completed step</LabelContent>
+                  </GupStepperItem>
+                </GupStepper>
+              </div>
+              <div>
+                <div class="demo-card-label" style="margin-bottom:8px;">selected</div>
+                <GupStepper StaticMode="true">
+                  <GupStepperItem StepNumber="2" StepType="selected">
+                    <LabelContent>Current step</LabelContent>
+                  </GupStepperItem>
+                </GupStepper>
+              </div>
+              <div>
+                <div class="demo-card-label" style="margin-bottom:8px;">default</div>
+                <GupStepper StaticMode="true">
+                  <GupStepperItem StepNumber="3" StepType="default">
+                    <LabelContent>Upcoming step</LabelContent>
+                  </GupStepperItem>
+                </GupStepper>
+              </div>
+            </GupTrack>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DETAILS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Details / Disclosure (GupDetails)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">content-appearance=sink (open by default)</span>
+          <GupDetails Open="true" ContentAppearance="sink"
+                      ClosedIcon="add-circle" OpenIcon="remove-circle">
+            <LabelContent>View application steps</LabelContent>
+            <ChildContent>
+              <GupStepper StaticMode="true">
+                <GupStepperItem StepNumber="1" StepType="done">
+                  <LabelContent>Identity verification</LabelContent>
+                </GupStepperItem>
+                <GupStepperItem StepNumber="2" StepType="selected">
+                  <LabelContent>Application form</LabelContent>
+                </GupStepperItem>
+                <GupStepperItem StepNumber="3" StepType="default">
+                  <LabelContent>Payment</LabelContent>
+                </GupStepperItem>
+              </GupStepper>
+            </ChildContent>
+          </GupDetails>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">content-appearance=quote (collapsed)</span>
+          <GupDetails Open="false" ContentAppearance="quote">
+            <LabelContent>Read important terms</LabelContent>
+            <ChildContent>
+              By submitting this application you agree to the terms and conditions of
+              the Sultanate of Oman e-Government services. Your data will be processed
+              in accordance with the Personal Data Protection Law.
+            </ChildContent>
+          </GupDetails>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

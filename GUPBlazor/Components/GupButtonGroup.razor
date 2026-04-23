@@ -1,0 +1,8 @@
+@* Equivalent of <gup-button-group> — wraps buttons with gap *@
+<div class="gup-button-group">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

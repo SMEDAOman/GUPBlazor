@@ -1,0 +1,164 @@
+@page "/demo/branding"
+
+<PageTitle>Branding — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Branding">
+    <PageSummary>Logo, icons, color tokens, and typography scale.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ LOGO ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Logo</h2>
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">Light (default)</span>
+          <div class="demo-surface" style="--gup-logo--color: var(--gup-color-brand-medium);">
+            <GupLogo Size="60" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">On brand background</span>
+          <div class="demo-surface" style="background: var(--gup-color-brand-medium); --gup-logo--color: #ffffff;">
+            <GupLogo Size="60" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">On dark background</span>
+          <div class="demo-surface--dark" style="--gup-logo--color: #ffffff;">
+            <GupLogo Size="60" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Small (32px)</span>
+          <div class="demo-surface" style="--gup-logo--color: var(--gup-color-brand-medium);">
+            <GupLogo Size="32" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ICONS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Icons (GupIcon)</h2>
+      <div class="demo-surface">
+        <div class="demo-icon-grid">
+          @foreach (var icon in new[] {
+            "arrow-back","arrow-forward","close","language",
+            "help-outline","add-circle","remove-circle","live-help","check"
+          })
+          {
+            <div class="demo-icon-item">
+              <GupIcon IconName="@icon" Width="24" Height="24" />
+              <span>@icon</span>
+            </div>
+          }
+        </div>
+        <div style="margin-top: 24px; display: flex; gap: 24px; align-items: center;">
+          <div class="demo-card-label" style="margin: 0;">Sizes:</div>
+          <GupIcon IconName="check" Width="16" Height="16" />
+          <GupIcon IconName="check" Width="20" Height="20" />
+          <GupIcon IconName="check" Width="24" Height="24" />
+          <GupIcon IconName="check" Width="32" Height="32" />
+        </div>
+        <div style="margin-top: 16px; display: flex; gap: 24px; align-items: center;">
+          <div class="demo-card-label" style="margin: 0;">Colored:</div>
+          <span style="--gup-icon--fill-color: var(--gup-color-positive-high);">
+            <GupIcon IconName="check" Width="24" Height="24" />
+          </span>
+          <span style="--gup-icon--fill-color: var(--gup-color-negative-medium);">
+            <GupIcon IconName="close" Width="24" Height="24" />
+          </span>
+          <span style="--gup-icon--fill-color: var(--gup-color-brand-medium);">
+            <GupIcon IconName="arrow-forward" Width="24" Height="24" />
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ COLOR TOKENS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Design Tokens — Color Palette</h2>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Brand</span>
+        <div class="demo-swatches">
+          <div class="demo-swatch" style="background: var(--gup-color-brand-xhigh);"><span>xhigh</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-brand-high);"><span>high</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-brand-medium);"><span>medium</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-brand-medium-low);"><span>medium-low</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-brand-low);"><span>low</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-brand-xlow); border-color: var(--gup-color-border-low);"><span style="color:#132459;">xlow</span></div>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Positive · Warning · Negative</span>
+        <div class="demo-swatches">
+          <div class="demo-swatch" style="background: var(--gup-color-positive-high);"><span>pos high</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-positive-medium);"><span>pos med</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-positive-xlow); border-color: var(--gup-color-border-low);"><span style="color:#114c29;">pos xlow</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-warning-medium);"><span>warn med</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-warning-low);"><span style="color:#733f12;">warn low</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-negative-medium);"><span>neg med</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-negative-xlow); border-color: var(--gup-color-border-low);"><span style="color:#811d1d;">neg xlow</span></div>
+        </div>
+      </div>
+
+      <div class="demo-card--full">
+        <span class="demo-card-label">Neutral · Content · Background</span>
+        <div class="demo-swatches">
+          <div class="demo-swatch" style="background: var(--gup-color-neutral-xhigh);"><span>neutral xhigh</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-neutral-high);"><span>neutral high</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-neutral-medium);"><span>neutral med</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-neutral-low); border-color: var(--gup-color-border-low);"><span style="color:#27272a;">neutral low</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-background-canvas); border-color: var(--gup-color-border-low);"><span style="color:#27272a;">canvas</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-background-wizard-bar); border-color: var(--gup-color-border-low);"><span style="color:#27272a;">wizard bar</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-background-footer);"><span>footer</span></div>
+          <div class="demo-swatch" style="background: var(--gup-color-states-base-focus-ring);"><span>focus ring</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TYPOGRAPHY ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Typography Scale</h2>
+      <div class="demo-surface">
+        <GupTrack Direction="vertical" Gap="5">
+          <div style="font-size: var(--font-size-700); font-weight: 700; color: var(--gup-color-content-primary);">
+            font-size-700 · 32px · Bold — Page title
+          </div>
+          <div style="font-size: var(--font-size-600); color: var(--gup-color-content-primary);">
+            font-size-600 · 24px — Section heading
+          </div>
+          <div style="font-size: var(--font-size-550); color: var(--gup-color-content-primary);">
+            font-size-550 · 20px — Subsection heading
+          </div>
+          <div style="font-size: var(--font-size-400); color: var(--gup-color-content-primary);">
+            font-size-400 · 16px — Body text (default)
+          </div>
+          <div style="font-size: var(--font-size-300); color: var(--gup-color-content-secondary);">
+            font-size-300 · 14px — Small / hint text
+          </div>
+          <div style="font-size: var(--font-size-200); color: var(--gup-color-content-tertiary);">
+            font-size-200 · 12px — Label / metadata
+          </div>
+        </GupTrack>
+      </div>
+    </section>
+
+  </div>
+</div>

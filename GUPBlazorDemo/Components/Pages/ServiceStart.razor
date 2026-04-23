@@ -1,0 +1,98 @@
+@page "/service-start"
+
+<PageTitle>Service Start — Gov.om Templates</PageTitle>
+
+<div style="display: flex; flex-direction: column; height: 100vh;">
+
+    <GupHeader NavAriaLabel="Service Navigation Header">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                    <ChildContent>Save &amp; exit</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+        <End>
+            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                    <IconStart><GupIcon IconName="live-help" Width="24" Height="24" /></IconStart>
+                    <ChildContent>Do you need help?</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </End>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Service name" />
+
+    <GupWizardMain>
+
+        <GupDetails Open="true" ContentAppearance="sink"
+                    ClosedIcon="add-circle" OpenIcon="remove-circle">
+            <LabelContent>Step 2</LabelContent>
+            <ChildContent>
+                <GupStepper StaticMode="true">
+                    <GupStepperItem StepNumber="1" StepType="done">
+                        <LabelContent>Step 1</LabelContent>
+                    </GupStepperItem>
+                    <GupStepperItem StepNumber="2" StepType="selected">
+                        <LabelContent>Step 2</LabelContent>
+                    </GupStepperItem>
+                    <GupStepperItem StepNumber="3" StepType="default">
+                        <LabelContent>Step 3</LabelContent>
+                    </GupStepperItem>
+                    <GupStepperItem StepNumber="4" StepType="default">
+                        <LabelContent>Step 4</LabelContent>
+                    </GupStepperItem>
+                </GupStepper>
+            </ChildContent>
+        </GupDetails>
+
+        <h2 style="font-size: 28px; font-weight: 700; margin-top: var(--gup-spacing-between-text); color: var(--gup-color-content-primary);">
+            Step title
+        </h2>
+        <p style="font-size: 24px; margin-top: 8px; color: var(--gup-color-content-primary);">
+            Placeholder for step description. Below is example form.
+        </p>
+
+        <form>
+            <GupFormSection>
+                <Title>Form section title 1</Title>
+                <ChildContent>
+                    <GupFormList>
+                        <GupInputField Name="your-message1" Type="text">Your message</GupInputField>
+                        <GupInputField Name="your-message2" Type="text">Your message</GupInputField>
+                        <GupInputField Name="your-message3" Type="text">Your message</GupInputField>
+                    </GupFormList>
+                </ChildContent>
+            </GupFormSection>
+            <GupFormSection>
+                <Title>Form section title 2</Title>
+                <ChildContent>
+                    <GupFormList>
+                        <GupInputField Name="your-message4" Type="text">Your message</GupInputField>
+                        <GupInputField Name="your-message5" Type="text">Your message</GupInputField>
+                        <GupInputField Name="your-message6" Type="text">Your message</GupInputField>
+                    </GupFormList>
+                </ChildContent>
+            </GupFormSection>
+        </form>
+
+    </GupWizardMain>
+
+    <GupWizardFooter>
+        <Start>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <IconStart><GupIcon IconName="arrow-back" Width="24" Height="24" /></IconStart>
+                <ChildContent>Back</ChildContent>
+            </GupButton>
+        </Start>
+        <End>
+            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <ChildContent>Continue</ChildContent>
+                <IconEnd><GupIcon IconName="arrow-forward" Width="24" Height="24" /></IconEnd>
+            </GupButton>
+        </End>
+    </GupWizardFooter>
+
+</div>

@@ -1,0 +1,35 @@
+@* Equivalent of <gup-details open content-appearance="sink|quote|none" closed-icon="..." open-icon="...">
+   Named slot: LabelContent
+   Default slot: ChildContent
+*@
+<div class="gup-details @ContentAppearance">
+    <details class="inner" open="@(Open ? true : null)">
+        <summary class="label">
+            <span class="gup-icon" aria-hidden="true">
+                <GupIcon IconName="@(Open ? OpenIcon : ClosedIcon)" Width="24" Height="24" />
+            </span>
+            <span class="label-inner">@LabelContent</span>
+        </summary>
+        <div class="content">
+            <div class="content-inner">
+                @ChildContent
+                @if (ContentAppearance == "sink")
+                {
+                    <button class="close-button" aria-label="Close" type="button"
+                            onclick="this.closest('details').removeAttribute('open')">
+                        <GupIcon IconName="close" Width="24" Height="24" />
+                    </button>
+                }
+            </div>
+        </div>
+    </details>
+</div>
+
+@code {
+    [Parameter] public bool Open { get; set; } = false;
+    [Parameter] public string ContentAppearance { get; set; } = "quote";
+    [Parameter] public string ClosedIcon { get; set; } = "keyboard-arrow-down";
+    [Parameter] public string OpenIcon { get; set; } = "keyboard-arrow-up";
+    [Parameter] public RenderFragment? LabelContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
