@@ -1,0 +1,49 @@
+@* Equivalent of <gup-spinner size="small|medium|large"> — accessible loading indicator.
+   Renders the gov.om brand spinner SVG with a continuous rotation animation.
+   Sizes: small=16px, medium=24px (default), large=40px. Pass Pixels to override.
+*@
+<span class="gup-spinner-wrapper @SizeClass" role="status">
+    <svg class="gup-spinner"
+         xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 40 40"
+         fill="none"
+         width="@RenderedSize"
+         height="@RenderedSize"
+         aria-hidden="true">
+        <mask id="@MaskId" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
+            <path d="M40 20C40 31.0457 31.0457 40 20 40C8.9543 40 -5.4282e-06 31.0457 -3.49691e-06 20C-1.56562e-06 8.9543 8.9543 1.56562e-06 20 3.49691e-06C31.0457 5.4282e-06 40 8.95431 40 20ZM6 20C6 27.732 12.268 34 20 34C27.732 34 34 27.732 34 20C34 12.268 27.732 6 20 6C12.268 6 6 12.268 6 20Z" />
+        </mask>
+        <g mask="url(#@MaskId)">
+            <circle class="gup-spinner-circle" cx="20" cy="20" r="20" />
+            <path class="gup-spinner-indicator" d="M40 20C40 25.3043 37.8929 30.3914 34.1421 34.1421C30.3914 37.8929 25.3043 40 20 40L20 20L40 20Z" />
+        </g>
+    </svg>
+    @if (!string.IsNullOrEmpty(Text))
+    {
+        <span class="gup-spinner-text">@Text</span>
+    }
+    <span class="gup-spinner-sr">@Label</span>
+</span>
+
+@code {
+    [Parameter] public string Size { get; set; } = "medium";
+    [Parameter] public int? Pixels { get; set; }
+    [Parameter] public string Label { get; set; } = "Loading...";
+    [Parameter] public string? Text { get; set; }
+
+    private readonly string MaskId = $"gup-spinner-mask-{Guid.NewGuid():N}";
+
+    private string SizeClass => Size switch
+    {
+        "small" => "gup-spinner--small",
+        "large" => "gup-spinner--large",
+        _       => "gup-spinner--medium",
+    };
+
+    private int RenderedSize => Pixels ?? Size switch
+    {
+        "small" => 16,
+        "large" => 40,
+        _       => 24,
+    };
+}

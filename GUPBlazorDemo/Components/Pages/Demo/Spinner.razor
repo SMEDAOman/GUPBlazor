@@ -1,0 +1,142 @@
+@page "/demo/spinner"
+
+<PageTitle>Spinner — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Spinner (GupSpinner)">
+    <PageSummary>Accessible loading indicator using the gov.om brand spinner SVG.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ SIZES ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Sizes</h2>
+
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">Small (16px)</span>
+          <div class="demo-surface" style="display:flex; justify-content:center;">
+            <GupSpinner Size="small" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Medium · default (24px)</span>
+          <div class="demo-surface" style="display:flex; justify-content:center;">
+            <GupSpinner />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Large (40px)</span>
+          <div class="demo-surface" style="display:flex; justify-content:center;">
+            <GupSpinner Size="large" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Custom · Pixels="56"</span>
+          <div class="demo-surface" style="display:flex; justify-content:center;">
+            <GupSpinner Pixels="56" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ WITH TEXT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">With visible text</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Inline text label</span>
+          <div class="demo-surface">
+            <GupSpinner Text="Loading..." />
+          </div>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Large with text · custom ARIA label</span>
+          <div class="demo-surface">
+            <GupSpinner Size="large"
+                        Text="Submitting your application..."
+                        Label="Submitting your application, please wait" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ IN-CONTEXT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">In context</h2>
+
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">Inside a button</span>
+          <div class="demo-surface" style="display:flex; justify-content:center;">
+            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+              <ChildContent>
+                <GupTrack Direction="horizontal" Gap="2" VerticalAlignment="center">
+                  <GupSpinner Size="small" Label="Saving" />
+                  <span>Saving…</span>
+                </GupTrack>
+              </ChildContent>
+            </GupButton>
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Centered loading panel</span>
+          <div class="demo-surface" style="min-height:120px; display:flex; align-items:center; justify-content:center;">
+            <GupSpinner Size="large" Text="Fetching data..." />
+          </div>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Inside a banner</span>
+          <GupBanner HideIcon="true" ShowClose="false">
+            <TitleContent>
+              <GupTrack Direction="horizontal" Gap="2" VerticalAlignment="center">
+                <GupSpinner Size="small" Label="Processing" />
+                <span>Processing your request</span>
+              </GupTrack>
+            </TitleContent>
+            <ChildContent>
+              <GupRichText>
+                <p>This usually takes less than 30 seconds. Please don't close this window.</p>
+              </GupRichText>
+            </ChildContent>
+          </GupBanner>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ COLORED ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">On dark surface</h2>
+
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">On brand background</span>
+          <div class="demo-surface"
+               style="background: var(--gup-color-brand-medium); display:flex; justify-content:center; padding:24px;">
+            <GupSpinner Size="large" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">On dark canvas</span>
+          <div class="demo-surface--dark" style="display:flex; justify-content:center; padding:24px;">
+            <GupSpinner Size="large" Text="Loading..." />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

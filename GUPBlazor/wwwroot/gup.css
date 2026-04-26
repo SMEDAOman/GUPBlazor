@@ -1799,6 +1799,50 @@ body {
   fill: var(--gup-color-brand-xhigh);
 }
 
+/* ── Spinner ── */
+.gup-spinner-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gup-component-2, 8px);
+  vertical-align: middle;
+}
+
+.gup-spinner {
+  animation: gup-spin 1s infinite linear;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.gup-spinner-circle {
+  fill: var(--gup-color-brand-accent-low);
+}
+
+.gup-spinner-indicator {
+  fill: var(--gup-color-brand-high);
+}
+
+.gup-spinner-text {
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+}
+
+.gup-spinner-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes gup-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */
