@@ -1,0 +1,90 @@
+@page "/demo/inputs/text"
+
+<PageTitle>Text Input — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Text Input">
+        <PageSummary>GupInputField with <code>Type="text"</code>. Variants: default, placeholder, pre-filled, read-only, disabled.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Basic Text Inputs</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="txt-default" Type="text">Full name</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">With placeholder</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="txt-placeholder" Type="text" Placeholder="e.g. Ahmed Al Habsi">Full name</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Pre-filled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="txt-value" Type="text" Value="Ahmed Al Habsi">Full name</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Read-only</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="txt-readonly" Type="text" Value="Cannot edit" Readonly="true">Read-only field</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="txt-disabled" Type="text" Disabled="true">Disabled field</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Multiple Fields in a Form List</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupInputField Name="first-name" Type="text">First name</GupInputField>
+                        <GupInputField Name="middle-name" Type="text">Middle name</GupInputField>
+                        <GupInputField Name="last-name" Type="text">Last name</GupInputField>
+                        <GupInputField Name="national-id" Type="text" Placeholder="8-digit number">National ID</GupInputField>
+                    </GupFormList>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

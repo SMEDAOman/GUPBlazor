@@ -1,7 +1,7 @@
 @* Equivalent of <gup-radio-button name="..." value="..." selected>
    Named slots: ChildContent (label text), Hint
 *@
-<div class="gup-radio-button @(Selected ? "selected" : "")">
+<div class="gup-radio-button">
     <label class="wrapper">
         <input type="radio" name="@Name" value="@Value"
                checked="@(Selected ? true : null)"

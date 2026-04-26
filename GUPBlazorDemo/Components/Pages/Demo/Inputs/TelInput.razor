@@ -1,0 +1,76 @@
+@page "/demo/inputs/tel"
+
+<PageTitle>Phone Input — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Phone / Tel Input">
+        <PageSummary>GupInputField with <code>Type="tel"</code>. Triggers numeric keypad on mobile.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Basic</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-default" Type="tel">Mobile number</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">With placeholder</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-placeholder" Type="tel" Placeholder="+968 9XXX XXXX">Mobile number</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Pre-filled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-value" Type="tel" Value="+96899123456">Primary phone</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Read-only</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-readonly" Type="tel" Value="+96899123456" Readonly="true">Verified number</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-disabled" Type="tel" Disabled="true">Disabled phone</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

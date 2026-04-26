@@ -1,0 +1,198 @@
+@page "/demo/inputs/dropdown"
+
+<PageTitle>Dropdown — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Dropdown">
+        <PageSummary>GupDropdownField with single-select, multi-select, search, clearable, disabled, error, and loading variants.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Single Select</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="governorate" Placeholder="Select a governorate">
+                            <Label>Governorate</Label>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="Muscat" Value="muscat" />
+                                    <GupDropdownMenuItem Label="Dhofar" Value="dhofar" />
+                                    <GupDropdownMenuItem Label="Musandam" Value="musandam" />
+                                    <GupDropdownMenuItem Label="Al Buraimi" Value="buraimi" />
+                                    <GupDropdownMenuItem Label="Ad Dakhiliyah" Value="dakhiliyah" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">With hint &amp; pre-selected</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="doc-type" Placeholder="Select document type" DisplayValue="Passport">
+                            <Label>Document type</Label>
+                            <Hint>Choose the type of document to upload (top hint).</Hint>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="National ID" Value="national-id" />
+                                    <GupDropdownMenuItem Label="Passport" Value="passport" Selected="true" />
+                                    <GupDropdownMenuItem Label="Driving License" Value="driving-license" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                            <Hint>Choose the type of document to upload (bottom hint).</Hint>
+                        </GupDropdownField>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">With Search</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Single select + search</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="country" Placeholder="Search and select">
+                            <Label>Country</Label>
+                            <ChildContent>
+                                <GupDropdownMenu SearchEnabled="true">
+                                    <GupDropdownMenuItem Label="Oman" Value="oman" />
+                                    <GupDropdownMenuItem Label="United Arab Emirates" Value="uae" />
+                                    <GupDropdownMenuItem Label="Saudi Arabia" Value="saudi-arabia" />
+                                    <GupDropdownMenuItem Label="Bahrain" Value="bahrain" />
+                                    <GupDropdownMenuItem Label="Kuwait" Value="kuwait" />
+                                    <GupDropdownMenuItem Label="Qatar" Value="qatar" />
+                                    <GupDropdownMenuItem Label="Jordan" Value="jordan" />
+                                    <GupDropdownMenuItem Label="Egypt" Value="egypt" />
+                                    <GupDropdownMenuItem Label="India" Value="india" />
+                                    <GupDropdownMenuItem Label="Pakistan" Value="pakistan" />
+                                    <GupDropdownMenuItem Label="United Kingdom" Value="uk" />
+                                    <GupDropdownMenuItem Label="United States" Value="us" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Multi-select + search</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="multi-search" Placeholder="Search and select multiple">
+                            <Label>Services</Label>
+                            <Hint>Select all applicable services.</Hint>
+                            <ChildContent>
+                                <GupDropdownMenu Multiple="true" SearchEnabled="true">
+                                    <GupDropdownMenuItem Label="Civil status" Value="civil-status" />
+                                    <GupDropdownMenuItem Label="Business registration" Value="business-reg" />
+                                    <GupDropdownMenuItem Label="Vehicle licensing" Value="vehicle-lic" />
+                                    <GupDropdownMenuItem Label="Property registration" Value="property-reg" />
+                                    <GupDropdownMenuItem Label="Education services" Value="education" />
+                                    <GupDropdownMenuItem Label="Health services" Value="health" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Multi-Select + Clearable (in a form)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <form novalidate onsubmit="event.preventDefault(); var fd = new FormData(event.target); console.log('Form data:', Object.fromEntries(fd));">
+                        <GupFormList>
+                            <GupDropdownField Name="dropdown" Placeholder="Select items" Clearable="true">
+                                <Label>Select items</Label>
+                                <ChildContent>
+                                    <GupDropdownMenu Multiple="true">
+                                        <GupDropdownMenuItem Label="Item number 1" Value="item1" />
+                                        <GupDropdownMenuItem Label="Item number 2" Value="item2" />
+                                        <GupDropdownMenuItem Label="Item 3" Value="item3" />
+                                        <GupDropdownMenuItem Label="Item number 4" Value="item4" />
+                                        <GupDropdownMenuItem Label="Item number 5" Value="item5" />
+                                        <GupDropdownMenuItem Label="Item number 6" Value="item6" />
+                                        <GupDropdownMenuItem Label="Item number 7" Value="item7" />
+                                        <GupDropdownMenuItem Label="Item number 8" Value="item8" />
+                                    </GupDropdownMenu>
+                                </ChildContent>
+                            </GupDropdownField>
+                        </GupFormList>
+                        <div style="margin-top: 16px;">
+                            <GupButton Type="GupButtonType.Submit">Submit</GupButton>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="disabled-dd" Placeholder="Cannot select" Disabled="true">
+                            <Label>Disabled dropdown</Label>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="Item 1" Value="1" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Error</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="error-dd" Placeholder="Select an option" ErrorMessage="This field is required.">
+                            <Label>Required field</Label>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="Option A" Value="a" />
+                                    <GupDropdownMenuItem Label="Option B" Value="b" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+
+                <div class="demo-card">
+                    <span class="demo-card-label">Loading (simulated)</span>
+                    <div class="demo-surface">
+                        <GupDropdownField Name="loading-dd" Placeholder="Select an option">
+                            <Label>Loading dropdown</Label>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="Option A" Value="a" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                        <div class="gup-button gup-button--secondary" style="margin-top: 12px;">
+                            <button class="button" type="button" onclick="window.__gupDropdownLoadingDemo('gup-dd-loading-dd')">
+                                Simulate loading
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

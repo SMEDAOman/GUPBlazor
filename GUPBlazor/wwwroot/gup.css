@@ -944,10 +944,6 @@ body {
   visibility: visible;
 }
 
-.gup-radio-button.selected .box-pupil {
-  visibility: visible;
-}
-
 .gup-radio-button .labels {
   display: flex;
   flex-direction: column;

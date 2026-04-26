@@ -1,0 +1,120 @@
+@page "/demo/inputs/radio"
+
+<PageTitle>Radio Button — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Radio Button">
+        <PageSummary>GupRadioButton and GupRadioButtonGroup — exclusive single-selection within a group.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default Group</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupRadioButtonGroup Label="Preferred contact method" Name="contact-method">
+                        <GupRadioButton Name="contact-method" Value="email">
+                            <ChildContent>Email</ChildContent>
+                            <Hint>We'll send updates to your inbox.</Hint>
+                        </GupRadioButton>
+                        <GupRadioButton Name="contact-method" Value="sms">
+                            <ChildContent>SMS</ChildContent>
+                            <Hint>We'll send a text to your phone.</Hint>
+                        </GupRadioButton>
+                        <GupRadioButton Name="contact-method" Value="none">
+                            <ChildContent>Do not contact</ChildContent>
+                        </GupRadioButton>
+                    </GupRadioButtonGroup>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">With Pre-Selected Item</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupRadioButtonGroup Label="Application type" Name="app-type">
+                        <GupRadioButton Name="app-type" Value="new" Selected="true">
+                            <ChildContent>New application</ChildContent>
+                            <Hint>Apply for the first time.</Hint>
+                        </GupRadioButton>
+                        <GupRadioButton Name="app-type" Value="renewal">
+                            <ChildContent>Renewal</ChildContent>
+                            <Hint>Renew an existing permit.</Hint>
+                        </GupRadioButton>
+                        <GupRadioButton Name="app-type" Value="replacement" Disabled="true">
+                            <ChildContent>Replacement (unavailable)</ChildContent>
+                        </GupRadioButton>
+                    </GupRadioButtonGroup>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Short Labels</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Gender</span>
+                    <div class="demo-surface">
+                        <GupRadioButtonGroup Label="Gender" Name="gender">
+                            <GupRadioButton Name="gender" Value="male">
+                                <ChildContent>Male</ChildContent>
+                            </GupRadioButton>
+                            <GupRadioButton Name="gender" Value="female">
+                                <ChildContent>Female</ChildContent>
+                            </GupRadioButton>
+                            <GupRadioButton Name="gender" Value="other">
+                                <ChildContent>Prefer not to say</ChildContent>
+                            </GupRadioButton>
+                        </GupRadioButtonGroup>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Yes / No</span>
+                    <div class="demo-surface">
+                        <GupRadioButtonGroup Label="Do you own a vehicle?" Name="owns-vehicle">
+                            <GupRadioButton Name="owns-vehicle" Value="yes">
+                                <ChildContent>Yes</ChildContent>
+                            </GupRadioButton>
+                            <GupRadioButton Name="owns-vehicle" Value="no" Selected="true">
+                                <ChildContent>No</ChildContent>
+                            </GupRadioButton>
+                        </GupRadioButtonGroup>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">All Disabled</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupRadioButtonGroup Label="Unavailable options" Name="disabled-group">
+                        <GupRadioButton Name="disabled-group" Value="a" Disabled="true">
+                            <ChildContent>Option A (disabled)</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Name="disabled-group" Value="b" Selected="true" Disabled="true">
+                            <ChildContent>Option B (selected &amp; disabled)</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Name="disabled-group" Value="c" Disabled="true">
+                            <ChildContent>Option C (disabled)</ChildContent>
+                        </GupRadioButton>
+                    </GupRadioButtonGroup>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

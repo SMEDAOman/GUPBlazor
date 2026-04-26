@@ -1,0 +1,98 @@
+@page "/demo/inputs/date"
+
+<PageTitle>Date Input — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Date Input">
+        <PageSummary>GupInputField with <code>Type="date"</code>, <code>"time"</code>, <code>"datetime-local"</code>, and <code>"month"</code>.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Date</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="date-default" Type="date">Date of birth</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Pre-filled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="date-value" Type="date" Value="1990-06-15">Date of birth</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Time / Date-Time / Month</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Time</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="time-input" Type="time">Appointment time</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Date-time</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="datetime-input" Type="datetime-local">Appointment slot</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Month</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="month-input" Type="month">Billing month</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Read-only</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="date-readonly" Type="date" Value="2025-01-01" Readonly="true">Issue date</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="date-disabled" Type="date" Disabled="true">Unavailable</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

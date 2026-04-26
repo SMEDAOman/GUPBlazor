@@ -1,0 +1,76 @@
+@page "/demo/inputs/email"
+
+<PageTitle>Email Input — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Email Input">
+        <PageSummary>GupInputField with <code>Type="email"</code>. Triggers email keyboards on mobile and browser-level validation.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Basic</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-default" Type="email">Email address</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">With placeholder</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-placeholder" Type="email" Placeholder="name@example.com">Email address</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Pre-filled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-value" Type="email" Value="ahmed@gov.om">Work email</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Read-only</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-readonly" Type="email" Value="verified@gov.om" Readonly="true">Verified email</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-disabled" Type="email" Disabled="true">Disabled email</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
