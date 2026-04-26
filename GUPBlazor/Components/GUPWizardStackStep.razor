@@ -1,0 +1,47 @@
+@* A single step inside a <GUPWizardStack>. Registers itself with the parent so the stepper
+   and navigation know about it, and renders its ChildContent only when it is the active step. *@
+@implements IDisposable
+
+@if (Parent?.IsStepActive(this) == true)
+{
+    @ChildContent
+}
+
+@code {
+    [CascadingParameter] private GUPWizardStack? Parent { get; set; }
+
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? StepLabel { get; set; }
+    [Parameter] public bool HideDefaultTitle { get; set; } = false;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>When true, the wizard's default Continue/Submit button is disabled and <see cref="GUPWizardStack.NextAsync"/> is blocked while this is the active step.</summary>
+    [Parameter] public bool Locked { get; set; } = false;
+
+    private bool _registered;
+    private bool _previousLocked;
+
+    protected override void OnInitialized()
+    {
+        if (Parent is null)
+        {
+            throw new InvalidOperationException(
+                $"{nameof(GUPWizardStackStep)} must be used inside a {nameof(GUPWizardStack)}.");
+        }
+        Parent.RegisterStep(this);
+        _registered = true;
+        _previousLocked = Locked;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (_registered && _previousLocked != Locked)
+        {
+            _previousLocked = Locked;
+            Parent?.NotifyStepChanged();
+        }
+    }
+
+    public void Dispose() => Parent?.UnregisterStep(this);
+}

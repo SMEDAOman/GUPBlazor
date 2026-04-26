@@ -1,0 +1,251 @@
+@* High-level wizard layout: wires GupHeader, GupContentHeader, GupWizardMain (with stepper)
+   and GupWizardFooter. Steps are declared as <GUPWizardStackStep> children and shown one at a
+   time based on CurrentStepIndex. *@
+
+<CascadingValue Value="this" IsFixed="true">
+    <div class="gup-wizard-stack" style="display: flex; flex-direction: column; height: 100vh;">
+
+        @if (ShowHeader)
+        {
+            <GupHeader NavAriaLabel="@NavAriaLabel">
+                <Start>@HeaderStart</Start>
+                <End>@HeaderEnd</End>
+            </GupHeader>
+        }
+
+        @if (ShowContentHeader && (!string.IsNullOrEmpty(PageTitle) || !string.IsNullOrEmpty(PageSubtitle) || PageSummary != null))
+        {
+            <GupContentHeader PageTitle="@PageTitle" PageSubtitle="@PageSubtitle">
+                <PageSummary>@PageSummary</PageSummary>
+            </GupContentHeader>
+        }
+
+        <GupWizardMain>
+
+            @if (ShowStepper && _steps.Count > 0)
+            {
+                <GupDetails Open="@StepperOpen" ContentAppearance="@StepperAppearance"
+                            ClosedIcon="@StepperClosedIcon" OpenIcon="@StepperOpenIcon">
+                    <LabelContent>@CurrentStepperLabel</LabelContent>
+                    <ChildContent>
+                        <GupStepper StaticMode="true">
+                            @for (var i = 0; i < _steps.Count; i++)
+                            {
+                                var idx = i;
+                                var step = _steps[idx];
+                                <GupStepperItem StepNumber="@((idx + 1).ToString())"
+                                                StepType="@GetStepType(idx)">
+                                    <LabelContent>@(step.StepLabel ?? step.Title)</LabelContent>
+                                </GupStepperItem>
+                            }
+                        </GupStepper>
+                    </ChildContent>
+                </GupDetails>
+            }
+
+            @if (CurrentStep is { } current)
+            {
+                @if (!current.HideDefaultTitle && !string.IsNullOrEmpty(current.Title))
+                {
+                    <h2 style="font-size: 28px; font-weight: 700; margin-top: var(--gup-spacing-between-text); color: var(--gup-color-content-primary);">
+                        @current.Title
+                    </h2>
+                }
+                @if (!string.IsNullOrEmpty(current.Description))
+                {
+                    <p style="font-size: 24px; margin-top: 8px; color: var(--gup-color-content-primary);">
+                        @current.Description
+                    </p>
+                }
+            }
+
+            @* Renders all <GUPWizardStackStep> components so they register with this stack.
+               Each step renders its own ChildContent only when active. *@
+            @ChildContent
+
+        </GupWizardMain>
+
+        @if (ShowFooter)
+        {
+            <GupWizardFooter>
+                <Start>
+                    @if (FooterStart != null)
+                    {
+                        @FooterStart
+                    }
+                    else if (ShowDefaultFooterButtons && !IsFirstStep)
+                    {
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   Type="@GupButtonType.Button"
+                                   OnClick="HandleBackAsync">
+                            <IconStart><GupIcon IconName="arrow-back" Width="24" Height="24" /></IconStart>
+                            <ChildContent>@BackButtonText</ChildContent>
+                        </GupButton>
+                    }
+                </Start>
+                <End>
+                    @if (FooterEnd != null)
+                    {
+                        @FooterEnd
+                    }
+                    else if (ShowDefaultFooterButtons)
+                    {
+                        <GupButton Appearance="@GupButtonAppearance.Primary"
+                                   Kind="@GupButtonKind.Button"
+                                   Type="@GupButtonType.Button"
+                                   Disabled="@(CurrentStep?.Locked == true)"
+                                   OnClick="HandleContinueAsync">
+                            <ChildContent>@(IsLastStep ? CompleteButtonText : ContinueButtonText)</ChildContent>
+                            <IconEnd><GupIcon IconName="@(IsLastStep ? "check" : "arrow-forward")" Width="24" Height="24" /></IconEnd>
+                        </GupButton>
+                    }
+                </End>
+            </GupWizardFooter>
+        }
+
+    </div>
+</CascadingValue>
+
+@code {
+    private readonly List<GUPWizardStackStep> _steps = new();
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    // Header
+    [Parameter] public bool ShowHeader { get; set; } = true;
+    [Parameter] public string NavAriaLabel { get; set; } = "Wizard Navigation Header";
+    [Parameter] public RenderFragment? HeaderStart { get; set; }
+    [Parameter] public RenderFragment? HeaderEnd { get; set; }
+
+    // Content header
+    [Parameter] public bool ShowContentHeader { get; set; } = true;
+    [Parameter] public string PageTitle { get; set; } = "";
+    [Parameter] public string? PageSubtitle { get; set; }
+    [Parameter] public RenderFragment? PageSummary { get; set; }
+
+    // Stepper
+    [Parameter] public bool ShowStepper { get; set; } = true;
+    [Parameter] public bool StepperOpen { get; set; } = true;
+    [Parameter] public string StepperAppearance { get; set; } = "sink";
+    [Parameter] public string StepperClosedIcon { get; set; } = "add-circle";
+    [Parameter] public string StepperOpenIcon { get; set; } = "remove-circle";
+
+    // Footer
+    [Parameter] public bool ShowFooter { get; set; } = true;
+    [Parameter] public bool ShowDefaultFooterButtons { get; set; } = true;
+    [Parameter] public RenderFragment? FooterStart { get; set; }
+    [Parameter] public RenderFragment? FooterEnd { get; set; }
+    [Parameter] public string BackButtonText { get; set; } = "Back";
+    [Parameter] public string ContinueButtonText { get; set; } = "Continue";
+    [Parameter] public string CompleteButtonText { get; set; } = "Submit";
+
+    // Navigation state
+    [Parameter] public int CurrentStepIndex { get; set; } = 0;
+    [Parameter] public EventCallback<int> CurrentStepIndexChanged { get; set; }
+
+    // Events
+    [Parameter] public EventCallback<int> OnStepChanged { get; set; }
+    [Parameter] public EventCallback<GupWizardNavArgs> OnNext { get; set; }
+    [Parameter] public EventCallback<GupWizardNavArgs> OnBack { get; set; }
+    [Parameter] public EventCallback<int> OnComplete { get; set; }
+
+    public IReadOnlyList<GUPWizardStackStep> Steps => _steps;
+    public int StepCount => _steps.Count;
+    public bool IsFirstStep => CurrentStepIndex <= 0;
+    public bool IsLastStep => _steps.Count == 0 || CurrentStepIndex >= _steps.Count - 1;
+    public GUPWizardStackStep? CurrentStep => _steps.Count > 0
+        ? _steps[Math.Clamp(CurrentStepIndex, 0, _steps.Count - 1)]
+        : null;
+
+    /// <summary>True when the current step is not locked and a next step exists.</summary>
+    public bool CanGoNext => CurrentStep?.Locked != true && (!IsLastStep || OnComplete.HasDelegate);
+
+    /// <summary>True when there is a previous step to move back to.</summary>
+    public bool CanGoBack => !IsFirstStep;
+
+    private RenderFragment? CurrentStepperLabel
+    {
+        get
+        {
+            var label = CurrentStep?.StepLabel ?? CurrentStep?.Title;
+            return string.IsNullOrEmpty(label) ? null : (builder => builder.AddContent(0, label));
+        }
+    }
+
+    internal void RegisterStep(GUPWizardStackStep step)
+    {
+        if (!_steps.Contains(step))
+        {
+            _steps.Add(step);
+            StateHasChanged();
+        }
+    }
+
+    internal void UnregisterStep(GUPWizardStackStep step)
+    {
+        if (_steps.Remove(step))
+        {
+            StateHasChanged();
+        }
+    }
+
+    internal void NotifyStepChanged() => StateHasChanged();
+
+    internal bool IsStepActive(GUPWizardStackStep step)
+        => CurrentStep == step;
+
+    private string GetStepType(int index)
+    {
+        if (index < CurrentStepIndex) return "done";
+        if (index == CurrentStepIndex) return "selected";
+        return "default";
+    }
+
+    public async Task GoToStepAsync(int index)
+    {
+        if (index < 0 || index >= _steps.Count || index == CurrentStepIndex) return;
+        CurrentStepIndex = index;
+        await CurrentStepIndexChanged.InvokeAsync(CurrentStepIndex);
+        await OnStepChanged.InvokeAsync(CurrentStepIndex);
+        StateHasChanged();
+    }
+
+    public async Task NextAsync()
+    {
+        if (_steps.Count == 0) return;
+        if (CurrentStep?.Locked == true) return;
+
+        if (IsLastStep)
+        {
+            await OnComplete.InvokeAsync(CurrentStepIndex);
+            return;
+        }
+
+        var args = new GupWizardNavArgs(CurrentStepIndex, CurrentStepIndex + 1);
+        await OnNext.InvokeAsync(args);
+        if (args.Cancel) return;
+
+        CurrentStepIndex = args.TargetStepIndex;
+        await CurrentStepIndexChanged.InvokeAsync(CurrentStepIndex);
+        await OnStepChanged.InvokeAsync(CurrentStepIndex);
+        StateHasChanged();
+    }
+
+    public async Task BackAsync()
+    {
+        if (IsFirstStep) return;
+
+        var args = new GupWizardNavArgs(CurrentStepIndex, CurrentStepIndex - 1);
+        await OnBack.InvokeAsync(args);
+        if (args.Cancel) return;
+
+        CurrentStepIndex = args.TargetStepIndex;
+        await CurrentStepIndexChanged.InvokeAsync(CurrentStepIndex);
+        await OnStepChanged.InvokeAsync(CurrentStepIndex);
+        StateHasChanged();
+    }
+
+    private Task HandleBackAsync(MouseEventArgs _) => BackAsync();
+    private Task HandleContinueAsync(MouseEventArgs _) => NextAsync();
+}

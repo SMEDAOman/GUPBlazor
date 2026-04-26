@@ -1,98 +1,176 @@
 @page "/service-start"
+@rendermode InteractiveServer
 
 <PageTitle>Service Start — Gov.om Templates</PageTitle>
 
-<div style="display: flex; flex-direction: column; height: 100vh;">
+<GUPWizardStack @ref="_wizard"
+                PageTitle="Service name"
+                @bind-CurrentStepIndex="_currentStep"
+                OnNext="HandleNext"
+                OnBack="HandleBack"
+                OnStepChanged="HandleStepChanged"
+                OnComplete="HandleComplete">
 
-    <GupHeader NavAriaLabel="Service Navigation Header">
-        <Start>
-            <GupTrack Direction="horizontal" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
-                    <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
-                    <ChildContent>Save &amp; exit</ChildContent>
-                </GupButton>
-            </GupTrack>
-        </Start>
-        <End>
-            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
-                    <IconStart><GupIcon IconName="live-help" Width="24" Height="24" /></IconStart>
-                    <ChildContent>Do you need help?</ChildContent>
-                </GupButton>
-            </GupTrack>
-        </End>
-    </GupHeader>
+    <HeaderStart>
+        <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
+                <ChildContent>Save &amp; exit</ChildContent>
+            </GupButton>
+        </GupTrack>
+    </HeaderStart>
 
-    <GupContentHeader PageTitle="Service name" />
+    <HeaderEnd>
+        <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <IconStart><GupIcon IconName="live-help" Width="24" Height="24" /></IconStart>
+                <ChildContent>Do you need help?</ChildContent>
+            </GupButton>
+        </GupTrack>
+    </HeaderEnd>
 
-    <GupWizardMain>
+    <ChildContent>
 
-        <GupDetails Open="true" ContentAppearance="sink"
-                    ClosedIcon="add-circle" OpenIcon="remove-circle">
-            <LabelContent>Step 2</LabelContent>
-            <ChildContent>
-                <GupStepper StaticMode="true">
-                    <GupStepperItem StepNumber="1" StepType="done">
-                        <LabelContent>Step 1</LabelContent>
-                    </GupStepperItem>
-                    <GupStepperItem StepNumber="2" StepType="selected">
-                        <LabelContent>Step 2</LabelContent>
-                    </GupStepperItem>
-                    <GupStepperItem StepNumber="3" StepType="default">
-                        <LabelContent>Step 3</LabelContent>
-                    </GupStepperItem>
-                    <GupStepperItem StepNumber="4" StepType="default">
-                        <LabelContent>Step 4</LabelContent>
-                    </GupStepperItem>
-                </GupStepper>
-            </ChildContent>
-        </GupDetails>
+        <GUPWizardStackStep Title="Applicant details"
+                            Description="Tell us who is applying.">
+            <form>
+                <GupFormSection>
+                    <Title>Personal information</Title>
+                    <ChildContent>
+                        <GupFormList>
+                            <GupInputField Name="full-name" Type="text">Full name</GupInputField>
+                            <GupInputField Name="civil-id" Type="text">Civil ID</GupInputField>
+                            <GupInputField Name="email" Type="email">Email</GupInputField>
+                        </GupFormList>
+                    </ChildContent>
+                </GupFormSection>
+            </form>
+        </GUPWizardStackStep>
 
-        <h2 style="font-size: 28px; font-weight: 700; margin-top: var(--gup-spacing-between-text); color: var(--gup-color-content-primary);">
-            Step title
-        </h2>
-        <p style="font-size: 24px; margin-top: 8px; color: var(--gup-color-content-primary);">
-            Placeholder for step description. Below is example form.
-        </p>
-
-        <form>
+        <GUPWizardStackStep Title="Service details"
+                            Description="Lock this step to disable Continue."
+                            Locked="@_lockServiceDetails">
             <GupFormSection>
-                <Title>Form section title 1</Title>
+                <Title>Request</Title>
                 <ChildContent>
+                    <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 18px; color: var(--gup-color-content-primary); margin-bottom: 16px;">
+                        <input type="checkbox" @bind="_lockServiceDetails" />
+                        <span>Lock this step (disables the Continue button)</span>
+                    </label>
                     <GupFormList>
-                        <GupInputField Name="your-message1" Type="text">Your message</GupInputField>
-                        <GupInputField Name="your-message2" Type="text">Your message</GupInputField>
-                        <GupInputField Name="your-message3" Type="text">Your message</GupInputField>
+                        <GupInputField Name="subject" Type="text">Subject</GupInputField>
+                        <GupInputField Name="reference" Type="text">Reference number</GupInputField>
+                        <GupInputField Name="notes" Type="text">Additional notes</GupInputField>
                     </GupFormList>
                 </ChildContent>
             </GupFormSection>
+        </GUPWizardStackStep>
+
+        <GUPWizardStackStep Title="Review"
+                            Description="Toggle the option below to demo the OnNext cancel flow.">
             <GupFormSection>
-                <Title>Form section title 2</Title>
+                <Title>Confirm</Title>
                 <ChildContent>
-                    <GupFormList>
-                        <GupInputField Name="your-message4" Type="text">Your message</GupInputField>
-                        <GupInputField Name="your-message5" Type="text">Your message</GupInputField>
-                        <GupInputField Name="your-message6" Type="text">Your message</GupInputField>
-                    </GupFormList>
+                    <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 18px; color: var(--gup-color-content-primary);">
+                        <input type="checkbox" @bind="_blockSubmit" />
+                        <span>Block the next click (handler will set <code>args.Cancel = true</code>)</span>
+                    </label>
                 </ChildContent>
             </GupFormSection>
-        </form>
+        </GUPWizardStackStep>
 
-    </GupWizardMain>
+        <GUPWizardStackStep Title="Done"
+                            Description="Your request has been submitted.">
+            <GupFormSection>
+                <Title>Thank you</Title>
+                <ChildContent>
+                    <p style="font-size: 18px; color: var(--gup-color-content-primary);">
+                        Reference <strong>@_submittedReference</strong> — keep this number for your records.
+                    </p>
+                </ChildContent>
+            </GupFormSection>
+        </GUPWizardStackStep>
 
-    <GupWizardFooter>
-        <Start>
-            <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
-                <IconStart><GupIcon IconName="arrow-back" Width="24" Height="24" /></IconStart>
-                <ChildContent>Back</ChildContent>
-            </GupButton>
-        </Start>
-        <End>
-            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
-                <ChildContent>Continue</ChildContent>
-                <IconEnd><GupIcon IconName="arrow-forward" Width="24" Height="24" /></IconEnd>
-            </GupButton>
-        </End>
-    </GupWizardFooter>
+    </ChildContent>
 
+</GUPWizardStack>
+
+<div style="position: fixed; top: 88px; right: 16px; width: 240px; padding: 12px 16px; background: rgba(0,0,0,0.78); color: #fff; font-family: monospace; font-size: 12px; border-radius: 8px; z-index: 1000;">
+    <strong>Programmatic control</strong>
+    <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+        <button type="button" @onclick="WizardBack">wizard.BackAsync()</button>
+        <button type="button" @onclick="WizardNext">wizard.NextAsync()</button>
+        <div style="display:flex; gap:4px;">
+            @for (var i = 0; i < 4; i++)
+            {
+                var idx = i;
+                <button type="button" style="flex:1" @onclick="() => WizardGoTo(idx)">@idx</button>
+            }
+        </div>
+        <small>step @_currentStep / locked: @(_wizard?.CurrentStep?.Locked == true)</small>
+    </div>
 </div>
+
+@if (_log.Count > 0)
+{
+    <div style="position: fixed; bottom: 96px; right: 16px; width: 320px; padding: 12px 16px; background: rgba(0,0,0,0.78); color: #fff; font-family: monospace; font-size: 12px; border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 1000;">
+        <strong>Wizard events</strong>
+        <ul style="margin: 8px 0 0 0; padding-left: 16px;">
+            @foreach (var entry in _log)
+            {
+                <li>@entry</li>
+            }
+        </ul>
+    </div>
+}
+
+@code {
+    private GUPWizardStack? _wizard;
+    private int _currentStep;
+    private bool _blockSubmit;
+    private bool _lockServiceDetails;
+    private string _submittedReference = "";
+    private readonly List<string> _log = new();
+
+    private Task HandleNext(GupWizardNavArgs args)
+    {
+        if (args.CurrentStepIndex == 2 && _blockSubmit)
+        {
+            args.Cancel = true;
+            Log($"Next blocked at step {args.CurrentStepIndex}");
+            return Task.CompletedTask;
+        }
+
+        Log($"Next: {args.CurrentStepIndex} → {args.TargetStepIndex}");
+        return Task.CompletedTask;
+    }
+
+    private Task HandleBack(GupWizardNavArgs args)
+    {
+        Log($"Back: {args.CurrentStepIndex} → {args.TargetStepIndex}");
+        return Task.CompletedTask;
+    }
+
+    private Task HandleStepChanged(int index)
+    {
+        Log($"Step changed → {index}");
+        return Task.CompletedTask;
+    }
+
+    private Task HandleComplete(int lastIndex)
+    {
+        _submittedReference = $"REQ-{DateTime.UtcNow:yyMMddHHmmss}";
+        Log($"Completed at step {lastIndex} (ref {_submittedReference})");
+        return Task.CompletedTask;
+    }
+
+    private Task WizardBack() => _wizard?.BackAsync() ?? Task.CompletedTask;
+    private Task WizardNext() => _wizard?.NextAsync() ?? Task.CompletedTask;
+    private Task WizardGoTo(int index) => _wizard?.GoToStepAsync(index) ?? Task.CompletedTask;
+
+    private void Log(string entry)
+    {
+        _log.Insert(0, $"{DateTime.Now:HH:mm:ss}  {entry}");
+        if (_log.Count > 8) _log.RemoveAt(_log.Count - 1);
+    }
+}
