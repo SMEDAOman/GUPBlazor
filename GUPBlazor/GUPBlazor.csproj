@@ -5,6 +5,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>GUPBlazor</Title>
+    <Authors>SMEDAOman</Authors>
+    <Company>SMEDAOman</Company>
+    <Product>GUPBlazor</Product>
+    <RepositoryUrl>https://github.com/SMEDAOman/GUPBlazor</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SMEDAOman/GUPBlazor</PackageProjectUrl>
+    <Version>0.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
