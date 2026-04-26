@@ -146,9 +146,29 @@ document.addEventListener('click', function (e) {
 window.__gupFileUpload = {
     // Internal storage: id → array of { file, thumbnail }
     _state: {},
+    // Registered .NET callbacks: id → DotNetObjectReference
+    _callbacks: {},
 
     _getField(inputEl) {
         return inputEl.closest('.gup-file-upload');
+    },
+    registerCallback(fieldId, dotnetRef) {
+        this._callbacks[fieldId] = dotnetRef;
+    },
+    unregisterCallback(fieldId) {
+        delete this._callbacks[fieldId];
+    },
+    _notifyChange(field) {
+        const id = field.id;
+        const cb = this._callbacks[id];
+        if (!cb) return;
+        const files = (this._state[id] || []).map(item => ({
+            name: item.file.name,
+            size: item.file.size,
+            type: item.file.type || '',
+            lastModified: item.file.lastModified || 0,
+        }));
+        cb.invokeMethodAsync('NotifyFilesChanged', files);
     },
     _formatSize(bytes) {
         const MB = 1024 * 1024;
@@ -272,34 +292,29 @@ window.__gupFileUpload = {
         let pending = files.length;
         const additions = [];
 
+        const finalize = () => {
+            this._state[id] = current.concat(additions);
+            this._render(field);
+            input.value = '';
+            this._notifyChange(field);
+        };
+
         files.forEach(file => {
             const type = (file.type || '').split('/')[0];
             if (allowThumbnails && type === 'image') {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     additions.push({ file, thumbnail: { src: e.target.result, alt: file.name } });
-                    if (--pending === 0) {
-                        this._state[id] = current.concat(additions);
-                        this._render(field);
-                        input.value = '';
-                    }
+                    if (--pending === 0) finalize();
                 };
                 reader.onerror = () => {
                     additions.push({ file, thumbnail: null });
-                    if (--pending === 0) {
-                        this._state[id] = current.concat(additions);
-                        this._render(field);
-                        input.value = '';
-                    }
+                    if (--pending === 0) finalize();
                 };
                 reader.readAsDataURL(file);
             } else {
                 additions.push({ file, thumbnail: null });
-                if (--pending === 0) {
-                    this._state[id] = current.concat(additions);
-                    this._render(field);
-                    input.value = '';
-                }
+                if (--pending === 0) finalize();
             }
         });
     },
@@ -310,6 +325,7 @@ window.__gupFileUpload = {
         list.splice(index, 1);
         this._state[fieldId] = list;
         this._render(field);
+        this._notifyChange(field);
     },
     // Seed a component with pre-populated files (used by demos)
     seed(fieldId, items) {

@@ -1,7 +1,11 @@
 @* Equivalent of <gup-file-upload name="..." accept="..." multiple required full-width error-message="..." allow-thumbnails max-file-size="50">
    Named slots: ChildContent (label), Hint, ExtraAction
    Uses plain JS (window.__gupFileUpload) for interactivity.
+   When OnChange is set, JS notifies .NET via DotNetObjectReference (requires interactive render mode).
 *@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
 <div class="gup-file-upload @(IsFullWidth ? "gup-file-upload--full-width" : "") @(HasError ? "gup-file-upload--invalid" : "")"
      id="@Id"
      data-accept="@Accept"
@@ -66,6 +70,11 @@
     [Parameter] public RenderFragment? Hint { get; set; }
     [Parameter] public RenderFragment? ExtraAction { get; set; }
 
+    [Parameter] public EventCallback<IReadOnlyList<GupFileUploadFile>> OnChange { get; set; }
+
+    private DotNetObjectReference<GupFileUpload>? _selfRef;
+    private bool _registered;
+
     private string Id => $"gup-fu-{Name}";
     private string InputId => $"file-upload-{Name}";
     private string HintId => $"hint-{Name}";
@@ -81,5 +90,33 @@
             if (HasError) ids.Add(ErrorId);
             return string.Join(" ", ids);
         }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_registered && OnChange.HasDelegate)
+        {
+            _selfRef = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("__gupFileUpload.registerCallback", Id, _selfRef);
+            _registered = true;
+        }
+    }
+
+    [JSInvokable]
+    public Task NotifyFilesChanged(IReadOnlyList<GupFileUploadFile> files)
+        => OnChange.InvokeAsync(files);
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_registered)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("__gupFileUpload.unregisterCallback", Id);
+            }
+            catch (JSDisconnectedException) { }
+            catch (Exception) { }
+        }
+        _selfRef?.Dispose();
     }
 }

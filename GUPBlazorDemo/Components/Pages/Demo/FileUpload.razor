@@ -1,4 +1,6 @@
 @page "/demo/file-upload"
+@rendermode InteractiveServer
+@using GUPBlazor.Components
 
 <PageTitle>File Upload — Component Demo</PageTitle>
 
@@ -40,6 +42,66 @@
                             <ChildContent>Upload a file</ChildContent>
                             <Hint>Only .pdf .jpg or .png files at <strong>5 MB</strong> or less.</Hint>
                         </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ONCHANGE CALLBACK (BLAZOR) ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnChange callback (Blazor)</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <span class="demo-card-label">Files flow into C# via OnChange</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="onchange-single" OnChange="HandleSingleChanged">
+                            <ChildContent>Upload a file</ChildContent>
+                            <Hint>Pick a file — its metadata appears below.</Hint>
+                        </GupFileUpload>
+                        <div style="margin-top: var(--gup-spacing-text-to-component);">
+                            <strong>Received in C# (@_singleFiles.Count):</strong>
+                            @if (_singleFiles.Count == 0)
+                            {
+                                <div><em>No files selected.</em></div>
+                            }
+                            else
+                            {
+                                <ul>
+                                    @foreach (var f in _singleFiles)
+                                    {
+                                        <li><code>@f.Name</code> — @FormatBytes(f.Size) — <code>@(string.IsNullOrEmpty(f.Type) ? "(unknown)" : f.Type)</code></li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <span class="demo-card-label">Multiple files + thumbnails, live state</span>
+                    <div class="demo-surface">
+                        <GupFileUpload Name="onchange-multi"
+                                       Multiple="true"
+                                       AllowThumbnails="true"
+                                       MaxFileSize="10"
+                                       OnChange="HandleMultiChanged">
+                            <ChildContent>Upload files</ChildContent>
+                            <Hint>Add or remove files — both fire OnChange.</Hint>
+                        </GupFileUpload>
+                        <div style="margin-top: var(--gup-spacing-text-to-component);">
+                            <strong>Last event count: @_multiEventCount &nbsp;|&nbsp; Files: @_multiFiles.Count</strong>
+                            @if (_multiFiles.Count > 0)
+                            {
+                                <ul>
+                                    @foreach (var f in _multiFiles)
+                                    {
+                                        <li><code>@f.Name</code> — @FormatBytes(f.Size)</li>
+                                    }
+                                </ul>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -314,6 +376,32 @@
 
     </div>
 </div>
+
+@code {
+    private IReadOnlyList<GupFileUploadFile> _singleFiles = Array.Empty<GupFileUploadFile>();
+    private IReadOnlyList<GupFileUploadFile> _multiFiles = Array.Empty<GupFileUploadFile>();
+    private int _multiEventCount;
+
+    private void HandleSingleChanged(IReadOnlyList<GupFileUploadFile> files)
+    {
+        _singleFiles = files;
+    }
+
+    private void HandleMultiChanged(IReadOnlyList<GupFileUploadFile> files)
+    {
+        _multiFiles = files;
+        _multiEventCount++;
+    }
+
+    private static string FormatBytes(long bytes)
+    {
+        const long MB = 1024 * 1024;
+        const long KB = 1024;
+        if (bytes >= MB) return $"{bytes / (double)MB:0.##} MB";
+        if (bytes >= KB) return $"{bytes / (double)KB:0.##} KB";
+        return $"{bytes} B";
+    }
+}
 
 <script>
     (function () {
