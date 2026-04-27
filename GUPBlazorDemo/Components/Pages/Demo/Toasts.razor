@@ -1,0 +1,99 @@
+@page "/demo/toasts"
+@rendermode InteractiveServer
+@inject ToastService ToastSvc
+
+<PageTitle>Toasts — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Toasts (GupToast / GupToastContainer)">
+    <PageSummary>Short messages displayed to the user. Inject <code>ToastService</code> and call <code>Show()</code> from any page — the global container in <code>MainLayout</code> renders them.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ STATIC TOAST VARIANTS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Severities</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Default · neutral</span>
+          <GupToast Severity="neutral">
+            This is a toast message slave desk north official prevent finish tightly mean suppose attack gravity breathing production was her test finally everybody
+          </GupToast>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Positive</span>
+          <GupToast Severity="positive">
+            Your changes have been saved successfully.
+          </GupToast>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Negative</span>
+          <GupToast Severity="negative">
+            We could not process your request. Please try again.
+          </GupToast>
+        </div>
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Warning</span>
+          <GupToast Severity="warning">
+            Your session will expire in 5 minutes.
+          </GupToast>
+        </div>
+        <div class="demo-card demo-card--full" dir="rtl">
+          <span class="demo-card-label">RTL</span>
+          <GupToast Severity="neutral">
+            هذه رسالة نخب
+          </GupToast>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DYNAMIC SERVICE ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Dynamic — ToastService</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Click a button to push a toast (auto-dismisses after 10s)</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => Push("neutral"))">
+              <ChildContent>Open neutral</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => Push("positive"))">
+              <ChildContent>Open positive</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => Push("negative"))">
+              <ChildContent>Open negative</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => Push("warning"))">
+              <ChildContent>Open warning</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private int _count;
+
+    private void Push(string severity)
+    {
+        _count++;
+        ToastSvc.Show($"Toast #{_count} · {severity}", severity, 10000);
+    }
+}

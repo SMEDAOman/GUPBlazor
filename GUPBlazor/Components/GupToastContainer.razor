@@ -1,0 +1,105 @@
+@* Equivalent of <gup-toast-container>. Mount once (typically in MainLayout) and
+   call ToastService.Show(...) from any page to push a toast. Also accepts
+   ChildContent for static <GupToast> entries and supports @ref-based AddToast()
+   for backward compatibility.
+*@
+@implements IDisposable
+@inject GUPBlazor.Services.ToastService Toasts
+
+<div class="gup-toast-container" aria-live="polite">
+    <GupTrack Direction="vertical" Gap="3">
+        @foreach (var t in _toasts)
+        {
+            <GupToast @key="t.Id"
+                      Severity="@t.Severity"
+                      CloseLabel="@t.CloseLabel"
+                      OnRemove="() => RemoveToast(t.Id)">
+                @t.Message
+            </GupToast>
+        }
+        @ChildContent
+    </GupTrack>
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private readonly List<ToastItem> _toasts = new();
+    private readonly CancellationTokenSource _cts = new();
+
+    protected override void OnInitialized()
+    {
+        Toasts.OnShow += HandleShow;
+        Toasts.OnRemove += HandleRemove;
+        Toasts.OnClear += HandleClear;
+    }
+
+    public Guid AddToast(string message, string severity = "neutral", int delayMs = 5000, string closeLabel = "Close")
+        => Toasts.Show(message, severity, delayMs, closeLabel);
+
+    public void RemoveToast(Guid id)
+    {
+        var idx = _toasts.FindIndex(t => t.Id == id);
+        if (idx >= 0)
+        {
+            _toasts.RemoveAt(idx);
+            StateHasChanged();
+        }
+    }
+
+    public void ClearAll()
+    {
+        _toasts.Clear();
+        StateHasChanged();
+    }
+
+    private void HandleShow(GUPBlazor.Services.ToastNotification n)
+    {
+        _ = InvokeAsync(() =>
+        {
+            _toasts.Add(new ToastItem
+            {
+                Id = n.Id,
+                Message = n.Message,
+                Severity = n.Severity,
+                CloseLabel = n.CloseLabel,
+            });
+            StateHasChanged();
+            if (n.DelayMs > 0)
+            {
+                _ = AutoRemoveAsync(n.Id, n.DelayMs, _cts.Token);
+            }
+        });
+    }
+
+    private void HandleRemove(Guid id) => _ = InvokeAsync(() => RemoveToast(id));
+
+    private void HandleClear() => _ = InvokeAsync(ClearAll);
+
+    private async Task AutoRemoveAsync(Guid id, int delayMs, CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(delayMs, token);
+            await InvokeAsync(() => RemoveToast(id));
+        }
+        catch (TaskCanceledException) { }
+    }
+
+    public void Dispose()
+    {
+        Toasts.OnShow -= HandleShow;
+        Toasts.OnRemove -= HandleRemove;
+        Toasts.OnClear -= HandleClear;
+        _cts.Cancel();
+        _cts.Dispose();
+    }
+
+    private sealed class ToastItem
+    {
+        public Guid Id { get; set; }
+        public string Message { get; set; } = "";
+        public string Severity { get; set; } = "neutral";
+        public string CloseLabel { get; set; } = "Close";
+    }
+}

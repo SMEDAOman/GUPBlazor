@@ -1,0 +1,38 @@
+@* Equivalent of <gup-toast severity="neutral|positive|negative|warning" close-label="...">
+   ChildContent is the message body. OnRemove fires when the close button is clicked.
+*@
+<div class="gup-toast gup-toast--@Severity">
+    <div class="inner">
+        <div class="icon-wrapper">
+            <GupIcon IconName="@IconForSeverity()" Width="12" Height="12" />
+        </div>
+        <div class="content" role="alert">
+            @ChildContent
+        </div>
+        <button class="close-button" type="button"
+                aria-label="@CloseLabel" title="@CloseLabel"
+                @onclick="HandleClose">
+            <GupIcon IconName="close" Width="22" Height="22" />
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Severity { get; set; } = "neutral";
+    [Parameter] public string CloseLabel { get; set; } = "Close";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback OnRemove { get; set; }
+
+    private async Task HandleClose()
+    {
+        if (OnRemove.HasDelegate) await OnRemove.InvokeAsync();
+    }
+
+    private string IconForSeverity() => Severity switch
+    {
+        "positive" => "done",
+        "negative" => "close",
+        "warning"  => "priority-high",
+        _          => "priority-high",
+    };
+}

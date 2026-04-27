@@ -12,6 +12,8 @@ namespace GUPBlazorDemo
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+            builder.Services.AddGUPBlazor();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
