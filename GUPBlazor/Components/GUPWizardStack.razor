@@ -3,7 +3,7 @@
    time based on CurrentStepIndex. *@
 
 <CascadingValue Value="this" IsFixed="true">
-    <div class="gup-wizard-stack" style="display: flex; flex-direction: column; height: 100vh;">
+    <div class="gup-wizard-stack" style="display: flex; flex-direction: column; height: 100vh;" dir="@GetDirection()">
 
         @if (ShowHeader)
         {
@@ -148,6 +148,7 @@
     [Parameter] public EventCallback<GupWizardNavArgs> OnBack { get; set; }
     [Parameter] public EventCallback<int> OnComplete { get; set; }
 
+    [Parameter] public bool IsRTL { get; set; } = false;
     public IReadOnlyList<GUPWizardStackStep> Steps => _steps;
     public int StepCount => _steps.Count;
     public bool IsFirstStep => CurrentStepIndex <= 0;
@@ -254,6 +255,8 @@
         await OnStepChanged.InvokeAsync(CurrentStepIndex);
         StateHasChanged();
     }
+
+    private string GetDirection() => IsRTL ? "rtl" : "ltr";
 
     private Task HandleBackAsync(MouseEventArgs _) => BackAsync();
     private Task HandleContinueAsync(MouseEventArgs _) => NextAsync();
