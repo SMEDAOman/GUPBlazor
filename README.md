@@ -5,7 +5,7 @@ This project is an initiative by the SMEs Development Authority (Oman) to develo
 It aims to bring standardized, reusable UI components into the .NET ecosystem, enabling consistent and high-quality digital experiences across government and enterprise applications.
 
 The project is inspired by the Angular implementation:  
-https://github.com/ekateriinal/gup-components-angular
+[https://github.com/ekateriinal/gup-components-angular](https://github.com/Gov-om/design-system)
 
 ---
 
@@ -14,22 +14,54 @@ https://github.com/ekateriinal/gup-components-angular
 The package is available on NuGet. You can install it using any of the following methods:
 
 **Package Manager Console**
+
 ```
 Install-Package GUPBlazor
 ```
 
 **.NET CLI**
+
 ```
 dotnet add package GUPBlazor
 ```
 
 **PackageReference** (add to your `.csproj`)
+
 ```xml
 <PackageReference Include="GUPBlazor" Version="*" />
 ```
 
 Or browse the package directly at:  
 https://www.nuget.org/packages/GUPBlazor
+
+### Adding required styles
+
+In your `App.razor` (or `_Host.cshtml` for Blazor Server), add the `<GUPHTMLHeader/>` component inside `<head>` and the GUP script reference before the closing `</body>` tag:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <title>Gov.om Templates</title>
+
+
+    @* Add GUPBlazor required styles and meta tags *@
+    <GUPHTMLHeader/>
+
+
+
+    <HeadOutlet />
+</head>
+<body>
+    <Routes />
+    <script src="_framework/blazor.web.js"></script>
+    <script src="_content/GUPBlazor/gup.js"></script>
+</body>
+</html>
+```
 
 ---
 
