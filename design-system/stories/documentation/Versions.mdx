@@ -1,0 +1,19 @@
+import { Meta } from "@storybook/blocks";
+
+import componentsPkg from '../../../package.json';
+import iconsPkg from '../../../../icons/package.json';
+import tokensPkg from '../../../../tokens/package.json';
+import reactPkg from '../../../../react/package.json';
+import angularPkg from '../../../../angular/package.json';
+
+<Meta title="Versions" />
+
+The project is a monorepo that contains 4 packages. `@govom/components`, `@govom/react`, `@govom/angular`, and `@govom/tokens` packages can be used by the component library consumers, and `@govom/icons` is only for internal use.
+
+# Package versions
+
+1. `@govom/components`: {componentsPkg.version}
+2. `@govom/icons`: {iconsPkg.version}
+3. `@govom/tokens`: {tokensPkg.version}
+4. `@govom/react`: {reactPkg.version}
+5. `@govom/angular`: {angularPkg.version}
