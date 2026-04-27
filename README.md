@@ -5,7 +5,7 @@ This project is an initiative by the SMEs Development Authority (Oman) to develo
 It aims to bring standardized, reusable UI components into the .NET ecosystem, enabling consistent and high-quality digital experiences across government and enterprise applications.
 
 The project is inspired by the Angular implementation:  
-https://github.com/ekateriinal/gup-components-angular
+[https://github.com/ekateriinal/gup-components-angular](https://github.com/Gov-om/design-system)
 
 ---
 
