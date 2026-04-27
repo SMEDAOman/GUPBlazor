@@ -6,12 +6,17 @@
 <GUPWizardStack @ref="_wizard"
                 PageTitle="Service name"
                 @bind-CurrentStepIndex="_currentStep"
-                OnNext="HandleNext"
-                OnBack="HandleBack"
+                IsLoading="@_isLoading"
                 OnStepChanged="HandleStepChanged"
-                OnComplete="HandleComplete">
+                PageSubtitle="A brief description of the service, its requirements, or instructions for the user can go here. It can be a couple of sentences long."
+
+               >
+    <PageSummary>
+        <p>Summary content goes here. It can be a few sentences long and include <strong>formatted text</strong>, links, or other elements.</p>
+    </PageSummary>
 
     <HeaderStart>
+        
         <GupTrack Direction="horizontal" Gap="2">
             <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
                 <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
@@ -32,7 +37,8 @@
     <ChildContent>
 
         <GUPWizardStackStep Title="Applicant details"
-                            Description="Tell us who is applying.">
+                            Description="Tell us who is applying."
+                            NextButtonText="Continue to service details">
             <form>
                 <GupFormSection>
                     <Title>Personal information</Title>
@@ -49,7 +55,10 @@
 
         <GUPWizardStackStep Title="Service details"
                             Description="Lock this step to disable Continue."
-                            Locked="@_lockServiceDetails">
+                            Locked="@_lockServiceDetails"
+                            BackButtonText="Edit applicant"
+                            OnNext="Handle1"
+                            >
             <GupFormSection>
                 <Title>Request</Title>
                 <ChildContent>
@@ -67,20 +76,25 @@
         </GUPWizardStackStep>
 
         <GUPWizardStackStep Title="Review"
-                            Description="Toggle the option below to demo the OnNext cancel flow.">
+                            Description="Toggle the option below to demo the per-step OnNext cancel flow."
+                            NextButtonText="Submit"
+                            OnNext="HandleReviewNext">
             <GupFormSection>
                 <Title>Confirm</Title>
                 <ChildContent>
                     <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 18px; color: var(--gup-color-content-primary);">
                         <input type="checkbox" @bind="_blockSubmit" />
-                        <span>Block the next click (handler will set <code>args.Cancel = true</code>)</span>
+                        <span>Block the next click (step's <code>OnNext</code> will set <code>args.Cancel = true</code>)</span>
                     </label>
                 </ChildContent>
             </GupFormSection>
         </GUPWizardStackStep>
 
         <GUPWizardStackStep Title="Done"
-                            Description="Your request has been submitted.">
+                            Description="Your request has been submitted."
+                            NextButtonText="Finish"
+                            BackButtonText="Back to review"
+                            OnNext="HandleComplete">
             <GupFormSection>
                 <Title>Thank you</Title>
                 <ChildContent>
@@ -95,7 +109,7 @@
 
 </GUPWizardStack>
 
-<div style="position: fixed; top: 88px; right: 16px; width: 240px; padding: 12px 16px; background: rgba(0,0,0,0.78); color: #fff; font-family: monospace; font-size: 12px; border-radius: 8px; z-index: 1000;">
+@* <div style="position: fixed; top: 88px; right: 16px; width: 240px; padding: 12px 16px; background: rgba(0,0,0,0.78); color: #fff; font-family: monospace; font-size: 12px; border-radius: 8px; z-index: 1000;">
     <strong>Programmatic control</strong>
     <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
         <button type="button" @onclick="WizardBack">wizard.BackAsync()</button>
@@ -109,7 +123,7 @@
         </div>
         <small>step @_currentStep / locked: @(_wizard?.CurrentStep?.Locked == true)</small>
     </div>
-</div>
+</div> *@
 
 @if (_log.Count > 0)
 {
@@ -129,25 +143,17 @@
     private int _currentStep;
     private bool _blockSubmit;
     private bool _lockServiceDetails;
+    private bool _isLoading;
     private string _submittedReference = "";
     private readonly List<string> _log = new();
 
-    private Task HandleNext(GupWizardNavArgs args)
+    private Task HandleReviewNext(GupWizardNavArgs args)
     {
-        if (args.CurrentStepIndex == 2 && _blockSubmit)
+        if (_blockSubmit)
         {
             args.Cancel = true;
-            Log($"Next blocked at step {args.CurrentStepIndex}");
-            return Task.CompletedTask;
+            Log($"Review step blocked submit (step {args.CurrentStepIndex})");
         }
-
-        Log($"Next: {args.CurrentStepIndex} → {args.TargetStepIndex}");
-        return Task.CompletedTask;
-    }
-
-    private Task HandleBack(GupWizardNavArgs args)
-    {
-        Log($"Back: {args.CurrentStepIndex} → {args.TargetStepIndex}");
         return Task.CompletedTask;
     }
 
@@ -157,11 +163,25 @@
         return Task.CompletedTask;
     }
 
-    private Task HandleComplete(int lastIndex)
+    private async Task HandleComplete(GupWizardNavArgs args)
     {
-        _submittedReference = $"REQ-{DateTime.UtcNow:yyMMddHHmmss}";
-        Log($"Completed at step {lastIndex} (ref {_submittedReference})");
-        return Task.CompletedTask;
+
+        _isLoading = true;
+        Log($"Loading start (step {args.CurrentStepIndex})");
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(2000);
+             _submittedReference = $"REQ-{DateTime.UtcNow:yyMMddHHmmss}";
+            Log($"Completed at step {args.CurrentStepIndex} (ref {_submittedReference})");
+        }
+        finally
+        {
+            _isLoading = false;
+            await Task.CompletedTask;
+        }
+        StateHasChanged();
     }
 
     private Task WizardBack() => _wizard?.BackAsync() ?? Task.CompletedTask;
@@ -173,4 +193,25 @@
         _log.Insert(0, $"{DateTime.Now:HH:mm:ss}  {entry}");
         if (_log.Count > 8) _log.RemoveAt(_log.Count - 1);
     }
+
+    private async Task Handle1(GupWizardNavArgs args)
+    {
+        _isLoading = true;
+        Log($"Loading start (step {args.CurrentStepIndex})");
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(2000);
+            Log($"Loading done (step {args.CurrentStepIndex})");
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+
+
 }
+

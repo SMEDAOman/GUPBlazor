@@ -69,37 +69,27 @@
         {
             <GupWizardFooter>
                 <Start>
-                    @if (FooterStart != null)
-                    {
-                        @FooterStart
-                    }
-                    else if (ShowDefaultFooterButtons && !IsFirstStep)
+                    @if (!IsFirstStep)
                     {
                         <GupButton Appearance="@GupButtonAppearance.Secondary"
                                    Kind="@GupButtonKind.Button"
                                    Type="@GupButtonType.Button"
+                                   Disabled="@IsLoading"
                                    OnClick="HandleBackAsync">
                             <IconStart><GupIcon IconName="arrow-back" Width="24" Height="24" /></IconStart>
-                            <ChildContent>@BackButtonText</ChildContent>
+                            <ChildContent>@CurrentBackButtonText</ChildContent>
                         </GupButton>
                     }
                 </Start>
                 <End>
-                    @if (FooterEnd != null)
-                    {
-                        @FooterEnd
-                    }
-                    else if (ShowDefaultFooterButtons)
-                    {
-                        <GupButton Appearance="@GupButtonAppearance.Primary"
-                                   Kind="@GupButtonKind.Button"
-                                   Type="@GupButtonType.Button"
-                                   Disabled="@(CurrentStep?.Locked == true)"
-                                   OnClick="HandleContinueAsync">
-                            <ChildContent>@(IsLastStep ? CompleteButtonText : ContinueButtonText)</ChildContent>
-                            <IconEnd><GupIcon IconName="@(IsLastStep ? "check" : "arrow-forward")" Width="24" Height="24" /></IconEnd>
-                        </GupButton>
-                    }
+                    <GupButton Appearance="@GupButtonAppearance.Primary"
+                               Kind="@GupButtonKind.Button"
+                               Type="@GupButtonType.Button"
+                               Disabled="@(IsLoading || CurrentStep?.Locked == true)"
+                               OnClick="HandleContinueAsync">
+                        <ChildContent>@CurrentNextButtonText</ChildContent>
+                        <IconEnd><GupIcon IconName="@(IsLastStep ? "check" : "arrow-forward")" Width="24" Height="24" /></IconEnd>
+                    </GupButton>
                 </End>
             </GupWizardFooter>
         }
@@ -133,12 +123,20 @@
 
     // Footer
     [Parameter] public bool ShowFooter { get; set; } = true;
-    [Parameter] public bool ShowDefaultFooterButtons { get; set; } = true;
-    [Parameter] public RenderFragment? FooterStart { get; set; }
-    [Parameter] public RenderFragment? FooterEnd { get; set; }
     [Parameter] public string BackButtonText { get; set; } = "Back";
     [Parameter] public string ContinueButtonText { get; set; } = "Continue";
     [Parameter] public string CompleteButtonText { get; set; } = "Submit";
+
+    /// <summary>When true, all footer buttons are disabled (e.g. while an async operation is in flight). Reset to false to re-enable navigation.</summary>
+    [Parameter] public bool IsLoading { get; set; } = false;
+
+    private string CurrentBackButtonText
+        => !string.IsNullOrEmpty(CurrentStep?.BackButtonText) ? CurrentStep!.BackButtonText! : BackButtonText;
+
+    private string CurrentNextButtonText
+        => !string.IsNullOrEmpty(CurrentStep?.NextButtonText)
+            ? CurrentStep!.NextButtonText!
+            : (IsLastStep ? CompleteButtonText : ContinueButtonText);
 
     // Navigation state
     [Parameter] public int CurrentStepIndex { get; set; } = 0;
@@ -218,11 +216,22 @@
 
         if (IsLastStep)
         {
+            if (CurrentStep is { } last)
+            {
+                var lastArgs = new GupWizardNavArgs(CurrentStepIndex, CurrentStepIndex);
+                await last.OnNext.InvokeAsync(lastArgs);
+                if (lastArgs.Cancel) return;
+            }
             await OnComplete.InvokeAsync(CurrentStepIndex);
             return;
         }
 
         var args = new GupWizardNavArgs(CurrentStepIndex, CurrentStepIndex + 1);
+        if (CurrentStep is { } step)
+        {
+            await step.OnNext.InvokeAsync(args);
+            if (args.Cancel) return;
+        }
         await OnNext.InvokeAsync(args);
         if (args.Cancel) return;
 

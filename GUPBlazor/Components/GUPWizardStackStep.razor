@@ -19,6 +19,15 @@
     /// <summary>When true, the wizard's default Continue/Submit button is disabled and <see cref="GUPWizardStack.NextAsync"/> is blocked while this is the active step.</summary>
     [Parameter] public bool Locked { get; set; } = false;
 
+    /// <summary>Overrides the wizard's default text for the forward (Continue/Submit) button while this step is active.</summary>
+    [Parameter] public string? NextButtonText { get; set; }
+
+    /// <summary>Overrides the wizard's default text for the Back button while this step is active.</summary>
+    [Parameter] public string? BackButtonText { get; set; }
+
+    /// <summary>Step-level Next handler. Fires before the wizard-level <c>OnNext</c>; set <c>args.Cancel = true</c> to abort navigation.</summary>
+    [Parameter] public EventCallback<GupWizardNavArgs> OnNext { get; set; }
+
     private bool _registered;
     private bool _previousLocked;
 
