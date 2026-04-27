@@ -9,6 +9,30 @@ https://github.com/ekateriinal/gup-components-angular
 
 ---
 
+## 📦 Installation
+
+The package is available on NuGet. You can install it using any of the following methods:
+
+**Package Manager Console**
+```
+Install-Package GUPBlazor
+```
+
+**.NET CLI**
+```
+dotnet add package GUPBlazor
+```
+
+**PackageReference** (add to your `.csproj`)
+```xml
+<PackageReference Include="GUPBlazor" Version="*" />
+```
+
+Or browse the package directly at:  
+https://www.nuget.org/packages/GUPBlazor
+
+---
+
 ## 🎯 Purpose
 
 The goal of this project is to provide a **Blazor-native component library** that aligns with GUP design standards, supporting:
@@ -55,11 +79,13 @@ Instructions and usage examples will be added as components become stable.
 This project was **initiated and is actively maintained by Caesar Moussalli** as part of the SMEs Development Authority efforts to modernize and standardize UI development using Blazor.
 
 The initiative aims to:
+
 - Establish a robust Blazor-based alternative to existing GUP implementations  
 - Ensure long-term sustainability and continuous improvement of the component library  
 - Support internal teams and external partners in building consistent digital solutions  
 
 Ongoing maintenance includes:
+
 - Continuous updates to match GUP standards  
 - Performance and accessibility improvements  
 - Feature expansion and community contributions  
@@ -71,6 +97,7 @@ Ongoing maintenance includes:
 Contributions are welcome and encouraged.
 
 You can contribute by:
+
 - Reporting issues  
 - Suggesting improvements  
 - Submitting pull requests  
