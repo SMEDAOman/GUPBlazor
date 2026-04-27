@@ -12,7 +12,7 @@
     <Product>GUPBlazor</Product>
     <RepositoryUrl>https://github.com/SMEDAOman/GUPBlazor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/SMEDAOman/GUPBlazor</PackageProjectUrl>
-    <Version>0.0.4</Version>
+    <Version>0.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
