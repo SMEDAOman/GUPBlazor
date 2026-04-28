@@ -1,0 +1,78 @@
+@page "/demo/badges"
+
+<PageTitle>Badge — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Badge">
+    <PageSummary>Small status dot used to convey state — neutral, positive, negative, and offline.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ ALL VARIANTS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Types (GupBadge)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">Neutral (default)</span>
+          <GupBadge AriaLabel="Pending" />
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Positive</span>
+          <GupBadge Type="@GupBadgeType.Positive" AriaLabel="Online" />
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Negative</span>
+          <GupBadge Type="@GupBadgeType.Negative" AriaLabel="Error" />
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">Offline</span>
+          <GupBadge Type="@GupBadgeType.Offline" AriaLabel="Offline" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ INLINE WITH LABEL ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Inline with text</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Status list</span>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+            <li style="display:flex; align-items:center; gap:8px;">
+              <GupBadge Type="@GupBadgeType.Positive" AriaLabel="Approved" />
+              <span>Approved</span>
+            </li>
+            <li style="display:flex; align-items:center; gap:8px;">
+              <GupBadge Type="@GupBadgeType.Neutral" AriaLabel="Pending" />
+              <span>Pending review</span>
+            </li>
+            <li style="display:flex; align-items:center; gap:8px;">
+              <GupBadge Type="@GupBadgeType.Negative" AriaLabel="Rejected" />
+              <span>Rejected</span>
+            </li>
+            <li style="display:flex; align-items:center; gap:8px;">
+              <GupBadge Type="@GupBadgeType.Offline" AriaLabel="Archived" />
+              <span>Archived</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>

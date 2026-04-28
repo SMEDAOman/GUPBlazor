@@ -1943,6 +1943,23 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+/* ------------------------------------------------------------
+   28. COMPONENT: gup-badge
+   ------------------------------------------------------------ */
+.gup-badge {
+  display: inline-block;
+  width: 12px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--gup-color-content-inverted-primary);
+  border-radius: 51%;
+  background-color: var(--bg-color);
+}
+
+.gup-badge--type-neutral  { --bg-color: var(--gup-color-warning-medium); }
+.gup-badge--type-positive { --bg-color: var(--gup-color-positive-medium); }
+.gup-badge--type-negative { --bg-color: var(--gup-color-negative-medium); }
+.gup-badge--type-offline  { --bg-color: var(--gup-color-neutral-low); }
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

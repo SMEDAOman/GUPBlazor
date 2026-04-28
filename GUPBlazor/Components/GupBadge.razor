@@ -1,0 +1,19 @@
+@* Equivalent of <gup-badge type="neutral|positive|negative|offline">
+   A small status dot used to convey state.
+*@
+<div class="gup-badge gup-badge--type-@TypeString()"
+     role="status"
+     aria-label="@AriaLabel"></div>
+
+@code {
+    [Parameter] public GupBadgeType Type { get; set; } = GupBadgeType.Neutral;
+    [Parameter] public string? AriaLabel { get; set; }
+
+    private string TypeString() => Type switch
+    {
+        GupBadgeType.Positive => "positive",
+        GupBadgeType.Negative => "negative",
+        GupBadgeType.Offline  => "offline",
+        _                     => "neutral",
+    };
+}
