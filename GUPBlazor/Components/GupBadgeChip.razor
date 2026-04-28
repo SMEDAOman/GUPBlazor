@@ -1,0 +1,60 @@
+@* Equivalent of <gup-badge-chip appearance="neutral|positive|warning|negative|brand" is-filled has-thumbnail with-icon-only>
+   Compact label for status. Slots: Thumbnail, Prefix, ChildContent, Suffix.
+   Use IconOnly=true for a square chip containing a single icon (no text).
+*@
+<span class="@CssClass" role="@Role" aria-label="@AriaLabel">
+    @if (Thumbnail is not null)
+    {
+        <span class="gup-badge-chip__thumbnail">@Thumbnail</span>
+    }
+    @if (Prefix is not null)
+    {
+        <span class="gup-badge-chip__prefix">@Prefix</span>
+    }
+    @if (IconOnly)
+    {
+        @ChildContent
+    }
+    else if (ChildContent is not null)
+    {
+        <span class="gup-badge-chip__label">@ChildContent</span>
+    }
+    @if (Suffix is not null)
+    {
+        <span class="gup-badge-chip__suffix">@Suffix</span>
+    }
+</span>
+
+@code {
+    [Parameter] public GupBadgeChipAppearance Appearance { get; set; } = GupBadgeChipAppearance.Neutral;
+    [Parameter] public bool IsFilled { get; set; }
+    [Parameter] public bool HasThumbnail { get; set; }
+    [Parameter] public bool IconOnly { get; set; }
+    [Parameter] public string Role { get; set; } = "status";
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Prefix { get; set; }
+    [Parameter] public RenderFragment? Suffix { get; set; }
+    [Parameter] public RenderFragment? Thumbnail { get; set; }
+
+    private string AppearanceString() => Appearance switch
+    {
+        GupBadgeChipAppearance.Positive => "positive",
+        GupBadgeChipAppearance.Warning  => "warning",
+        GupBadgeChipAppearance.Negative => "negative",
+        GupBadgeChipAppearance.Brand    => "brand",
+        _                                => "neutral",
+    };
+
+    private string CssClass
+    {
+        get
+        {
+            var classes = new List<string> { "gup-badge-chip", $"gup-badge-chip--{AppearanceString()}" };
+            if (IsFilled)      classes.Add("gup-badge-chip--filled");
+            if (HasThumbnail)  classes.Add("gup-badge-chip--has-thumbnail");
+            if (IconOnly)      classes.Add("gup-badge-chip--icon-only");
+            return string.Join(' ', classes);
+        }
+    }
+}

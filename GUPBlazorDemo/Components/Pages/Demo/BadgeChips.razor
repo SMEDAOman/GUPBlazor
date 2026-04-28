@@ -1,0 +1,166 @@
+@page "/demo/badge-chips"
+
+<PageTitle>Badge Chip — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Badge Chip">
+    <PageSummary>Compact label used to convey status or category — neutral, positive, warning, negative, brand. Available as outline (default) and filled.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ APPEARANCES — OUTLINE ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Appearances (outline)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Neutral (default)</span>
+          <GupBadgeChip>Label</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Positive</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive">Approved</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Warning</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Warning">Pending</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Negative</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Negative">Rejected</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Brand</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Brand">Featured</GupBadgeChip>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ APPEARANCES — FILLED ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Appearances (filled)</h2>
+
+      <div class="demo-row">
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Neutral filled</span>
+          <GupBadgeChip IsFilled="true">Label</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Positive filled</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive" IsFilled="true">Approved</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Warning filled</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Warning" IsFilled="true">Pending</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Negative filled</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Negative" IsFilled="true">Rejected</GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Brand filled</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Brand" IsFilled="true">Featured</GupBadgeChip>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ WITH ICONS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">With icons</h2>
+
+      <div class="demo-row">
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Prefix icon</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive">
+            <Prefix><GupIcon IconName="check" Width="16" Height="16" /></Prefix>
+            <ChildContent>Approved</ChildContent>
+          </GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Suffix icon</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Negative">
+            <ChildContent>Rejected</ChildContent>
+            <Suffix><GupIcon IconName="close" Width="16" Height="16" /></Suffix>
+          </GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Prefix + suffix</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Brand">
+            <Prefix><GupIcon IconName="check" Width="16" Height="16" /></Prefix>
+            <ChildContent>Verified</ChildContent>
+            <Suffix><GupIcon IconName="close" Width="16" Height="16" /></Suffix>
+          </GupBadgeChip>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ICON ONLY ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Icon-only</h2>
+
+      <div class="demo-row">
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Neutral</span>
+          <GupBadgeChip IconOnly="true" AriaLabel="Information">
+            <GupIcon IconName="help-outline" Width="16" Height="16" />
+          </GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Positive filled</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive" IsFilled="true" IconOnly="true" AriaLabel="Done">
+            <GupIcon IconName="check" Width="16" Height="16" />
+          </GupBadgeChip>
+        </div>
+        <div class="demo-card" style="align-items: flex-start;">
+          <span class="demo-card-label">Negative filled</span>
+          <GupBadgeChip Appearance="@GupBadgeChipAppearance.Negative" IsFilled="true" IconOnly="true" AriaLabel="Error">
+            <GupIcon IconName="close" Width="16" Height="16" />
+          </GupBadgeChip>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ INLINE WITH TEXT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Inline with text</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Status list</span>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px;">
+            <li style="display:flex; align-items:center; gap:12px;">
+              <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive">Approved</GupBadgeChip>
+              <span>Application has been approved</span>
+            </li>
+            <li style="display:flex; align-items:center; gap:12px;">
+              <GupBadgeChip Appearance="@GupBadgeChipAppearance.Warning">Pending</GupBadgeChip>
+              <span>Awaiting reviewer decision</span>
+            </li>
+            <li style="display:flex; align-items:center; gap:12px;">
+              <GupBadgeChip Appearance="@GupBadgeChipAppearance.Negative">Rejected</GupBadgeChip>
+              <span>Application could not be processed</span>
+            </li>
+            <li style="display:flex; align-items:center; gap:12px;">
+              <GupBadgeChip Appearance="@GupBadgeChipAppearance.Brand" IsFilled="true">New</GupBadgeChip>
+              <span>Recently added service</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>

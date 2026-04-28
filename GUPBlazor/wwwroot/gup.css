@@ -1960,6 +1960,69 @@ body {
 .gup-badge--type-negative { --bg-color: var(--gup-color-negative-medium); }
 .gup-badge--type-offline  { --bg-color: var(--gup-color-neutral-low); }
 
+/* ------------------------------------------------------------
+   29. COMPONENT: gup-badge-chip
+   Compact label/status pill — sized to its content.
+   Mirrors design-system/components/badge-chip/badge-chip.css.
+   Slots: thumbnail, prefix, label (default), suffix.
+   ------------------------------------------------------------ */
+.gup-badge-chip {
+  display: inline-flex;
+  min-height: var(--gup-icon-md);
+  padding: 0 var(--gup-component-3);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gup-component-3);
+  border-radius: calc(var(--gup-icon-md) / 2);
+  border: 1px solid var(--gup-color-neutral-low);
+  background: var(--gup-color-neutral-contrast);
+  color: var(--gup-color-neutral-high);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-500);
+  box-sizing: border-box;
+}
+
+.gup-badge-chip__label,
+.gup-badge-chip__prefix,
+.gup-badge-chip__suffix {
+  display: inline-flex;
+  align-items: center;
+}
+
+.gup-badge-chip__thumbnail {
+  display: flex;
+  width: var(--gup-component-5);
+  height: var(--gup-component-5);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--gup-radius-component-full);
+}
+
+.gup-badge-chip--has-thumbnail {
+  padding: var(--gup-component-0) var(--gup-component-3) var(--gup-component-0) var(--gup-component-1);
+}
+
+.gup-badge-chip--icon-only {
+  padding: 0;
+  width: var(--gup-component-7);
+  height: var(--gup-component-7);
+}
+
+/* Outline (default) variants */
+.gup-badge-chip--neutral  { border-color: var(--gup-color-neutral-low);  background: var(--gup-color-neutral-contrast); color: var(--gup-color-neutral-high); }
+.gup-badge-chip--positive { border-color: var(--gup-color-positive-low); background: var(--gup-color-positive-xlow);    color: var(--gup-color-positive-xhigh); }
+.gup-badge-chip--warning  { border-color: var(--gup-color-warning-low);  background: var(--gup-color-warning-xlow);     color: var(--gup-color-warning-xhigh); }
+.gup-badge-chip--negative { border-color: var(--gup-color-negative-low); background: var(--gup-color-negative-xlow);    color: var(--gup-color-negative-xhigh); }
+.gup-badge-chip--brand    { border-color: var(--gup-color-brand-low);    background: var(--gup-color-brand-xlow);       color: var(--gup-color-brand-xhigh); }
+
+/* Filled variants */
+.gup-badge-chip--neutral.gup-badge-chip--filled  { background: var(--gup-color-neutral-medium); color: var(--gup-color-negative-contrast); }
+.gup-badge-chip--positive.gup-badge-chip--filled { background: var(--gup-color-positive-high);  color: var(--gup-color-negative-contrast); }
+.gup-badge-chip--warning.gup-badge-chip--filled  { background: var(--gup-color-warning-low);    color: var(--gup-color-warning-xhigh); }
+.gup-badge-chip--negative.gup-badge-chip--filled { background: var(--gup-color-negative-high);  color: var(--gup-color-negative-contrast); }
+.gup-badge-chip--brand.gup-badge-chip--filled    { background: var(--gup-color-brand-high);     color: var(--gup-color-negative-contrast); }
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */
