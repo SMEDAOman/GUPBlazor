@@ -34,9 +34,9 @@ dotnet add package GUPBlazor
 Or browse the package directly at:  
 https://www.nuget.org/packages/GUPBlazor
 
-### Adding required styles
+### Adding required styles & scripts
 
-In your `App.razor` (or `_Host.cshtml` for Blazor Server), add the `<GUPHTMLHeader/>` component inside `<head>` and the GUP script reference before the closing `</body>` tag:
+In your `App.razor` (or `_Host.cshtml` for Blazor Server), add the `<GUPHTMLHeader/>` component inside `<head>` and the GUP <GUPHTMLFooter /> component before the closing `</body>` tag:
 
 ```html
 <!DOCTYPE html>
@@ -58,7 +58,12 @@ In your `App.razor` (or `_Host.cshtml` for Blazor Server), add the `<GUPHTMLHead
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
-    <script src="_content/GUPBlazor/gup.js"></script>
+
+
+    @* Add GUPBlazor required scripts and footer content *@
+    <GUPHTMLFooter />
+
+
 </body>
 </html>
 ```
