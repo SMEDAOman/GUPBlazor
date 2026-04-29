@@ -1,0 +1,232 @@
+@page "/demo/dialogs"
+@rendermode InteractiveServer
+
+<PageTitle>Dialog — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Dialog (GupDialog)">
+    <PageSummary>A modal dialog with a heading, content, and action buttons. Bind <code>IsOpen</code> to control visibility — listen to <code>OnClose</code> to react to close events.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ DEFAULT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Default</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Standard dialog with action buttons</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => _defaultOpen = true)">
+              <ChildContent>Open default dialog</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ LONG CONTENT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">With long content</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Body scrolls when content exceeds the max height</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => _longOpen = true)">
+              <ChildContent>Open long content dialog</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ FORM CONTENT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">With form content</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Inputs inside the dialog body</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => _formOpen = true)">
+              <ChildContent>Open form dialog</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ NO CLOSE BUTTON ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Without close button</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Forces the user to use an action button — backdrop &amp; ESC are disabled</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => _noCloseOpen = true)">
+              <ChildContent>Open no-close dialog</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RTL ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">RTL</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full" dir="rtl">
+          <span class="demo-card-label">Right-to-left content</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => _rtlOpen = true)">
+              <ChildContent>افتح النافذة</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ EVENT LOG ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Event log</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Last close event</span>
+          <p data-testid="dialog-event-log" style="margin: 0; color: var(--gup-color-content-secondary, #52525b);">
+            @(_lastEvent ?? "(none yet)")
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ══ DIALOG INSTANCES ══ -->
+
+<GupDialog Heading="Do you want to save your progress?"
+           IsOpen="_defaultOpen"
+           OnClose="@(() => CloseDialog("default"))">
+  <ChildContent>Save now to keep any changes you've made so far.</ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("default-submit"))">
+        <ChildContent>Submit</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => CloseDialog("default-cancel"))">
+        <ChildContent>Cancel</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<GupDialog Heading="Dialog with Long Content"
+           IsOpen="_longOpen"
+           OnClose="@(() => CloseDialog("long"))">
+  <ChildContent>
+    <p>This is a paragraph with a lot of content to demonstrate scrolling.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultricies, nunc nisl ultricies nunc, quis ultricies nunc nisl quis nisl.</p>
+    <p>Donec euismod, nisl eget ultricies ultricies, nunc nisl ultricies nunc, quis ultricies nunc nisl quis nisl.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultricies, nunc nisl ultricies nunc, quis ultricies nunc nisl quis nisl.</p>
+    <p>Donec euismod, nisl eget ultricies ultricies, nunc nisl ultricies nunc, quis ultricies nunc nisl quis nisl.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultricies, nunc nisl ultricies nunc, quis ultricies nunc nisl quis nisl.</p>
+    <p>Donec euismod, nisl eget ultricies ultricies, nunc nisl ultricies nunc, quis ultricies nunc nisl quis nisl.</p>
+  </ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("long-ok"))">
+        <ChildContent>Got it</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => CloseDialog("long-cancel"))">
+        <ChildContent>Cancel</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<GupDialog Heading="Form Example"
+           IsOpen="_formOpen"
+           OnClose="@(() => CloseDialog("form"))">
+  <ChildContent>
+    <GupTrack Direction="vertical" Gap="2">
+      <GupInputField Type="text" Placeholder="Enter your name">Name</GupInputField>
+      <GupInputField Type="email" Placeholder="Enter your email">Email</GupInputField>
+    </GupTrack>
+  </ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("form-submit"))">
+        <ChildContent>Submit</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => CloseDialog("form-cancel"))">
+        <ChildContent>Cancel</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<GupDialog Heading="No Close Button Dialog"
+           IsOpen="_noCloseOpen"
+           HideCloseButton="true"
+           OnClose="@(() => CloseDialog("no-close"))">
+  <ChildContent>You must use an action button below to dismiss this dialog.</ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("no-close-confirm"))">
+        <ChildContent>Confirm</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<div dir="rtl">
+  <GupDialog Heading="رسالة مؤكدة"
+             IsOpen="_rtlOpen"
+             OnClose="@(() => CloseDialog("rtl"))">
+    <ChildContent>هذا هو محتوى النافذة المنبثقة. يمكنك وضع أي محتوى تريده هنا.</ChildContent>
+    <ActionButtons>
+      <GupButtonGroup>
+        <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("rtl-submit"))">
+          <ChildContent>تأكيد</ChildContent>
+        </GupButton>
+        <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => CloseDialog("rtl-cancel"))">
+          <ChildContent>إلغاء</ChildContent>
+        </GupButton>
+      </GupButtonGroup>
+    </ActionButtons>
+  </GupDialog>
+</div>
+
+@code {
+    private bool _defaultOpen;
+    private bool _longOpen;
+    private bool _formOpen;
+    private bool _noCloseOpen;
+    private bool _rtlOpen;
+    private string? _lastEvent;
+
+    private void CloseDialog(string source)
+    {
+        _defaultOpen = false;
+        _longOpen = false;
+        _formOpen = false;
+        _noCloseOpen = false;
+        _rtlOpen = false;
+        _lastEvent = $"closed via: {source} @ {DateTime.Now:HH:mm:ss}";
+    }
+}

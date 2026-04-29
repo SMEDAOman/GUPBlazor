@@ -1,0 +1,121 @@
+@* Equivalent of <gup-dialog heading="..." hide-close-button close-label="...">
+   A modal dialog. Slots:
+     ChildContent  — main body content
+     ActionButtons — typically a <GupButtonGroup> with Submit/Cancel buttons
+
+   Visibility is controlled by IsOpen. When IsOpen is true the host renders a
+   full-viewport backdrop + the centered modal panel. ESC closes the dialog
+   (unless HideCloseButton is true). OnClose fires when the close button is
+   clicked, the backdrop is clicked, or ESC is pressed.
+*@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+@if (IsOpen)
+{
+    <div class="gup-dialog-backdrop"
+         @ref="_backdropRef"
+         @onclick="HandleBackdropClick"
+         @onkeydown="HandleKeyDown"
+         tabindex="-1">
+        <div class="gup-dialog"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="@_headingId"
+             @onclick:stopPropagation="true"
+             @ref="_dialogRef">
+            <GupIcon IconName="info" Width="28" Height="28" />
+            <div class="gup-dialog__header">
+                <h2 id="@_headingId" class="gup-dialog__heading">@Heading</h2>
+                @if (!HideCloseButton)
+                {
+                    <button class="gup-dialog__close-button"
+                            type="button"
+                            aria-label="@CloseLabel"
+                            title="@CloseLabel"
+                            @ref="_closeButtonRef"
+                            @onclick="HandleClose">
+                        <GupIcon IconName="close" Width="24" Height="24" />
+                    </button>
+                }
+            </div>
+            <div class="gup-dialog__content" tabindex="0" @ref="_contentRef">
+                @ChildContent
+            </div>
+            @if (ActionButtons is not null)
+            {
+                <div class="gup-dialog__footer">
+                    @ActionButtons
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public string Heading { get; set; } = "";
+    [Parameter] public bool HideCloseButton { get; set; }
+    [Parameter] public string CloseLabel { get; set; } = "Close";
+    [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? ActionButtons { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private readonly string _headingId = $"gup-dialog-heading-{Guid.NewGuid():N}";
+    private ElementReference _backdropRef;
+    private ElementReference _dialogRef;
+    private ElementReference _contentRef;
+    private ElementReference _closeButtonRef;
+    private bool _wasOpen;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (IsOpen && !_wasOpen)
+        {
+            _wasOpen = true;
+            try
+            {
+                if (HideCloseButton)
+                {
+                    await _contentRef.FocusAsync();
+                }
+                else
+                {
+                    await _closeButtonRef.FocusAsync();
+                }
+            }
+            catch
+            {
+                // element not yet attached — ignore
+            }
+        }
+        else if (!IsOpen && _wasOpen)
+        {
+            _wasOpen = false;
+        }
+    }
+
+    private async Task HandleClose()
+    {
+        if (OnClose.HasDelegate) await OnClose.InvokeAsync();
+    }
+
+    private async Task HandleBackdropClick()
+    {
+        if (CloseOnBackdropClick && !HideCloseButton)
+        {
+            await HandleClose();
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape" && !HideCloseButton)
+        {
+            await HandleClose();
+        }
+    }
+
+    public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+}

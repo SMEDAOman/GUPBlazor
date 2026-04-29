@@ -2023,6 +2023,104 @@ body {
 .gup-badge-chip--negative.gup-badge-chip--filled { background: var(--gup-color-negative-high);  color: var(--gup-color-negative-contrast); }
 .gup-badge-chip--brand.gup-badge-chip--filled    { background: var(--gup-color-brand-high);     color: var(--gup-color-negative-contrast); }
 
+/* ------------------------------------------------------------
+   30. COMPONENT: gup-dialog
+   ------------------------------------------------------------ */
+.gup-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: var(--gup-dialog--z-index, 100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 0;
+}
+
+.gup-dialog {
+  position: relative;
+  display: grid;
+  grid-template-areas: 'icon title' '. body' '. footer';
+  grid-template-columns: 0fr auto;
+  grid-template-rows: auto auto auto;
+  row-gap: var(--gup-spacing-text-to-component);
+  color: var(--gup-color-content-primary);
+  width: 100%;
+  max-width: var(--gup-modal--width, 420px);
+  max-height: var(--gup-modal--height, 80vh);
+  border: 1px solid var(--gup-color-neutral-low);
+  background-color: var(--gup-color-neutral-xlow);
+  border-radius: var(--gup-radius-card);
+  box-shadow:
+    0 16px 32px 0 var(--gup-color-shadow-color-5),
+    0 8px  16px 0 var(--gup-color-shadow-color-4),
+    0 3px   6px 0 var(--gup-color-shadow-color-3),
+    0 1px   2px 0 var(--gup-color-shadow-color-2);
+  padding: var(--gup-padding-md);
+  z-index: calc(var(--gup-modal--z-index, 100) + 1);
+}
+
+.gup-dialog .gup-icon {
+  grid-area: icon;
+  align-self: start;
+}
+
+.gup-dialog .gup-icon svg {
+  fill: var(--gup-color-neutral-medium);
+}
+
+.gup-dialog__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-inline-start: var(--gup-spacing-text-to-component);
+  grid-area: title;
+}
+
+.gup-dialog__heading {
+  margin: 0;
+  font-size: var(--font-size-550);
+  font-weight: var(--font-weight-base-beta);
+  color: var(--gup-color-content-primary);
+  padding-inline-end: var(--gup-padding-lg);
+}
+
+.gup-dialog__close-button {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.gup-dialog__close-button .gup-icon svg {
+  fill: var(--gup-color-content-primary);
+}
+
+.gup-dialog__content {
+  grid-area: body;
+  max-height: var(--gup-modal--content-max-height, 400px);
+  color: var(--gup-color-content-primary);
+  display: flex;
+  flex-direction: column;
+  padding-inline-start: var(--gup-spacing-text-to-component);
+  padding-inline-end: var(--gup-icon-md);
+  padding-block-end: var(--gup-spacing-text-to-component);
+  overflow-y: auto;
+}
+
+.gup-dialog__footer {
+  grid-area: footer;
+  padding-inline-start: var(--gup-spacing-text-to-component);
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */
