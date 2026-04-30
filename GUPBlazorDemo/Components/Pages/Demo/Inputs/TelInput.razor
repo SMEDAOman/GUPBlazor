@@ -1,4 +1,5 @@
 @page "/demo/inputs/tel"
+@rendermode InteractiveServer
 
 <PageTitle>Phone Input — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Phone / Tel Input">
-        <PageSummary>GupInputField with <code>Type="tel"</code>. Triggers numeric keypad on mobile.</PageSummary>
+        <PageSummary>GupInputField with <code>Type="tel"</code>. Triggers the numeric keypad on mobile and can be locked to digits-only with <code>StrictNumeric</code>.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -66,6 +67,60 @@
                     <div class="demo-surface">
                         <GupFormList>
                             <GupInputField Name="tel-disabled" Type="tel" Disabled="true">Disabled phone</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Validation</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Oman mobile (8 digits, digits-only)</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-oman"
+                                           Type="tel"
+                                           StrictNumeric="true"
+                                           Pattern="\d{8,8}"
+                                           MaxLength="8"
+                                           Placeholder="9XXXXXXX">
+                                <ChildContent>Mobile number</ChildContent>
+                                <Hint>Try typing letters or symbols — only digits will go through.</Hint>
+                            </GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Required</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-required"
+                                           Type="tel"
+                                           StrictNumeric="true"
+                                           Pattern="\d{8,8}"
+                                           MaxLength="8"
+                                           Required="true"
+                                           Placeholder="9XXXXXXX">
+                                Mobile number
+                            </GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Custom error message</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="tel-custom-error"
+                                           Type="tel"
+                                           StrictNumeric="true"
+                                           Pattern="\d{8,8}"
+                                           MaxLength="8"
+                                           ErrorMessage="Please enter an 8-digit Oman mobile number."
+                                           Placeholder="9XXXXXXX">
+                                Mobile number
+                            </GupInputField>
                         </GupFormList>
                     </div>
                 </div>

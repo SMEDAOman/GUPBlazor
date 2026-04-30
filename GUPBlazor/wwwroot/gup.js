@@ -413,3 +413,21 @@ window.__gupCheckbox = {
         if (el) el.indeterminate = !!value;
     }
 };
+
+// Input field: native HTMLInputElement.showPicker() is JS-only.
+// Also exposes setValue() — used by StrictNumeric to push a filtered value back into the DOM
+// because Blazor's render diff would skip an attribute update that compares equal to the prior render.
+window.__gupInputField = {
+    showPicker(id) {
+        const el = document.getElementById(id);
+        if (el && typeof el.showPicker === 'function') {
+            try { el.showPicker(); } catch (e) { /* user gesture or unsupported type */ }
+        }
+    },
+    setValue(id, value) {
+        const el = document.getElementById(id);
+        if (el && el.value !== value) {
+            el.value = value;
+        }
+    }
+};

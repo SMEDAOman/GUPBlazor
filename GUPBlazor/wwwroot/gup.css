@@ -658,6 +658,27 @@ body {
   margin-bottom: var(--gup-spacing-component-default);
 }
 
+.gup-input-field .label.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gup-input-field .validation-message {
+  color: var(--gup-color-negative-medium, #b91c1c);
+  font-size: var(--font-size-300);
+  margin-bottom: var(--gup-spacing-component-default);
+  display: flex;
+  gap: var(--gup-component-3);
+  align-items: center;
+}
+
 .gup-input-field .field-wrapper {
   border-radius: var(--gup-radius-component-default);
   border: 1px solid transparent;
@@ -673,6 +694,8 @@ body {
 
 .gup-input-field .input-wrapper {
   display: flex;
+  flex: 1 1 auto;
+  align-items: center;
   width: 100%;
   background-color: var(--gup-color-states-base-bg);
 }
@@ -684,6 +707,7 @@ body {
   box-shadow: none;
   outline: none;
   flex-grow: 1;
+  min-width: 0;
   padding-inline: var(--gup-component-4);
   padding-block: var(--gup-component-3);
   color: var(--gup-color-content-primary);
@@ -691,10 +715,15 @@ body {
   font-size: var(--font-size-400);
   font-family: inherit;
   width: 100%;
+  text-align: start;
 }
 
 .gup-input-field .input::placeholder {
   color: var(--gup-color-content-secondary);
+}
+
+.gup-input-field .input::-webkit-calendar-picker-indicator {
+  display: none;
 }
 
 .gup-input-field .input:focus {
@@ -704,6 +733,119 @@ body {
 .gup-input-field .field-wrapper:focus-within {
   outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
   outline-offset: 2px;
+}
+
+/* Prefix / Suffix slots (non-interactive labels with secondary background) */
+.gup-input-field .prefix,
+.gup-input-field .suffix {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  padding-inline: var(--gup-component-4);
+  padding-block: var(--gup-component-3);
+  background-color: var(--gup-color-states-base-bg-secondary, var(--gup-color-states-base-bg));
+  color: var(--gup-color-content-secondary);
+  cursor: default;
+  font-size: var(--font-size-300);
+}
+
+/* Input-start / Input-end slots (icons or interactive content inside the field) */
+.gup-input-field .input-start,
+.gup-input-field .input-end {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-input-field .input-start {
+  padding-inline-start: var(--gup-component-4);
+  padding-inline-end: var(--gup-component-3);
+}
+
+.gup-input-field .input-end {
+  padding-inline-start: var(--gup-component-3);
+  padding-inline-end: var(--gup-component-4);
+}
+
+.gup-input-field .input-affix-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  cursor: pointer;
+}
+
+.gup-input-field .input-affix-btn:disabled {
+  cursor: not-allowed;
+  color: var(--gup-color-states-disabled-medium);
+}
+
+.gup-input-field .input-affix-btn:focus-visible {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--gup-radius-component-default);
+}
+
+/* Hint text */
+.gup-input-field .hint {
+  margin-top: var(--gup-spacing-component-default);
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-500);
+}
+
+/* Hover state */
+.gup-input-field:hover:not(.disabled):not(.invalid) .field-inner-wrapper {
+  box-shadow: 0 0 0 1px var(--gup-color-states-base-border) inset;
+}
+
+/* Invalid state */
+.gup-input-field.invalid .field-inner-wrapper {
+  border-color: var(--gup-color-negative-medium, #b91c1c);
+  box-shadow: 0 0 0 1px var(--gup-color-negative-medium, #b91c1c) inset;
+}
+
+.gup-input-field.invalid .label {
+  color: var(--gup-color-negative-medium, #b91c1c);
+}
+
+/* Disabled state */
+.gup-input-field.disabled .label {
+  color: var(--gup-color-content-tertiary);
+}
+
+.gup-input-field.disabled .field-inner-wrapper {
+  border-color: transparent;
+}
+
+.gup-input-field.disabled .input-wrapper,
+.gup-input-field.disabled .prefix,
+.gup-input-field.disabled .suffix {
+  background-color: var(--gup-color-states-disabled-low);
+}
+
+.gup-input-field.disabled .input {
+  color: var(--gup-color-states-disabled-medium);
+  cursor: not-allowed;
+}
+
+.gup-input-field.disabled .input-start,
+.gup-input-field.disabled .input-end,
+.gup-input-field.disabled .prefix,
+.gup-input-field.disabled .suffix {
+  color: var(--gup-color-states-disabled-medium);
+}
+
+/* RTL support: tel and email keep LTR for the input */
+.gup-input-field[data-type="tel"] .field-inner-wrapper,
+.gup-input-field[data-type="email"] .field-inner-wrapper {
+  direction: ltr;
 }
 
 /* ------------------------------------------------------------

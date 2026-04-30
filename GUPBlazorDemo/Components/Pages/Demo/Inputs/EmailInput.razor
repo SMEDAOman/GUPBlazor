@@ -1,4 +1,5 @@
 @page "/demo/inputs/email"
+@rendermode InteractiveServer
 
 <PageTitle>Email Input — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Email Input">
-        <PageSummary>GupInputField with <code>Type="email"</code>. Triggers email keyboards on mobile and browser-level validation.</PageSummary>
+        <PageSummary>GupInputField with <code>Type="email"</code>. Triggers email keyboards on mobile and self-validates the address format after the user interacts.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -66,6 +67,44 @@
                     <div class="demo-surface">
                         <GupFormList>
                             <GupInputField Name="email-disabled" Type="email" Disabled="true">Disabled email</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Validation</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Self-validates format</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-format" Type="email" Placeholder="Try typing 'not-an-email'">
+                                <ChildContent>Email address</ChildContent>
+                                <Hint>Error appears once you blur the field with an invalid address.</Hint>
+                            </GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Required</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-required" Type="email" Required="true">Email address</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Custom error message</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="email-custom-error"
+                                           Type="email"
+                                           Placeholder="name@example.com"
+                                           ErrorMessage="@("Please use your @gov.om work email.")">
+                                Work email
+                            </GupInputField>
                         </GupFormList>
                     </div>
                 </div>

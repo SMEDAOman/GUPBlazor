@@ -1,25 +1,100 @@
-@* Equivalent of <gup-input-field name="..." type="text|email|...">Label</gup-input-field>
+@* Equivalent of <gup-input-field name="..." type="text|email|date|time|password|number|numeric|tel|url">Label</gup-input-field>
    Two-way binding: @bind-Value
-   Events: OnValueChange (fires on every keystroke), OnKeyPress (fires on key press)
+   Slots (RenderFragment): ChildContent (label), Prefix, Suffix, InputStart, InputEnd, Hint, ErrorMessageContent, Popup
+   Events: OnValueChange (input), OnChange (commit/blur), OnKeyDown, OnFocus, OnInvalid
+   Validation: self-validates against Pattern, MinLength, MaxLength, Required after the user interacts.
+              Parent can force the error state via IsInvalid.
 *@
-<div class="gup-input-field">
-    <label class="label" for="@Id">@ChildContent</label>
+@using Microsoft.AspNetCore.Components.Web
+@using System.Linq
+@using System.Text.RegularExpressions
+@inject IJSRuntime JS
+
+<div class="@RootClass" data-type="@Type">
+    @if (LabelHidden)
+    {
+        <label class="label sr-only" for="@Id">@ChildContent</label>
+    }
+    else
+    {
+        <label class="label" for="@Id">@ChildContent</label>
+    }
+
+    @if (ErrorMessageContent != null)
+    {
+        <div class="validation-message" id="@ErrorId">@ErrorMessageContent</div>
+    }
+    else if (ShowValidationMessage)
+    {
+        <div class="validation-message" id="@ErrorId">@ResolvedValidationMessage</div>
+    }
+
     <div class="field-wrapper">
         <div class="field-inner-wrapper">
+            @if (Prefix != null)
+            {
+                <div class="prefix" @onclick="FocusInternal">@Prefix</div>
+            }
             <div class="input-wrapper">
+                @if (HasInputStart)
+                {
+                    <div class="input-start">
+                        @RenderInputStart()
+                    </div>
+                }
                 <input class="input"
                        id="@Id"
                        name="@Name"
-                       type="@Type"
+                       type="@HtmlInputType"
+                       inputmode="@(IsNumeric ? "numeric" : null)"
+                       pattern="@ResolvedPattern"
                        placeholder="@Placeholder"
                        value="@Value"
+                       minlength="@(MinLength?.ToString())"
+                       maxlength="@(MaxLength?.ToString())"
+                       min="@Min"
+                       max="@Max"
+                       step="@(Step?.ToString())"
                        disabled="@(Disabled ? true : null)"
                        readonly="@(Readonly ? true : null)"
+                       required="@(Required ? true : null)"
+                       role="@InputRole"
+                       aria-controls="@AriaControlsId"
+                       aria-expanded="@AriaExpandedAttr"
+                       aria-haspopup="@AriaHasPopupType"
+                       aria-activedescendant="@AriaActiveDescendantId"
+                       aria-describedby="@AriaDescribedBy"
+                       aria-invalid="@(EffectiveInvalid ? "true" : "false")"
+                       @ref="_inputRef"
                        @oninput="HandleInput"
-                       @onkeypress="HandleKeyPress" />
+                       @onchange="HandleChange"
+                       @onkeydown="HandleKeyDown"
+                       @onfocus="HandleFocus"
+                       @onblur="HandleBlur"
+                       @oninvalid="HandleInvalid" />
+                @if (HasInputEnd)
+                {
+                    <div class="input-end">
+                        @RenderInputEnd()
+                    </div>
+                }
             </div>
+            @if (Suffix != null)
+            {
+                <div class="suffix" @onclick="FocusInternal">@Suffix</div>
+            }
         </div>
     </div>
+
+    @if (Popup != null)
+    {
+        @Popup
+    }
+
+    @if (Hint != null)
+    {
+        <div class="hint" id="@HintId">@Hint</div>
+    }
 </div>
 
 @code {
@@ -30,27 +105,351 @@
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool Readonly { get; set; }
+    [Parameter] public bool Required { get; set; }
+
+    [Parameter] public int? MinLength { get; set; }
+    [Parameter] public int? MaxLength { get; set; }
+    [Parameter] public string? Min { get; set; }
+    [Parameter] public string? Max { get; set; }
+    [Parameter] public string? Pattern { get; set; }
+    [Parameter] public int? Step { get; set; }
+
+    [Parameter] public bool LabelHidden { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
+    [Parameter] public bool IsInvalid { get; set; }
+
+    /// <summary>When true and Type is "numeric" or "tel", non-digit keystrokes are stripped on input.
+    /// Deviates from the design-system spec (which only validates, not filters) — opt in deliberately.</summary>
+    [Parameter] public bool StrictNumeric { get; set; }
+
+    [Parameter] public string? InputRole { get; set; }
+    [Parameter] public string? AriaControlsId { get; set; }
+    [Parameter] public bool? AriaExpandedState { get; set; }
+    [Parameter] public string? AriaHasPopupType { get; set; }
+    [Parameter] public string? AriaActiveDescendantId { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Prefix { get; set; }
+    [Parameter] public RenderFragment? Suffix { get; set; }
+    [Parameter] public RenderFragment? InputStart { get; set; }
+    [Parameter] public RenderFragment? InputEnd { get; set; }
+    [Parameter] public RenderFragment? Hint { get; set; }
+    [Parameter] public RenderFragment? ErrorMessageContent { get; set; }
+    [Parameter] public RenderFragment? Popup { get; set; }
 
     /// <summary>Fires whenever the input value changes (on every keystroke).</summary>
     [Parameter] public EventCallback<string?> OnValueChange { get; set; }
 
+    /// <summary>Fires when the input value is committed (change event / blur).</summary>
+    [Parameter] public EventCallback<string?> OnChange { get; set; }
+
     /// <summary>Fires when a key is pressed inside the input.</summary>
-    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyPress { get; set; }
+    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
+
+    /// <summary>Fires when the input is focused.</summary>
+    [Parameter] public EventCallback<FocusEventArgs> OnFocus { get; set; }
+
+    /// <summary>Fires when the native input becomes invalid.</summary>
+    [Parameter] public EventCallback OnInvalid { get; set; }
+
+    private ElementReference _inputRef;
+    private bool _passwordVisible;
+    private bool _focused;
+    private bool _dirty;
+    private bool _interacted;
 
     private string Id => $"input-{Name}";
+    private string HintId => $"{Id}-hint";
+    private string ErrorId => $"{Id}-error";
+
+    private bool IsNumeric => string.Equals(Type, "numeric", StringComparison.OrdinalIgnoreCase);
+    private bool IsPassword => string.Equals(Type, "password", StringComparison.OrdinalIgnoreCase);
+    private bool IsDate => string.Equals(Type, "date", StringComparison.OrdinalIgnoreCase);
+    private bool IsTime => string.Equals(Type, "time", StringComparison.OrdinalIgnoreCase);
+    private bool IsEmail => string.Equals(Type, "email", StringComparison.OrdinalIgnoreCase);
+    private bool IsTel => string.Equals(Type, "tel", StringComparison.OrdinalIgnoreCase);
+
+    private string HtmlInputType
+    {
+        get
+        {
+            if (IsPassword) return _passwordVisible ? "text" : "password";
+            if (IsNumeric) return "text";
+            return Type;
+        }
+    }
+
+    // WHATWG-aligned email pattern: same shape the browser uses for <input type="email">.
+    private const string EmailPattern = @"[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*";
+
+    private string? ResolvedPattern
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(Pattern)) return Pattern;
+            if (IsNumeric) return "[0-9]*";
+            if (IsEmail) return EmailPattern;
+            return null;
+        }
+    }
+
+    private bool HasInputStart => InputStart != null || IsEmail || IsTel || IsDate || IsTime;
+    private bool HasInputEnd => InputEnd != null || IsPassword;
+
+    /// <summary>True when the field's own constraints are violated by the current value.</summary>
+    private bool InternalInvalid
+    {
+        get
+        {
+            if (Disabled || Readonly) return false;
+            var val = Value ?? "";
+
+            if (Required && string.IsNullOrEmpty(val)) return true;
+            if (string.IsNullOrEmpty(val)) return false;
+
+            if (MinLength.HasValue && val.Length < MinLength.Value) return true;
+            if (MaxLength.HasValue && val.Length > MaxLength.Value) return true;
+
+            var pattern = ResolvedPattern;
+            if (!string.IsNullOrEmpty(pattern))
+            {
+                try
+                {
+                    if (!Regex.IsMatch(val, "^(?:" + pattern + ")$"))
+                        return true;
+                }
+                catch (ArgumentException)
+                {
+                    // Invalid regex syntax — skip pattern check
+                }
+            }
+
+            return false;
+        }
+    }
+
+    /// <summary>Effective invalid state used by the markup. Parent can force-on via IsInvalid;
+    /// otherwise the field self-validates after the user interacts (matches the spec).</summary>
+    private bool EffectiveInvalid => IsInvalid || (_interacted && InternalInvalid);
+
+    private bool ShowValidationMessage => EffectiveInvalid && !string.IsNullOrEmpty(ResolvedValidationMessage);
+
+    private string ResolvedValidationMessage
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(ErrorMessage)) return ErrorMessage!;
+            var val = Value ?? "";
+            if (Required && string.IsNullOrEmpty(val)) return "This field is required";
+            if (MinLength.HasValue && val.Length < MinLength.Value)
+                return $"Please enter at least {MinLength.Value} characters";
+            if (MaxLength.HasValue && val.Length > MaxLength.Value)
+                return $"Please enter no more than {MaxLength.Value} characters";
+            if (IsEmail && string.IsNullOrEmpty(Pattern)) return "Please enter a valid email address";
+            if (!string.IsNullOrEmpty(ResolvedPattern)) return "Please match the requested format";
+            return "";
+        }
+    }
+
+    private string RootClass
+    {
+        get
+        {
+            var parts = new List<string> { "gup-input-field" };
+            if (EffectiveInvalid) parts.Add("invalid");
+            if (_dirty) parts.Add("dirty");
+            if (_focused) parts.Add("focused");
+            if (Disabled) parts.Add("disabled");
+            if (Required) parts.Add("required");
+            if (Prefix != null) parts.Add("has-prefix");
+            if (Suffix != null) parts.Add("has-suffix");
+            if (HasInputStart) parts.Add("has-input-start");
+            if (HasInputEnd) parts.Add("has-input-end");
+            if (Hint != null) parts.Add("has-hint");
+            return string.Join(' ', parts);
+        }
+    }
+
+    private string? AriaExpandedAttr =>
+        AriaExpandedState is null ? null : (AriaExpandedState.Value ? "true" : "false");
+
+    private string? AriaDescribedBy
+    {
+        get
+        {
+            var parts = new List<string>();
+            if (Hint != null) parts.Add(HintId);
+            if (EffectiveInvalid) parts.Add(ErrorId);
+            return parts.Count == 0 ? null : string.Join(" ", parts);
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _dirty = !string.IsNullOrEmpty(Value);
+    }
 
     private async Task HandleInput(ChangeEventArgs e)
     {
         if (Disabled || Readonly) return;
         var newValue = e.Value?.ToString();
+
+        if (StrictNumeric && (IsNumeric || IsTel) && !string.IsNullOrEmpty(newValue))
+        {
+            var filtered = new string(newValue!.Where(char.IsDigit).ToArray());
+            if (filtered != newValue)
+            {
+                newValue = filtered;
+                // Blazor's render diff sees the same `value="@Value"` attribute and skips
+                // the DOM update, so push the filtered value back via JS interop.
+                try { await JS.InvokeVoidAsync("__gupInputField.setValue", Id, newValue); }
+                catch { /* prerender / JS unavailable */ }
+            }
+        }
+
         Value = newValue;
+        _dirty = !string.IsNullOrEmpty(newValue);
+        _interacted = true;
         if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(newValue);
         if (OnValueChange.HasDelegate) await OnValueChange.InvokeAsync(newValue);
     }
 
-    private async Task HandleKeyPress(KeyboardEventArgs e)
+    private async Task HandleChange(ChangeEventArgs e)
     {
-        if (OnKeyPress.HasDelegate) await OnKeyPress.InvokeAsync(e);
+        if (Disabled || Readonly) return;
+        var newValue = e.Value?.ToString();
+        Value = newValue;
+        _interacted = true;
+        if (OnChange.HasDelegate) await OnChange.InvokeAsync(newValue);
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (OnKeyDown.HasDelegate) await OnKeyDown.InvokeAsync(e);
+    }
+
+    private async Task HandleFocus(FocusEventArgs e)
+    {
+        _focused = true;
+        if (OnFocus.HasDelegate) await OnFocus.InvokeAsync(e);
+        if ((IsDate || IsTime) && !Disabled && !Readonly)
+        {
+            await TryShowPickerAsync();
+        }
+    }
+
+    private void HandleBlur(FocusEventArgs _)
+    {
+        _focused = false;
+        _interacted = true;
+    }
+
+    private async Task HandleInvalid()
+    {
+        if (OnInvalid.HasDelegate) await OnInvalid.InvokeAsync();
+    }
+
+    private void TogglePasswordVisibility() => _passwordVisible = !_passwordVisible;
+
+    private async Task FocusInternal()
+    {
+        if (Disabled) return;
+        try { await _inputRef.FocusAsync(); }
+        catch { /* element not yet rendered */ }
+    }
+
+    /// <summary>Focuses the input programmatically.</summary>
+    public Task FocusAsync() => FocusInternal();
+
+    /// <summary>Shows the native HTML picker (eg date or time popup) when supported.</summary>
+    public async Task ShowPickerAsync()
+    {
+        await TryShowPickerAsync();
+    }
+
+    private async Task TryShowPickerAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("__gupInputField.showPicker", Id);
+        }
+        catch
+        {
+            // Prerendering / JS unavailable
+        }
+    }
+
+    private RenderFragment RenderInputStart() => builder =>
+    {
+        if (IsEmail)
+        {
+            builder.OpenComponent<GupIcon>(0);
+            builder.AddAttribute(1, "IconName", "mail");
+            builder.AddAttribute(2, "Width", 24);
+            builder.AddAttribute(3, "Height", 24);
+            builder.CloseComponent();
+        }
+        else if (IsTel)
+        {
+            builder.OpenComponent<GupIcon>(0);
+            builder.AddAttribute(1, "IconName", "phone");
+            builder.AddAttribute(2, "Width", 24);
+            builder.AddAttribute(3, "Height", 24);
+            builder.CloseComponent();
+        }
+        else if (IsDate)
+        {
+            BuildIconButton(builder, "calendar-today", "Click to pick a date");
+        }
+        else if (IsTime)
+        {
+            BuildIconButton(builder, "schedule", "Click to pick time");
+        }
+        else if (InputStart != null)
+        {
+            builder.AddContent(0, InputStart);
+        }
+    };
+
+    private RenderFragment RenderInputEnd() => builder =>
+    {
+        if (IsPassword)
+        {
+            var label = _passwordVisible ? "Click to hide password" : "Click to show password";
+            var icon = _passwordVisible ? "visibility-off" : "visibility";
+            builder.OpenElement(0, "button");
+            builder.AddAttribute(1, "type", "button");
+            builder.AddAttribute(2, "class", "input-affix-btn");
+            builder.AddAttribute(3, "title", label);
+            builder.AddAttribute(4, "aria-label", label);
+            if (Disabled) builder.AddAttribute(5, "disabled", true);
+            builder.AddAttribute(6, "onclick", EventCallback.Factory.Create(this, TogglePasswordVisibility));
+            builder.OpenComponent<GupIcon>(7);
+            builder.AddAttribute(8, "IconName", icon);
+            builder.AddAttribute(9, "Width", 24);
+            builder.AddAttribute(10, "Height", 24);
+            builder.CloseComponent();
+            builder.CloseElement();
+        }
+        else if (InputEnd != null)
+        {
+            builder.AddContent(0, InputEnd);
+        }
+    };
+
+    private void BuildIconButton(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder builder, string iconName, string label)
+    {
+        builder.OpenElement(0, "button");
+        builder.AddAttribute(1, "type", "button");
+        builder.AddAttribute(2, "class", "input-affix-btn");
+        builder.AddAttribute(3, "aria-label", label);
+        if (Disabled) builder.AddAttribute(4, "disabled", true);
+        builder.AddAttribute(5, "onclick", EventCallback.Factory.Create(this, FocusInternal));
+        builder.OpenComponent<GupIcon>(6);
+        builder.AddAttribute(7, "IconName", iconName);
+        builder.AddAttribute(8, "Width", 24);
+        builder.AddAttribute(9, "Height", 24);
+        builder.CloseComponent();
+        builder.CloseElement();
     }
 }
