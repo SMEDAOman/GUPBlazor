@@ -1,4 +1,5 @@
 @page "/demo/inputs/text"
+@rendermode InteractiveServer
 
 <PageTitle>Text Input — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Text Input">
-        <PageSummary>GupInputField with <code>Type="text"</code>. Variants: default, placeholder, pre-filled, read-only, disabled.</PageSummary>
+        <PageSummary>GupInputField with <code>Type="text"</code>. Variants, two-way binding, and event handling.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -73,6 +74,48 @@
         </section>
 
         <section class="demo-section">
+            <h2 class="demo-section-title">Two-way Binding (@@bind-Value)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupInputField Name="txt-bind" Type="text" Placeholder="Type something..." @bind-Value="_boundValue">Bound input</GupInputField>
+                    </GupFormList>
+                    <p data-testid="bind-output" style="margin-top: 12px;">
+                        Bound value: <strong>@(_boundValue ?? "(empty)")</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnValueChange Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupInputField Name="txt-change" Type="text" Placeholder="Type to fire OnValueChange..." OnValueChange="HandleValueChange">Change-tracked input</GupInputField>
+                    </GupFormList>
+                    <p data-testid="change-log" style="margin-top: 12px;">
+                        Last value: <strong>@(_lastChangeValue ?? "(none)")</strong> (count: @_changeCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnKeyPress Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupInputField Name="txt-keypress" Type="text" Placeholder="Press any key..." OnKeyPress="HandleKeyPress">Key-tracked input</GupInputField>
+                    </GupFormList>
+                    <p data-testid="keypress-log" style="margin-top: 12px;">
+                        Last key: <strong>@(_lastKey ?? "(none)")</strong> (count: @_keyCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
             <h2 class="demo-section-title">Multiple Fields in a Form List</h2>
             <div class="demo-card--full">
                 <div class="demo-surface">
@@ -88,3 +131,25 @@
 
     </div>
 </div>
+
+@code {
+    private string? _boundValue;
+
+    private string? _lastChangeValue;
+    private int _changeCount;
+
+    private string? _lastKey;
+    private int _keyCount;
+
+    private void HandleValueChange(string? value)
+    {
+        _lastChangeValue = value;
+        _changeCount++;
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        _lastKey = e.Key;
+        _keyCount++;
+    }
+}

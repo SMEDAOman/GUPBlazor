@@ -1,4 +1,7 @@
-@* Equivalent of <gup-input-field name="..." type="text|email|...">Label</gup-input-field> *@
+@* Equivalent of <gup-input-field name="..." type="text|email|...">Label</gup-input-field>
+   Two-way binding: @bind-Value
+   Events: OnValueChange (fires on every keystroke), OnKeyPress (fires on key press)
+*@
 <div class="gup-input-field">
     <label class="label" for="@Id">@ChildContent</label>
     <div class="field-wrapper">
@@ -11,7 +14,9 @@
                        placeholder="@Placeholder"
                        value="@Value"
                        disabled="@(Disabled ? true : null)"
-                       readonly="@(Readonly ? true : null)" />
+                       readonly="@(Readonly ? true : null)"
+                       @oninput="HandleInput"
+                       @onkeypress="HandleKeyPress" />
             </div>
         </div>
     </div>
@@ -22,9 +27,30 @@
     [Parameter] public string Type { get; set; } = "text";
     [Parameter] public string? Placeholder { get; set; }
     [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool Readonly { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>Fires whenever the input value changes (on every keystroke).</summary>
+    [Parameter] public EventCallback<string?> OnValueChange { get; set; }
+
+    /// <summary>Fires when a key is pressed inside the input.</summary>
+    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyPress { get; set; }
+
     private string Id => $"input-{Name}";
+
+    private async Task HandleInput(ChangeEventArgs e)
+    {
+        if (Disabled || Readonly) return;
+        var newValue = e.Value?.ToString();
+        Value = newValue;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(newValue);
+        if (OnValueChange.HasDelegate) await OnValueChange.InvokeAsync(newValue);
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (OnKeyPress.HasDelegate) await OnKeyPress.InvokeAsync(e);
+    }
 }
