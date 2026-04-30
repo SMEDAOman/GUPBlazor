@@ -1,4 +1,5 @@
 @page "/demo/inputs/date"
+@rendermode InteractiveServer
 
 <PageTitle>Date Input — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Date Input">
-        <PageSummary>GupInputField with <code>Type="date"</code>, <code>"time"</code>, <code>"datetime-local"</code>, and <code>"month"</code>.</PageSummary>
+        <PageSummary>GupInputField with <code>Type="date"</code>, <code>"time"</code>, <code>"datetime-local"</code>, and <code>"month"</code>. Two-way binding and event handling.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -94,5 +95,46 @@
             </div>
         </section>
 
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way Binding (@@bind-Value)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupInputField Name="date-bind" Type="date" @bind-Value="_boundValue">Bound date</GupInputField>
+                    </GupFormList>
+                    <p data-testid="bind-output" style="margin-top: 12px;">
+                        Bound value: <strong>@(_boundValue ?? "(empty)")</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnValueChange Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupInputField Name="date-change" Type="date" OnValueChange="HandleValueChange">Change-tracked date</GupInputField>
+                    </GupFormList>
+                    <p data-testid="change-log" style="margin-top: 12px;">
+                        Last value: <strong>@(_lastChangeValue ?? "(none)")</strong> (count: @_changeCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </div>
 </div>
+
+@code {
+    private string? _boundValue;
+
+    private string? _lastChangeValue;
+    private int _changeCount;
+
+    private void HandleValueChange(string? value)
+    {
+        _lastChangeValue = value;
+        _changeCount++;
+    }
+}
