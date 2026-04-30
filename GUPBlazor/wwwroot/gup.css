@@ -2133,6 +2133,110 @@ body {
   padding-inline-start: var(--gup-spacing-text-to-component);
 }
 
+/* ------------------------------------------------------------
+   COMPONENT: gup-textarea-field
+   ------------------------------------------------------------ */
+.gup-textarea-field {
+  display: block;
+}
+
+.gup-textarea-field .label {
+  color: var(--gup-color-content-primary);
+  font-weight: var(--font-weight-base-beta);
+  display: block;
+  margin-bottom: var(--gup-spacing-component-default);
+}
+
+.gup-textarea-field .validation-message {
+  color: var(--gup-color-negative-medium, #b91c1c);
+  font-size: var(--font-size-300);
+  margin-bottom: var(--gup-spacing-component-default);
+  display: flex;
+  gap: var(--gup-component-3);
+  align-items: center;
+}
+
+.gup-textarea-field .input-wrapper {
+  display: flex;
+  border-radius: var(--gup-radius-component-default);
+  border: 1px solid var(--gup-color-states-base-border, var(--gup-color-border-medium));
+  line-height: 1;
+  overflow: hidden;
+  background-color: var(--gup-color-states-base-bg);
+}
+
+.gup-textarea-field .input-inner-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.gup-textarea-field .input {
+  appearance: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  flex-grow: 1;
+  width: 100%;
+  padding-inline: var(--gup-component-4);
+  padding-block: var(--gup-component-3);
+  color: var(--gup-color-content-primary);
+  line-height: 1.4;
+  font-size: var(--font-size-400);
+  font-family: inherit;
+  resize: vertical;
+  min-height: calc(var(--gup-component-7) * 2);
+}
+
+.gup-textarea-field .input::placeholder {
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-textarea-field .input:focus {
+  outline: none;
+}
+
+.gup-textarea-field .input-wrapper:focus-within {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+.gup-textarea-field:hover:not(.disabled):not(.invalid) .input-wrapper {
+  box-shadow: 0 0 0 1px var(--gup-color-states-base-border, var(--gup-color-border-medium)) inset;
+}
+
+.gup-textarea-field.invalid .input-wrapper {
+  border-color: var(--gup-color-negative-medium, #b91c1c);
+  box-shadow: 0 0 0 1px var(--gup-color-negative-medium, #b91c1c) inset;
+}
+
+.gup-textarea-field.invalid .label {
+  color: var(--gup-color-negative-medium, #b91c1c);
+}
+
+.gup-textarea-field.disabled .label {
+  color: var(--gup-color-content-tertiary);
+}
+
+.gup-textarea-field.disabled .input-wrapper {
+  border-color: transparent;
+  background-color: var(--gup-color-states-disabled-low);
+}
+
+.gup-textarea-field.disabled .input {
+  color: var(--gup-color-states-disabled-medium);
+  resize: none;
+  cursor: not-allowed;
+}
+
+.gup-textarea-field .hint {
+  margin-top: var(--gup-spacing-component-default);
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-500);
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

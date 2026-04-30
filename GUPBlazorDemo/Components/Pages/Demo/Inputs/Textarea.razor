@@ -1,0 +1,187 @@
+@page "/demo/inputs/textarea"
+@rendermode InteractiveServer
+
+<PageTitle>Textarea — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Textarea">
+        <PageSummary><code>GupTextarea</code> — multi-line text entry with rows, length limits, hint, and error states.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Default</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-default">Your message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">With placeholder</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-placeholder" Placeholder="Type your message here...">Your message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Pre-filled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-value" Value="This is some pre-filled message text.">Your message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Read-only</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-readonly" Value="This message cannot be edited." Readonly="true">Read-only message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Disabled</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-disabled" Disabled="true">Disabled message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Rows</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">2 rows</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-rows-2" Rows="2">Short message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">4 rows (default)</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-rows-4" Rows="4">Standard message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">10 rows</span>
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupTextarea Name="msg-rows-10" Rows="10">Long message</GupTextarea>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Max character limit</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupTextarea Name="msg-maxlength" Maxlength="120" Placeholder="Up to 120 characters...">Bio</GupTextarea>
+                    </GupFormList>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">With hint</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupTextarea Name="msg-hint">
+                            <ChildContent>Why are you applying?</ChildContent>
+                            <HintContent>Briefly explain your motivation. We'll review your answer when assessing your application.</HintContent>
+                        </GupTextarea>
+                    </GupFormList>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Validation error</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupTextarea Name="msg-error" IsInvalid="true" ErrorMessage="Please enter a message before submitting.">Your message</GupTextarea>
+                    </GupFormList>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Value)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupTextarea Name="msg-bind" Placeholder="Type something..." @bind-Value="_boundValue">Bound textarea</GupTextarea>
+                    </GupFormList>
+                    <p data-testid="bind-output" style="margin-top: 12px;">
+                        Bound value: <strong>@(_boundValue ?? "(empty)")</strong>
+                    </p>
+                    <p data-testid="bind-length" style="margin-top: 4px;">
+                        Length: <strong>@(_boundValue?.Length ?? 0)</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnValueChange event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFormList>
+                        <GupTextarea Name="msg-change" Placeholder="Type to fire OnValueChange..." OnValueChange="HandleValueChange">Change-tracked textarea</GupTextarea>
+                    </GupFormList>
+                    <p data-testid="change-log" style="margin-top: 12px;">
+                        Last value: <strong>@(_lastChangeValue ?? "(none)")</strong> (count: @_changeCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+@code {
+    private string? _boundValue;
+
+    private string? _lastChangeValue;
+    private int _changeCount;
+
+    private void HandleValueChange(string? value)
+    {
+        _lastChangeValue = value;
+        _changeCount++;
+    }
+}

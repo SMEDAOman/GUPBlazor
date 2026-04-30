@@ -1,0 +1,112 @@
+@* Equivalent of <gup-textarea-field name="..." rows="...">Label</gup-textarea-field>
+   Two-way binding: @bind-Value
+   Events: OnValueChange (fires on every input), OnChange (fires on change/blur)
+*@
+<div class="gup-textarea-field @(IsInvalid ? "invalid" : "") @(_dirty ? "dirty" : "") @(Disabled ? "disabled" : "")">
+    <label class="label" for="@Id">@ChildContent</label>
+
+    @if (IsInvalid && !string.IsNullOrEmpty(ValidationMessage))
+    {
+        <div class="validation-message" id="@($"{Id}-error")">
+            @ValidationMessage
+        </div>
+    }
+
+    <div class="input-wrapper">
+        <div class="input-inner-wrapper">
+            <textarea class="input"
+                      id="@Id"
+                      name="@Name"
+                      rows="@Rows"
+                      minlength="@(Minlength?.ToString())"
+                      maxlength="@(Maxlength?.ToString())"
+                      placeholder="@Placeholder"
+                      disabled="@(Disabled ? true : null)"
+                      readonly="@(Readonly ? true : null)"
+                      required="@(Required ? true : null)"
+                      aria-invalid="@(IsInvalid ? "true" : "false")"
+                      aria-describedby="@AriaDescribedBy"
+                      @oninput="HandleInput"
+                      @onchange="HandleChange"
+                      @onkeypress="HandleKeyPress">@Value</textarea>
+        </div>
+    </div>
+
+    @if (HintContent != null)
+    {
+        <div class="hint" id="@($"{Id}-hint")">
+            @HintContent
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Readonly { get; set; }
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public int Rows { get; set; } = 4;
+    [Parameter] public int? Minlength { get; set; }
+    [Parameter] public int? Maxlength { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
+    [Parameter] public bool IsInvalid { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? HintContent { get; set; }
+
+    /// <summary>Fires whenever the textarea value changes (on every input event).</summary>
+    [Parameter] public EventCallback<string?> OnValueChange { get; set; }
+
+    /// <summary>Fires when the textarea value changes and loses focus.</summary>
+    [Parameter] public EventCallback<string?> OnChange { get; set; }
+
+    /// <summary>Fires when a key is pressed inside the textarea.</summary>
+    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyPress { get; set; }
+
+    private bool _dirty;
+
+    private string Id => $"textarea-{Name}";
+
+    private string ValidationMessage => ErrorMessage ?? "This field is required";
+
+    private string? AriaDescribedBy
+    {
+        get
+        {
+            var parts = new List<string>();
+            if (HintContent != null) parts.Add($"{Id}-hint");
+            if (IsInvalid) parts.Add($"{Id}-error");
+            return parts.Count == 0 ? null : string.Join(" ", parts);
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _dirty = !string.IsNullOrEmpty(Value);
+    }
+
+    private async Task HandleInput(ChangeEventArgs e)
+    {
+        if (Disabled || Readonly) return;
+        var newValue = e.Value?.ToString();
+        Value = newValue;
+        _dirty = !string.IsNullOrEmpty(newValue);
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(newValue);
+        if (OnValueChange.HasDelegate) await OnValueChange.InvokeAsync(newValue);
+    }
+
+    private async Task HandleChange(ChangeEventArgs e)
+    {
+        if (Disabled || Readonly) return;
+        var newValue = e.Value?.ToString();
+        Value = newValue;
+        if (OnChange.HasDelegate) await OnChange.InvokeAsync(newValue);
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (OnKeyPress.HasDelegate) await OnKeyPress.InvokeAsync(e);
+    }
+}
