@@ -1,14 +1,29 @@
-@* Equivalent of <gup-checkbox name="..." checked disabled>
-   Class-based approach using gup-checkbox CSS.
-   Named slots: ChildContent (label text), Hint
+@* Equivalent of <gup-checkbox name="..." checked disabled indeterminate>
+   Two-way binding: @bind-Checked (and @bind-Indeterminate)
+   Events: OnChange (new checked state), OnInvalid (required + unchecked)
 *@
-<label class="gup-checkbox @SizeClass @AppearanceClass">
+@using Microsoft.AspNetCore.Components.Web
+@inject IJSRuntime JS
+
+@if (!_isValid && !string.IsNullOrEmpty(_currentErrorMessage))
+{
+    <div class="gup-checkbox__error" id="@($"{Id}-error")" role="alert">
+        @_currentErrorMessage
+    </div>
+}
+
+<label class="gup-checkbox @SizeClass @AppearanceClass" for="@Id">
     <input type="checkbox"
+           id="@Id"
            class="gup-checkbox__input"
            name="@Name"
            value="@Value"
-           checked="@(Checked ? true : null)"
-           disabled="@(Disabled ? true : null)" />
+           checked="@Checked"
+           disabled="@Disabled"
+           required="@Required"
+           aria-describedby="@AriaDescribedBy"
+           aria-invalid="@(_isValid ? null : "true")"
+           @onchange="HandleChange" />
     <div class="gup-checkbox__check-mark">
         <div class="gup-checkbox__check-mark-inner"></div>
     </div>
@@ -16,7 +31,7 @@
         <div>@ChildContent</div>
         @if (Hint != null)
         {
-            <span class="gup-checkbox__hint">@Hint</span>
+            <span class="gup-checkbox__hint" id="@($"{Id}-hint")">@Hint</span>
         }
     </div>
 </label>
@@ -25,12 +40,119 @@
     [Parameter] public string Name { get; set; } = "";
     [Parameter] public string Value { get; set; } = "on";
     [Parameter] public bool Checked { get; set; }
+    [Parameter] public EventCallback<bool> CheckedChanged { get; set; }
+    [Parameter] public bool Indeterminate { get; set; }
+    [Parameter] public EventCallback<bool> IndeterminateChanged { get; set; }
     [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
     [Parameter] public string Size { get; set; } = "m";
     [Parameter] public string Appearance { get; set; } = "default";
+    [Parameter] public string? Id { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public RenderFragment? Hint { get; set; }
 
+    [Parameter] public EventCallback<bool> OnChange { get; set; }
+    [Parameter] public EventCallback OnInvalid { get; set; }
+
+    private bool _previousIndeterminate;
+    private bool _isValid = true;
+    private string? _currentErrorMessage;
+
     private string SizeClass => Size == "s" ? "gup-checkbox--small" : "";
     private string AppearanceClass => Appearance == "circle" ? "gup-checkbox--circle" : "";
+
+    private string? AriaDescribedBy
+    {
+        get
+        {
+            var ids = new List<string>();
+            if (Hint != null) ids.Add($"{Id}-hint");
+            if (!_isValid) ids.Add($"{Id}-error");
+            return ids.Count > 0 ? string.Join(' ', ids) : null;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Id))
+        {
+            Id = $"gup-cb-{Guid.NewGuid():N}";
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender || _previousIndeterminate != Indeterminate)
+        {
+            _previousIndeterminate = Indeterminate;
+            try
+            {
+                await JS.InvokeVoidAsync("__gupCheckbox.setIndeterminate", Id, Indeterminate);
+            }
+            catch (InvalidOperationException)
+            {
+                // Prerendering — JS interop is unavailable.
+            }
+        }
+    }
+
+    private async Task HandleChange(ChangeEventArgs e)
+    {
+        if (Disabled) return;
+
+        var newChecked = e.Value is bool b && b;
+
+        if (Indeterminate)
+        {
+            Indeterminate = false;
+            if (IndeterminateChanged.HasDelegate)
+            {
+                await IndeterminateChanged.InvokeAsync(false);
+            }
+        }
+
+        Checked = newChecked;
+
+        if (CheckedChanged.HasDelegate)
+        {
+            await CheckedChanged.InvokeAsync(newChecked);
+        }
+
+        if (OnChange.HasDelegate)
+        {
+            await OnChange.InvokeAsync(newChecked);
+        }
+
+        if (Required && !newChecked)
+        {
+            _isValid = false;
+            _currentErrorMessage = ErrorMessage ?? "This field is required.";
+            if (OnInvalid.HasDelegate)
+            {
+                await OnInvalid.InvokeAsync();
+            }
+        }
+        else
+        {
+            _isValid = true;
+            _currentErrorMessage = null;
+        }
+    }
+
+    public bool ReportValidity()
+    {
+        if (Required && !Checked)
+        {
+            _isValid = false;
+            _currentErrorMessage = ErrorMessage ?? "This field is required.";
+            if (OnInvalid.HasDelegate) _ = OnInvalid.InvokeAsync();
+            StateHasChanged();
+            return false;
+        }
+        _isValid = true;
+        _currentErrorMessage = null;
+        StateHasChanged();
+        return true;
+    }
 }

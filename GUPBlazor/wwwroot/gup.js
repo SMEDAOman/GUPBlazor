@@ -376,3 +376,11 @@ window.__gupDropdownLoadingDemo = function (id) {
         if (originalOnclick) fieldWrapper.setAttribute('onclick', originalOnclick);
     }, 3000);
 };
+
+// Checkbox: indeterminate is a JS-only DOM property and cannot be set via attributes.
+window.__gupCheckbox = {
+    setIndeterminate(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.indeterminate = !!value;
+    }
+};

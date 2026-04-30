@@ -1,0 +1,142 @@
+- generic [ref=e209]:
+  - banner [ref=e210]:
+    - navigation "Demo Navigation" [ref=e212]:
+      - link "← Back to demo" [ref=e216] [cursor=pointer]:
+        - /url: /
+      - img [ref=e219]
+  - generic [ref=e223]:
+    - heading "Checkbox" [level=1] [ref=e225]
+    - generic [ref=e226]: GupCheckbox in default, checked, disabled, small, indeterminate, and circle variants — with event handling and two-way binding.
+  - generic [ref=e227]:
+    - generic [ref=e228]:
+      - heading "Default" [level=2] [ref=e229]
+      - generic [ref=e230]:
+        - generic [ref=e231]:
+          - generic [ref=e232]: Single, unchecked
+          - generic [ref=e234] [cursor=pointer]:
+            - checkbox "I accept the terms and conditions Please read the terms before accepting." [ref=e235]
+            - generic [ref=e238]:
+              - generic [ref=e239]: I accept the terms and conditions
+              - generic [ref=e240]: Please read the terms before accepting.
+        - generic [ref=e241]:
+          - generic [ref=e242]: Single, checked
+          - generic [ref=e244] [cursor=pointer]:
+            - checkbox "Subscribe to newsletter" [checked] [ref=e245]
+            - generic [ref=e249]: Subscribe to newsletter
+    - generic [ref=e250]:
+      - heading "Two-way Binding (@bind-Checked)" [level=2] [ref=e251]
+      - generic [ref=e253]:
+        - generic [ref=e254] [cursor=pointer]:
+          - checkbox "Enable notifications Toggle me — the bound value updates below." [ref=e255]
+          - generic [ref=e258]:
+            - generic [ref=e259]: Enable notifications
+            - generic [ref=e260]: Toggle me — the bound value updates below.
+        - paragraph [ref=e261]:
+          - text: "Bound value:"
+          - strong [ref=e262]: "False"
+    - generic [ref=e263]:
+      - heading "OnChange Event" [level=2] [ref=e264]
+      - generic [ref=e266]:
+        - generic [ref=e267] [cursor=pointer]:
+          - checkbox "Subscribe to product updates" [ref=e268]
+          - generic [ref=e272]: Subscribe to product updates
+        - paragraph [ref=e273]:
+          - text: "Last event:"
+          - strong [ref=e274]: (none)
+          - text: "(count: 0)"
+    - generic [ref=e275]:
+      - heading "Indeterminate State" [level=2] [ref=e276]
+      - generic [ref=e278]:
+        - generic [ref=e279] [cursor=pointer]:
+          - checkbox "Select all (0 of 3 selected)" [ref=e280]
+          - generic [ref=e284]: Select all (0 of 3 selected)
+        - generic [ref=e285]:
+          - generic [ref=e286] [cursor=pointer]:
+            - checkbox "Item A" [ref=e287]
+            - generic [ref=e291]: Item A
+          - generic [ref=e292] [cursor=pointer]:
+            - checkbox "Item B" [ref=e293]
+            - generic [ref=e297]: Item B
+          - generic [ref=e298] [cursor=pointer]:
+            - checkbox "Item C" [ref=e299]
+            - generic [ref=e303]: Item C
+    - generic [ref=e304]:
+      - heading "Required + Validation" [level=2] [ref=e305]
+      - generic [ref=e307]:
+        - generic [ref=e308] [cursor=pointer]:
+          - checkbox "I agree to the terms (required)" [ref=e309]
+          - generic [ref=e313]: I agree to the terms (required)
+        - button "Submit" [ref=e316] [cursor=pointer]
+    - generic [ref=e317]:
+      - heading "Disabled States" [level=2] [ref=e318]
+      - generic [ref=e319]:
+        - generic [ref=e320]:
+          - generic [ref=e321]: Unchecked + disabled
+          - generic [ref=e322]:
+            - generic:
+              - checkbox "This option is disabled" [disabled]
+              - generic:
+                - generic: This option is disabled
+        - generic [ref=e323]:
+          - generic [ref=e324]: Checked + disabled
+          - generic [ref=e325]:
+            - generic:
+              - checkbox "Checked & disabled" [checked] [disabled]
+              - generic:
+                - generic: Checked & disabled
+    - generic [ref=e326]:
+      - heading "Sizes" [level=2] [ref=e327]
+      - generic [ref=e328]:
+        - generic [ref=e329]:
+          - generic [ref=e330]: Medium (default)
+          - generic [ref=e331]:
+            - generic [ref=e332] [cursor=pointer]:
+              - checkbox "Medium checkbox" [ref=e333]
+              - generic [ref=e337]: Medium checkbox
+            - generic [ref=e338] [cursor=pointer]:
+              - checkbox "Medium checked" [checked] [ref=e339]
+              - generic [ref=e343]: Medium checked
+        - generic [ref=e344]:
+          - generic [ref=e345]: Small
+          - generic [ref=e346]:
+            - generic [ref=e347] [cursor=pointer]:
+              - checkbox "Small checkbox" [ref=e348]
+              - generic [ref=e352]: Small checkbox
+            - generic [ref=e353] [cursor=pointer]:
+              - checkbox "Small checked" [checked] [ref=e354]
+              - generic [ref=e358]: Small checked
+    - generic [ref=e359]:
+      - heading "Circle Appearance" [level=2] [ref=e360]
+      - generic [ref=e361]:
+        - generic [ref=e362]:
+          - generic [ref=e363]: Circle
+          - generic [ref=e364]:
+            - generic [ref=e365] [cursor=pointer]:
+              - checkbox "Circle checkbox" [ref=e366]
+              - generic [ref=e370]: Circle checkbox
+            - generic [ref=e371] [cursor=pointer]:
+              - checkbox "Circle checked" [checked] [ref=e372]
+              - generic [ref=e376]: Circle checked
+        - generic [ref=e377]:
+          - generic [ref=e378]: Small circle
+          - generic [ref=e380] [cursor=pointer]:
+            - checkbox "Small circle checked" [checked] [ref=e381]
+            - generic [ref=e385]: Small circle checked
+    - generic [ref=e386]:
+      - heading "Checkbox Group (multi-select)" [level=2] [ref=e387]
+      - generic [ref=e389]:
+        - generic [ref=e390] [cursor=pointer]:
+          - checkbox "Civil status" [ref=e391]
+          - generic [ref=e395]: Civil status
+        - generic [ref=e396] [cursor=pointer]:
+          - checkbox "Business registration" [checked] [ref=e397]
+          - generic [ref=e401]: Business registration
+        - generic [ref=e402] [cursor=pointer]:
+          - checkbox "Vehicle licensing" [ref=e403]
+          - generic [ref=e407]: Vehicle licensing
+        - generic [ref=e408] [cursor=pointer]:
+          - checkbox "Health services" [ref=e409]
+          - generic [ref=e413]: Health services
+        - paragraph [ref=e414]:
+          - text: "Selected:"
+          - strong [ref=e415]: business-reg

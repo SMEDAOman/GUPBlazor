@@ -1369,6 +1369,18 @@ body {
   outline-offset: 3px;
 }
 
+/* ── Error message ── */
+.gup-checkbox__error {
+  display: block;
+  color: var(--gup-color-negative-medium);
+  font-size: var(--font-size-300);
+  padding-bottom: var(--gup-spacing-component-default);
+}
+
+.gup-checkbox__input[aria-invalid="true"] + .gup-checkbox__check-mark {
+  border-color: var(--gup-color-negative-medium);
+}
+
 /* ------------------------------------------------------------
    COMPONENT: gup-dropdown-field
    ------------------------------------------------------------ */

@@ -1,4 +1,5 @@
 @page "/demo/inputs/checkbox"
+@rendermode InteractiveServer
 
 <PageTitle>Checkbox — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Checkbox">
-        <PageSummary>GupCheckbox in default, checked, disabled, small, and circle variants — individually and in groups.</PageSummary>
+        <PageSummary>GupCheckbox in default, checked, disabled, small, indeterminate, and circle variants — with event handling and two-way binding.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -39,6 +40,80 @@
                             <ChildContent>Subscribe to newsletter</ChildContent>
                         </GupCheckbox>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way Binding (@@bind-Checked)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCheckbox Name="cb-bind" @bind-Checked="_bindChecked">
+                        <ChildContent>Enable notifications</ChildContent>
+                        <Hint>Toggle me — the bound value updates below.</Hint>
+                    </GupCheckbox>
+                    <p data-testid="bind-output" style="margin-top: 12px;">
+                        Bound value: <strong>@_bindChecked</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnChange Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCheckbox Name="cb-event" OnChange="HandleCheckboxChanged">
+                        <ChildContent>Subscribe to product updates</ChildContent>
+                    </GupCheckbox>
+                    <p data-testid="event-log" style="margin-top: 12px;">
+                        Last event: <strong>@_lastEvent</strong> (count: @_eventCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Indeterminate State</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCheckbox Name="cb-parent" @bind-Checked="_parentChecked" Indeterminate="@_parentIndeterminate" OnChange="HandleParentChange">
+                        <ChildContent>Select all (@_selectedCount of @_childItems.Count selected)</ChildContent>
+                    </GupCheckbox>
+                    <div style="margin-left: 32px; margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+                        @for (var i = 0; i < _childItems.Count; i++)
+                        {
+                            var idx = i;
+                            <GupCheckbox Name="@($"cb-child-{idx}")" Checked="_childItems[idx].Checked" OnChange="@(c => HandleChildChange(idx, c))">
+                                <ChildContent>@_childItems[idx].Label</ChildContent>
+                            </GupCheckbox>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Required + Validation</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCheckbox @ref="_requiredCheckbox"
+                                 Name="cb-required"
+                                 Required="true"
+                                 ErrorMessage="You must accept the terms to continue.">
+                        <ChildContent>I agree to the terms (required)</ChildContent>
+                    </GupCheckbox>
+                    <div style="margin-top: 12px;">
+                        <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ValidateRequired">
+                            <ChildContent>Submit</ChildContent>
+                        </GupButton>
+                    </div>
+                    @if (_validationMessage != null)
+                    {
+                        <p data-testid="validation-output" style="margin-top: 12px;">
+                            Validation result: <strong>@_validationMessage</strong>
+                        </p>
+                    }
                 </div>
             </div>
         </section>
@@ -122,21 +197,106 @@
             <h2 class="demo-section-title">Checkbox Group (multi-select)</h2>
             <div class="demo-card--full">
                 <div class="demo-surface">
-                    <GupCheckbox Name="services" Value="civil-status">
+                    <GupCheckbox Name="services" Value="civil-status" OnChange="@(c => ToggleService("civil-status", c))">
                         <ChildContent>Civil status</ChildContent>
                     </GupCheckbox>
-                    <GupCheckbox Name="services" Value="business-reg" Checked="true">
+                    <GupCheckbox Name="services" Value="business-reg" Checked="true" OnChange="@(c => ToggleService("business-reg", c))">
                         <ChildContent>Business registration</ChildContent>
                     </GupCheckbox>
-                    <GupCheckbox Name="services" Value="vehicle-lic">
+                    <GupCheckbox Name="services" Value="vehicle-lic" OnChange="@(c => ToggleService("vehicle-lic", c))">
                         <ChildContent>Vehicle licensing</ChildContent>
                     </GupCheckbox>
-                    <GupCheckbox Name="services" Value="health">
+                    <GupCheckbox Name="services" Value="health" OnChange="@(c => ToggleService("health", c))">
                         <ChildContent>Health services</ChildContent>
                     </GupCheckbox>
+                    <p data-testid="services-output" style="margin-top: 12px;">
+                        Selected: <strong>@(_selectedServices.Count == 0 ? "(none)" : string.Join(", ", _selectedServices))</strong>
+                    </p>
                 </div>
             </div>
         </section>
 
     </div>
 </div>
+
+@code {
+    private bool _bindChecked;
+
+    private string _lastEvent = "(none)";
+    private int _eventCount;
+
+    private bool _parentChecked;
+    private bool _parentIndeterminate;
+    private List<ChildItem> _childItems = new()
+    {
+        new ChildItem("Item A", false),
+        new ChildItem("Item B", false),
+        new ChildItem("Item C", false)
+    };
+    private int _selectedCount => _childItems.Count(c => c.Checked);
+
+    private GupCheckbox? _requiredCheckbox;
+    private string? _validationMessage;
+
+    private HashSet<string> _selectedServices = new() { "business-reg" };
+
+    private void HandleCheckboxChanged(bool checkedValue)
+    {
+        _eventCount++;
+        _lastEvent = checkedValue ? "checked" : "unchecked";
+    }
+
+    private void HandleParentChange(bool checkedValue)
+    {
+        _parentIndeterminate = false;
+        foreach (var c in _childItems)
+        {
+            c.Checked = checkedValue;
+        }
+    }
+
+    private void HandleChildChange(int index, bool checkedValue)
+    {
+        _childItems[index].Checked = checkedValue;
+        var count = _selectedCount;
+        if (count == 0)
+        {
+            _parentChecked = false;
+            _parentIndeterminate = false;
+        }
+        else if (count == _childItems.Count)
+        {
+            _parentChecked = true;
+            _parentIndeterminate = false;
+        }
+        else
+        {
+            _parentChecked = false;
+            _parentIndeterminate = true;
+        }
+    }
+
+    private void ValidateRequired()
+    {
+        if (_requiredCheckbox is null) return;
+        var ok = _requiredCheckbox.ReportValidity();
+        _validationMessage = ok ? "valid" : "invalid";
+    }
+
+    private void ToggleService(string id, bool checkedValue)
+    {
+        if (checkedValue) _selectedServices.Add(id);
+        else _selectedServices.Remove(id);
+    }
+
+    private class ChildItem
+    {
+        public string Label { get; }
+        public bool Checked { get; set; }
+        public ChildItem(string label, bool isChecked)
+        {
+            Label = label;
+            Checked = isChecked;
+        }
+    }
+}
