@@ -1,8 +1,17 @@
 @* Equivalent of <gup-dropdown-field name="..." placeholder="..." required disabled clearable loading>
    Named slots: Label, Hint
    Default slot: ChildContent (gup-dropdown-menu)
-   Uses plain JS for interactivity (no interactive render mode required).
+   Uses plain JS for interactivity; event handling round-trips to Blazor via DotNetObjectReference.
+   Events:
+     - OnChange (single mode): fires with selected value when user picks an item
+     - OnMultiChange (multi mode): fires on every toggle with current selected values
+     - OnMultiApplied (multi mode): fires when user clicks Apply or closes the menu
+     - OnOpen / OnClose: menu visibility changes
+     - OnClear: clear button clicked
 *@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
 <div class="gup-dropdown-field @DisabledClass @InvalidClass"
      id="@Id"
      data-clearable="@Clearable.ToString().ToLowerInvariant()"
@@ -86,8 +95,96 @@
     [Parameter] public RenderFragment? Hint { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>Single-select: fires with the selected value (or null) when the user picks an item.</summary>
+    [Parameter] public EventCallback<string?> OnChange { get; set; }
+
+    /// <summary>Multi-select: fires on every toggle with the current list of selected values.</summary>
+    [Parameter] public EventCallback<IReadOnlyList<string>> OnMultiChange { get; set; }
+
+    /// <summary>Multi-select: fires when the user clicks Apply or closes the dropdown.</summary>
+    [Parameter] public EventCallback<IReadOnlyList<string>> OnMultiApplied { get; set; }
+
+    [Parameter] public EventCallback OnOpen { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback OnClear { get; set; }
+
     private string Id => $"gup-dd-{Name}";
     private string InputId => $"dropdown-{Name}";
     private string DisabledClass => Disabled ? "gup-dropdown-field--disabled" : "";
     private string InvalidClass => !string.IsNullOrEmpty(ErrorMessage) ? "gup-dropdown-field--invalid" : "";
+
+    private DotNetObjectReference<GupDropdownField>? _selfRef;
+    private bool _registered;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _selfRef = DotNetObjectReference.Create(this);
+            try
+            {
+                await JS.InvokeVoidAsync("__gupDropdown.registerCallback", Id, _selfRef);
+                _registered = true;
+            }
+            catch (InvalidOperationException)
+            {
+                // Prerendering — JS interop unavailable. Will retry next render via OnAfterRender.
+            }
+        }
+    }
+
+    [JSInvokable]
+    public async Task NotifyChange(string? value, string? label)
+    {
+        Value = value;
+        DisplayValue = label;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(value);
+        if (OnChange.HasDelegate) await OnChange.InvokeAsync(value);
+    }
+
+    [JSInvokable]
+    public async Task NotifyMultiChange(string[] values)
+    {
+        if (OnMultiChange.HasDelegate) await OnMultiChange.InvokeAsync(values);
+    }
+
+    [JSInvokable]
+    public async Task NotifyMultiApplied(string[] values)
+    {
+        if (OnMultiApplied.HasDelegate) await OnMultiApplied.InvokeAsync(values);
+    }
+
+    [JSInvokable]
+    public async Task NotifyClear()
+    {
+        Value = null;
+        DisplayValue = null;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(null);
+        if (OnClear.HasDelegate) await OnClear.InvokeAsync();
+    }
+
+    [JSInvokable]
+    public async Task NotifyOpen()
+    {
+        if (OnOpen.HasDelegate) await OnOpen.InvokeAsync();
+    }
+
+    [JSInvokable]
+    public async Task NotifyClose()
+    {
+        if (OnClose.HasDelegate) await OnClose.InvokeAsync();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_registered)
+        {
+            try { await JS.InvokeVoidAsync("__gupDropdown.unregisterCallback", Id); }
+            catch { /* circuit may already be down */ }
+        }
+        _selfRef?.Dispose();
+    }
 }

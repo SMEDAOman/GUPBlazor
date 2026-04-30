@@ -1,4 +1,5 @@
 @page "/demo/inputs/dropdown"
+@rendermode InteractiveServer
 
 <PageTitle>Dropdown — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Dropdown">
-        <PageSummary>GupDropdownField with single-select, multi-select, search, clearable, disabled, error, and loading variants.</PageSummary>
+        <PageSummary>GupDropdownField with single-select, multi-select, search, clearable, disabled, error, loading variants — and event handling.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -62,6 +63,50 @@
         </section>
 
         <section class="demo-section">
+            <h2 class="demo-section-title">Two-way Binding (@@bind-Value)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDropdownField Name="bind-color" Placeholder="Pick a color" @bind-Value="_selectedColor">
+                        <Label>Favourite colour</Label>
+                        <ChildContent>
+                            <GupDropdownMenu>
+                                <GupDropdownMenuItem Label="Red" Value="red" />
+                                <GupDropdownMenuItem Label="Green" Value="green" />
+                                <GupDropdownMenuItem Label="Blue" Value="blue" />
+                                <GupDropdownMenuItem Label="Yellow" Value="yellow" />
+                            </GupDropdownMenu>
+                        </ChildContent>
+                    </GupDropdownField>
+                    <p data-testid="bind-color-output" style="margin-top: 12px;">
+                        Bound value: <strong>@(_selectedColor ?? "(none)")</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnChange Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDropdownField Name="event-fruit" Placeholder="Choose a fruit" OnChange="HandleFruitChange" OnOpen="HandleOpen" OnClose="HandleClose">
+                        <Label>Fruit</Label>
+                        <ChildContent>
+                            <GupDropdownMenu>
+                                <GupDropdownMenuItem Label="Apple" Value="apple" />
+                                <GupDropdownMenuItem Label="Banana" Value="banana" />
+                                <GupDropdownMenuItem Label="Cherry" Value="cherry" />
+                                <GupDropdownMenuItem Label="Date" Value="date" />
+                            </GupDropdownMenu>
+                        </ChildContent>
+                    </GupDropdownField>
+                    <p data-testid="event-fruit-output" style="margin-top: 12px;">
+                        Last change: <strong>@_fruitLog</strong> — Open count: <strong data-testid="open-count">@_openCount</strong>, Close count: <strong data-testid="close-count">@_closeCount</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
             <h2 class="demo-section-title">With Search</h2>
             <div class="demo-row">
                 <div class="demo-card">
@@ -90,9 +135,11 @@
                 </div>
 
                 <div class="demo-card">
-                    <span class="demo-card-label">Multi-select + search</span>
+                    <span class="demo-card-label">Multi-select + search + events</span>
                     <div class="demo-surface">
-                        <GupDropdownField Name="multi-search" Placeholder="Search and select multiple">
+                        <GupDropdownField Name="multi-search" Placeholder="Search and select multiple"
+                                          OnMultiChange="HandleServicesChange"
+                                          OnMultiApplied="HandleServicesApplied">
                             <Label>Services</Label>
                             <Hint>Select all applicable services.</Hint>
                             <ChildContent>
@@ -106,37 +153,40 @@
                                 </GupDropdownMenu>
                             </ChildContent>
                         </GupDropdownField>
+                        <p data-testid="services-output" style="margin-top: 12px;">
+                            Live: <strong>@_servicesLive</strong><br/>
+                            Applied: <strong>@_servicesApplied</strong>
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="demo-section">
-            <h2 class="demo-section-title">Multi-Select + Clearable (in a form)</h2>
+            <h2 class="demo-section-title">Multi-Select + Clearable + OnClear</h2>
             <div class="demo-card--full">
                 <div class="demo-surface">
-                    <form novalidate onsubmit="event.preventDefault(); var fd = new FormData(event.target); console.log('Form data:', Object.fromEntries(fd));">
-                        <GupFormList>
-                            <GupDropdownField Name="dropdown" Placeholder="Select items" Clearable="true">
-                                <Label>Select items</Label>
-                                <ChildContent>
-                                    <GupDropdownMenu Multiple="true">
-                                        <GupDropdownMenuItem Label="Item number 1" Value="item1" />
-                                        <GupDropdownMenuItem Label="Item number 2" Value="item2" />
-                                        <GupDropdownMenuItem Label="Item 3" Value="item3" />
-                                        <GupDropdownMenuItem Label="Item number 4" Value="item4" />
-                                        <GupDropdownMenuItem Label="Item number 5" Value="item5" />
-                                        <GupDropdownMenuItem Label="Item number 6" Value="item6" />
-                                        <GupDropdownMenuItem Label="Item number 7" Value="item7" />
-                                        <GupDropdownMenuItem Label="Item number 8" Value="item8" />
-                                    </GupDropdownMenu>
-                                </ChildContent>
-                            </GupDropdownField>
-                        </GupFormList>
-                        <div style="margin-top: 16px;">
-                            <GupButton Type="GupButtonType.Submit">Submit</GupButton>
-                        </div>
-                    </form>
+                    <GupDropdownField Name="dropdown" Placeholder="Select items" Clearable="true"
+                                      OnMultiChange="HandleItemsChange"
+                                      OnClear="HandleItemsCleared">
+                        <Label>Select items</Label>
+                        <ChildContent>
+                            <GupDropdownMenu Multiple="true">
+                                <GupDropdownMenuItem Label="Item number 1" Value="item1" />
+                                <GupDropdownMenuItem Label="Item number 2" Value="item2" />
+                                <GupDropdownMenuItem Label="Item 3" Value="item3" />
+                                <GupDropdownMenuItem Label="Item number 4" Value="item4" />
+                                <GupDropdownMenuItem Label="Item number 5" Value="item5" />
+                                <GupDropdownMenuItem Label="Item number 6" Value="item6" />
+                                <GupDropdownMenuItem Label="Item number 7" Value="item7" />
+                                <GupDropdownMenuItem Label="Item number 8" Value="item8" />
+                            </GupDropdownMenu>
+                        </ChildContent>
+                    </GupDropdownField>
+                    <p data-testid="items-output" style="margin-top: 12px;">
+                        Selected: <strong>@(_selectedItems.Count == 0 ? "(none)" : string.Join(", ", _selectedItems))</strong>
+                        — Cleared: <strong data-testid="cleared-count">@_clearedCount</strong> times
+                    </p>
                 </div>
             </div>
         </section>
@@ -196,3 +246,46 @@
 
     </div>
 </div>
+
+@code {
+    private string? _selectedColor;
+
+    private string _fruitLog = "(none)";
+    private int _openCount;
+    private int _closeCount;
+
+    private string _servicesLive = "(none)";
+    private string _servicesApplied = "(none)";
+
+    private List<string> _selectedItems = new();
+    private int _clearedCount;
+
+    private void HandleFruitChange(string? value)
+    {
+        _fruitLog = value ?? "(none)";
+    }
+
+    private void HandleOpen() => _openCount++;
+    private void HandleClose() => _closeCount++;
+
+    private void HandleServicesChange(IReadOnlyList<string> values)
+    {
+        _servicesLive = values.Count == 0 ? "(none)" : string.Join(", ", values);
+    }
+
+    private void HandleServicesApplied(IReadOnlyList<string> values)
+    {
+        _servicesApplied = values.Count == 0 ? "(none)" : string.Join(", ", values);
+    }
+
+    private void HandleItemsChange(IReadOnlyList<string> values)
+    {
+        _selectedItems = values.ToList();
+    }
+
+    private void HandleItemsCleared()
+    {
+        _selectedItems.Clear();
+        _clearedCount++;
+    }
+}

@@ -1,5 +1,24 @@
 // Dropdown field interactivity (no interactive render mode required)
 window.__gupDropdown = {
+    // Registered .NET callbacks: id → DotNetObjectReference
+    _callbacks: {},
+
+    registerCallback(fieldId, dotnetRef) {
+        this._callbacks[fieldId] = dotnetRef;
+    },
+    unregisterCallback(fieldId) {
+        delete this._callbacks[fieldId];
+    },
+    _notify(fieldId, method, ...args) {
+        const cb = this._callbacks[fieldId];
+        if (!cb) return;
+        try { cb.invokeMethodAsync(method, ...args); } catch (e) { /* component disposed */ }
+    },
+    _selectedValues(field) {
+        return [...field.querySelectorAll('.gup-dropdown-menu-item--selected')]
+            .map(i => i.dataset.value);
+    },
+
     toggle(id) {
         const el = document.getElementById(id);
         if (!el) return;
@@ -11,12 +30,17 @@ window.__gupDropdown = {
             if (search) { search.value = ''; this._showAll(el); search.focus(); }
             // Sync apply button state when reopening
             if (this._isMultiple(el)) this._updateApplyButton(el);
+            this._notify(id, 'NotifyOpen');
+        } else {
+            this._notify(id, 'NotifyClose');
         }
     },
     close(el) {
+        const wasOpen = el.classList.contains('gup-dropdown-field--open');
         el.classList.remove('gup-dropdown-field--open');
         const input = el.querySelector('.input');
         if (input) input.setAttribute('aria-expanded', 'false');
+        if (wasOpen) this._notify(el.id, 'NotifyClose');
     },
     _isMultiple(field) {
         const menu = field.querySelector('.gup-dropdown-menu');
@@ -40,6 +64,7 @@ window.__gupDropdown = {
             if (cb) cb.checked = isSelected;
             // Update apply button with count
             this._updateApplyButton(field);
+            this._notify(field.id, 'NotifyMultiChange', this._selectedValues(field));
         } else {
             // Single select: deselect all, select one, close
             field.querySelectorAll('.gup-dropdown-menu-item').forEach(mi => {
@@ -56,6 +81,7 @@ window.__gupDropdown = {
             if (ci) ci.style.display = '';
             const input = field.querySelector('.input');
             if (input) input.value = item.dataset.label;
+            this._notify(field.id, 'NotifyChange', item.dataset.value, item.dataset.label);
             this.close(field);
         }
     },
@@ -69,6 +95,7 @@ window.__gupDropdown = {
             input.value = count > 0 ? count + valuesLabel : '';
         }
         this._updateClearButton(field, count > 0);
+        this._notify(field.id, 'NotifyMultiApplied', this._selectedValues(field));
         this.close(field);
     },
     clearSelection(fieldId) {
@@ -85,6 +112,7 @@ window.__gupDropdown = {
         if (input) input.value = '';
         this._updateClearButton(field, false);
         this._updateApplyButton(field);
+        this._notify(fieldId, 'NotifyClear');
     },
     _updateClearButton(field, show) {
         const clearBtn = field.querySelector('.gup-dropdown-clear-btn');
@@ -136,6 +164,7 @@ document.addEventListener('click', function (e) {
                 var valuesLabel = dd.dataset.multipleValuesLabel || ' selected';
                 if (input) input.value = count > 0 ? count + valuesLabel : '';
                 window.__gupDropdown._updateClearButton(dd, count > 0);
+                window.__gupDropdown._notify(dd.id, 'NotifyMultiApplied', window.__gupDropdown._selectedValues(dd));
             }
             window.__gupDropdown.close(dd);
         }
