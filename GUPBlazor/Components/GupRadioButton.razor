@@ -1,11 +1,17 @@
 @* Equivalent of <gup-radio-button name="..." value="..." selected>
    Named slots: ChildContent (label text), Hint
+   Events: OnChange (fires with this radio's value when it becomes selected)
+   When nested inside a GupRadioButtonGroup, the group's @bind-Value drives selection.
 *@
+@using Microsoft.AspNetCore.Components.Web
+@implements IDisposable
+
 <div class="gup-radio-button">
     <label class="wrapper">
-        <input type="radio" name="@Name" value="@Value"
-               checked="@(Selected ? true : null)"
-               disabled="@(Disabled ? true : null)" />
+        <input type="radio" name="@EffectiveName" value="@Value"
+               checked="@(IsChecked ? true : null)"
+               disabled="@(Disabled ? true : null)"
+               @onchange="HandleChange" />
         <div class="box">
             <div class="box-inner">
                 <div class="box-pupil"></div>
@@ -28,4 +34,60 @@
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public RenderFragment? Hint { get; set; }
+    [Parameter] public EventCallback<string> OnChange { get; set; }
+
+    [CascadingParameter] private GupRadioButtonGroup? Group { get; set; }
+
+    private bool _localSelected;
+    private bool _registered;
+
+    private string EffectiveName => !string.IsNullOrEmpty(Group?.Name) ? Group!.Name : Name;
+
+    private bool IsChecked => Group is not null
+        ? Group.Value == Value
+        : _localSelected;
+
+    protected override void OnInitialized()
+    {
+        _localSelected = Selected;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!_registered && Group is not null)
+        {
+            _registered = true;
+            Group.RegisterChild(this);
+            if (Selected && Group.Value is null)
+            {
+                await Group.SetInitialValueAsync(Value);
+            }
+        }
+    }
+
+    private async Task HandleChange(ChangeEventArgs e)
+    {
+        if (Disabled) return;
+
+        if (Group is not null)
+        {
+            await Group.NotifyChangeAsync(Value);
+        }
+        else
+        {
+            _localSelected = true;
+        }
+
+        if (OnChange.HasDelegate)
+        {
+            await OnChange.InvokeAsync(Value);
+        }
+    }
+
+    internal void RefreshFromGroup() => StateHasChanged();
+
+    public void Dispose()
+    {
+        if (_registered) Group?.UnregisterChild(this);
+    }
 }

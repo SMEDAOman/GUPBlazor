@@ -1,4 +1,5 @@
 @page "/demo/inputs/radio"
+@rendermode InteractiveServer
 
 <PageTitle>Radio Button — Component Demo</PageTitle>
 
@@ -15,7 +16,7 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Radio Button">
-        <PageSummary>GupRadioButton and GupRadioButtonGroup — exclusive single-selection within a group.</PageSummary>
+        <PageSummary>GupRadioButton and GupRadioButtonGroup — exclusive single-selection within a group, with event handling and two-way binding.</PageSummary>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -25,15 +26,15 @@
             <div class="demo-card--full">
                 <div class="demo-surface">
                     <GupRadioButtonGroup Label="Preferred contact method" Name="contact-method">
-                        <GupRadioButton Name="contact-method" Value="email">
+                        <GupRadioButton Value="email">
                             <ChildContent>Email</ChildContent>
                             <Hint>We'll send updates to your inbox.</Hint>
                         </GupRadioButton>
-                        <GupRadioButton Name="contact-method" Value="sms">
+                        <GupRadioButton Value="sms">
                             <ChildContent>SMS</ChildContent>
                             <Hint>We'll send a text to your phone.</Hint>
                         </GupRadioButton>
-                        <GupRadioButton Name="contact-method" Value="none">
+                        <GupRadioButton Value="none">
                             <ChildContent>Do not contact</ChildContent>
                         </GupRadioButton>
                     </GupRadioButtonGroup>
@@ -42,20 +43,61 @@
         </section>
 
         <section class="demo-section">
-            <h2 class="demo-section-title">With Pre-Selected Item</h2>
+            <h2 class="demo-section-title">Two-way Binding (@@bind-Value)</h2>
             <div class="demo-card--full">
                 <div class="demo-surface">
-                    <GupRadioButtonGroup Label="Application type" Name="app-type">
-                        <GupRadioButton Name="app-type" Value="new" Selected="true">
+                    <GupRadioButtonGroup Label="Application type" Name="app-type" @bind-Value="_appType">
+                        <GupRadioButton Value="new">
                             <ChildContent>New application</ChildContent>
                             <Hint>Apply for the first time.</Hint>
                         </GupRadioButton>
-                        <GupRadioButton Name="app-type" Value="renewal">
+                        <GupRadioButton Value="renewal">
                             <ChildContent>Renewal</ChildContent>
                             <Hint>Renew an existing permit.</Hint>
                         </GupRadioButton>
-                        <GupRadioButton Name="app-type" Value="replacement" Disabled="true">
+                        <GupRadioButton Value="replacement" Disabled="true">
                             <ChildContent>Replacement (unavailable)</ChildContent>
+                        </GupRadioButton>
+                    </GupRadioButtonGroup>
+                    <p data-testid="bind-output" style="margin-top: 12px;">
+                        Bound value: <strong>@(_appType ?? "(none)")</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnChange Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupRadioButtonGroup Label="Do you own a vehicle?" Name="owns-vehicle" OnChange="HandleVehicleChange">
+                        <GupRadioButton Value="yes">
+                            <ChildContent>Yes</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Value="no">
+                            <ChildContent>No</ChildContent>
+                        </GupRadioButton>
+                    </GupRadioButtonGroup>
+                    <p data-testid="event-log" style="margin-top: 12px;">
+                        Last event: <strong>@_lastVehicleEvent</strong> (count: @_vehicleEventCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Pre-Selected via Selected="true"</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupRadioButtonGroup Label="Gender" Name="gender">
+                        <GupRadioButton Value="male">
+                            <ChildContent>Male</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Value="female" Selected="true">
+                            <ChildContent>Female</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Value="other">
+                            <ChildContent>Prefer not to say</ChildContent>
                         </GupRadioButton>
                     </GupRadioButtonGroup>
                 </div>
@@ -63,36 +105,23 @@
         </section>
 
         <section class="demo-section">
-            <h2 class="demo-section-title">Short Labels</h2>
-            <div class="demo-row">
-                <div class="demo-card">
-                    <span class="demo-card-label">Gender</span>
-                    <div class="demo-surface">
-                        <GupRadioButtonGroup Label="Gender" Name="gender">
-                            <GupRadioButton Name="gender" Value="male">
-                                <ChildContent>Male</ChildContent>
-                            </GupRadioButton>
-                            <GupRadioButton Name="gender" Value="female">
-                                <ChildContent>Female</ChildContent>
-                            </GupRadioButton>
-                            <GupRadioButton Name="gender" Value="other">
-                                <ChildContent>Prefer not to say</ChildContent>
-                            </GupRadioButton>
-                        </GupRadioButtonGroup>
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Yes / No</span>
-                    <div class="demo-surface">
-                        <GupRadioButtonGroup Label="Do you own a vehicle?" Name="owns-vehicle">
-                            <GupRadioButton Name="owns-vehicle" Value="yes">
-                                <ChildContent>Yes</ChildContent>
-                            </GupRadioButton>
-                            <GupRadioButton Name="owns-vehicle" Value="no" Selected="true">
-                                <ChildContent>No</ChildContent>
-                            </GupRadioButton>
-                        </GupRadioButtonGroup>
-                    </div>
+            <h2 class="demo-section-title">Per-Radio OnChange</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupRadioButtonGroup Label="Choose a plan" Name="plan">
+                        <GupRadioButton Value="basic" OnChange="@(v => HandlePlanChosen(v))">
+                            <ChildContent>Basic</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Value="pro" OnChange="@(v => HandlePlanChosen(v))">
+                            <ChildContent>Pro</ChildContent>
+                        </GupRadioButton>
+                        <GupRadioButton Value="enterprise" OnChange="@(v => HandlePlanChosen(v))">
+                            <ChildContent>Enterprise</ChildContent>
+                        </GupRadioButton>
+                    </GupRadioButtonGroup>
+                    <p data-testid="plan-output" style="margin-top: 12px;">
+                        Last picked: <strong>@(_lastPlan ?? "(none)")</strong>
+                    </p>
                 </div>
             </div>
         </section>
@@ -102,13 +131,13 @@
             <div class="demo-card--full">
                 <div class="demo-surface">
                     <GupRadioButtonGroup Label="Unavailable options" Name="disabled-group">
-                        <GupRadioButton Name="disabled-group" Value="a" Disabled="true">
+                        <GupRadioButton Value="a" Disabled="true">
                             <ChildContent>Option A (disabled)</ChildContent>
                         </GupRadioButton>
-                        <GupRadioButton Name="disabled-group" Value="b" Selected="true" Disabled="true">
+                        <GupRadioButton Value="b" Selected="true" Disabled="true">
                             <ChildContent>Option B (selected &amp; disabled)</ChildContent>
                         </GupRadioButton>
-                        <GupRadioButton Name="disabled-group" Value="c" Disabled="true">
+                        <GupRadioButton Value="c" Disabled="true">
                             <ChildContent>Option C (disabled)</ChildContent>
                         </GupRadioButton>
                     </GupRadioButtonGroup>
@@ -118,3 +147,23 @@
 
     </div>
 </div>
+
+@code {
+    private string? _appType;
+
+    private string _lastVehicleEvent = "(none)";
+    private int _vehicleEventCount;
+
+    private string? _lastPlan;
+
+    private void HandleVehicleChange(string? value)
+    {
+        _vehicleEventCount++;
+        _lastVehicleEvent = value ?? "(cleared)";
+    }
+
+    private void HandlePlanChosen(string value)
+    {
+        _lastPlan = value;
+    }
+}

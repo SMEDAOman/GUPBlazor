@@ -1,16 +1,55 @@
-@* Equivalent of <gup-radio-button-group label="..." name="..."> *@
+@* Equivalent of <gup-radio-button-group label="..." name="...">
+   Two-way binding: @bind-Value (selected radio's value)
+   Events: OnChange (new selected value)
+*@
 <div class="gup-radio-button-group">
     @if (!string.IsNullOrEmpty(Label))
     {
         <span class="group-label">@Label</span>
     }
     <div class="options" role="radiogroup" aria-label="@Label">
-        @ChildContent
+        <CascadingValue Value="this" IsFixed="true">
+            @ChildContent
+        </CascadingValue>
     </div>
 </div>
 
 @code {
     [Parameter] public string Label { get; set; } = "";
     [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public EventCallback<string?> OnChange { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private readonly List<GupRadioButton> _children = new();
+
+    internal void RegisterChild(GupRadioButton child)
+    {
+        if (!_children.Contains(child)) _children.Add(child);
+    }
+
+    internal void UnregisterChild(GupRadioButton child)
+    {
+        _children.Remove(child);
+    }
+
+    internal async Task NotifyChangeAsync(string? value)
+    {
+        if (Value == value) return;
+        Value = value;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(value);
+        if (OnChange.HasDelegate) await OnChange.InvokeAsync(value);
+        foreach (var c in _children.ToArray()) c.RefreshFromGroup();
+        StateHasChanged();
+    }
+
+    internal async Task SetInitialValueAsync(string? value)
+    {
+        if (Value is not null) return;
+        Value = value;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(value);
+        foreach (var c in _children.ToArray()) c.RefreshFromGroup();
+        StateHasChanged();
+    }
 }
