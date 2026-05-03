@@ -18,7 +18,7 @@
          @onclick="HandleBackdropClick"
          @onkeydown="HandleKeyDown"
          tabindex="-1">
-        <div class="gup-dialog"
+        <div class="gup-dialog @SizeClass"
              role="dialog"
              aria-modal="true"
              aria-labelledby="@_headingId"
@@ -58,9 +58,19 @@
     [Parameter] public bool HideCloseButton { get; set; }
     [Parameter] public string CloseLabel { get; set; } = "Close";
     [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+    [Parameter] public string Size { get; set; } = "medium";
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public RenderFragment? ActionButtons { get; set; }
     [Parameter] public EventCallback OnClose { get; set; }
+
+    private string SizeClass => Size switch
+    {
+        "small"      => "gup-dialog--small",
+        "large"      => "gup-dialog--large",
+        "xl"         => "gup-dialog--xl",
+        "fullscreen" => "gup-dialog--fullscreen",
+        _            => "gup-dialog--medium",
+    };
 
     private readonly string _headingId = $"gup-dialog-heading-{Guid.NewGuid():N}";
     private ElementReference _backdropRef;

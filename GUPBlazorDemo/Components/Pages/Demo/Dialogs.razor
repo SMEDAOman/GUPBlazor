@@ -69,6 +69,31 @@
       </div>
     </section>
 
+    <!-- ══ SIZES ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Sizes</h2>
+
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Size="small|medium|large|xl|fullscreen" — controls the modal's max-width (and viewport coverage for fullscreen)</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => _smallOpen = true)">
+              <ChildContent>Small (320px)</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => _largeOpen = true)">
+              <ChildContent>Large (640px)</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => _xlOpen = true)">
+              <ChildContent>XL (960px)</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => _fullscreenOpen = true)">
+              <ChildContent>Fullscreen</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
     <!-- ══ NO CLOSE BUTTON ══ -->
     <section class="demo-section">
       <h2 class="demo-section-title">Without close button</h2>
@@ -180,6 +205,83 @@
   </ActionButtons>
 </GupDialog>
 
+<GupDialog Heading="Small dialog"
+           IsOpen="_smallOpen"
+           Size="small"
+           OnClose="@(() => CloseDialog("size-small"))">
+  <ChildContent>A compact dialog — useful for short confirmations like "Delete this item?"</ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("size-small-ok"))">
+        <ChildContent>OK</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<GupDialog Heading="Large dialog — review details"
+           IsOpen="_largeOpen"
+           Size="large"
+           OnClose="@(() => CloseDialog("size-large"))">
+  <ChildContent>
+    <GupTrack Direction="vertical" Gap="2">
+      <p>A wider dialog suited for richer content like multi-column forms or summary panels.</p>
+      <GupInputField Type="text" Placeholder="Reference number">Reference</GupInputField>
+      <GupInputField Type="text" Placeholder="Reason for change">Reason</GupInputField>
+    </GupTrack>
+  </ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("size-large-save"))">
+        <ChildContent>Save</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => CloseDialog("size-large-cancel"))">
+        <ChildContent>Cancel</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<GupDialog Heading="Extra-large dialog — data preview"
+           IsOpen="_xlOpen"
+           Size="xl"
+           OnClose="@(() => CloseDialog("size-xl"))">
+  <ChildContent>
+    <p>Use the XL size for content that needs more horizontal room — tables, side-by-side comparisons, or wide forms.</p>
+    <p>The body still scrolls vertically when content exceeds the dialog's max height.</p>
+  </ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("size-xl-close"))">
+        <ChildContent>Close</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
+<GupDialog Heading="Fullscreen dialog — document editor"
+           IsOpen="_fullscreenOpen"
+           Size="fullscreen"
+           OnClose="@(() => CloseDialog("size-fullscreen"))">
+  <ChildContent>
+    <GupTrack Direction="vertical" Gap="2">
+      <p>The fullscreen variant fills the viewport — good for immersive flows like editors, file pickers, or onboarding.</p>
+      <GupInputField Type="text" Placeholder="Document title">Title</GupInputField>
+      <p>The content area expands to fill the available height instead of being capped at 400px.</p>
+    </GupTrack>
+  </ChildContent>
+  <ActionButtons>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => CloseDialog("size-fullscreen-save"))">
+        <ChildContent>Save and close</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => CloseDialog("size-fullscreen-discard"))">
+        <ChildContent>Discard</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </ActionButtons>
+</GupDialog>
+
 <GupDialog Heading="No Close Button Dialog"
            IsOpen="_noCloseOpen"
            HideCloseButton="true"
@@ -218,6 +320,10 @@
     private bool _formOpen;
     private bool _noCloseOpen;
     private bool _rtlOpen;
+    private bool _smallOpen;
+    private bool _largeOpen;
+    private bool _xlOpen;
+    private bool _fullscreenOpen;
     private string? _lastEvent;
 
     private void CloseDialog(string source)
@@ -227,6 +333,10 @@
         _formOpen = false;
         _noCloseOpen = false;
         _rtlOpen = false;
+        _smallOpen = false;
+        _largeOpen = false;
+        _xlOpen = false;
+        _fullscreenOpen = false;
         _lastEvent = $"closed via: {source} @ {DateTime.Now:HH:mm:ss}";
     }
 }

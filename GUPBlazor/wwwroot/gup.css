@@ -2275,6 +2275,36 @@ body {
   padding-inline-start: var(--gup-spacing-text-to-component);
 }
 
+.gup-dialog--small {
+  max-width: 320px;
+}
+
+.gup-dialog--medium {
+  max-width: 420px;
+}
+
+.gup-dialog--large {
+  max-width: 640px;
+}
+
+.gup-dialog--xl {
+  max-width: 960px;
+}
+
+.gup-dialog--fullscreen {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  border: 0;
+}
+
+.gup-dialog--fullscreen .gup-dialog__content {
+  max-height: none;
+  flex: 1 1 auto;
+}
+
 /* ------------------------------------------------------------
    COMPONENT: gup-textarea-field
    ------------------------------------------------------------ */
