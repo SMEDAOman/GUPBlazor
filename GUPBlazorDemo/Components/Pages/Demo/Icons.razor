@@ -1,0 +1,219 @@
+@page "/demo/icons"
+@rendermode RenderMode.InteractiveServer
+
+<PageTitle>Icons — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Icons">
+    <PageSummary>
+      GupIcon renders Material Symbols Outlined via the Google variable font.
+      Pass any Material Symbols name as <code>IconName</code> — kebab-case names from
+      the previous SVG set (e.g. <code>arrow-back</code>) are auto-normalized to snake_case.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ BACKWARD-COMPAT NAMES ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Legacy names (kebab-case, still work)</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">All 24 names from the previous inline-SVG set</span>
+        <div class="demo-surface demo-row" style="gap: 24px; flex-wrap: wrap;">
+          @foreach (var name in LegacyNames)
+          {
+            <div class="icon-tile">
+              <GupIcon IconName="@name" Width="28" Height="28" />
+              <code>@name</code>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ FULL CATALOG ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">New names (full Material Symbols catalog)</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">Any name from fonts.google.com/icons</span>
+        <div class="demo-surface demo-row" style="gap: 24px; flex-wrap: wrap;">
+          @foreach (var name in CatalogSamples)
+          {
+            <div class="icon-tile">
+              <GupIcon IconName="@name" Width="28" />
+              <code>@name</code>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SIZES ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Sizes</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">Width drives both font-size and the opsz axis</span>
+        <div class="demo-surface demo-row" style="gap: 24px; align-items: flex-end; flex-wrap: wrap;">
+          @foreach (var size in new[] { 16, 20, 24, 32, 40, 48 })
+          {
+            <div class="icon-tile">
+              <GupIcon IconName="settings" Width="@size" />
+              <code>@(size)px</code>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ FILLED ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Filled vs outlined</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">FILL axis (0 / 1)</span>
+        <div class="demo-surface demo-row" style="gap: 32px; flex-wrap: wrap;">
+          @foreach (var name in new[] { "favorite", "star", "home", "bookmark", "notifications" })
+          {
+            <div class="icon-tile">
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <GupIcon IconName="@name" Width="28" />
+                <GupIcon IconName="@name" Width="28" Filled="true" />
+              </div>
+              <code>@name</code>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ WEIGHT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Weight axis</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">wght 100 → 700</span>
+        <div class="demo-surface demo-row" style="gap: 24px; flex-wrap: wrap;">
+          @foreach (var w in new[] { 100, 200, 300, 400, 500, 600, 700 })
+          {
+            <div class="icon-tile">
+              <GupIcon IconName="rocket_launch" Width="32" Weight="@w" />
+              <code>@w</code>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ GRADE ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Grade axis</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">GRAD -25 / 0 / 200 — fine-tunes glyph weight without shifting size</span>
+        <div class="demo-surface demo-row" style="gap: 24px; flex-wrap: wrap;">
+          @foreach (var g in new[] { -25, 0, 200 })
+          {
+            <div class="icon-tile">
+              <GupIcon IconName="thumb_up" Width="32" Grade="@g" />
+              <code>@g</code>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ COLOR ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Color</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">Glyph inherits CSS <code>color</code> from its parent</span>
+        <div class="demo-surface demo-row" style="gap: 24px; flex-wrap: wrap;">
+          <div class="icon-tile" style="color: var(--gup-color-brand-xhigh);">
+            <GupIcon IconName="palette" Width="32" />
+            <code>brand-xhigh</code>
+          </div>
+          <div class="icon-tile" style="color: var(--gup-color-positive-high);">
+            <GupIcon IconName="check_circle" Width="32" Filled="true" />
+            <code>positive-high</code>
+          </div>
+          <div class="icon-tile" style="color: var(--gup-color-warning-high);">
+            <GupIcon IconName="warning" Width="32" Filled="true" />
+            <code>warning-high</code>
+          </div>
+          <div class="icon-tile" style="color: var(--gup-color-negative-high);">
+            <GupIcon IconName="error" Width="32" Filled="true" />
+            <code>negative-high</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ IN BUTTONS ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Inside buttons</h2>
+      <div class="demo-card--full">
+        <span class="demo-card-label">Icon color follows the button variant via per-context CSS</span>
+        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
+          <GupButton Appearance="@GupButtonAppearance.Primary">
+            <IconStart><GupIcon IconName="download" Width="20" /></IconStart>
+            <ChildContent>Download</ChildContent>
+          </GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Secondary">
+            <IconStart><GupIcon IconName="edit" Width="20" /></IconStart>
+            <ChildContent>Edit</ChildContent>
+          </GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Text">
+            <ChildContent>Continue</ChildContent>
+            <IconEnd><GupIcon IconName="arrow_forward" Width="20" /></IconEnd>
+          </GupButton>
+          <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true">
+            <IconStart><GupIcon IconName="lock" Width="20" /></IconStart>
+            <ChildContent>Disabled</ChildContent>
+          </GupButton>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<style>
+  .icon-tile {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 96px;
+  }
+  .icon-tile code {
+    font-size: 12px;
+    color: var(--gup-color-content-secondary, #52525b);
+  }
+</style>
+
+@code {
+    private static readonly string[] LegacyNames = new[]
+    {
+        "arrow-back", "arrow-forward", "close", "language", "help-outline",
+        "add-circle", "remove-circle", "live-help", "check", "keyboard-arrow-down",
+        "keyboard-arrow-up", "search", "upload", "delete-forever", "priority-high",
+        "done", "info", "mail", "phone", "calendar-today",
+        "schedule", "visibility", "visibility-off"
+    };
+
+    private static readonly string[] CatalogSamples = new[]
+    {
+        "rocket_launch", "settings", "home", "favorite", "star",
+        "shopping_cart", "lightbulb", "palette", "thumb_up", "bookmark",
+        "notifications", "lock", "download", "edit", "share",
+        "cloud_upload", "verified", "fingerprint", "translate", "auto_awesome"
+    };
+}
