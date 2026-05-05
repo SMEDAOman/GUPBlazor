@@ -1,0 +1,11 @@
+@* Equivalent of <gup-accordion>
+   A wrapper for accordion items.
+   Default slot: ChildContent (only GupAccordionItem elements expected)
+*@
+<div class="gup-accordion">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

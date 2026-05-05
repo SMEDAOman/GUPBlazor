@@ -2534,6 +2534,89 @@ body {
   background-color: var(--gup-color-states-disabled-medium);
 }
 
+/* ------------------------------------------------------------
+   COMPONENT: gup-accordion / gup-accordion-item
+   Converted from @govom/components accordion web component
+   ------------------------------------------------------------ */
+.gup-accordion {
+  display: block;
+}
+
+.gup-accordion-item {
+  --gup-icon--fill-color: var(--gup-color-content-link);
+  --gup-accordion-item--border-color: transparent;
+
+  border-bottom: 1px solid var(--gup-color-border-medium);
+  display: block;
+  color: var(--gup-color-content-primary);
+}
+
+.gup-accordion-item:hover {
+  border-bottom-color: transparent;
+}
+
+.gup-accordion .gup-accordion-item:last-child:not(:only-child) {
+  border-bottom: none;
+}
+
+.gup-accordion-item .inner {
+  display: block;
+}
+
+.gup-accordion-item .label {
+  cursor: pointer;
+  padding: var(--gup-component-4) var(--gup-component-0, 0) var(--gup-component-7) var(--gup-component-0, 0);
+  border-bottom: 4px solid var(--gup-accordion-item--border-color);
+
+  /* Removes the native details marker */
+  list-style-type: none;
+}
+
+.gup-accordion-item .label:hover {
+  background-color: var(--gup-color-states-secondary-hover);
+}
+
+.gup-accordion-item .label::-webkit-details-marker {
+  display: none;
+}
+
+.gup-accordion-item .label::marker {
+  display: none;
+}
+
+.gup-accordion-item__row {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(4 * var(--unit, 4px));
+  width: 100%;
+}
+
+.gup-accordion-item .label-inner {
+  flex-grow: 1;
+  font-size: var(--font-size-600);
+  font-weight: var(--font-weight-base-beta);
+  line-height: 32px;
+  letter-spacing: -0.48px;
+}
+
+.gup-accordion-item .content {
+  padding-bottom: var(--gup-padding-lg);
+}
+
+/* gup-accordion-item-action: a presentational toggle indicator */
+.gup-accordion-item-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gup-component-3);
+  color: var(--gup-color-content-link);
+  flex-shrink: 0;
+}
+
+.gup-accordion-item-action__label {
+  line-height: var(--line-height-500);
+  text-decoration-line: underline;
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

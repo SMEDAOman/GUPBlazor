@@ -1,0 +1,61 @@
+@* Equivalent of <gup-accordion-item open hide-controls label-show="..." label-hide="...">
+   Two-way binding: @bind-Open
+   Events: OnToggle (new open state)
+   Slots: LabelContent (named "label"), ChildContent (default — collapsible content)
+*@
+<div class="gup-accordion-item">
+    <details class="inner" open="@(Open ? true : null)">
+        <summary class="label" @onclick="HandleToggle" @onclick:preventDefault="true">
+            <div class="gup-accordion-item__row">
+                <span class="label-inner">@LabelContent</span>
+                @if (!HideControls)
+                {
+                    <GupAccordionItemAction IconName="@(Open ? "remove-circle-outline" : "add-circle-outline")">
+                        @(Open ? LabelHide : LabelShow)
+                    </GupAccordionItemAction>
+                }
+            </div>
+        </summary>
+        <div class="content">
+            @ChildContent
+        </div>
+    </details>
+</div>
+
+@code {
+    /// <summary>A translatable label for the Show indicator.</summary>
+    [Parameter] public string LabelShow { get; set; } = "Show";
+
+    /// <summary>A translatable label for the Hide indicator.</summary>
+    [Parameter] public string LabelHide { get; set; } = "Hide";
+
+    /// <summary>Whether the accordion item is open.</summary>
+    [Parameter] public bool Open { get; set; }
+
+    /// <summary>Two-way binding callback for Open.</summary>
+    [Parameter] public EventCallback<bool> OpenChanged { get; set; }
+
+    /// <summary>Whether to hide the show/hide controls.</summary>
+    [Parameter] public bool HideControls { get; set; }
+
+    [Parameter] public RenderFragment? LabelContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Fires whenever the item is toggled by the user. Argument is the new open state.</summary>
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+
+    private async Task HandleToggle()
+    {
+        Open = !Open;
+
+        if (OpenChanged.HasDelegate)
+        {
+            await OpenChanged.InvokeAsync(Open);
+        }
+
+        if (OnToggle.HasDelegate)
+        {
+            await OnToggle.InvokeAsync(Open);
+        }
+    }
+}

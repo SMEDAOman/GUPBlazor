@@ -1,0 +1,17 @@
+@* Equivalent of <gup-accordion-item-action icon-name="...">
+   An accordion item toggle action label/icon. Used inside GupAccordionItem or on its own.
+   Note: this is presentational — it is not a button or link.
+   Default slot: ChildContent (the label)
+*@
+<span class="gup-accordion-item-action">
+    @if (!string.IsNullOrEmpty(IconName))
+    {
+        <GupIcon IconName="@IconName" Width="24" Height="24" />
+    }
+    <span class="gup-accordion-item-action__label">@ChildContent</span>
+</span>
+
+@code {
+    [Parameter] public string? IconName { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
