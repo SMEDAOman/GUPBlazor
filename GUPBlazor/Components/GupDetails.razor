@@ -1,22 +1,31 @@
-@* Equivalent of <gup-details open content-appearance="sink|quote|none" closed-icon="..." open-icon="...">
-   Named slot: LabelContent
-   Default slot: ChildContent
+@* Equivalent of <gup-details open content-appearance="quote|sink|none" closed-icon="..." open-icon="..."
+                              icon-hidden toggle-button-title="..." close-button-label="...">
+   A disclosure element. Click on the button, and hidden content will be revealed. Do not stack.
+
+   Two-way binding: @bind-Open
+   Events: OnToggle (new open state)
+   Slots: LabelContent (named "label"), ChildContent (default — collapsible content)
 *@
-<div class="gup-details @ContentAppearance">
+<div class="gup-details gup-details--appearance-@AppearanceString() @(IconHidden ? "gup-details--icon-hidden" : "")">
     <details class="inner" open="@(Open ? true : null)">
-        <summary class="label">
-            <span class="gup-icon" aria-hidden="true">
-                <GupIcon IconName="@(Open ? OpenIcon : ClosedIcon)" Width="24" Height="24" />
-            </span>
+        <summary class="label" title="@ToggleButtonTitle"
+                 @onclick="HandleToggle" @onclick:preventDefault="true">
+            @if (!IconHidden)
+            {
+                <span class="gup-icon" aria-hidden="true">
+                    <GupIcon IconName="@(Open ? OpenIcon : ClosedIcon)" Width="24" Height="24" />
+                </span>
+            }
             <span class="label-inner">@LabelContent</span>
         </summary>
         <div class="content">
             <div class="content-inner">
                 @ChildContent
-                @if (ContentAppearance == "sink")
+                @if (Appearance == GupDetailsContentAppearance.Sink)
                 {
-                    <button class="close-button" aria-label="Close" type="button"
-                            onclick="this.closest('details').removeAttribute('open')">
+                    <button type="button" class="close-button"
+                            aria-label="@CloseButtonLabel" title="@CloseButtonLabel"
+                            @onclick="HandleClose">
                         <GupIcon IconName="close" Width="24" Height="24" />
                     </button>
                 }
@@ -26,10 +35,72 @@
 </div>
 
 @code {
-    [Parameter] public bool Open { get; set; } = false;
-    [Parameter] public string ContentAppearance { get; set; } = "quote";
+    /// <summary>Whether the content is expanded.</summary>
+    [Parameter] public bool Open { get; set; }
+
+    /// <summary>Two-way binding callback for Open.</summary>
+    [Parameter] public EventCallback<bool> OpenChanged { get; set; }
+
+    /// <summary>Whether the content is styled as a quote, a sink, or none.</summary>
+    [Parameter] public GupDetailsContentAppearance Appearance { get; set; } = GupDetailsContentAppearance.Quote;
+
+    /// <summary>The icon to use when the content is closed.</summary>
     [Parameter] public string ClosedIcon { get; set; } = "keyboard-arrow-down";
+
+    /// <summary>The icon to use when the content is open.</summary>
     [Parameter] public string OpenIcon { get; set; } = "keyboard-arrow-up";
+
+    /// <summary>A tooltip appearing when hovering on the toggle button.</summary>
+    [Parameter] public string? ToggleButtonTitle { get; set; }
+
+    /// <summary>Hide the disclosure icon next to the label.</summary>
+    [Parameter] public bool IconHidden { get; set; }
+
+    /// <summary>Label/tooltip for the close button (sink appearance only).</summary>
+    [Parameter] public string CloseButtonLabel { get; set; } = "Close";
+
     [Parameter] public RenderFragment? LabelContent { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Fires whenever the disclosure is toggled by the user. Argument is the new open state.</summary>
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+
+    private string AppearanceString() => Appearance switch
+    {
+        GupDetailsContentAppearance.Sink => "sink",
+        GupDetailsContentAppearance.None => "none",
+        _                                => "quote",
+    };
+
+    private async Task HandleToggle()
+    {
+        Open = !Open;
+
+        if (OpenChanged.HasDelegate)
+        {
+            await OpenChanged.InvokeAsync(Open);
+        }
+
+        if (OnToggle.HasDelegate)
+        {
+            await OnToggle.InvokeAsync(Open);
+        }
+    }
+
+    private async Task HandleClose()
+    {
+        if (!Open) return;
+
+        Open = false;
+
+        if (OpenChanged.HasDelegate)
+        {
+            await OpenChanged.InvokeAsync(Open);
+        }
+
+        if (OnToggle.HasDelegate)
+        {
+            await OnToggle.InvokeAsync(Open);
+        }
+    }
 }

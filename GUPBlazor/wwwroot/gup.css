@@ -947,13 +947,14 @@ body {
    19. COMPONENT: gup-details (disclosure)
    ------------------------------------------------------------ */
 .gup-details {
+  --gup-icon--fill-color: var(--gup-color-content-link);
   display: block;
   width: 100%;
   position: relative;
 }
 
-.gup-details .inner {
-  /* <details> element */
+.gup-details--appearance-quote {
+  max-width: 328px;
 }
 
 .gup-details .inner summary.label {
@@ -986,11 +987,20 @@ body {
   text-decoration-thickness: 2px;
 }
 
-/* content-appearance: sink */
 .gup-details .content {
   margin-block-start: var(--gup-spacing-component-default);
 }
 
+/* content-appearance: quote */
+.gup-details--appearance-quote .content {
+  padding-block: var(--gup-padding-sm);
+  padding-inline-start: var(--gup-padding-lg);
+  border-inline-start: 6px solid var(--gup-color-brand-high);
+  color: var(--gup-color-content-primary);
+}
+
+/* content-appearance: sink */
+.gup-details--appearance-sink .content,
 .gup-details.sink .content {
   background-color: var(--gup-color-states-base-bg-secondary);
   padding: var(--gup-padding-md);
@@ -999,12 +1009,15 @@ body {
   margin-bottom: var(--gup-spacing-between-text);
 }
 
+.gup-details--appearance-sink .content-inner,
 .gup-details.sink .content-inner {
   position: relative;
   padding-inline-end: 24px;
   --gup-stepper-item--label--color: var(--gup-color-content-tertiary);
+  --gup-stepper-item--selected--label--color: var(--gup-color-content-primary);
 }
 
+.gup-details--appearance-sink .close-button,
 .gup-details.sink .close-button {
   position: absolute;
   inset-inline-end: 0;
@@ -1012,8 +1025,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--gup-color-content-link);
 }
 
+.gup-details--appearance-sink .close-button .gup-icon,
 .gup-details.sink .close-button .gup-icon {
   color: var(--gup-color-content-link);
 }
@@ -2824,6 +2843,80 @@ body {
 }
 
 .gup-callout--clickable:focus-visible {
+  outline: 2px solid var(--gup-color-brand-high);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   COMPONENT: gup-data-sheet
+   Mirrors design-system/components/data-sheet/data-sheet.css.
+   A bordered, padded vertical stack — typically used to highlight
+   a group of gup-labelled-item entries.
+   ------------------------------------------------------------ */
+.gup-data-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-padding-md);
+  border: 1px solid var(--gup-color-border-low);
+  padding: var(--gup-padding-md);
+  border-radius: var(--gup-radius-card);
+}
+
+.gup-data-sheet--clickable {
+  cursor: pointer;
+}
+
+.gup-data-sheet--clickable:focus-visible {
+  outline: 2px solid var(--gup-color-brand-high);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   COMPONENT: gup-labelled-item
+   Mirrors design-system/components/labelled-item/labelled-item.css.
+   A label sitting above its content, with an optional icon next to
+   the content.
+   ------------------------------------------------------------ */
+.gup-labelled-item {
+  display: block;
+}
+
+.gup-labelled-item__inner {
+  display: block;
+}
+
+.gup-labelled-item__label {
+  color: var(--gup-color-content-primary);
+  font-weight: var(--font-weight-base-beta);
+  font-size: var(--font-size-400);
+  margin-bottom: var(--gup-component-2);
+}
+
+.gup-labelled-item__content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: calc(var(--unit) * 2);
+  font-size: var(--font-size-550);
+  line-height: var(--line-height-400);
+}
+
+.gup-labelled-item__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.gup-labelled-item__value {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.gup-labelled-item--clickable {
+  cursor: pointer;
+}
+
+.gup-labelled-item--clickable:focus-visible {
   outline: 2px solid var(--gup-color-brand-high);
   outline-offset: 2px;
 }

@@ -1,0 +1,83 @@
+@* Equivalent of <gup-labelled-item>
+   A generic component to label any static content. Produces a form-item-like
+   layout with a label above the content. Used inside GupDataSheet but also on
+   its own to display read-only data.
+
+   Parameters / slots:
+     - Label         (string, two-way bindable) → simple text label
+     - LabelContent  (RenderFragment)           → richer label content (overrides Label)
+     - IconContent   (RenderFragment)           → optional icon next to the content (use a GupIcon)
+     - ChildContent  (RenderFragment)           → the content being labelled (default slot)
+
+   Events: OnClick — fires when the labelled item is activated.
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-labelled-item @(IsClickable ? "gup-labelled-item--clickable" : "")"
+     role="@(IsClickable ? "button" : null)"
+     tabindex="@(IsClickable ? "0" : null)"
+     aria-label="@AriaLabel"
+     @onclick="HandleClick"
+     @onkeydown="HandleKeyDown">
+    <div class="gup-labelled-item__inner">
+        <div class="gup-labelled-item__label" id="@_labelId">
+            @if (LabelContent != null)
+            {
+                @LabelContent
+            }
+            else
+            {
+                @Label
+            }
+        </div>
+        <div class="gup-labelled-item__content" aria-labelledby="@_labelId">
+            @if (IconContent != null)
+            {
+                <span class="gup-labelled-item__icon">@IconContent</span>
+            }
+            <div class="gup-labelled-item__value">@ChildContent</div>
+        </div>
+    </div>
+</div>
+
+@code {
+    /// <summary>Plain-text label. Use <see cref="LabelContent"/> for richer content.</summary>
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public EventCallback<string?> LabelChanged { get; set; }
+
+    /// <summary>Rich label content — takes precedence over <see cref="Label"/> when set.</summary>
+    [Parameter] public RenderFragment? LabelContent { get; set; }
+
+    /// <summary>Optional icon rendered next to the value (insert a GupIcon).</summary>
+    [Parameter] public RenderFragment? IconContent { get; set; }
+
+    /// <summary>The labelled value / content (default slot).</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Accessible label for the item — used when the item is clickable.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Fires when the item is clicked or activated by keyboard (Enter/Space).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private readonly string _labelId = $"gup-li-label-{Guid.NewGuid():N}";
+
+    private bool IsClickable => OnClick.HasDelegate;
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!IsClickable) return;
+        if (e.Key == "Enter" || e.Key == " " || e.Code == "Space")
+        {
+            await OnClick.InvokeAsync(new MouseEventArgs());
+        }
+    }
+}

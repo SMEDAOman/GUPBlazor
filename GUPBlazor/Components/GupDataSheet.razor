@@ -1,0 +1,49 @@
+@* Equivalent of <gup-data-sheet>
+   A bordered, padded container — typically used to highlight a group of GupLabelledItem
+   entries (e.g. an order summary), but it can wrap any other content too.
+
+   Slots:
+     - ChildContent → the content of the data-sheet (default slot)
+
+   Events: OnClick (also makes the sheet keyboard-focusable / activatable)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-data-sheet @(IsClickable ? "gup-data-sheet--clickable" : "")"
+     role="@(IsClickable ? "button" : null)"
+     tabindex="@(IsClickable ? "0" : null)"
+     aria-label="@AriaLabel"
+     @onclick="HandleClick"
+     @onkeydown="HandleKeyDown">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Content of the data-sheet (typically GupLabelledItem children).</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Accessible label for the sheet — used when the sheet is clickable.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Fires when the sheet is clicked or activated by keyboard (Enter/Space).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private bool IsClickable => OnClick.HasDelegate;
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!IsClickable) return;
+        if (e.Key == "Enter" || e.Key == " " || e.Code == "Space")
+        {
+            await OnClick.InvokeAsync(new MouseEventArgs());
+        }
+    }
+}

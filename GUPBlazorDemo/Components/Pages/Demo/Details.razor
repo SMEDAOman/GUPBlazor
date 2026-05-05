@@ -1,0 +1,249 @@
+@page "/demo/details"
+@rendermode InteractiveServer
+
+<PageTitle>Details — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Details">
+        <PageSummary>GupDetails — a single disclosure element. Click the button to reveal hidden content. Three content
+            appearances: quote (left-bordered, default), sink (filled card with a close button), and none (no extra
+            decoration).</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT (CLOSED) ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default (closed)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails>
+                        <LabelContent>I am a label for the button</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ OPEN BY DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Open by default</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails Open="true">
+                        <LabelContent>I am open</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ APPEARANCES ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Content appearances</h2>
+            <p class="demo-section-description">
+                <code>Appearance="Quote"</code> (default) renders a brand-colored left border.
+                <code>Appearance="Sink"</code> renders a filled card with a close button.
+                <code>Appearance="None"</code> drops the decoration entirely.
+            </p>
+
+            <div class="demo-card--full">
+                <span class="demo-card-label">Quote (default)</span>
+                <div class="demo-surface">
+                    <GupDetails Open="true" Appearance="@GupDetailsContentAppearance.Quote">
+                        <LabelContent>Quote appearance</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+
+            <div class="demo-card--full">
+                <span class="demo-card-label">Sink</span>
+                <div class="demo-surface">
+                    <GupDetails Open="true" Appearance="@GupDetailsContentAppearance.Sink">
+                        <LabelContent>Sink appearance</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+
+            <div class="demo-card--full">
+                <span class="demo-card-label">None</span>
+                <div class="demo-surface">
+                    <GupDetails Open="true" Appearance="@GupDetailsContentAppearance.None">
+                        <LabelContent>No decoration</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CUSTOM ICONS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Custom icons</h2>
+            <p class="demo-section-description">Override <code>ClosedIcon</code> and <code>OpenIcon</code> to swap the
+                disclosure indicator.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails ClosedIcon="add-circle" OpenIcon="remove-circle">
+                        <LabelContent>I am a label for the button</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ICON HIDDEN ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Icon hidden</h2>
+            <p class="demo-section-description">Set <code>IconHidden="true"</code> to drop the disclosure icon.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails IconHidden="true">
+                        <LabelContent>Click me to toggle the content</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TOOLTIP ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Toggle button tooltip</h2>
+            <p class="demo-section-description">Hover the label to see the tooltip.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails ToggleButtonTitle="Click to toggle">
+                        <LabelContent>I am a label for the button</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Open)</h2>
+            <p class="demo-section-description">
+                The disclosure's <code>Open</code> state is bound to a parent variable — the buttons below can toggle it
+                from the outside.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+                    <GupDetails @bind-Open="_bindOpen">
+                        <LabelContent>Bound disclosure</LabelContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupDetails>
+
+                    <GupTrack Direction="horizontal" Gap="2">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _bindOpen = !_bindOpen)">
+                            <ChildContent>Toggle externally</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _bindOpen = true)">
+                            <ChildContent>Open</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _bindOpen = false)">
+                            <ChildContent>Close</ChildContent>
+                        </GupButton>
+                    </GupTrack>
+
+                    <p data-testid="bind-output" style="margin:0;">
+                        Bound value: <strong>@(_bindOpen ? "open" : "closed")</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ON TOGGLE EVENT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnToggle event</h2>
+            <p class="demo-section-description">Each open/close fires an <code>OnToggle</code> event with the new open
+                state.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails OnToggle="HandleDetailsToggled">
+                        <LabelContent>Watch the event log</LabelContent>
+                        <ChildContent>Toggle me a few times to update the counter.</ChildContent>
+                    </GupDetails>
+                    <p data-testid="event-log" style="margin-top: 12px;">
+                        Last event: <strong>@_lastEvent</strong> (count: @_eventCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ SINK CLOSE BUTTON ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Sink — close button</h2>
+            <p class="demo-section-description">In sink appearance, a close button is rendered in the top-right corner.
+                Localize it via <code>CloseButtonLabel</code>.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDetails Appearance="@GupDetailsContentAppearance.Sink"
+                                Open="true"
+                                CloseButtonLabel="Close panel">
+                        <LabelContent>Sink with close button</LabelContent>
+                        <ChildContent>Click the X in the corner to collapse the disclosure. The close button is only
+                            rendered for the sink appearance.</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">The left border flips to the right edge automatically using logical
+                properties.</p>
+            <div class="demo-card--full" dir="rtl">
+                <div class="demo-surface">
+                    <GupDetails Open="true">
+                        <LabelContent>اضغط</LabelContent>
+                        <ChildContent>طبيعية ساحرة شمس على الجبال قمر على البحر نجوم راقصة نهر هادئ</ChildContent>
+                    </GupDetails>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+@code {
+    private bool _bindOpen;
+
+    private string _lastEvent = "(none)";
+    private int _eventCount;
+
+    private void HandleDetailsToggled(bool isOpen)
+    {
+        _eventCount++;
+        _lastEvent = isOpen ? "opened" : "closed";
+    }
+}

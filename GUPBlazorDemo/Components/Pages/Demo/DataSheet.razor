@@ -1,0 +1,213 @@
+@page "/demo/data-sheet"
+@rendermode InteractiveServer
+
+<PageTitle>Data Sheet — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Data Sheet">
+        <PageSummary>
+            GupDataSheet — a bordered, padded card. Typically used to highlight a group of GupLabelledItem entries
+            (e.g. an order summary), but it can wrap any other content.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT (TEXT CONTENT) ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default (any content)</h2>
+            <p class="demo-section-description">
+                The data-sheet is a generic container — drop in any text or markup to highlight it.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataSheet>
+                        <ChildContent>
+                            Usually this component is used with labelled items, but it can be also used to highlight
+                            any other content.
+                        </ChildContent>
+                    </GupDataSheet>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WITH LABELLED ITEMS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With labelled items</h2>
+            <p class="demo-section-description">
+                The most common usage — group <code>GupLabelledItem</code> entries to show read-only data such as an
+                order summary.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataSheet>
+                        <ChildContent>
+                            <GupLabelledItem Label="Selected service">
+                                <ChildContent>Service name</ChildContent>
+                            </GupLabelledItem>
+                            <GupLabelledItem Label="Amount to pay">
+                                <IconContent>
+                                    <GupIcon IconName="receipt" Width="30" Height="30" />
+                                </IconContent>
+                                <ChildContent>15 OMR</ChildContent>
+                            </GupLabelledItem>
+                        </ChildContent>
+                    </GupDataSheet>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RICH LABEL CONTENT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Rich label content</h2>
+            <p class="demo-section-description">
+                Use <code>LabelContent</code> instead of the <code>Label</code> string when you need richer markup
+                (e.g. a label with inline icons or styled text).
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataSheet>
+                        <ChildContent>
+                            <GupLabelledItem>
+                                <LabelContent>
+                                    <span style="display:inline-flex; align-items:center; gap:6px;">
+                                        <GupIcon IconName="badge" Width="16" Height="16" /> Applicant ID
+                                    </span>
+                                </LabelContent>
+                                <ChildContent>OM-2026-001234</ChildContent>
+                            </GupLabelledItem>
+                            <GupLabelledItem>
+                                <LabelContent>
+                                    <span style="display:inline-flex; align-items:center; gap:6px;">
+                                        <GupIcon IconName="event" Width="16" Height="16" /> Submitted on
+                                    </span>
+                                </LabelContent>
+                                <ChildContent>5 May 2026</ChildContent>
+                            </GupLabelledItem>
+                        </ChildContent>
+                    </GupDataSheet>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Label)</h2>
+            <p class="demo-section-description">
+                <code>GupLabelledItem.Label</code> is two-way bindable. Edit the input below and watch the labelled
+                item update in real time.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+                    <input data-testid="bind-input"
+                           type="text"
+                           value="@_boundLabel"
+                           @oninput="OnBoundLabelInput"
+                           style="padding:8px 12px; border:1px solid var(--gup-color-border-low); border-radius:8px;" />
+
+                    <GupDataSheet>
+                        <ChildContent>
+                            <GupLabelledItem @bind-Label="_boundLabel">
+                                <ChildContent>Bound value renders here.</ChildContent>
+                            </GupLabelledItem>
+                        </ChildContent>
+                    </GupDataSheet>
+
+                    <p data-testid="bind-output" style="margin:0;">
+                        Bound label: <strong>@_boundLabel</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CLICK EVENTS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Click events</h2>
+            <p class="demo-section-description">
+                Both <code>GupDataSheet</code> and <code>GupLabelledItem</code> expose <code>OnClick</code>. When set,
+                they become keyboard-focusable and activate on Enter/Space.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+                    <GupDataSheet AriaLabel="Order summary"
+                                  OnClick="HandleSheetClick">
+                        <ChildContent>
+                            <GupLabelledItem Label="Service"
+                                             AriaLabel="Edit service"
+                                             OnClick="HandleItemClick">
+                                <ChildContent>Click me — labelled item</ChildContent>
+                            </GupLabelledItem>
+                            <GupLabelledItem Label="Total">
+                                <ChildContent>Click outside any item — bubbles to the sheet</ChildContent>
+                            </GupLabelledItem>
+                        </ChildContent>
+                    </GupDataSheet>
+
+                    <p data-testid="click-log" style="margin:0;">
+                        Sheet clicks: <strong data-testid="sheet-clicks">@_sheetClicks</strong> ·
+                        Item clicks: <strong data-testid="item-clicks">@_itemClicks</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">
+                The data-sheet uses logical padding so it renders correctly in right-to-left layouts.
+            </p>
+            <div class="demo-card--full" dir="rtl">
+                <div class="demo-surface">
+                    <GupDataSheet>
+                        <ChildContent>
+                            <GupLabelledItem Label="الخدمة المختارة">
+                                <ChildContent>اسم الخدمة</ChildContent>
+                            </GupLabelledItem>
+                            <GupLabelledItem Label="المبلغ المستحق">
+                                <IconContent>
+                                    <GupIcon IconName="receipt" Width="30" Height="30" />
+                                </IconContent>
+                                <ChildContent>١٥ ر.ع</ChildContent>
+                            </GupLabelledItem>
+                        </ChildContent>
+                    </GupDataSheet>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private string? _boundLabel = "Selected service";
+    private int _sheetClicks;
+    private int _itemClicks;
+
+    private void OnBoundLabelInput(Microsoft.AspNetCore.Components.ChangeEventArgs e)
+    {
+        _boundLabel = e.Value?.ToString();
+    }
+
+    private void HandleSheetClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+        _sheetClicks++;
+    }
+
+    private void HandleItemClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+        _itemClicks++;
+    }
+}
