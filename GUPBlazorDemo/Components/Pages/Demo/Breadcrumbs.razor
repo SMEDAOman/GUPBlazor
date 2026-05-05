@@ -1,0 +1,161 @@
+@page "/demo/breadcrumbs"
+@rendermode InteractiveServer
+
+<PageTitle>Breadcrumbs — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Breadcrumbs">
+        <PageSummary>GupBreadcrumbs &amp; GupBreadcrumbsItem — a navigation trail with two-way binding for current state and click events.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupBreadcrumbs>
+                        <GupBreadcrumbsItem Href="#">Home</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="#">Store</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="#">Category</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="#">Phone</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="#" Current="true">Phone specs</GupBreadcrumbsItem>
+                    </GupBreadcrumbs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO ITEMS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two items</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupBreadcrumbs>
+                        <GupBreadcrumbsItem Href="#">Representative of an Overseas Business visa</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="#" Current="true">Settling in Oman</GupBreadcrumbsItem>
+                    </GupBreadcrumbs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Current)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupTrack Direction="horizontal" Gap="2">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _currentIndex = 0)">
+                            <ChildContent>Mark Home as current</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _currentIndex = 1)">
+                            <ChildContent>Mark Store as current</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                   Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _currentIndex = 2)">
+                            <ChildContent>Mark Category as current</ChildContent>
+                        </GupButton>
+                    </GupTrack>
+
+                    <div style="margin-top:16px;">
+                        <GupBreadcrumbs>
+                            <GupBreadcrumbsItem Href="#" @bind-Current="_isHomeCurrent">Home</GupBreadcrumbsItem>
+                            <GupBreadcrumbsItem Href="#" @bind-Current="_isStoreCurrent">Store</GupBreadcrumbsItem>
+                            <GupBreadcrumbsItem Href="#" @bind-Current="_isCategoryCurrent">Category</GupBreadcrumbsItem>
+                        </GupBreadcrumbs>
+                    </div>
+
+                    <p data-testid="bind-output" style="margin-top:12px;">
+                        Current item: <strong>@CurrentLabel</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ONCLICK EVENT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnClick event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupBreadcrumbs>
+                        <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Home"))">Home</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Store"))">Store</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Category"))">Category</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="javascript:void(0)" Current="true" OnClick="@(e => Log("Phone specs"))">Phone specs</GupBreadcrumbsItem>
+                    </GupBreadcrumbs>
+
+                    <p data-testid="event-log" style="margin-top:12px;">
+                        Last clicked: <strong>@_lastClicked</strong> (count: @_clickCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface" dir="rtl">
+                    <GupBreadcrumbs AriaLabel="مسار التنقل">
+                        <GupBreadcrumbsItem Href="#">الصفحة الرئيسية</GupBreadcrumbsItem>
+                        <GupBreadcrumbsItem Href="#" Current="true">هذه الصفحة</GupBreadcrumbsItem>
+                    </GupBreadcrumbs>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+@code {
+    private int _currentIndex = 2;
+
+    private bool _isHomeCurrent
+    {
+        get => _currentIndex == 0;
+        set { if (value) _currentIndex = 0; }
+    }
+    private bool _isStoreCurrent
+    {
+        get => _currentIndex == 1;
+        set { if (value) _currentIndex = 1; }
+    }
+    private bool _isCategoryCurrent
+    {
+        get => _currentIndex == 2;
+        set { if (value) _currentIndex = 2; }
+    }
+
+    private string CurrentLabel => _currentIndex switch
+    {
+        0 => "Home",
+        1 => "Store",
+        2 => "Category",
+        _ => "(none)"
+    };
+
+    private string _lastClicked = "(none)";
+    private int _clickCount;
+
+    private void Log(string label)
+    {
+        _lastClicked = label;
+        _clickCount++;
+    }
+}

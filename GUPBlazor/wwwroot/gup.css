@@ -2687,6 +2687,71 @@ body {
   inset-inline-end: 0;
 }
 
+/* ------------------------------------------------------------
+   COMPONENT: gup-breadcrumbs / gup-breadcrumbs-item
+   Mirrors design-system/components/breadcrumbs/*.css.
+   The chevron between items is an ::after element rotated 45deg
+   in LTR and -45deg in RTL.
+   ------------------------------------------------------------ */
+.gup-breadcrumbs {
+  --gap: var(--gup-spacing-component-default);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+.gup-breadcrumbs-item {
+  --color: var(--gup-color-content-primary);
+
+  display: inline-flex;
+  gap: var(--gup-spacing-component-default);
+  align-items: center;
+  font-size: var(--font-size-400);
+  line-height: var(--line-height-500);
+  color: var(--color);
+  text-decoration: underline;
+}
+
+.gup-breadcrumbs-item:hover {
+  --color: var(--gup-color-brand-strong);
+
+  text-decoration-thickness: 2px;
+}
+
+.gup-breadcrumbs-item::after {
+  --border-width: 2px;
+  --size: 6px;
+  --rotation: 45deg;
+
+  content: '';
+  transform: rotate(calc(var(--rotation) * var(--gup--is-ltr, 1)));
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  border-style: solid;
+  border-color: var(--gup-color-content-tertiary);
+  border-width: 0;
+  border-inline-end-width: var(--border-width);
+  border-block-start-width: var(--border-width);
+  will-change: transform;
+}
+
+.gup-breadcrumbs-item:last-child::after {
+  display: none;
+}
+
+.gup-breadcrumbs-item--current {
+  text-decoration: none;
+  cursor: default;
+}
+
+@media (max-width: 599px) {
+  .gup-breadcrumbs-item:not(:first-child, :last-child) {
+    display: none;
+  }
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

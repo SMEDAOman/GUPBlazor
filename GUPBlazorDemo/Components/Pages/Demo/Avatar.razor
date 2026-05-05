@@ -16,230 +16,234 @@
     </GupHeader>
 
     <GupContentHeader PageTitle="Avatar">
-        <PageSummary>GupAvatar — user avatar with image, abbreviation, or fallback person icon, with optional status badge.</PageSummary>
-    </GupContentHeader>
+        <PageSummary>GupAvatar — user avatar with image, abbreviation, or fallback person icon, with optional status
+            badge.</PageSummary>
+        </GupContentHeader>
 
-    <div class="demo-body">
+        <div class="demo-body">
 
-        <!-- ══ SIZES ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">Sizes</h2>
-            <div class="demo-row">
-                <div class="demo-card">
-                    <span class="demo-card-label">Small (default)</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.S" Label="Angelo Badalamenti" AriaLabel="Angelo Badalamenti" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Medium</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.M" Label="Angelo Badalamenti" AriaLabel="Angelo Badalamenti" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Large</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L" Label="Angelo Badalamenti" AriaLabel="Angelo Badalamenti" />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ FALLBACK PERSON ICON ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">No label — fallback person icon</h2>
-            <div class="demo-row">
-                <div class="demo-card">
-                    <span class="demo-card-label">Small</span>
-                    <div class="demo-surface"><GupAvatar Size="@GupAvatarSize.S" AriaLabel="Anonymous user" /></div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Medium</span>
-                    <div class="demo-surface"><GupAvatar Size="@GupAvatarSize.M" AriaLabel="Anonymous user" /></div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Large</span>
-                    <div class="demo-surface"><GupAvatar Size="@GupAvatarSize.L" AriaLabel="Anonymous user" /></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ ABBREVIATIONS ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">Name abbreviations</h2>
-            <p class="demo-section-description">
-                Uppercase letters in <code>Label</code> are extracted as the avatar text.
-            </p>
-            <div class="demo-row">
-                <div class="demo-card">
-                    <span class="demo-card-label">"Angelo Badalamenti" → AB</span>
-                    <div class="demo-surface"><GupAvatar Size="@GupAvatarSize.L" Label="Angelo Badalamenti" /></div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">"Sultan Qaboos" → SQ</span>
-                    <div class="demo-surface"><GupAvatar Size="@GupAvatarSize.L" Label="Sultan Qaboos" /></div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">"Mohammed Al Said" → MAS</span>
-                    <div class="demo-surface"><GupAvatar Size="@GupAvatarSize.L" Label="Mohammed Al Said" /></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ WITH IMAGE ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">With picture</h2>
-            <div class="demo-row">
-                <div class="demo-card">
-                    <span class="demo-card-label">Small</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.S"
-                                   Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                   Alt="Some Profile" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Medium</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.M"
-                                   Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                   Alt="Some Profile" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Large</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L"
-                                   Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                   Alt="Some Profile" />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ WITH STATUS BADGE ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">With status badge</h2>
-            <div class="demo-row">
-                <div class="demo-card">
-                    <span class="demo-card-label">Neutral</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L" Label="Angelo Badalamenti"
-                                   Status="@GupBadgeType.Neutral" StatusAriaLabel="Pending" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Positive</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L" Label="Angelo Badalamenti"
-                                   Status="@GupBadgeType.Positive" StatusAriaLabel="Online" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Negative</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L" Label="Angelo Badalamenti"
-                                   Status="@GupBadgeType.Negative" StatusAriaLabel="Error" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Offline</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L" Label="Angelo Badalamenti"
-                                   Status="@GupBadgeType.Offline" StatusAriaLabel="Offline" />
-                    </div>
-                </div>
-                <div class="demo-card">
-                    <span class="demo-card-label">Image + status</span>
-                    <div class="demo-surface">
-                        <GupAvatar Size="@GupAvatarSize.L"
-                                   Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                   Alt="Some Profile"
-                                   Status="@GupBadgeType.Positive" StatusAriaLabel="Online" />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ TWO-WAY BINDING ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">Two-way binding (@@bind-Label, @@bind-Status)</h2>
-            <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
-
-                    <GupAvatar Size="@GupAvatarSize.L"
-                               @bind-Label="_boundLabel"
-                               @bind-Status="_boundStatus"
-                               StatusAriaLabel="@_boundStatus?.ToString()"
-                               AriaLabel="@_boundLabel" />
-
-                    <div style="flex:1; min-width:240px;">
-                        <GupInputField Type="text"
-                                       @bind-Value="_boundLabel">
-                            <ChildContent>Label</ChildContent>
-                            <Hint>Type a name — uppercase letters become the avatar abbreviation.</Hint>
-                        </GupInputField>
-
-                        <div style="margin-top:12px;">
-                            <span class="demo-card-label">Status</span>
-                            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                           OnClick="@(() => _boundStatus = null)">
-                                    <ChildContent>None</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                           OnClick="@(() => _boundStatus = GupBadgeType.Neutral)">
-                                    <ChildContent>Neutral</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                           OnClick="@(() => _boundStatus = GupBadgeType.Positive)">
-                                    <ChildContent>Positive</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                           OnClick="@(() => _boundStatus = GupBadgeType.Negative)">
-                                    <ChildContent>Negative</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                           OnClick="@(() => _boundStatus = GupBadgeType.Offline)">
-                                    <ChildContent>Offline</ChildContent>
-                                </GupButton>
-                            </div>
+            <!-- ══ SIZES ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">Sizes</h2>
+                <div class="demo-row">
+                    <div class="demo-card">
+                        <span class="demo-card-label">Small (default)</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.S" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
                         </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Medium</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.M" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Large</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                        <p data-testid="bind-output" style="margin-top:12px;">
-                            Bound label: <strong>@_boundLabel</strong>,
-                            bound status: <strong>@(_boundStatus?.ToString() ?? "(none)")</strong>
+            <!-- ══ FALLBACK PERSON ICON ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">No label — fallback person icon</h2>
+                <div class="demo-row">
+                    <div class="demo-card">
+                        <span class="demo-card-label">Small</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.S" AriaLabel="Anonymous user" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Medium</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.M" AriaLabel="Anonymous user" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Large</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" AriaLabel="Anonymous user" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ ABBREVIATIONS ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">Name abbreviations</h2>
+                <p class="demo-section-description">
+                    Uppercase letters in <code>Label</code> are extracted as the avatar text.
+                </p>
+                <div class="demo-row">
+                    <div class="demo-card">
+                        <span class="demo-card-label">"Caesar Moussalli" → AB</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">"Sultan Qaboos" → SQ</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Sultan Qaboos" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">"Mohammed Al Said" → MAS</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Mohammed Al Said" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ WITH IMAGE ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">With picture</h2>
+                <div class="demo-row">
+                    <div class="demo-card">
+                        <span class="demo-card-label">Small</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.S"
+                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                       Alt="Some Profile" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Medium</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.M"
+                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                       Alt="Some Profile" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Large</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L"
+                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                       Alt="Some Profile" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ WITH STATUS BADGE ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">With status badge</h2>
+                <div class="demo-row">
+                    <div class="demo-card">
+                        <span class="demo-card-label">Neutral</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Neutral"
+                                       StatusAriaLabel="Pending" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Positive</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Positive"
+                                       StatusAriaLabel="Online" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Negative</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Negative"
+                                       StatusAriaLabel="Error" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Offline</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Offline"
+                                       StatusAriaLabel="Offline" />
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <span class="demo-card-label">Image + status</span>
+                        <div class="demo-surface">
+                            <GupAvatar Size="@GupAvatarSize.L"
+                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                       Alt="Some Profile" Status="@GupBadgeType.Positive" StatusAriaLabel="Online" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ TWO-WAY BINDING ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">Two-way binding (@@bind-Label, @@bind-Status)</h2>
+                <div class="demo-card--full">
+                    <div class="demo-surface" style="display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+
+                        <GupAvatar Size="@GupAvatarSize.L" @bind-Label="_boundLabel" @bind-Status="_boundStatus"
+                                   StatusAriaLabel="@_boundStatus?.ToString()" AriaLabel="@_boundLabel" />
+
+                        <div style="flex:1; min-width:240px;">
+                            <GupInputField Type="text" @bind-Value="_boundLabel">
+                                <ChildContent>Label</ChildContent>
+                                <Hint>Type a name — uppercase letters become the avatar abbreviation.</Hint>
+                            </GupInputField>
+
+                            <div style="margin-top:12px;">
+                                <span class="demo-card-label">Status</span>
+                                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+                                    <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                               OnClick="@(() => _boundStatus = null)">
+                                        <ChildContent>None</ChildContent>
+                                    </GupButton>
+                                    <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                               OnClick="@(() => _boundStatus = GupBadgeType.Neutral)">
+                                        <ChildContent>Neutral</ChildContent>
+                                    </GupButton>
+                                    <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                               OnClick="@(() => _boundStatus = GupBadgeType.Positive)">
+                                        <ChildContent>Positive</ChildContent>
+                                    </GupButton>
+                                    <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                               OnClick="@(() => _boundStatus = GupBadgeType.Negative)">
+                                        <ChildContent>Negative</ChildContent>
+                                    </GupButton>
+                                    <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                               OnClick="@(() => _boundStatus = GupBadgeType.Offline)">
+                                        <ChildContent>Offline</ChildContent>
+                                    </GupButton>
+                                </div>
+                            </div>
+
+                            <p data-testid="bind-output" style="margin-top:12px;">
+                                Bound label: <strong>@_boundLabel</strong>,
+                                bound status: <strong>@(_boundStatus?.ToString() ?? "(none)")</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ ONCLICK EVENT ══ -->
+            <section class="demo-section">
+                <h2 class="demo-section-title">OnClick event</h2>
+                <div class="demo-card--full">
+                    <div class="demo-surface" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+                        <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Positive"
+                                   StatusAriaLabel="Online" AriaLabel="Open profile menu" OnClick="HandleAvatarClick" />
+                        <p data-testid="click-log" style="margin:0;">
+                            Click count: <strong>@_clickCount</strong>
                         </p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ══ ONCLICK EVENT ══ -->
-        <section class="demo-section">
-            <h2 class="demo-section-title">OnClick event</h2>
-            <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-                    <GupAvatar Size="@GupAvatarSize.L"
-                               Label="Angelo Badalamenti"
-                               Status="@GupBadgeType.Positive"
-                               StatusAriaLabel="Online"
-                               AriaLabel="Open profile menu"
-                               OnClick="HandleAvatarClick" />
-                    <p data-testid="click-log" style="margin:0;">
-                        Click count: <strong>@_clickCount</strong>
-                    </p>
-                </div>
-            </div>
-        </section>
+        </div>
 
     </div>
 
-</div>
-
 @code {
-    private string? _boundLabel = "Angelo Badalamenti";
+    private string? _boundLabel = "Caesar Moussalli";
     private GupBadgeType? _boundStatus = GupBadgeType.Positive;
     private int _clickCount;
 

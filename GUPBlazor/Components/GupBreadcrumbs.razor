@@ -1,0 +1,14 @@
+@* Equivalent of <gup-breadcrumbs>
+   A wrapper for breadcrumb items.
+   Default slot: ChildContent (only GupBreadcrumbsItem elements expected)
+*@
+<div class="gup-breadcrumbs" role="list" aria-label="@AriaLabel">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Accessible label for the breadcrumb trail.</summary>
+    [Parameter] public string AriaLabel { get; set; } = "Breadcrumb";
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

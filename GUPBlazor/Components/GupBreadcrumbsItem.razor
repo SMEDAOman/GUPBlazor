@@ -1,0 +1,37 @@
+@* Equivalent of <gup-breadcrumbs-item href="..." current>
+   A single breadcrumb item — to be used as a child of GupBreadcrumbs.
+   Two-way binding: @bind-Current, @bind-Href
+   Events: OnClick
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<a class="gup-breadcrumbs-item @(Current ? "gup-breadcrumbs-item--current" : "")"
+   role="listitem"
+   href="@Href"
+   aria-current="@(Current ? "page" : "false")"
+   @onclick="HandleClick">
+    <span class="gup-breadcrumbs-item__link">@ChildContent</span>
+</a>
+
+@code {
+    /// <summary>Breadcrumb URL.</summary>
+    [Parameter] public string Href { get; set; } = "#";
+    [Parameter] public EventCallback<string> HrefChanged { get; set; }
+
+    /// <summary>Whether this breadcrumb represents the current page.</summary>
+    [Parameter] public bool Current { get; set; }
+    [Parameter] public EventCallback<bool> CurrentChanged { get; set; }
+
+    /// <summary>Fires when the breadcrumb link is clicked.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+}
