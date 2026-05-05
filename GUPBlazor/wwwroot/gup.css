@@ -2752,6 +2752,82 @@ body {
   }
 }
 
+/* ------------------------------------------------------------
+   COMPONENT: gup-callout
+   Mirrors design-system/components/callout/callout.css.
+   Three appearances:
+     - default    : left brand-color border, no background
+     - background : filled overcanvas background, rounded corners
+     - border     : 1px outline, rounded corners
+   ------------------------------------------------------------ */
+.gup-callout {
+  --gup-callout-color: var(--gup-color-content-primary);
+
+  display: block;
+  color: var(--gup-callout-color);
+}
+
+.gup-callout__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-text);
+  position: relative;
+}
+
+.gup-callout--appearance-default .gup-callout__inner {
+  padding-block-start: var(--gup-padding-sm);
+  padding-inline-end: 0;
+  padding-block-end: var(--gup-padding-sm);
+  padding-inline-start: var(--gup-padding-lg);
+  border-inline-start: 6px solid var(--gup-color-brand-high);
+}
+
+.gup-callout--appearance-background .gup-callout__inner {
+  padding: var(--gup-padding-md);
+  background: var(--gup-color-background-overcanvas);
+  border-radius: var(--gup-radius-card);
+}
+
+.gup-callout--appearance-border .gup-callout__inner {
+  padding: var(--gup-padding-md);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-card);
+}
+
+.gup-callout__header {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--unit) * 2);
+  font-weight: var(--font-weight-base-beta);
+}
+
+.gup-callout__icon {
+  --gup-icon--fill-color: var(--gup-callout-color);
+
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.gup-callout__title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.gup-callout__footer {
+  color: var(--gup-color-content-secondary);
+}
+
+.gup-callout--clickable {
+  cursor: pointer;
+}
+
+.gup-callout--clickable:focus-visible {
+  outline: 2px solid var(--gup-color-brand-high);
+  outline-offset: 2px;
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

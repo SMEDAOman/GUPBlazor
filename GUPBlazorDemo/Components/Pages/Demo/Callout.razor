@@ -1,0 +1,223 @@
+@page "/demo/callout"
+@rendermode InteractiveServer
+
+<PageTitle>Callout — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Callout">
+        <PageSummary>GupCallout — a block quote with optional title and footer (e.g. an author name). Three
+            appearances: default (left-border), background (filled), and border (outlined).</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ APPEARANCES ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Appearances</h2>
+            <p class="demo-section-description">
+                The default appearance uses a brand-colored left border. Background and border variants render the
+                callout as a card.
+            </p>
+
+            <div class="demo-card--full">
+                <span class="demo-card-label">Default (left border)</span>
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Default">
+                        <TitleContent>Quote title</TitleContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                        <FooterContent>- Author</FooterContent>
+                    </GupCallout>
+                </div>
+            </div>
+
+            <div class="demo-card--full">
+                <span class="demo-card-label">Background (filled)</span>
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Background">
+                        <TitleContent>Quote title</TitleContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                        <FooterContent>- Author</FooterContent>
+                    </GupCallout>
+                </div>
+            </div>
+
+            <div class="demo-card--full">
+                <span class="demo-card-label">Border (outlined)</span>
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Border">
+                        <TitleContent>Quote title</TitleContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                        <FooterContent>- Author</FooterContent>
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WITHOUT TITLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Without title</h2>
+            <p class="demo-section-description">
+                Omit <code>TitleContent</code> to render only the body and footer — the quote icon is hidden.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Default">
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                        <FooterContent>- Author</FooterContent>
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WITHOUT FOOTER ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Without footer</h2>
+            <p class="demo-section-description">Omit <code>FooterContent</code> to render only the title and body.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Default">
+                        <TitleContent>Quote title</TitleContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ BODY ONLY ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Body only</h2>
+            <p class="demo-section-description">Without title or footer, the callout renders just the quoted body.</p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Background">
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ LONG TITLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Long title</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Border">
+                        <TitleContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</TitleContent>
+                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                            content of a page when looking at its layout.</ChildContent>
+                        <FooterContent>- Author</FooterContent>
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">The left border flips to the right edge automatically using logical
+                properties.</p>
+            <div class="demo-card--full" dir="rtl">
+                <div class="demo-surface">
+                    <GupCallout Appearance="@GupCalloutAppearance.Default">
+                        <TitleContent>العادي هو تجميل الجنون العادي - اسأل سريالي</TitleContent>
+                        <ChildContent>ولكن هل يمكن أن يكون هناك تعريف للعادي لا يعادله العادي أو الباهت؟ أو الذي لا يكون
+                            قسريًا أو مبالغًا فيه أو مبالغًا فيه؟</ChildContent>
+                        <FooterContent>- الكاتب</FooterContent>
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Appearance)</h2>
+            <p class="demo-section-description">
+                Switch the appearance at runtime — the callout reflects the bound value.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+                    <GupCallout @bind-Appearance="_boundAppearance">
+                        <TitleContent>Bound appearance</TitleContent>
+                        <ChildContent>Click the buttons to swap between appearances. The callout's appearance is bound
+                            to a parent variable.</ChildContent>
+                        <FooterContent>- Two-way binding demo</FooterContent>
+                    </GupCallout>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundAppearance = GupCalloutAppearance.Default)">
+                            <ChildContent>Default</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundAppearance = GupCalloutAppearance.Background)">
+                            <ChildContent>Background</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundAppearance = GupCalloutAppearance.Border)">
+                            <ChildContent>Border</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <p data-testid="bind-output" style="margin:0;">
+                        Bound appearance: <strong>@_boundAppearance</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ONCLICK EVENT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnClick event</h2>
+            <p class="demo-section-description">
+                When <code>OnClick</code> is set, the callout becomes keyboard-focusable and activates on Enter/Space.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+                    <GupCallout Appearance="@GupCalloutAppearance.Background"
+                                AriaLabel="Open the full quote"
+                                OnClick="HandleCalloutClick">
+                        <TitleContent>Clickable callout</TitleContent>
+                        <ChildContent>Click anywhere on this callout (or focus and press Enter/Space) to fire the
+                            OnClick event.</ChildContent>
+                        <FooterContent>- Click target</FooterContent>
+                    </GupCallout>
+
+                    <p data-testid="click-log" style="margin:0;">
+                        Click count: <strong>@_clickCount</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private GupCalloutAppearance _boundAppearance = GupCalloutAppearance.Default;
+    private int _clickCount;
+
+    private void HandleCalloutClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+        _clickCount++;
+    }
+}

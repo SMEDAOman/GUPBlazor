@@ -1,0 +1,86 @@
+@* Equivalent of <gup-callout appearance="default|background|border">
+   A callout / blockquote with an optional title and footer (e.g. an author name).
+
+   Slots:
+     - TitleContent  → rendered as a heading next to a quote icon (header)
+     - ChildContent  → main body of the callout (default slot)
+     - FooterContent → optional footer (e.g. attribution)
+
+   Two-way binding: @bind-Appearance
+   Events: OnClick
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-callout gup-callout--appearance-@AppearanceString() @(IsClickable ? "gup-callout--clickable" : "")"
+     role="@(IsClickable ? "button" : null)"
+     tabindex="@(IsClickable ? "0" : null)"
+     aria-label="@AriaLabel"
+     @onclick="HandleClick"
+     @onkeydown="HandleKeyDown">
+    <div class="gup-callout__inner">
+        @if (TitleContent != null)
+        {
+            <div class="gup-callout__header">
+                <span class="gup-callout__icon">
+                    <GupIcon IconName="format-quote" Width="24" Height="24" />
+                </span>
+                <h2 class="gup-callout__title">@TitleContent</h2>
+            </div>
+        }
+        @if (ChildContent != null)
+        {
+            <div class="gup-callout__content">@ChildContent</div>
+        }
+        @if (FooterContent != null)
+        {
+            <div class="gup-callout__footer">@FooterContent</div>
+        }
+    </div>
+</div>
+
+@code {
+    /// <summary>Visual appearance — default (left border), background (filled), or border (outlined).</summary>
+    [Parameter] public GupCalloutAppearance Appearance { get; set; } = GupCalloutAppearance.Default;
+    [Parameter] public EventCallback<GupCalloutAppearance> AppearanceChanged { get; set; }
+
+    /// <summary>Optional title — rendered next to a quote icon.</summary>
+    [Parameter] public RenderFragment? TitleContent { get; set; }
+
+    /// <summary>Main body of the callout.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Optional footer — typically an author or attribution.</summary>
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    /// <summary>Accessible label for the callout — used when the callout is clickable.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Fires when the callout is clicked or activated by keyboard (Enter/Space).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private bool IsClickable => OnClick.HasDelegate;
+
+    private string AppearanceString() => Appearance switch
+    {
+        GupCalloutAppearance.Background => "background",
+        GupCalloutAppearance.Border     => "border",
+        _                               => "default",
+    };
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!IsClickable) return;
+        if (e.Key == "Enter" || e.Key == " " || e.Code == "Space")
+        {
+            await OnClick.InvokeAsync(new MouseEventArgs());
+        }
+    }
+}
