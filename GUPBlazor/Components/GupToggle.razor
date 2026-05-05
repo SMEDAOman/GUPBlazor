@@ -1,0 +1,104 @@
+@* Equivalent of <gup-toggle name="..." checked disabled readonly knob-location="before|after">
+   Two-way binding: @bind-Checked
+   Events: OnChange (new checked state)
+*@
+
+<label class="gup-toggle @KnobLocationClass @(Checked ? "gup-toggle--checked" : "") @(Disabled ? "gup-toggle--disabled" : "") @(Readonly ? "gup-toggle--readonly" : "")"
+       for="@Id"
+       @onclick:preventDefault="@Readonly">
+    @if (KnobLocation == "after" && HasText)
+    {
+        <div class="gup-toggle__text-container">
+            @if (ChildContent != null)
+            {
+                <span class="gup-toggle__label">@ChildContent</span>
+            }
+            @if (Hint != null)
+            {
+                <span class="gup-toggle__hint" id="@($"{Id}-hint")">@Hint</span>
+            }
+        </div>
+    }
+
+    <input type="checkbox"
+           id="@Id"
+           class="gup-toggle__input"
+           name="@Name"
+           role="switch"
+           checked="@Checked"
+           disabled="@(Disabled ? true : null)"
+           readonly="@(Readonly ? true : null)"
+           aria-checked="@(Checked ? "true" : "false")"
+           aria-describedby="@AriaDescribedBy"
+           @onchange="HandleChange" />
+
+    <div class="gup-toggle__box">
+        <div class="gup-toggle__knob"></div>
+    </div>
+
+    @if (KnobLocation != "after" && HasText)
+    {
+        <div class="gup-toggle__text-container">
+            @if (ChildContent != null)
+            {
+                <span class="gup-toggle__label">@ChildContent</span>
+            }
+            @if (Hint != null)
+            {
+                <span class="gup-toggle__hint" id="@($"{Id}-hint")">@Hint</span>
+            }
+        </div>
+    }
+</label>
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public bool Checked { get; set; }
+    [Parameter] public EventCallback<bool> CheckedChanged { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool Readonly { get; set; }
+
+    /// <summary>"before" (default) renders knob before the text, "after" renders knob after the text.</summary>
+    [Parameter] public string KnobLocation { get; set; } = "before";
+
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? Hint { get; set; }
+
+    /// <summary>Fires whenever the toggle is changed by the user.</summary>
+    [Parameter] public EventCallback<bool> OnChange { get; set; }
+
+    private bool HasText => ChildContent != null || Hint != null;
+
+    private string KnobLocationClass => KnobLocation == "after"
+        ? "gup-toggle--knob-after"
+        : "gup-toggle--knob-before";
+
+    private string? AriaDescribedBy => Hint != null ? $"{Id}-hint" : null;
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrEmpty(Id))
+        {
+            Id = $"gup-toggle-{Guid.NewGuid():N}";
+        }
+    }
+
+    private async Task HandleChange(ChangeEventArgs e)
+    {
+        if (Disabled || Readonly) return;
+
+        var newChecked = e.Value is bool b && b;
+        Checked = newChecked;
+
+        if (CheckedChanged.HasDelegate)
+        {
+            await CheckedChanged.InvokeAsync(newChecked);
+        }
+
+        if (OnChange.HasDelegate)
+        {
+            await OnChange.InvokeAsync(newChecked);
+        }
+    }
+}

@@ -1,0 +1,199 @@
+@page "/demo/inputs/toggle"
+@rendermode InteractiveServer
+
+<PageTitle>Toggle — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Toggle">
+        <PageSummary>GupToggle — a form-based switch control with two-way binding, knob position, hint, disabled, and readonly states.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Unchecked</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-default">
+                            <ChildContent>Default</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Checked</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-checked" Checked="true">
+                            <ChildContent>Default</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way Binding (@@bind-Checked)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupToggle Name="t-bind" @bind-Checked="_bindChecked">
+                        <ChildContent>Enable notifications</ChildContent>
+                        <Hint>Toggle me — the bound value updates below.</Hint>
+                    </GupToggle>
+                    <p data-testid="bind-output" style="margin-top: 12px;">
+                        Bound value: <strong>@_bindChecked</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnChange Event</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupToggle Name="t-event" OnChange="HandleToggleChanged">
+                        <ChildContent>Subscribe to product updates</ChildContent>
+                    </GupToggle>
+                    <p data-testid="event-log" style="margin-top: 12px;">
+                        Last event: <strong>@_lastEvent</strong> (count: @_eventCount)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Knob Location</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Knob before (default)</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-knob-before" KnobLocation="before">
+                            <ChildContent>Knob before label</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Knob after</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-knob-after" KnobLocation="after">
+                            <ChildContent>Knob after label</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">With Hint</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupToggle Name="t-hint">
+                        <ChildContent>Custom Label</ChildContent>
+                        <Hint>Helper text is in here and it takes a lot of space and a lot of time to read properly in English language</Hint>
+                    </GupToggle>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Disabled States</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Unchecked + disabled</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-disabled" Disabled="true">
+                            <ChildContent>This option is disabled</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Checked + disabled</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-checked-disabled" Checked="true" Disabled="true">
+                            <ChildContent>Checked &amp; disabled</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Readonly</h2>
+            <div class="demo-row">
+                <div class="demo-card">
+                    <span class="demo-card-label">Readonly, unchecked</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-readonly" Readonly="true">
+                            <ChildContent>Readonly toggle</ChildContent>
+                            <Hint>You can focus me, but I can't be changed.</Hint>
+                        </GupToggle>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <span class="demo-card-label">Readonly, checked</span>
+                    <div class="demo-surface">
+                        <GupToggle Name="t-readonly-checked" Readonly="true" Checked="true">
+                            <ChildContent>Readonly &amp; checked</ChildContent>
+                        </GupToggle>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Toggle Group (multiple)</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupToggle Name="features" OnChange="@(c => ToggleFeature("dark-mode", c))">
+                        <ChildContent>Dark mode</ChildContent>
+                    </GupToggle>
+                    <GupToggle Name="features" Checked="true" OnChange="@(c => ToggleFeature("notifications", c))">
+                        <ChildContent>Push notifications</ChildContent>
+                    </GupToggle>
+                    <GupToggle Name="features" OnChange="@(c => ToggleFeature("analytics", c))">
+                        <ChildContent>Analytics</ChildContent>
+                    </GupToggle>
+                    <GupToggle Name="features" OnChange="@(c => ToggleFeature("beta", c))">
+                        <ChildContent>Beta features</ChildContent>
+                    </GupToggle>
+                    <p data-testid="features-output" style="margin-top: 12px;">
+                        Enabled: <strong>@(_enabledFeatures.Count == 0 ? "(none)" : string.Join(", ", _enabledFeatures))</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+@code {
+    private bool _bindChecked;
+
+    private string _lastEvent = "(none)";
+    private int _eventCount;
+
+    private HashSet<string> _enabledFeatures = new() { "notifications" };
+
+    private void HandleToggleChanged(bool checkedValue)
+    {
+        _eventCount++;
+        _lastEvent = checkedValue ? "on" : "off";
+    }
+
+    private void ToggleFeature(string id, bool checkedValue)
+    {
+        if (checkedValue) _enabledFeatures.Add(id);
+        else _enabledFeatures.Remove(id);
+    }
+}
