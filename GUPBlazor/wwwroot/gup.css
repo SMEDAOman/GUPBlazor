@@ -2617,6 +2617,76 @@ body {
   text-decoration-line: underline;
 }
 
+/* ------------------------------------------------------------
+   COMPONENT: gup-avatar
+   Mirrors design-system/components/avatar/avatar.css.
+   Sizes: s (20px), m (28px), l (40px) — driven by --size + --font-size
+   inline custom properties set on the host element.
+   ------------------------------------------------------------ */
+.gup-avatar {
+  --gup-icon--fill-color: var(--gup-color-neutral-high);
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  outline: 1px solid var(--gup-color-neutral-low);
+  background-color: var(--gup-color-brand-accent-contrast);
+  color: var(--gup-color-neutral-high);
+  border-radius: 51%;
+  width: var(--size, 20px);
+  height: var(--size, 20px);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  font-size: var(--font-size, var(--font-size-90));
+  vertical-align: middle;
+}
+
+.gup-avatar--has-label {
+  --gup-icon--fill-color: var(--gup-color-neutral-contrast);
+
+  background-color: var(--gup-color-neutral-high);
+  color: var(--gup-color-neutral-contrast);
+  outline-color: transparent;
+}
+
+.gup-avatar--clickable {
+  cursor: pointer;
+}
+
+.gup-avatar--clickable:focus-visible {
+  outline: 2px solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+.gup-avatar__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 51%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.gup-avatar__label {
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.gup-avatar__badge {
+  position: absolute;
+  bottom: 0;
+  inset-inline-end: 0;
+}
+
 /* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

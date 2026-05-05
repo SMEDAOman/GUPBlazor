@@ -1,0 +1,123 @@
+@* Equivalent of <gup-avatar size="s|m|l" src="..." alt="..." label="..." status="...">
+   Renders a user avatar — image when Src+Alt are provided, name abbreviation when
+   Label is provided, otherwise a generic "person" icon. Supports an optional status
+   badge in the bottom-end corner.
+
+   Two-way binding: @bind-Status, @bind-Label, @bind-Src
+   Events: OnClick
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-avatar gup-avatar--size-@SizeString() @(HasLabel ? "gup-avatar--has-label" : "") @(IsClickable ? "gup-avatar--clickable" : "")"
+     style="@StyleVars()"
+     role="@(IsClickable ? "button" : null)"
+     tabindex="@(IsClickable ? "0" : null)"
+     aria-label="@AriaLabel"
+     @onclick="HandleClick"
+     @onkeydown="HandleKeyDown">
+
+    @if (HasImage)
+    {
+        <img class="gup-avatar__image" alt="@Alt" src="@Src" />
+    }
+    else
+    {
+        <div class="gup-avatar__label">
+            @if (HasLabel)
+            {
+                @Abbreviation
+            }
+            else
+            {
+                <GupIcon IconName="person" Width="@IconSize" Height="@IconSize" />
+            }
+        </div>
+    }
+
+    @if (Status.HasValue)
+    {
+        <div class="gup-avatar__badge">
+            <GupBadge Type="@Status.Value" AriaLabel="@StatusAriaLabel" />
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>Avatar size — small, medium, or large.</summary>
+    [Parameter] public GupAvatarSize Size { get; set; } = GupAvatarSize.S;
+
+    /// <summary>Image source — when set together with <see cref="Alt"/>, the avatar shows the image.</summary>
+    [Parameter] public string? Src { get; set; }
+    [Parameter] public EventCallback<string?> SrcChanged { get; set; }
+
+    /// <summary>Image alt text. Required for the image to render.</summary>
+    [Parameter] public string? Alt { get; set; }
+
+    /// <summary>Text label — uppercase letters are extracted as the abbreviation when no image is provided.</summary>
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public EventCallback<string?> LabelChanged { get; set; }
+
+    /// <summary>Optional status badge rendered in the bottom-end corner.</summary>
+    [Parameter] public GupBadgeType? Status { get; set; }
+    [Parameter] public EventCallback<GupBadgeType?> StatusChanged { get; set; }
+
+    /// <summary>Accessible label for the status badge.</summary>
+    [Parameter] public string? StatusAriaLabel { get; set; }
+
+    /// <summary>Accessible label for the avatar itself.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Fires when the avatar is clicked or activated by keyboard (Enter/Space).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private bool HasImage => !string.IsNullOrEmpty(Src) && !string.IsNullOrEmpty(Alt);
+    private bool HasLabel => !string.IsNullOrEmpty(Label);
+    private bool IsClickable => OnClick.HasDelegate;
+
+    private string Abbreviation =>
+        string.IsNullOrEmpty(Label)
+            ? string.Empty
+            : new string(Label.Where(char.IsUpper).ToArray());
+
+    private int IconSize => Size switch
+    {
+        GupAvatarSize.M => 20,
+        GupAvatarSize.L => 28,
+        _               => 16,
+    };
+
+    private string SizeString() => Size switch
+    {
+        GupAvatarSize.M => "m",
+        GupAvatarSize.L => "l",
+        _               => "s",
+    };
+
+    private string StyleVars()
+    {
+        var (px, fontSize) = Size switch
+        {
+            GupAvatarSize.M => (28, "var(--font-size-250)"),
+            GupAvatarSize.L => (40, "var(--font-size-400)"),
+            _               => (20, "var(--font-size-90)"),
+        };
+        return $"--size: {px}px; --font-size: {fontSize};";
+    }
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!IsClickable) return;
+        if (e.Key == "Enter" || e.Key == " " || e.Code == "Space")
+        {
+            await OnClick.InvokeAsync(new MouseEventArgs());
+        }
+    }
+}
