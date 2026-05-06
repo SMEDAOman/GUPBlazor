@@ -1,0 +1,57 @@
+@* Equivalent of <gup-filter-chip-wrapper clear-label="Clear all">
+   Groups GupFilterChip elements with an optional leading label and a trailing
+   "clear all" button. Renders the chips in a multi-line GupTrack.
+
+   Default slot:  ChildContent — should contain only GupFilterChip elements
+   Named slot:    Label         — group label rendered before the chips
+   Two-way bind:  @bind-ClearLabel
+   Events:        OnClearAll    — fires when the "clear all" button is clicked
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-filter-chip-wrapper" role="group" aria-label="@AriaLabel">
+    <GupTrack Direction="horizontal" Gap="4" VerticalAlignment="center">
+        @if (Label is not null)
+        {
+            <span class="gup-filter-chip-wrapper__label">@Label</span>
+        }
+        @ChildContent
+        @if (!string.IsNullOrEmpty(ClearLabel))
+        {
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                       Kind="@GupButtonKind.Button"
+                       OnClick="HandleClearAll">
+                <IconStart>
+                    <GupIcon IconName="refresh" Width="20" Height="20" />
+                </IconStart>
+                <ChildContent>@ClearLabel</ChildContent>
+            </GupButton>
+        }
+    </GupTrack>
+</div>
+
+@code {
+    /// <summary>Label for the trailing "clear all" button. When empty, the button is hidden.</summary>
+    [Parameter] public string ClearLabel { get; set; } = "";
+    [Parameter] public EventCallback<string> ClearLabelChanged { get; set; }
+
+    /// <summary>Optional accessible label for the wrapper region.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Group label rendered before the chips.</summary>
+    [Parameter] public RenderFragment? Label { get; set; }
+
+    /// <summary>Default slot — should contain only GupFilterChip elements.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Fires when the "clear all" button is clicked.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClearAll { get; set; }
+
+    private async Task HandleClearAll(MouseEventArgs e)
+    {
+        if (OnClearAll.HasDelegate)
+        {
+            await OnClearAll.InvokeAsync(e);
+        }
+    }
+}

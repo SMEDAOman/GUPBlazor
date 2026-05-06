@@ -1,0 +1,74 @@
+@* Equivalent of <gup-divider appearance="default|secondary|inverse" location="bottom|top|top-and-bottom" gap="4">
+   A simple divider that separates content via a top, bottom, or both border.
+   The content goes in ChildContent (default slot).
+
+   Two-way binding: @bind-Appearance, @bind-Location, @bind-Gap
+   Events: OnClick (fires when the divider wrapper is clicked / activated by Enter/Space)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-divider gup-divider--appearance-@AppearanceString() gup-divider--location-@LocationString() @(IsClickable ? "gup-divider--clickable" : "")"
+     style="--gup-divider-gap: calc(@Gap * var(--unit, 4px));"
+     role="@(IsClickable ? "button" : null)"
+     tabindex="@(IsClickable ? "0" : null)"
+     aria-label="@AriaLabel"
+     @onclick="HandleClick"
+     @onkeydown="HandleKeyDown">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Visual appearance — default, secondary (lower contrast), or inverse (for dark surfaces).</summary>
+    [Parameter] public GupDividerAppearance Appearance { get; set; } = GupDividerAppearance.Default;
+    [Parameter] public EventCallback<GupDividerAppearance> AppearanceChanged { get; set; }
+
+    /// <summary>Where the divider line is rendered relative to the content.</summary>
+    [Parameter] public GupDividerLocation Location { get; set; } = GupDividerLocation.Bottom;
+    [Parameter] public EventCallback<GupDividerLocation> LocationChanged { get; set; }
+
+    /// <summary>Spacing (in --unit multiples, default 4 = 16px) between the content and the line.</summary>
+    [Parameter] public int Gap { get; set; } = 4;
+    [Parameter] public EventCallback<int> GapChanged { get; set; }
+
+    /// <summary>Content to be separated by the divider.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Accessible label — used when the divider is clickable.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Fires when the divider is clicked or activated by keyboard (Enter/Space).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private bool IsClickable => OnClick.HasDelegate;
+
+    private string AppearanceString() => Appearance switch
+    {
+        GupDividerAppearance.Secondary => "secondary",
+        GupDividerAppearance.Inverse   => "inverse",
+        _                              => "default",
+    };
+
+    private string LocationString() => Location switch
+    {
+        GupDividerLocation.Top          => "top",
+        GupDividerLocation.TopAndBottom => "top-and-bottom",
+        _                               => "bottom",
+    };
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!IsClickable) return;
+        if (e.Key == "Enter" || e.Key == " " || e.Code == "Space")
+        {
+            await OnClick.InvokeAsync(new MouseEventArgs());
+        }
+    }
+}

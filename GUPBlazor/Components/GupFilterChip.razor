@@ -1,0 +1,70 @@
+@* Equivalent of <gup-filter-chip kind="button|link" disabled href="..." hide-close-icon>
+   A pill-shaped chip used to display a user-selected filter. As a "button" it renders a
+   close (×) icon and emits OnClick when activated; as a "link" it navigates to Href.
+
+   Two-way binding: @bind-Kind, @bind-Disabled, @bind-Href, @bind-HideCloseIcon
+   Events:          OnClick (fires when the button-kind chip is clicked)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+@if (Kind == GupFilterChipKind.Link)
+{
+    <a class="gup-filter-chip @(Disabled ? "is-disabled" : "")"
+       href="@(Disabled ? null : Href)"
+       aria-disabled="@(Disabled ? "true" : null)"
+       tabindex="@(Disabled ? "-1" : null)">
+        <span class="gup-filter-chip__label">@ChildContent</span>
+    </a>
+}
+else
+{
+    <button type="button"
+            class="gup-filter-chip @(Disabled ? "is-disabled" : "")"
+            disabled="@(Disabled ? true : null)"
+            aria-label="@AriaLabel"
+            @onclick="HandleClick">
+        <span class="gup-filter-chip__label">@ChildContent</span>
+        @if (!HideCloseIcon)
+        {
+            <span class="gup-filter-chip__icon" aria-hidden="true">
+                <GupIcon IconName="close" Width="24" Height="24" />
+            </span>
+        }
+    </button>
+}
+
+@code {
+    /// <summary>Whether the chip behaves as a button (default — closeable) or a link.</summary>
+    [Parameter] public GupFilterChipKind Kind { get; set; } = GupFilterChipKind.Button;
+    [Parameter] public EventCallback<GupFilterChipKind> KindChanged { get; set; }
+
+    /// <summary>Whether the button-kind chip is disabled. Ignored when Kind=Link.</summary>
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public EventCallback<bool> DisabledChanged { get; set; }
+
+    /// <summary>Target URL when Kind=Link.</summary>
+    [Parameter] public string Href { get; set; } = "";
+    [Parameter] public EventCallback<string> HrefChanged { get; set; }
+
+    /// <summary>Hides the trailing close (×) icon. Only relevant when Kind=Button.</summary>
+    [Parameter] public bool HideCloseIcon { get; set; }
+    [Parameter] public EventCallback<bool> HideCloseIconChanged { get; set; }
+
+    /// <summary>Optional accessible label — useful when the chip's only visible content is the close icon.</summary>
+    [Parameter] public string? AriaLabel { get; set; }
+
+    /// <summary>Chip label content. Avoid placing interactive elements inside.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Fires when the button-kind chip is activated (click / Enter / Space).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (Disabled) return;
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+}

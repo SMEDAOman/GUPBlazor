@@ -458,7 +458,7 @@ body {
   max-width: 632px;
   margin-inline: auto;
   padding-top: var(--gup-component-9);
-  padding-bottom: 64px;
+  /* padding-bottom: 64px; */
 }
 
 /* ------------------------------------------------------------
@@ -2848,6 +2848,59 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-divider
+   Mirrors design-system/components/divider/divider.css.
+   Three appearances:
+     - default   : medium-contrast border (default)
+     - secondary : low-contrast border
+     - inverse   : white-tinted border for dark surfaces
+   Three locations:
+     - bottom        : line under the content (default)
+     - top           : line above the content
+     - top-and-bottom: lines on both sides
+   The Gap parameter (in --unit multiples, default 4) controls spacing.
+   ------------------------------------------------------------ */
+.gup-divider {
+  --gup-divider-border-color: var(--gup-color-border-medium);
+  --gup-divider-gap: calc(4 * var(--unit, 4px));
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-block-end: 1px solid var(--gup-divider-border-color);
+  padding-block-end: var(--gup-divider-gap);
+}
+
+.gup-divider--appearance-secondary {
+  --gup-divider-border-color: var(--gup-color-border-low);
+}
+
+.gup-divider--appearance-inverse {
+  --gup-divider-border-color: var(--gup-color-border-inverted-medium);
+}
+
+.gup-divider--location-top {
+  border-block-start: 1px solid var(--gup-divider-border-color);
+  padding-block-start: var(--gup-divider-gap);
+  border-block-end: none;
+  padding-block-end: 0;
+}
+
+.gup-divider--location-top-and-bottom {
+  border-block: 1px solid var(--gup-divider-border-color);
+  padding-block: var(--gup-divider-gap);
+}
+
+.gup-divider--clickable {
+  cursor: pointer;
+}
+
+.gup-divider--clickable:focus-visible {
+  outline: 2px solid var(--gup-color-brand-high);
+  outline-offset: 2px;
+}
+
+/* ============================================================
    COMPONENT: gup-data-sheet
    Mirrors design-system/components/data-sheet/data-sheet.css.
    A bordered, padded vertical stack — typically used to highlight
@@ -2919,6 +2972,88 @@ body {
 .gup-labelled-item--clickable:focus-visible {
   outline: 2px solid var(--gup-color-brand-high);
   outline-offset: 2px;
+}
+
+/* ============================================================
+   COMPONENT: gup-filter-chip
+   Mirrors design-system/components/filter-chip/filter-chip/filter-chip.css.
+   A pill-shaped chip displaying a user-selected filter; renders an
+   optional trailing close icon when used as a button.
+   ------------------------------------------------------------ */
+.gup-filter-chip {
+  --gup-filter-chip-color: var(--gup-color-content-link);
+  --gup-filter-chip-bg:    var(--gup-color-states-base-bg-control);
+  --gup-icon--fill-color:  var(--gup-filter-chip-color);
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gup-component-3);
+  padding: 8px var(--gup-component-5);
+  border: 0;
+  border-radius: var(--gup-radius-component-full);
+  background: var(--gup-filter-chip-bg);
+  color: var(--gup-filter-chip-color);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 24px;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.gup-filter-chip:not(.is-disabled):hover {
+  --gup-filter-chip-bg:
+    linear-gradient(var(--gup-color-states-secondary-hover), var(--gup-color-states-secondary-hover)),
+    linear-gradient(var(--gup-color-brand-accent-xlow), var(--gup-color-brand-accent-xlow));
+}
+
+.gup-filter-chip:not(.is-disabled):active {
+  --gup-filter-chip-bg:
+    linear-gradient(0deg, var(--gup-color-states-secondary-active) 0%, var(--gup-color-states-secondary-active) 100%),
+    var(--gup-color-states-base-bg-control);
+}
+
+.gup-filter-chip:focus-visible {
+  outline: 2px solid var(--gup-color-brand-high);
+  outline-offset: 2px;
+}
+
+.gup-filter-chip.is-disabled,
+.gup-filter-chip[disabled] {
+  --gup-filter-chip-color: var(--gup-color-states-disabled-medium);
+  --gup-filter-chip-bg:    var(--gup-color-states-disabled-low);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.gup-filter-chip__label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.gup-filter-chip__icon {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+/* ============================================================
+   COMPONENT: gup-filter-chip-wrapper
+   Mirrors design-system/components/filter-chip/filter-chip-wrapper/
+   filter-chip-wrapper.css. Groups filter chips with an optional
+   leading label and a trailing "clear all" button.
+   ------------------------------------------------------------ */
+.gup-filter-chip-wrapper {
+  display: block;
+  border-bottom: 1px solid var(--gup-color-brand-low);
+  padding-bottom: var(--gup-component-3);
+}
+
+.gup-filter-chip-wrapper__label {
+  color: var(--gup-color-brand-high);
+  font-weight: var(--font-weight-base-beta);
 }
 
 /* ============================================================

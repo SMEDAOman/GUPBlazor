@@ -1,0 +1,225 @@
+@page "/demo/filter-chip"
+@rendermode InteractiveServer
+
+<PageTitle>Filter Chip — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Filter Chip & Wrapper">
+        <PageSummary>GupFilterChip — pill-shaped chips representing user-selected filters, optionally
+            grouped inside a GupFilterChipWrapper with a leading label and a trailing "clear all" action.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT CHIP ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default (button)</h2>
+            <p class="demo-section-description">
+                A button-kind chip renders a trailing close (×) icon. Click anywhere on the chip to fire
+                <code>OnClick</code>.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFilterChip>I am a button</GupFilterChip>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ DISABLED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Disabled</h2>
+            <p class="demo-section-description">
+                <code>Disabled="true"</code> applies the muted disabled tokens and prevents pointer events.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFilterChip Disabled="true">I am disabled</GupFilterChip>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ LINK ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Link</h2>
+            <p class="demo-section-description">
+                Set <code>Kind="GupFilterChipKind.Link"</code> and provide an <code>Href</code> to render as
+                an anchor — the close icon is omitted.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFilterChip Kind="@GupFilterChipKind.Link" Href="#">I am a link</GupFilterChip>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ HIDE CLOSE ICON ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Without close icon</h2>
+            <p class="demo-section-description">
+                Use <code>HideCloseIcon="true"</code> when the chip is purely decorative or activates a different
+                action.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFilterChip HideCloseIcon="true">No close icon</GupFilterChip>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WRAPPER (BASIC) ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Wrapper — basic</h2>
+            <p class="demo-section-description">
+                <code>GupFilterChipWrapper</code> arranges chips on a multi-line track with an optional leading
+                label and a trailing "clear all" button.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFilterChipWrapper ClearLabel="Clear all">
+                        <Label>Search in:</Label>
+                        <ChildContent>
+                            <GupFilterChip>Filter 1</GupFilterChip>
+                            <GupFilterChip>Filter 2</GupFilterChip>
+                            <GupFilterChip>Filter 3</GupFilterChip>
+                            <GupFilterChip>Filter 4</GupFilterChip>
+                        </ChildContent>
+                    </GupFilterChipWrapper>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ INTERACTIVE WRAPPER (TWO-WAY BIND + EVENTS) ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Interactive — events &amp; two-way binding</h2>
+            <p class="demo-section-description">
+                Each chip's <code>OnClick</code> removes the matching filter from the bound list; the wrapper's
+                <code>OnClearAll</code> empties it. The "Disabled" toggle shows two-way binding on the chip's
+                <code>Disabled</code> property.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+                    <GupFilterChipWrapper ClearLabel="Clear all" OnClearAll="HandleClearAll">
+                        <Label>Active filters:</Label>
+                        <ChildContent>
+                            @foreach (var f in _filters.ToArray())
+                            {
+                                <GupFilterChip @key="f"
+                                               Disabled="@_chipsDisabled"
+                                               OnClick="@(() => RemoveFilter(f))">
+                                    @f
+                                </GupFilterChip>
+                            }
+                            @if (_filters.Count == 0)
+                            {
+                                <span data-testid="empty-state" style="color: var(--gup-color-content-secondary, #52525b);">
+                                    All filters cleared.
+                                </span>
+                            }
+                        </ChildContent>
+                    </GupFilterChipWrapper>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="ResetFilters">
+                            <ChildContent>Reset filters</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _chipsDisabled = !_chipsDisabled)">
+                            <ChildContent>Toggle Disabled (@(_chipsDisabled ? "On" : "Off"))</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <p data-testid="event-log" style="margin:0;">
+                        Removed count: <strong>@_removedCount</strong> &nbsp;|&nbsp;
+                        Clear-all count: <strong>@_clearAllCount</strong> &nbsp;|&nbsp;
+                        Last action: <strong>@_lastAction</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ KINDS COMBINED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Mixed kinds inside a wrapper</h2>
+            <p class="demo-section-description">
+                Wrappers can mix button and link chips freely.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupFilterChipWrapper ClearLabel="Clear all">
+                        <Label>Mixed:</Label>
+                        <ChildContent>
+                            <GupFilterChip>Button chip</GupFilterChip>
+                            <GupFilterChip Kind="@GupFilterChipKind.Link" Href="#">Link chip</GupFilterChip>
+                            <GupFilterChip HideCloseIcon="true">No icon</GupFilterChip>
+                            <GupFilterChip Disabled="true">Disabled</GupFilterChip>
+                        </ChildContent>
+                    </GupFilterChipWrapper>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">The chips and wrapper use logical layout, so RTL is automatic.</p>
+            <div class="demo-card--full" dir="rtl">
+                <div class="demo-surface">
+                    <GupFilterChipWrapper ClearLabel="مسح الكل">
+                        <Label>البحث في:</Label>
+                        <ChildContent>
+                            <GupFilterChip>الفرز الأول</GupFilterChip>
+                            <GupFilterChip>الفرز الثاني</GupFilterChip>
+                            <GupFilterChip>الفرز الثالث</GupFilterChip>
+                            <GupFilterChip>الفرز الرابع</GupFilterChip>
+                        </ChildContent>
+                    </GupFilterChipWrapper>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private List<string> _filters = new() { "Type: Service", "Region: Muscat", "Year: 2025", "Status: Open" };
+    private bool _chipsDisabled;
+    private int _removedCount;
+    private int _clearAllCount;
+    private string _lastAction = "—";
+
+    private void RemoveFilter(string filter)
+    {
+        if (_filters.Remove(filter))
+        {
+            _removedCount++;
+            _lastAction = $"Removed '{filter}'";
+        }
+    }
+
+    private void HandleClearAll()
+    {
+        _clearAllCount++;
+        _lastAction = $"Clear-all ({_filters.Count} filter(s) cleared)";
+        _filters.Clear();
+    }
+
+    private void ResetFilters()
+    {
+        _filters = new List<string> { "Type: Service", "Region: Muscat", "Year: 2025", "Status: Open" };
+        _lastAction = "Reset to defaults";
+    }
+}

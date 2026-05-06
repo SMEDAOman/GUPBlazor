@@ -1,0 +1,254 @@
+@page "/demo/divider"
+@rendermode InteractiveServer
+
+<PageTitle>Divider — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Divider">
+        <PageSummary>GupDivider — a simple line separator that wraps content. Three appearances (default, secondary,
+            inverse), three locations (bottom, top, top-and-bottom), and a configurable gap.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT (BOTTOM) ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default (bottom)</h2>
+            <p class="demo-section-description">
+                The default divider renders a 1-pixel line beneath the wrapped content.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDivider>
+                        <span>Element 1</span>
+                        <span>Element 2 with some words</span>
+                        <span>Element 3 with so many words that they wrap onto multiple lines and demonstrate how the
+                            divider sits beneath them.</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TOP ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Top</h2>
+            <p class="demo-section-description">
+                With <code>Location="GupDividerLocation.Top"</code>, the line sits above the content.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDivider Location="@GupDividerLocation.Top" Gap="5">
+                        <span>Element 1</span>
+                        <span>Element 2 with some words</span>
+                        <span>Element 3 with so many words that they wrap.</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TOP AND BOTTOM ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Top and bottom</h2>
+            <p class="demo-section-description">
+                Use <code>Location="GupDividerLocation.TopAndBottom"</code> to bracket the content with two lines.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDivider Location="@GupDividerLocation.TopAndBottom" Gap="6">
+                        <span>Element 1</span>
+                        <span>Element 2 with some words</span>
+                        <span>Element 3 with so many words that they wrap onto multiple lines.</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ SECONDARY ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Secondary appearance</h2>
+            <p class="demo-section-description">
+                The secondary appearance uses the lower-contrast border token.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDivider Appearance="@GupDividerAppearance.Secondary"
+                                Location="@GupDividerLocation.TopAndBottom"
+                                Gap="7">
+                        <span>Element 1</span>
+                        <span>Element 2 with some words</span>
+                        <span>Element 3 — lower-contrast line for less visual weight.</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ INVERSE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Inverse appearance (dark surface)</h2>
+            <p class="demo-section-description">
+                The inverse appearance is intended for dark backgrounds.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="background:#1a1a1a; color:#fff; padding:24px;">
+                    <GupDivider Appearance="@GupDividerAppearance.Inverse"
+                                Location="@GupDividerLocation.TopAndBottom"
+                                Gap="8">
+                        <span>Element 1</span>
+                        <span>Element 2 with some words</span>
+                        <span>Element 3 — white-tinted line on a dark surface.</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ GAP VARIATIONS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Gap variations</h2>
+            <p class="demo-section-description">
+                <code>Gap</code> is multiplied by the design system's <code>--unit</code> (4px) — so
+                <code>Gap="2"</code> = 8px, <code>Gap="10"</code> = 40px.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:24px;">
+                    <GupDivider Gap="2">
+                        <span>Gap = 2 (8px)</span>
+                    </GupDivider>
+                    <GupDivider Gap="4">
+                        <span>Gap = 4 (16px, default)</span>
+                    </GupDivider>
+                    <GupDivider Gap="10">
+                        <span>Gap = 10 (40px)</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Appearance, @@bind-Location, @@bind-Gap)</h2>
+            <p class="demo-section-description">
+                Switch appearance, location, and gap at runtime — the divider reflects the bound values.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+                    <GupDivider @bind-Appearance="_boundAppearance"
+                                @bind-Location="_boundLocation"
+                                @bind-Gap="_boundGap">
+                        <span>Bound divider</span>
+                        <span>Use the controls below to change appearance, location, and gap.</span>
+                    </GupDivider>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <strong>Appearance:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundAppearance = GupDividerAppearance.Default)">
+                            <ChildContent>Default</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundAppearance = GupDividerAppearance.Secondary)">
+                            <ChildContent>Secondary</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <strong>Location:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundLocation = GupDividerLocation.Bottom)">
+                            <ChildContent>Bottom</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundLocation = GupDividerLocation.Top)">
+                            <ChildContent>Top</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundLocation = GupDividerLocation.TopAndBottom)">
+                            <ChildContent>Top &amp; bottom</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <strong>Gap:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundGap = Math.Max(0, _boundGap - 1))">
+                            <ChildContent>−</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundGap = _boundGap + 1)">
+                            <ChildContent>+</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <p data-testid="bind-output" style="margin:0;">
+                        Bound state: appearance = <strong>@_boundAppearance</strong>, location =
+                        <strong>@_boundLocation</strong>, gap = <strong>@_boundGap</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ONCLICK EVENT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnClick event</h2>
+            <p class="demo-section-description">
+                When <code>OnClick</code> is set, the divider becomes keyboard-focusable and activates on Enter/Space.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+                    <GupDivider Location="@GupDividerLocation.TopAndBottom"
+                                AriaLabel="Activate the divider"
+                                OnClick="HandleDividerClick">
+                        <span>Clickable divider</span>
+                        <span>Click anywhere in this content (or focus and press Enter/Space) to fire the OnClick
+                            event.</span>
+                    </GupDivider>
+
+                    <p data-testid="click-log" style="margin:0;">
+                        Click count: <strong>@_clickCount</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">The divider uses logical block-direction borders, so it renders
+                identically in RTL.</p>
+            <div class="demo-card--full" dir="rtl">
+                <div class="demo-surface">
+                    <GupDivider Location="@GupDividerLocation.TopAndBottom">
+                        <span>العنصر الأول</span>
+                        <span>العنصر الثاني مع بعض الكلمات</span>
+                        <span>العنصر الثالث مع كلمات كثيرة لإظهار كيف يتصرف الفاصل في الاتجاه من اليمين إلى اليسار.</span>
+                    </GupDivider>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private GupDividerAppearance _boundAppearance = GupDividerAppearance.Default;
+    private GupDividerLocation _boundLocation = GupDividerLocation.Bottom;
+    private int _boundGap = 4;
+    private int _clickCount;
+
+    private void HandleDividerClick(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+        _clickCount++;
+    }
+}

@@ -21,7 +21,7 @@
         <div class="content">
             <div class="content-inner">
                 @ChildContent
-                @if (Appearance == GupDetailsContentAppearance.Sink)
+                @if (ContentAppearance == GupDetailsContentAppearance.Sink)
                 {
                     <button type="button" class="close-button"
                             aria-label="@CloseButtonLabel" title="@CloseButtonLabel"
@@ -42,7 +42,7 @@
     [Parameter] public EventCallback<bool> OpenChanged { get; set; }
 
     /// <summary>Whether the content is styled as a quote, a sink, or none.</summary>
-    [Parameter] public GupDetailsContentAppearance Appearance { get; set; } = GupDetailsContentAppearance.Quote;
+    [Parameter] public GupDetailsContentAppearance ContentAppearance { get; set; } = GupDetailsContentAppearance.Quote;
 
     /// <summary>The icon to use when the content is closed.</summary>
     [Parameter] public string ClosedIcon { get; set; } = "keyboard-arrow-down";
@@ -65,7 +65,7 @@
     /// <summary>Fires whenever the disclosure is toggled by the user. Argument is the new open state.</summary>
     [Parameter] public EventCallback<bool> OnToggle { get; set; }
 
-    private string AppearanceString() => Appearance switch
+    private string AppearanceString() => ContentAppearance switch
     {
         GupDetailsContentAppearance.Sink => "sink",
         GupDetailsContentAppearance.None => "none",
