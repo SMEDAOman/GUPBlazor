@@ -636,6 +636,7 @@ body {
 
 /* ------------------------------------------------------------
    15. COMPONENT: gup-form-section
+   Mirrors design-system/components/form-section/form-section.css.
    ------------------------------------------------------------ */
 .gup-form-section {
   display: block;
@@ -646,7 +647,20 @@ body {
   color: var(--gup-color-content-primary);
   font-size: var(--font-size-600);
   line-height: var(--line-height-500);
+  margin-top: 0;
   margin-bottom: var(--gup-spacing-text-to-component);
+}
+
+.gup-form-section .content {
+  display: block;
+}
+
+.gup-form-section .footer {
+  display: block;
+}
+
+.gup-form-section--has-footer .footer {
+  margin-top: var(--gup-spacing-content-to-cta);
 }
 
 /* ------------------------------------------------------------

@@ -1,17 +1,67 @@
 @* Equivalent of <gup-form-section>
-   Named slot: Title (section heading)
+   A section in a long form with a heading and an optional footer
+   (typically a GupButtonGroup with action buttons).
+
+   Slots:
+     - Title          → rich content for the section heading (overrides Heading)
+     - ChildContent   → main content of the section (default slot)
+     - FooterContent  → optional footer with action buttons (use GupButtonGroup)
+
+   Two-way binding: @bind-Heading
+   Events: OnFooterClick (fires when the footer area is clicked, useful for
+           bubbling up button clicks without wiring each one individually)
 *@
-<div class="gup-form-section">
-    @if (Title != null)
+@using Microsoft.AspNetCore.Components.Web
+
+<section class="gup-form-section @(HasFooter ? "gup-form-section--has-footer" : "")">
+    @if (Title != null || !string.IsNullOrEmpty(Heading))
     {
-        <div class="title">@Title</div>
+        <h2 class="title">
+            @if (Title != null)
+            {
+                @Title
+            }
+            else
+            {
+                @Heading
+            }
+        </h2>
     }
-    <div class="inner">
+    <div class="content">
         @ChildContent
     </div>
-</div>
+    @if (HasFooter)
+    {
+        <div class="footer" @onclick="HandleFooterClick">
+            @FooterContent
+        </div>
+    }
+</section>
 
 @code {
+    /// <summary>Plain-text section heading. Use <see cref="Title"/> for rich content.</summary>
+    [Parameter] public string? Heading { get; set; }
+    [Parameter] public EventCallback<string?> HeadingChanged { get; set; }
+
+    /// <summary>Rich content for the section heading. Overrides <see cref="Heading"/>.</summary>
     [Parameter] public RenderFragment? Title { get; set; }
+
+    /// <summary>Main content of the section.</summary>
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Optional footer — typically a GupButtonGroup with action buttons.</summary>
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    /// <summary>Fires when the footer area is clicked.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnFooterClick { get; set; }
+
+    private bool HasFooter => FooterContent != null;
+
+    private async Task HandleFooterClick(MouseEventArgs e)
+    {
+        if (OnFooterClick.HasDelegate)
+        {
+            await OnFooterClick.InvokeAsync(e);
+        }
+    }
 }
