@@ -3057,5 +3057,182 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-flyout
+   Mirrors design-system/components/flyout/flyout.css. A side / top /
+   bottom panel that slides into view from an edge of the viewport.
+   Supports a heading, optional close button, scrollable content area
+   and an optional footer (typically action buttons).
+   ------------------------------------------------------------ */
+.gup-flyout-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: var(--gup-flyout--z-index, 100);
+  outline: 0;
+}
+
+.gup-flyout-backdrop--transparent {
+  background-color: transparent;
+}
+
+.gup-flyout-panel {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+  box-shadow:
+    0 16px 32px 0 var(--gup-color-shadow-color-5, rgba(0, 0, 0, 0.10)),
+    0 8px  16px 0 var(--gup-color-shadow-color-4, rgba(0, 0, 0, 0.08)),
+    0 3px   6px 0 var(--gup-color-shadow-color-3, rgba(0, 0, 0, 0.06)),
+    0 1px   2px 0 var(--gup-color-shadow-color-2, rgba(0, 0, 0, 0.04));
+  z-index: calc(var(--gup-flyout--z-index, 100) + 1);
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.gup-flyout-panel--right {
+  top: 0;
+  inset-inline-end: 0;
+  bottom: 0;
+  width: var(--gup-flyout--width, 460px);
+  max-width: 100%;
+  animation-name: gup-flyout-slide-in-right;
+}
+
+.gup-flyout-panel--left {
+  top: 0;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: var(--gup-flyout--width, 460px);
+  max-width: 100%;
+  animation-name: gup-flyout-slide-in-left;
+}
+
+.gup-flyout-panel--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--gup-flyout--height, 400px);
+  max-height: 100%;
+  animation-name: gup-flyout-slide-in-top;
+}
+
+.gup-flyout-panel--bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--gup-flyout--height, 400px);
+  max-height: 100%;
+  animation-name: gup-flyout-slide-in-bottom;
+}
+
+.gup-flyout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block-start: var(--gup-spacing-between-text, 16px);
+  padding-block-end: var(--gup-spacing-between-text, 17px);
+  padding-inline-start: var(--gup-spacing-between-content, 24px);
+  padding-inline-end: var(--gup-spacing-component-default, 12px);
+  border-bottom: 1px solid var(--gup-color-border-low, #e1e1e2);
+  min-height: 60px;
+  box-sizing: border-box;
+}
+
+.gup-flyout-heading {
+  margin: 0;
+  font-size: var(--font-size-500, 20px);
+  font-weight: var(--font-weight-base-beta, 700);
+  line-height: 28px;
+  letter-spacing: -0.4px;
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-flyout-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: var(--gup-radius-button, 999px);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-flyout-close-button:hover {
+  background-color: var(--gup-color-states-hover-bg, rgba(0, 0, 0, 0.04));
+}
+
+.gup-flyout-close-button:focus-visible {
+  outline: 2px solid var(--gup-color-focus-ring, #2f57cd);
+  outline-offset: 2px;
+}
+
+.gup-flyout-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--gup-spacing-between-content, 24px) var(--gup-spacing-content-to-cta, 32px);
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-flyout-content:focus {
+  outline: none;
+}
+
+.gup-flyout-content:focus-visible {
+  outline: 2px solid var(--gup-color-focus-ring, #2f57cd);
+  outline-offset: -2px;
+}
+
+.gup-flyout-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  padding-inline: var(--gup-spacing-content-to-cta, 32px);
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+  border-top: 1px solid var(--gup-color-border-low, #e1e1e2);
+}
+
+.gup-flyout-footer:empty {
+  display: none;
+}
+
+@keyframes gup-flyout-slide-in-right {
+  0%  { transform: translateX(100%); }
+  to  { transform: translateX(0); }
+}
+
+@keyframes gup-flyout-slide-in-left {
+  0%  { transform: translateX(-100%); }
+  to  { transform: translateX(0); }
+}
+
+@keyframes gup-flyout-slide-in-top {
+  0%  { transform: translateY(-100%); }
+  to  { transform: translateY(0); }
+}
+
+@keyframes gup-flyout-slide-in-bottom {
+  0%  { transform: translateY(100%); }
+  to  { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gup-flyout-panel {
+    animation: none;
+  }
+}
+
+/* RTL: in left-to-right languages, "left" = physical left and "right" = physical right.
+   The right/left panels already use logical inset-inline-start/end so they flip automatically
+   in RTL contexts. Top/bottom variants stay anchored to the top/bottom edges. */
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

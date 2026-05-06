@@ -1,0 +1,415 @@
+@page "/demo/flyout"
+@rendermode InteractiveServer
+
+<PageTitle>Flyout — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Flyout (GupFlyout)">
+    <PageSummary>
+      A side / top / bottom panel that slides into view from the edge of the viewport. Bind
+      <code>IsOpen</code> with <code>@@bind-IsOpen</code> to control visibility, listen to
+      <code>OnOpen</code> / <code>OnClose</code> for lifecycle events, and pick the slide direction
+      with <code>Position</code>.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <!-- ══ DEFAULT (RIGHT) ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Default — slides in from the right</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Standard right-edge flyout with footer action buttons</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _rightOpen = true)">
+              <ChildContent>Open right flyout</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ LEFT ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Left</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Position="Left" — slides in from the left edge (filter pattern)</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _leftOpen = true)">
+              <ChildContent>Open left flyout</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TOP ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Top</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Position="Top" — slides down from the top edge</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _topOpen = true)">
+              <ChildContent>Open top flyout</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ BOTTOM ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Bottom</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Position="Bottom" — slides up from the bottom edge</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _bottomOpen = true)">
+              <ChildContent>Open bottom flyout</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ NO BACKDROP ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Without backdrop</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Backdrop="false" — the dimmed overlay is hidden but the flyout still captures clicks behind it</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                       OnClick="@(() => _noBackdropOpen = true)">
+              <ChildContent>Open without backdrop</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ NO CLOSE BUTTON ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Without close button</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">HideCloseButton="true" — user must use a footer action (ESC and backdrop still close unless disabled)</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _noCloseOpen = true)">
+              <ChildContent>Open no-close flyout</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TWO-WAY BINDING — POSITION ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Two-way binding (@@bind-Position)</h2>
+      <p class="demo-section-description">
+        Switch the slide direction at runtime — the flyout reflects the bound value.
+      </p>
+      <div class="demo-card--full">
+        <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Right)">
+              <ChildContent>Right</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Left)">
+              <ChildContent>Left</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Top)">
+              <ChildContent>Top</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Bottom)">
+              <ChildContent>Bottom</ChildContent>
+            </GupButton>
+          </div>
+
+          <GupButton Appearance="@GupButtonAppearance.Primary"
+                     OnClick="@(() => _boundOpen = true)">
+            <ChildContent>Open bound flyout (@_boundPosition)</ChildContent>
+          </GupButton>
+
+          <p data-testid="bind-output" style="margin:0;">
+            Bound position: <strong>@_boundPosition</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ EVENT LOG ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">Event log</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Last open / close event</span>
+          <p data-testid="flyout-event-log" style="margin: 0; color: var(--gup-color-content-secondary, #52525b);">
+            @(_lastEvent ?? "(none yet)")
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RTL ══ -->
+    <section class="demo-section">
+      <h2 class="demo-section-title">RTL (Arabic)</h2>
+      <p class="demo-section-description">
+        The right/left panels use <code>inset-inline-start/end</code>, so they automatically swap edges
+        in right-to-left content.
+      </p>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full" dir="rtl">
+          <span class="demo-card-label">Position="Right" inside dir="rtl" — visually anchored to the left edge</span>
+          <GupTrack Direction="horizontal" Gap="2">
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _rtlOpen = true)">
+              <ChildContent>افتح اللوحة المنزلقة</ChildContent>
+            </GupButton>
+          </GupTrack>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ══ FLYOUT INSTANCES ══ -->
+
+<GupFlyout Heading="Right flyout"
+           @bind-IsOpen="_rightOpen"
+           Position="@GupFlyoutPosition.Right"
+           OnOpen="@(() => LogEvent("right-open"))"
+           OnClose="@(() => LogEvent("right-close"))">
+  <ChildContent>
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <span style="font-size:16px; font-weight:700; line-height:24px;">Civil ID</span>
+        <span style="font-size:20px; font-weight:400; line-height:28px;">1034580392</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <span style="font-size:16px; font-weight:700; line-height:24px;">Expiry Date</span>
+        <span style="font-size:20px; font-weight:400; line-height:28px;">01/02/2028</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <span style="font-size:16px; font-weight:700; line-height:24px;">Full Name</span>
+        <span style="font-size:20px; font-weight:400; line-height:28px;">First Name Last Name</span>
+      </div>
+      <GupTrack Direction="vertical" Gap="2">
+        <GupInputField Type="text" Placeholder="Update field">Name</GupInputField>
+        <GupInputField Type="email" Placeholder="Update field">Email</GupInputField>
+      </GupTrack>
+    </div>
+  </ChildContent>
+  <FooterContent>
+    <div style="display:flex; justify-content:flex-end; gap:12px; width:100%;">
+      <GupButton Appearance="@GupButtonAppearance.Secondary"
+                 OnClick="@(() => CloseFlyout("right-cancel"))">
+        <ChildContent>Cancel</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Primary"
+                 OnClick="@(() => CloseFlyout("right-save"))">
+        <ChildContent>Save changes</ChildContent>
+      </GupButton>
+    </div>
+  </FooterContent>
+</GupFlyout>
+
+<GupFlyout Heading="Filters"
+           @bind-IsOpen="_leftOpen"
+           Position="@GupFlyoutPosition.Left"
+           OnOpen="@(() => LogEvent("left-open"))"
+           OnClose="@(() => LogEvent("left-close"))">
+  <ChildContent>
+    <GupTrack Direction="vertical" Gap="2">
+      <GupInputField Type="text" Placeholder="Filter A">Filter A</GupInputField>
+      <GupInputField Type="text" Placeholder="Filter B">Filter B</GupInputField>
+      <GupInputField Type="text" Placeholder="Filter C">Filter C</GupInputField>
+    </GupTrack>
+  </ChildContent>
+  <FooterContent>
+    <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+      <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button"
+                 OnClick="@(() => LogEvent("left-clear-all"))">
+        <ChildContent>Clear all</ChildContent>
+      </GupButton>
+      <GupButtonGroup>
+        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                   OnClick="@(() => CloseFlyout("left-cancel"))">
+          <ChildContent>Cancel</ChildContent>
+        </GupButton>
+        <GupButton Appearance="@GupButtonAppearance.Primary"
+                   OnClick="@(() => CloseFlyout("left-apply"))">
+          <ChildContent>Apply</ChildContent>
+        </GupButton>
+      </GupButtonGroup>
+    </div>
+  </FooterContent>
+</GupFlyout>
+
+<GupFlyout Heading="Top flyout"
+           @bind-IsOpen="_topOpen"
+           Position="@GupFlyoutPosition.Top"
+           OnOpen="@(() => LogEvent("top-open"))"
+           OnClose="@(() => LogEvent("top-close"))">
+  <ChildContent>
+    <p>Slides down from the top of the viewport. Useful for global notifications, quick search, or temporary tools.</p>
+  </ChildContent>
+  <FooterContent>
+    <GupButton Appearance="@GupButtonAppearance.Primary"
+               OnClick="@(() => CloseFlyout("top-done"))">
+      <ChildContent>Done</ChildContent>
+    </GupButton>
+  </FooterContent>
+</GupFlyout>
+
+<GupFlyout Heading="Bottom flyout"
+           @bind-IsOpen="_bottomOpen"
+           Position="@GupFlyoutPosition.Bottom"
+           OnOpen="@(() => LogEvent("bottom-open"))"
+           OnClose="@(() => LogEvent("bottom-close"))">
+  <ChildContent>
+    <p>Slides up from the bottom of the viewport. Often used for mobile action sheets or contextual details.</p>
+  </ChildContent>
+  <FooterContent>
+    <GupButton Appearance="@GupButtonAppearance.Primary"
+               OnClick="@(() => CloseFlyout("bottom-done"))">
+      <ChildContent>Done</ChildContent>
+    </GupButton>
+  </FooterContent>
+</GupFlyout>
+
+<GupFlyout Heading="No backdrop"
+           @bind-IsOpen="_noBackdropOpen"
+           Backdrop="false"
+           Position="@GupFlyoutPosition.Right"
+           OnClose="@(() => LogEvent("no-backdrop-close"))">
+  <ChildContent>
+    <p>The dimmed overlay is hidden — the page behind stays visible and interactive.</p>
+  </ChildContent>
+  <FooterContent>
+    <GupButton Appearance="@GupButtonAppearance.Primary"
+               OnClick="@(() => CloseFlyout("no-backdrop-close-btn"))">
+      <ChildContent>Close</ChildContent>
+    </GupButton>
+  </FooterContent>
+</GupFlyout>
+
+<GupFlyout Heading="Confirm action"
+           @bind-IsOpen="_noCloseOpen"
+           HideCloseButton="true"
+           CloseOnBackdropClick="false"
+           CloseOnEscape="false"
+           Position="@GupFlyoutPosition.Right"
+           OnClose="@(() => LogEvent("no-close-close"))">
+  <ChildContent>
+    <p>You must pick one of the options below — backdrop click and ESC are disabled.</p>
+  </ChildContent>
+  <FooterContent>
+    <GupButtonGroup>
+      <GupButton Appearance="@GupButtonAppearance.Secondary"
+                 OnClick="@(() => CloseFlyout("no-close-decline"))">
+        <ChildContent>Decline</ChildContent>
+      </GupButton>
+      <GupButton Appearance="@GupButtonAppearance.Primary"
+                 OnClick="@(() => CloseFlyout("no-close-accept"))">
+        <ChildContent>Accept</ChildContent>
+      </GupButton>
+    </GupButtonGroup>
+  </FooterContent>
+</GupFlyout>
+
+<GupFlyout Heading="@($"Bound flyout — {_boundPosition}")"
+           @bind-IsOpen="_boundOpen"
+           @bind-Position="_boundPosition"
+           OnOpen="@(() => LogEvent($"bound-open-{_boundPosition}"))"
+           OnClose="@(() => LogEvent($"bound-close-{_boundPosition}"))">
+  <ChildContent>
+    <p>This flyout's <code>Position</code> is bound to the parent. Click a direction button to swap edges before opening.</p>
+  </ChildContent>
+  <FooterContent>
+    <GupButton Appearance="@GupButtonAppearance.Primary"
+               OnClick="@(() => CloseFlyout($"bound-{_boundPosition}-done"))">
+      <ChildContent>Done</ChildContent>
+    </GupButton>
+  </FooterContent>
+</GupFlyout>
+
+<div dir="rtl">
+  <GupFlyout Heading="لوحة جانبية"
+             @bind-IsOpen="_rtlOpen"
+             Position="@GupFlyoutPosition.Right"
+             OnClose="@(() => LogEvent("rtl-close"))">
+    <ChildContent>
+      <p>هذا هو محتوى اللوحة الجانبية. يمكنك وضع أي محتوى تريده هنا.</p>
+    </ChildContent>
+    <FooterContent>
+      <GupButtonGroup>
+        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                   OnClick="@(() => CloseFlyout("rtl-cancel"))">
+          <ChildContent>إلغاء</ChildContent>
+        </GupButton>
+        <GupButton Appearance="@GupButtonAppearance.Primary"
+                   OnClick="@(() => CloseFlyout("rtl-apply"))">
+          <ChildContent>تطبيق</ChildContent>
+        </GupButton>
+      </GupButtonGroup>
+    </FooterContent>
+  </GupFlyout>
+</div>
+
+@code {
+    private bool _rightOpen;
+    private bool _leftOpen;
+    private bool _topOpen;
+    private bool _bottomOpen;
+    private bool _noBackdropOpen;
+    private bool _noCloseOpen;
+    private bool _boundOpen;
+    private bool _rtlOpen;
+
+    private GupFlyoutPosition _boundPosition = GupFlyoutPosition.Right;
+    private string? _lastEvent;
+
+    private void CloseFlyout(string source)
+    {
+        _rightOpen = false;
+        _leftOpen = false;
+        _topOpen = false;
+        _bottomOpen = false;
+        _noBackdropOpen = false;
+        _noCloseOpen = false;
+        _boundOpen = false;
+        _rtlOpen = false;
+        LogEvent(source);
+    }
+
+    private void LogEvent(string source)
+    {
+        _lastEvent = $"{source} @ {DateTime.Now:HH:mm:ss}";
+    }
+}

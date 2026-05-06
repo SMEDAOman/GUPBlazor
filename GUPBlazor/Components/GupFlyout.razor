@@ -1,0 +1,177 @@
+@* Equivalent of <gup-flyout heading="..." position="right|left|top|bottom" backdrop hide-close-button>
+   A side / top / bottom panel that slides into view from an edge of the viewport.
+
+   Slots:
+     ChildContent  — main body content
+     FooterContent — optional footer (typically action buttons)
+
+   Two-way binding:
+     @bind-IsOpen   — controls visibility (Show/Hide are equivalent)
+     @bind-Position — current edge the panel slides from
+
+   Events:
+     OnOpen   — fires when the flyout becomes visible
+     OnClose  — fires when the flyout closes (close button, backdrop, or ESC)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+@if (IsOpen)
+{
+    <div class="gup-flyout-backdrop @(Backdrop ? "" : "gup-flyout-backdrop--transparent")"
+         @ref="_backdropRef"
+         @onclick="HandleBackdropClick"
+         @onkeydown="HandleKeyDown"
+         tabindex="-1">
+        <div class="gup-flyout-panel gup-flyout-panel--@PositionString()"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="@_headingId"
+             @onclick:stopPropagation="true"
+             @ref="_panelRef">
+            <div class="gup-flyout-header">
+                <h2 id="@_headingId" class="gup-flyout-heading">@Heading</h2>
+                @if (!HideCloseButton)
+                {
+                    <button class="gup-flyout-close-button"
+                            type="button"
+                            aria-label="@CloseLabel"
+                            title="@CloseLabel"
+                            @ref="_closeButtonRef"
+                            @onclick="HandleClose">
+                        <GupIcon IconName="close" Width="24" Height="24" />
+                    </button>
+                }
+            </div>
+            <div class="gup-flyout-content" tabindex="0" @ref="_contentRef">
+                @ChildContent
+            </div>
+            @if (FooterContent is not null)
+            {
+                <div class="gup-flyout-footer">
+                    @FooterContent
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    /// <summary>Heading text shown in the flyout header.</summary>
+    [Parameter] public string Heading { get; set; } = "";
+
+    /// <summary>Edge the flyout slides from. Default: Right.</summary>
+    [Parameter] public GupFlyoutPosition Position { get; set; } = GupFlyoutPosition.Right;
+    [Parameter] public EventCallback<GupFlyoutPosition> PositionChanged { get; set; }
+
+    /// <summary>Whether the flyout is open. Supports two-way binding via @@bind-IsOpen.</summary>
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+
+    /// <summary>Hide the built-in close button. ESC and backdrop click still close the flyout unless disabled separately.</summary>
+    [Parameter] public bool HideCloseButton { get; set; }
+
+    /// <summary>Accessible label for the close button. Default: "Close".</summary>
+    [Parameter] public string CloseLabel { get; set; } = "Close";
+
+    /// <summary>Show the dimmed backdrop behind the flyout panel. Default: true.</summary>
+    [Parameter] public bool Backdrop { get; set; } = true;
+
+    /// <summary>Whether clicking on the backdrop should close the flyout. Default: true.</summary>
+    [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+
+    /// <summary>Whether pressing ESC should close the flyout. Default: true.</summary>
+    [Parameter] public bool CloseOnEscape { get; set; } = true;
+
+    /// <summary>Main body content of the flyout.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Optional footer content (typically action buttons).</summary>
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    /// <summary>Fires when the flyout becomes visible.</summary>
+    [Parameter] public EventCallback OnOpen { get; set; }
+
+    /// <summary>Fires when the flyout closes (close button, backdrop click, or ESC).</summary>
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private readonly string _headingId = $"gup-flyout-heading-{Guid.NewGuid():N}";
+    private ElementReference _backdropRef;
+    private ElementReference _panelRef;
+    private ElementReference _contentRef;
+    private ElementReference _closeButtonRef;
+    private bool _wasOpen;
+
+    private string PositionString() => Position switch
+    {
+        GupFlyoutPosition.Left   => "left",
+        GupFlyoutPosition.Top    => "top",
+        GupFlyoutPosition.Bottom => "bottom",
+        _                        => "right",
+    };
+
+    /// <summary>Programmatically open the flyout.</summary>
+    public Task ShowAsync() => SetOpenAsync(true);
+
+    /// <summary>Programmatically close the flyout.</summary>
+    public Task HideAsync() => SetOpenAsync(false);
+
+    /// <summary>Toggle the flyout's open state.</summary>
+    public Task ToggleAsync() => SetOpenAsync(!IsOpen);
+
+    private async Task SetOpenAsync(bool value)
+    {
+        if (IsOpen == value) return;
+        IsOpen = value;
+        if (IsOpenChanged.HasDelegate) await IsOpenChanged.InvokeAsync(IsOpen);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (IsOpen && !_wasOpen)
+        {
+            _wasOpen = true;
+            if (OnOpen.HasDelegate) await OnOpen.InvokeAsync();
+            try
+            {
+                if (HideCloseButton)
+                {
+                    await _contentRef.FocusAsync();
+                }
+                else
+                {
+                    await _closeButtonRef.FocusAsync();
+                }
+            }
+            catch
+            {
+                // element not yet attached — ignore
+            }
+        }
+        else if (!IsOpen && _wasOpen)
+        {
+            _wasOpen = false;
+        }
+    }
+
+    private async Task HandleClose()
+    {
+        await SetOpenAsync(false);
+        if (OnClose.HasDelegate) await OnClose.InvokeAsync();
+    }
+
+    private async Task HandleBackdropClick()
+    {
+        if (CloseOnBackdropClick)
+        {
+            await HandleClose();
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape" && CloseOnEscape)
+        {
+            await HandleClose();
+        }
+    }
+}
