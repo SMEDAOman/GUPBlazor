@@ -3248,5 +3248,44 @@ body {
    in RTL contexts. Top/bottom variants stay anchored to the top/bottom edges. */
 
 /* ============================================================
+   COMPONENT: gup-image
+   ------------------------------------------------------------
+   Mirrors design-system/components/image/image.css — a <figure>
+   wraps the <img> with an optional <figcaption>. The caption uses
+   the secondary content color and the spacing-image-bottom token
+   so it lines up with the rest of the design system.
+   ============================================================ */
+
+.gup-image {
+  display: inline-block;
+  margin: 0;
+  max-width: 100%;
+}
+
+.gup-image__img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.gup-image__caption {
+  color: var(--gup-color-content-secondary, #52525b);
+  font-size: var(--font-size-300, 14px);
+  margin-top: var(--gup-spacing-image-bottom, 8px);
+}
+
+.gup-image--error {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gup-color-content-secondary, #52525b);
+  font-size: var(--font-size-300, 14px);
+}
+
+.gup-image__error-message {
+  padding: 8px 12px;
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

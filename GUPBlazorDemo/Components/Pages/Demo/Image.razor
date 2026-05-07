@@ -1,0 +1,279 @@
+@page "/demo/image"
+@rendermode InteractiveServer
+
+<PageTitle>Image — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Image">
+        <PageSummary>GupImage — display images with branded captions, sizing, lazy loading, and
+            graceful error fallback (default error message or a custom error slot).</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default</h2>
+            <p class="demo-section-description">
+                A basic image with explicit <code>Width</code>, <code>Height</code>, and <code>Alt</code>.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupImage Src="@_unsplashSrc"
+                              Alt="A scenic landscape"
+                              Width="300"
+                              Height="300" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WITH CAPTION ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With caption</h2>
+            <p class="demo-section-description">
+                Provide <code>CaptionContent</code> to render a <code>&lt;figcaption&gt;</code> beneath the image.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupImage Src="@_unsplashSrc"
+                              Alt="A scenic landscape"
+                              Width="300"
+                              Height="300">
+                        <CaptionContent>Caption</CaptionContent>
+                    </GupImage>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CAPTION WITH HTML ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Caption with custom HTML</h2>
+            <p class="demo-section-description">
+                The caption fragment accepts arbitrary content — for example an <code>&lt;strong&gt;</code> accent.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupImage Src="@_unsplashSrc"
+                              Alt="A scenic landscape"
+                              Width="300"
+                              Height="300">
+                        <CaptionContent>
+                            Caption with some HTML, eg. an <strong>accent</strong>
+                        </CaptionContent>
+                    </GupImage>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ERROR MESSAGE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Error message (default fallback)</h2>
+            <p class="demo-section-description">
+                When the image fails to load, the default <code>ErrorMessage</code> is rendered.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupImage Src="invalid-url"
+                              Alt="Won't load"
+                              Width="300"
+                              Height="300"
+                              ErrorMessage="Error loading image" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CUSTOM ERROR CONTENT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Custom error content</h2>
+            <p class="demo-section-description">
+                Provide <code>ErrorContent</code> to replace the default error UI with your own markup.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupImage Src="another-invalid-url"
+                              Alt="Won't load either"
+                              Width="300"
+                              Height="300">
+                        <ErrorContent>
+                            <div style="width:300px; height:300px; border:1px solid #e2e2e2;
+                                        border-radius:12px; display:flex; justify-content:center;
+                                        align-items:center; background:#f8f8f8;">
+                                Image failed to load 🤕
+                            </div>
+                        </ErrorContent>
+                    </GupImage>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ LAZY LOADING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Lazy loading</h2>
+            <p class="demo-section-description">
+                Set <code>Loading="GupImageLoading.Lazy"</code> to defer load until the image enters the viewport.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupImage Src="@_unsplashSrc"
+                              Alt="Lazy-loaded landscape"
+                              Width="300"
+                              Height="300"
+                              Loading="GupImageLoading.Lazy">
+                        <CaptionContent>This image uses <code>loading="lazy"</code>.</CaptionContent>
+                    </GupImage>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Src, @@bind-Alt, @@bind-Width, @@bind-Height, @@bind-Loading)</h2>
+            <p class="demo-section-description">
+                Switch sources, sizes, and loading strategy at runtime — the image reflects the bound values.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+                    <GupImage @bind-Src="_boundSrc"
+                              @bind-Alt="_boundAlt"
+                              @bind-Width="_boundWidth"
+                              @bind-Height="_boundHeight"
+                              @bind-Loading="_boundLoading">
+                        <CaptionContent>Bound image — change the controls below.</CaptionContent>
+                    </GupImage>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <strong>Source:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundSrc = _unsplashSrc; _boundAlt = "A scenic landscape"; })">
+                            <ChildContent>Landscape</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundSrc = _picsumSrc; _boundAlt = "Random Picsum photo"; })">
+                            <ChildContent>Picsum</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundSrc = "invalid"; _boundAlt = "Broken"; })">
+                            <ChildContent>Broken</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <strong>Size:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundWidth = 200; _boundHeight = 200; })">
+                            <ChildContent>200 × 200</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundWidth = 300; _boundHeight = 300; })">
+                            <ChildContent>300 × 300</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundWidth = 400; _boundHeight = 250; })">
+                            <ChildContent>400 × 250</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <strong>Loading:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundLoading = null)">
+                            <ChildContent>(none)</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundLoading = GupImageLoading.Lazy)">
+                            <ChildContent>Lazy</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundLoading = GupImageLoading.Eager)">
+                            <ChildContent>Eager</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <p data-testid="bind-output" style="margin:0;">
+                        Bound state: src = <strong>@(_boundSrc.Length > 40 ? _boundSrc.Substring(0, 40) + "…" : _boundSrc)</strong>,
+                        alt = <strong>@_boundAlt</strong>,
+                        size = <strong>@_boundWidth × @_boundHeight</strong>,
+                        loading = <strong>@(_boundLoading?.ToString() ?? "(none)")</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EVENTS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnLoad and OnError events</h2>
+            <p class="demo-section-description">
+                The component fires <code>OnLoad</code> when the image loads and <code>OnError</code>
+                when it fails. Click the buttons to swap between a valid and broken source.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+
+                    <GupImage Src="@_eventSrc"
+                              Alt="Event demo image"
+                              Width="200"
+                              Height="200"
+                              OnLoad="HandleImageLoad"
+                              OnError="HandleImageError" />
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _eventSrc = _picsumSrc + "?v=" + DateTime.UtcNow.Ticks)">
+                            <ChildContent>Load valid image</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _eventSrc = "broken-" + DateTime.UtcNow.Ticks)">
+                            <ChildContent>Load broken image</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <p data-testid="event-log" style="margin:0;">
+                        Loads: <strong>@_loadCount</strong> · Errors: <strong>@_errorCount</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private const string _unsplashSrc =
+        "https://images.unsplash.com/photo-1542401886-65d6c61db217?q=80&w=600&auto=format&fit=crop";
+    private const string _picsumSrc = "https://picsum.photos/300/300";
+
+    // Two-way binding state
+    private string _boundSrc = _unsplashSrc;
+    private string _boundAlt = "A scenic landscape";
+    private int? _boundWidth = 300;
+    private int? _boundHeight = 300;
+    private GupImageLoading? _boundLoading;
+
+    // Event-handling state
+    private string _eventSrc = _picsumSrc;
+    private int _loadCount;
+    private int _errorCount;
+
+    private void HandleImageLoad()
+    {
+        _loadCount++;
+    }
+
+    private void HandleImageError()
+    {
+        _errorCount++;
+    }
+}

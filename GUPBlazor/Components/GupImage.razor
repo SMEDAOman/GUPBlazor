@@ -1,0 +1,117 @@
+@* Equivalent of <gup-image src="..." alt="..." width="..." height="..." loading="lazy|eager" error-message="...">
+   A component for displaying images with branded captions and graceful error fallback.
+
+   Slots / RenderFragments:
+     - CaptionContent → optional caption rendered in a <figcaption> beneath the image
+     - ErrorContent   → optional custom error UI (replaces the default error message
+                        when the image fails to load)
+
+   Two-way binding: @bind-Src, @bind-Alt, @bind-ErrorMessage, @bind-Loading, @bind-Width, @bind-Height
+   Events: OnError, OnLoad
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+@if (_hasError && ErrorContent != null)
+{
+    <div class="gup-image gup-image--error">
+        @ErrorContent
+    </div>
+}
+else if (_hasError)
+{
+    <div class="gup-image gup-image--error">
+        <div class="gup-image__error-message">@ErrorMessage</div>
+    </div>
+}
+else
+{
+    <figure class="gup-image">
+        <img class="gup-image__img"
+             src="@Src"
+             alt="@Alt"
+             width="@(Width?.ToString())"
+             height="@(Height?.ToString())"
+             loading="@LoadingString()"
+             @onerror="HandleError"
+             @onload="HandleLoad" />
+        @if (CaptionContent != null)
+        {
+            <figcaption class="gup-image__caption">@CaptionContent</figcaption>
+        }
+    </figure>
+}
+
+@code {
+    /// <summary>The source URL of the image.</summary>
+    [Parameter] public string Src { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> SrcChanged { get; set; }
+
+    /// <summary>The alt text for the image.</summary>
+    [Parameter] public string Alt { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> AltChanged { get; set; }
+
+    /// <summary>The error message shown when the image fails to load. Overridden by <see cref="ErrorContent"/>.</summary>
+    [Parameter] public string ErrorMessage { get; set; } = "Error loading image";
+    [Parameter] public EventCallback<string> ErrorMessageChanged { get; set; }
+
+    /// <summary>Image loading strategy — lazy or eager. When null, the attribute is omitted.</summary>
+    [Parameter] public GupImageLoading? Loading { get; set; }
+    [Parameter] public EventCallback<GupImageLoading?> LoadingChanged { get; set; }
+
+    /// <summary>The intrinsic width of the image (in pixels).</summary>
+    [Parameter] public int? Width { get; set; }
+    [Parameter] public EventCallback<int?> WidthChanged { get; set; }
+
+    /// <summary>The intrinsic height of the image (in pixels).</summary>
+    [Parameter] public int? Height { get; set; }
+    [Parameter] public EventCallback<int?> HeightChanged { get; set; }
+
+    /// <summary>Optional caption rendered in a <figcaption> below the image.</summary>
+    [Parameter] public RenderFragment? CaptionContent { get; set; }
+
+    /// <summary>Optional custom error UI — when provided, replaces the default error message.</summary>
+    [Parameter] public RenderFragment? ErrorContent { get; set; }
+
+    /// <summary>Fires when the underlying <img> emits an error event (image failed to load).</summary>
+    [Parameter] public EventCallback OnError { get; set; }
+
+    /// <summary>Fires when the underlying <img> finishes loading successfully.</summary>
+    [Parameter] public EventCallback OnLoad { get; set; }
+
+    private bool _hasError;
+    private string? _lastSrc;
+
+    protected override void OnParametersSet()
+    {
+        // Reset error state if Src changes — gives the new image a chance to load.
+        if (!string.Equals(_lastSrc, Src, StringComparison.Ordinal))
+        {
+            _hasError = false;
+            _lastSrc = Src;
+        }
+    }
+
+    private string? LoadingString() => Loading switch
+    {
+        GupImageLoading.Lazy  => "lazy",
+        GupImageLoading.Eager => "eager",
+        _                     => null,
+    };
+
+    private async Task HandleError()
+    {
+        _hasError = true;
+        if (OnError.HasDelegate)
+        {
+            await OnError.InvokeAsync();
+        }
+    }
+
+    private async Task HandleLoad()
+    {
+        if (OnLoad.HasDelegate)
+        {
+            await OnLoad.InvokeAsync();
+        }
+    }
+}
