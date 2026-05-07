@@ -3544,5 +3544,132 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-search
+   ============================================================
+   Mirror of design-system/components/search.css — pill-shaped
+   text field with a trailing clear (×) and search-icon button.
+*/
+.gup-search {
+  --gup-search--controls-gap: 10px;
+  --gup-search--close-width: calc(20px + var(--gup-search--controls-gap));
+  --gup-search--search-width: calc(24px + var(--gup-search--controls-gap));
+  --gup-search--second-border-color: transparent;
+
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  font-size: var(--font-size-400);
+}
+
+.gup-search__input-container {
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-4);
+  border: 1px solid var(--gup-color-states-base-border);
+  border-radius: var(--gup-radius-component-full);
+  background: var(--gup-color-states-base-bg);
+  padding-block: var(--gup-component-4);
+  padding-inline-start: var(--gup-component-5);
+  padding-inline-end: var(--gup-component-4);
+  outline: 1px solid var(--gup-search--second-border-color);
+}
+
+.gup-search__input-container:hover {
+  --gup-search--second-border-color: var(--gup-color-states-base-border);
+}
+
+.gup-search__input-container:focus-within {
+  outline: var(--gup-stroke-focus-ring, 2px) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.gup-search__input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+  min-height: 23px;
+  cursor: inherit;
+  font: inherit;
+  color: inherit;
+  padding-inline-end: calc(
+    var(--gup-search--controls-gap) + var(--gup-search--close-width) + var(--gup-search--search-width)
+  );
+}
+
+/* Strip the native "X" the browser injects for type=search — we render our own. */
+.gup-search__input::-webkit-search-cancel-button,
+.gup-search__input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.gup-search__controls {
+  position: absolute;
+  inset-inline-end: 4px;
+  inset-block-start: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-3);
+}
+
+.gup-search__icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  border-radius: var(--gup-radius-component-full);
+  cursor: pointer;
+  color: var(--gup-color-content-link);
+}
+
+.gup-search__icon-button .gup-icon {
+  color: inherit;
+}
+
+.gup-search__icon-button:hover:not(:disabled) {
+  background: var(--gup-color-states-secondary-hover, rgba(0, 0, 0, 0.04));
+}
+
+.gup-search__icon-button:focus-visible {
+  outline: var(--gup-stroke-focus-ring, 2px) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+.gup-search__icon-button--clear {
+  color: var(--gup-color-content-link);
+}
+
+.gup-search.is-disabled .gup-search__input-container {
+  --gup-search--second-border-color: var(--gup-color-states-disabled-low);
+  background-color: var(--gup-color-states-disabled-low);
+  border-color: var(--gup-color-states-disabled-low);
+  color: var(--gup-color-states-disabled-medium);
+  cursor: not-allowed;
+}
+
+.gup-search.is-disabled .gup-search__input {
+  cursor: not-allowed;
+  color: var(--gup-color-states-disabled-medium);
+}
+
+.gup-search.is-disabled .gup-search__icon-button {
+  color: var(--gup-color-states-disabled-medium);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* RTL — flip the search-icon (the magnifier handle reads natural in either direction
+   but we mirror it for visual symmetry with prev/next arrows elsewhere in the system). */
+[dir="rtl"] .gup-search__icon-button--submit .gup-icon {
+  transform: scaleX(-1);
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

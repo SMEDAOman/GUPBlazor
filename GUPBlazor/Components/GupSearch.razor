@@ -1,0 +1,133 @@
+@* Equivalent of <gup-search name="..." label="..." placeholder="..." value="...">
+   Pill-shaped search field with a clear-button (visible only when there is a value)
+   and a trailing search-icon submit button. Mirrors the gov.om design-system component
+   at design-system/components/search.
+
+   Two-way binding: @bind-Value, @bind-Disabled
+   Events:
+     - OnValueChange → fires on every keystroke (input event); receives the new value
+     - OnSearch      → fires when the search icon is clicked or Enter is pressed; receives the current value
+     - OnClear       → fires when the × clear button is pressed
+     - OnClick       → fires when the input is clicked (matches gup-click in the source component)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-search @(Disabled ? "is-disabled" : "")">
+    <div class="gup-search__input-container">
+        <input class="gup-search__input"
+               id="@Id"
+               name="@Name"
+               type="search"
+               value="@Value"
+               placeholder="@Placeholder"
+               aria-label="@Label"
+               disabled="@(Disabled ? true : null)"
+               @oninput="HandleInput"
+               @onkeydown="HandleKeyDown"
+               @onclick="HandleInputClick" />
+
+        <div class="gup-search__controls">
+            @if (!string.IsNullOrEmpty(Value))
+            {
+                <button type="button"
+                        class="gup-search__icon-button gup-search__icon-button--clear"
+                        aria-label="@ResetLabel"
+                        title="@ResetLabel"
+                        disabled="@(Disabled ? true : null)"
+                        @onclick="HandleClearClick"
+                        @onclick:stopPropagation="true">
+                    <GupIcon IconName="close" Width="20" Height="20" />
+                </button>
+            }
+            <button type="button"
+                    class="gup-search__icon-button gup-search__icon-button--submit"
+                    aria-label="@SearchLabel"
+                    title="@SearchLabel"
+                    disabled="@(Disabled ? true : null)"
+                    @onclick="HandleSubmitClick"
+                    @onclick:stopPropagation="true">
+                <GupIcon IconName="search" Width="24" Height="24" />
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    /// <summary>The name of the search input — used for the input id/name.</summary>
+    [Parameter] public string Name { get; set; } = "search";
+
+    /// <summary>Accessible label for the search input (rendered as aria-label).</summary>
+    [Parameter] public string Label { get; set; } = "Search";
+
+    /// <summary>Placeholder text shown when the field is empty.</summary>
+    [Parameter] public string? Placeholder { get; set; }
+
+    /// <summary>Current value of the search input.</summary>
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+
+    /// <summary>When true, the field and both buttons are visually disabled and non-interactive.</summary>
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public EventCallback<bool> DisabledChanged { get; set; }
+
+    /// <summary>aria-label / title for the search submit button.</summary>
+    [Parameter] public string SearchLabel { get; set; } = "Search";
+
+    /// <summary>aria-label / title for the clear button (× icon).</summary>
+    [Parameter] public string ResetLabel { get; set; } = "Clear";
+
+    /// <summary>Fires on every keystroke — receives the new value.</summary>
+    [Parameter] public EventCallback<string?> OnValueChange { get; set; }
+
+    /// <summary>Fires when the user submits — clicking the search button or pressing Enter. Receives the current value.</summary>
+    [Parameter] public EventCallback<string?> OnSearch { get; set; }
+
+    /// <summary>Fires when the × clear button is pressed.</summary>
+    [Parameter] public EventCallback OnClear { get; set; }
+
+    /// <summary>Fires when the input field is clicked.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private string Id => $"gup-search-{Name}";
+
+    private async Task HandleInput(ChangeEventArgs e)
+    {
+        if (Disabled) return;
+        var newValue = e.Value?.ToString();
+        var oldValue = Value;
+        Value = newValue;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(newValue);
+        if (oldValue != newValue && OnValueChange.HasDelegate)
+        {
+            await OnValueChange.InvokeAsync(newValue);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (Disabled) return;
+        if (e.Key == "Enter")
+        {
+            await SubmitAsync();
+        }
+    }
+
+    private async Task HandleInputClick(MouseEventArgs e)
+    {
+        if (Disabled) return;
+        if (OnClick.HasDelegate) await OnClick.InvokeAsync(e);
+    }
+
+    private async Task HandleClearClick()
+    {
+        if (Disabled) return;
+        Value = string.Empty;
+        if (ValueChanged.HasDelegate) await ValueChanged.InvokeAsync(Value);
+        if (OnClear.HasDelegate) await OnClear.InvokeAsync();
+    }
+
+    private Task HandleSubmitClick() => SubmitAsync();
+
+    private Task SubmitAsync() =>
+        OnSearch.HasDelegate ? OnSearch.InvokeAsync(Value) : Task.CompletedTask;
+}

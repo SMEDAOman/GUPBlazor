@@ -1,0 +1,280 @@
+@page "/demo/search"
+@rendermode InteractiveServer
+
+<PageTitle>Search — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Search">
+        <PageSummary>
+            GupSearch — pill-shaped search field with a trailing clear button (visible
+            only when there is a value) and a search-icon submit button. Mirrors the
+            gov.om <code>gup-search</code> design-system component. Supports two-way
+            binding on <code>Value</code> and <code>Disabled</code>, plus
+            <code>OnValueChange</code>, <code>OnSearch</code>, <code>OnClear</code>, and
+            <code>OnClick</code> events.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default</h2>
+            <p class="demo-section-description">
+                Empty search field. The clear (×) button only appears once you start typing —
+                the search-icon button is always visible.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupSearch Name="default" Label="Search" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ PLACEHOLDER ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With placeholder</h2>
+            <p class="demo-section-description">
+                Use <code>Placeholder</code> to give the user a hint about what they can search for.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupSearch Name="placeholder"
+                               Label="Search services"
+                               Placeholder="Search for something…" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WITH VALUE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With initial value</h2>
+            <p class="demo-section-description">
+                Pre-populate the field via <code>Value</code> — the clear button shows up
+                immediately because there's content to clear.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupSearch Name="prefilled"
+                               Label="Search"
+                               Value="what is the real meaning of life?" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ DISABLED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Disabled</h2>
+            <p class="demo-section-description">
+                <code>Disabled="true"</code> dims the field and both buttons, and the input
+                rejects keystrokes.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupSearch Name="disabled"
+                               Label="Search"
+                               Placeholder="Search for something…"
+                               Disabled="true" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BIND VALUE + EVENTS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Value) &amp; events</h2>
+            <p class="demo-section-description">
+                The bound value updates on every keystroke. <code>OnValueChange</code> fires
+                only when the value actually differs from the previous one, <code>OnSearch</code>
+                fires on Enter or the search-icon click, and <code>OnClear</code> fires when
+                the × button is pressed.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupSearch Name="bound"
+                               Label="Search"
+                               Placeholder="Type something then press Enter or click 🔍"
+                               @bind-Value="_boundValue"
+                               OnValueChange="HandleValueChange"
+                               OnSearch="HandleSearch"
+                               OnClear="HandleClear"
+                               OnClick="HandleClick" />
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundValue = "Hello world")">
+                            <ChildContent>Set to "Hello world"</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => _boundValue = string.Empty)">
+                            <ChildContent>Clear externally</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <div data-testid="bind-output" style="display:flex; flex-direction:column; gap:4px; margin:0;">
+                        <p style="margin:0;">
+                            <strong>Bound value:</strong>
+                            "<span data-testid="bind-value">@_boundValue</span>"
+                        </p>
+                        <p style="margin:0;">
+                            <strong>OnValueChange:</strong>
+                            <span data-testid="value-change-count">@_valueChangeCount</span> times
+                            &nbsp;·&nbsp;
+                            <strong>OnSearch:</strong>
+                            <span data-testid="search-count">@_searchCount</span> times
+                            &nbsp;·&nbsp;
+                            <strong>OnClear:</strong>
+                            <span data-testid="clear-count">@_clearCount</span> times
+                            &nbsp;·&nbsp;
+                            <strong>OnClick:</strong>
+                            <span data-testid="click-count">@_clickCount</span> times
+                        </p>
+                        <p style="margin:0;">
+                            <strong>Last submitted query:</strong>
+                            "<span data-testid="last-search">@_lastSearch</span>"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BIND DISABLED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Disabled)</h2>
+            <p class="demo-section-description">
+                Toggle the disabled state at runtime — useful while a parent loads results or
+                during read-only periods.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupSearch Name="bind-disabled"
+                               Label="Search"
+                               Placeholder="Search…"
+                               @bind-Disabled="_isDisabled"
+                               Value="Some preset query" />
+
+                    <GupCheckbox Name="toggle-disabled"
+                                 @bind-Checked="_isDisabled">Disable the search field</GupCheckbox>
+
+                    <p style="margin:0;">
+                        Bound disabled state: <strong>@_isDisabled</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ FILTERED LIST EXAMPLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">In context — filtering a list</h2>
+            <p class="demo-section-description">
+                Real-world wiring — type to filter, press Enter or click the search button to
+                "submit" (here we just record the submission), and × clears.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupSearch Name="list-filter"
+                               Label="Filter services"
+                               Placeholder="Filter services…"
+                               @bind-Value="_filterText"
+                               OnSearch="HandleListSearch" />
+
+                    <ul data-testid="filtered-list" style="margin:0; padding-inline-start:20px;">
+                        @foreach (var item in FilteredServices)
+                        {
+                            <li>@item</li>
+                        }
+                        @if (!FilteredServices.Any())
+                        {
+                            <li style="list-style:none; color:#52525b;">No services match "@_filterText".</li>
+                        }
+                    </ul>
+
+                    @if (!string.IsNullOrEmpty(_lastListSearch))
+                    {
+                        <p data-testid="list-submitted" style="margin:0;">
+                            Last submitted query: <strong>@_lastListSearch</strong>
+                        </p>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">
+                Wrap the component in <code>dir="rtl"</code> — the controls automatically move
+                to the inline-start edge and the magnifier glyph mirrors visually.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" dir="rtl" style="padding:32px;">
+                    <GupSearch Name="rtl"
+                               Label="بحث"
+                               Placeholder="ابحث عن شيء…"
+                               SearchLabel="بحث"
+                               ResetLabel="مسح" />
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    // Two-way bound value + event counters
+    private string? _boundValue = "";
+    private int _valueChangeCount;
+    private int _searchCount;
+    private int _clearCount;
+    private int _clickCount;
+    private string? _lastSearch = "";
+
+    private void HandleValueChange(string? value) => _valueChangeCount++;
+    private void HandleSearch(string? value)
+    {
+        _searchCount++;
+        _lastSearch = value;
+    }
+    private void HandleClear() => _clearCount++;
+    private void HandleClick(MouseEventArgs _) => _clickCount++;
+
+    // Two-way bound disabled state
+    private bool _isDisabled;
+
+    // List-filter example
+    private string? _filterText = "";
+    private string? _lastListSearch = "";
+
+    private static readonly string[] AllServices =
+    {
+        "Apply for an ID card",
+        "Renew a passport",
+        "Pay traffic fines",
+        "Check visa status",
+        "Register a business",
+        "Book a clinic appointment",
+        "Apply for a driving licence",
+        "Update your address"
+    };
+
+    private IEnumerable<string> FilteredServices =>
+        string.IsNullOrWhiteSpace(_filterText)
+            ? AllServices
+            : AllServices.Where(s => s.Contains(_filterText!, StringComparison.OrdinalIgnoreCase));
+
+    private void HandleListSearch(string? value) => _lastListSearch = value;
+}
