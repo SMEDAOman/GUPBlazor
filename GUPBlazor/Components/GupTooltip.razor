@@ -1,0 +1,204 @@
+@* Equivalent of <gup-tooltip title="…" hint="…" placement="bottom" max-width="200" max-height="150">
+   A small popup attached to a trigger element. Mirrors the gov.om design-system
+   `gup-tooltip` component (which wraps gup-generic-popup + Floating UI).
+
+   Slots:
+     Trigger        — the element that activates the tooltip (button, link, icon…).
+                      Required. Wraps the actual trigger so we can attach mouse / focus
+                      handlers without forcing the consumer to use a specific element id.
+     ChildContent   — extra content inside the popup, rendered after the title and hint
+                      (matches the unnamed slot of <gup-tooltip>). Optional.
+
+   Two-way binding:
+     @bind-IsOpen     — visible state (Show / Hide / Toggle are equivalent).
+     @bind-Placement  — current placement edge.
+
+   Events:
+     OnShow  — fires when the tooltip becomes visible (matches gup-tooltip-show).
+     OnHide  — fires when the tooltip is hidden  (matches gup-tooltip-hide).
+
+   CSS custom properties (set on the wrapper):
+     --gup-tooltip--max-width    overrides MaxWidth.
+     --gup-tooltip--max-height   overrides MaxHeight.
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-tooltip @(IsOpen ? "gup-tooltip--open" : "") gup-tooltip--placement-@PlacementString()"
+     id="@_id"
+     style="@WrapperStyle"
+     @onkeydown="HandleKeyDown"
+     @onmouseenter="HandleMouseEnter"
+     @onmouseleave="HandleMouseLeave"
+     @onfocusin="HandleFocusIn"
+     @onfocusout="HandleFocusOut">
+
+    <div class="gup-tooltip__trigger"
+         aria-describedby="@(IsOpen ? _popupId : null)"
+         @onclick="HandleTriggerClick">
+        @Trigger
+    </div>
+
+    @if (IsOpen)
+    {
+        <div class="gup-tooltip__popup"
+             id="@_popupId"
+             role="tooltip">
+            @if (ShowArrow)
+            {
+                <div class="gup-tooltip__arrow"></div>
+            }
+            <div class="gup-tooltip__content" tabindex="0">
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    <h2 class="gup-tooltip__title">@Title</h2>
+                }
+                @if (!string.IsNullOrEmpty(Hint))
+                {
+                    <div class="gup-tooltip__hint">@Hint</div>
+                }
+                @ChildContent
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>Title of the tooltip — rendered as a heading inside the popup.</summary>
+    [Parameter] public string Title { get; set; } = "";
+
+    /// <summary>Optional hint shown below the title.</summary>
+    [Parameter] public string? Hint { get; set; }
+
+    /// <summary>Placement of the popup relative to the trigger. Default: <see cref="GupTooltipPlacement.Bottom"/>.</summary>
+    [Parameter] public GupTooltipPlacement Placement { get; set; } = GupTooltipPlacement.Bottom;
+    [Parameter] public EventCallback<GupTooltipPlacement> PlacementChanged { get; set; }
+
+    /// <summary>How the tooltip opens. Default: <see cref="GupTooltipTrigger.Click"/>.</summary>
+    [Parameter] public GupTooltipTrigger TriggerOn { get; set; } = GupTooltipTrigger.Click;
+
+    /// <summary>Whether the tooltip is currently visible. Supports two-way binding via @@bind-IsOpen.</summary>
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+
+    /// <summary>Display the small triangular arrow pointing at the trigger. Default: true.</summary>
+    [Parameter] public bool ShowArrow { get; set; } = true;
+
+    /// <summary>Maximum width of the popup, in px. Override at runtime via <c>--gup-tooltip--max-width</c>.</summary>
+    [Parameter] public int MaxWidth { get; set; } = 200;
+
+    /// <summary>Maximum height of the popup, in px (a scrollbar appears when content overflows). Override via <c>--gup-tooltip--max-height</c>.</summary>
+    [Parameter] public int MaxHeight { get; set; } = 150;
+
+    /// <summary>Close on click outside the trigger and popup. Default: true.</summary>
+    [Parameter] public bool CloseOnOutsideClick { get; set; } = true;
+
+    /// <summary>Close when ESC is pressed. Default: true.</summary>
+    [Parameter] public bool CloseOnEscape { get; set; } = true;
+
+    /// <summary>Element used to activate the tooltip. Required.</summary>
+    [Parameter] public RenderFragment? Trigger { get; set; }
+
+    /// <summary>Optional extra content inside the popup, rendered after the title/hint.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Fires when the tooltip is shown (matches <c>gup-tooltip-show</c>).</summary>
+    [Parameter] public EventCallback OnShow { get; set; }
+
+    /// <summary>Fires when the tooltip is hidden (matches <c>gup-tooltip-hide</c>).</summary>
+    [Parameter] public EventCallback OnHide { get; set; }
+
+    private readonly string _id = $"gup-tooltip-{Guid.NewGuid():N}";
+    private string _popupId => $"{_id}-popup";
+    private bool _wasOpen;
+
+    private string PlacementString() => Placement switch
+    {
+        GupTooltipPlacement.Top    => "top",
+        GupTooltipPlacement.Left   => "left",
+        GupTooltipPlacement.Right  => "right",
+        _                          => "bottom",
+    };
+
+    private string WrapperStyle =>
+        $"--gup-tooltip--max-width-fallback:{MaxWidth}px;--gup-tooltip--max-height-fallback:{MaxHeight}px;";
+
+    /// <summary>Programmatically show the tooltip.</summary>
+    public Task ShowAsync() => SetOpenAsync(true);
+
+    /// <summary>Programmatically hide the tooltip.</summary>
+    public Task HideAsync() => SetOpenAsync(false);
+
+    /// <summary>Toggle the tooltip's open state.</summary>
+    public Task ToggleAsync() => SetOpenAsync(!IsOpen);
+
+    private async Task SetOpenAsync(bool value)
+    {
+        if (IsOpen == value) return;
+        IsOpen = value;
+        if (IsOpenChanged.HasDelegate) await IsOpenChanged.InvokeAsync(IsOpen);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Fire OnShow / OnHide whenever IsOpen toggles — covers programmatic
+        // changes, two-way binding, and the internal click/hover handlers below.
+        if (IsOpen && !_wasOpen)
+        {
+            _wasOpen = true;
+            if (OnShow.HasDelegate) await OnShow.InvokeAsync();
+        }
+        else if (!IsOpen && _wasOpen)
+        {
+            _wasOpen = false;
+            if (OnHide.HasDelegate) await OnHide.InvokeAsync();
+        }
+    }
+
+    private async Task HandleTriggerClick()
+    {
+        if (TriggerOn == GupTooltipTrigger.Click)
+        {
+            await ToggleAsync();
+        }
+    }
+
+    private async Task HandleMouseEnter()
+    {
+        if (TriggerOn == GupTooltipTrigger.Hover)
+        {
+            await SetOpenAsync(true);
+        }
+    }
+
+    private async Task HandleMouseLeave()
+    {
+        if (TriggerOn == GupTooltipTrigger.Hover)
+        {
+            await SetOpenAsync(false);
+        }
+    }
+
+    private async Task HandleFocusIn()
+    {
+        if (TriggerOn == GupTooltipTrigger.Hover)
+        {
+            await SetOpenAsync(true);
+        }
+    }
+
+    private async Task HandleFocusOut()
+    {
+        if (TriggerOn == GupTooltipTrigger.Hover)
+        {
+            await SetOpenAsync(false);
+        }
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape" && IsOpen && CloseOnEscape)
+        {
+            await SetOpenAsync(false);
+        }
+    }
+}

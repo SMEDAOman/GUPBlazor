@@ -3881,5 +3881,157 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-tooltip
+   ------------------------------------------------------------
+   Mirrors the gov.om <gup-tooltip> design-system component
+   (which itself wraps gup-generic-popup + Floating UI).
+   The Blazor port positions the popup with plain CSS — the
+   wrapper is the positioning context and the popup is absolutely
+   placed on the requested edge with a flip happening at the
+   viewport edge via `max-width` + scroll.
+   ============================================================ */
+
+.gup-tooltip {
+  --gup-tooltip--arrow-size: var(--gup-component-3);
+  --gup-tooltip--offset: var(--gup-component-2);
+
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.gup-tooltip__trigger {
+  display: inline-block;
+}
+
+.gup-tooltip__popup {
+  position: absolute;
+  z-index: 1000;
+  display: block;
+  /* Allow text to wrap naturally up to max-width. */
+  width: max-content;
+  max-width: var(--gup-tooltip--max-width, var(--gup-tooltip--max-width-fallback, 200px));
+}
+
+/* ── Placement edges ─────────────────────────────────────── */
+
+.gup-tooltip--placement-bottom > .gup-tooltip__popup {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: var(--gup-tooltip--offset);
+}
+
+.gup-tooltip--placement-top > .gup-tooltip__popup {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: var(--gup-tooltip--offset);
+}
+
+.gup-tooltip--placement-left > .gup-tooltip__popup {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: var(--gup-tooltip--offset);
+}
+
+.gup-tooltip--placement-right > .gup-tooltip__popup {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: var(--gup-tooltip--offset);
+}
+
+/* RTL inline reflection for left/right. */
+[dir="rtl"] .gup-tooltip--placement-left > .gup-tooltip__popup {
+  right: auto;
+  left: 100%;
+  margin-right: 0;
+  margin-left: var(--gup-tooltip--offset);
+}
+
+[dir="rtl"] .gup-tooltip--placement-right > .gup-tooltip__popup {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: var(--gup-tooltip--offset);
+}
+
+/* ── Content card ────────────────────────────────────────── */
+
+.gup-tooltip__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-component-2);
+  overflow: auto;
+  background: var(--gup-color-background-elevated-container);
+  border: 1px solid var(--gup-color-border-low);
+  box-shadow:
+    0 8px 16px 0 var(--gup-color-shadow-color-3),
+    0 4px 8px 0 var(--gup-color-shadow-color-2),
+    0 1.5px 3px 0 var(--gup-color-shadow-color-1),
+    0 0.5px 1px 0 var(--gup-color-shadow-color-1);
+  border-radius: var(--gup-radius-component-default);
+  padding: var(--gup-padding-sm);
+  max-height: var(--gup-tooltip--max-height, var(--gup-tooltip--max-height-fallback, 150px));
+  position: relative;
+}
+
+.gup-tooltip__content:focus {
+  outline: none;
+}
+
+.gup-tooltip__title {
+  margin: 0;
+  color: var(--gup-color-content-primary);
+  font-size: var(--font-size-300);
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.gup-tooltip__hint {
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-200);
+}
+
+/* ── Arrow ───────────────────────────────────────────────── */
+
+.gup-tooltip__arrow {
+  position: absolute;
+  width: var(--gup-tooltip--arrow-size);
+  height: var(--gup-tooltip--arrow-size);
+  background: var(--gup-color-background-elevated-container);
+  border: 1px solid var(--gup-color-border-low);
+  border-bottom: none;
+  border-inline-end: none;
+  z-index: 1;
+}
+
+.gup-tooltip--placement-bottom > .gup-tooltip__popup > .gup-tooltip__arrow {
+  top: calc(var(--gup-tooltip--arrow-size) / -2);
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.gup-tooltip--placement-top > .gup-tooltip__popup > .gup-tooltip__arrow {
+  bottom: calc(var(--gup-tooltip--arrow-size) / -2);
+  left: 50%;
+  transform: translateX(-50%) rotate(-135deg);
+}
+
+.gup-tooltip--placement-left > .gup-tooltip__popup > .gup-tooltip__arrow {
+  right: calc(var(--gup-tooltip--arrow-size) / -2);
+  top: 50%;
+  transform: translateY(-50%) rotate(135deg);
+}
+
+.gup-tooltip--placement-right > .gup-tooltip__popup > .gup-tooltip__arrow {
+  left: calc(var(--gup-tooltip--arrow-size) / -2);
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */
