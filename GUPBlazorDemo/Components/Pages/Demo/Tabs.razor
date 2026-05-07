@@ -1,0 +1,292 @@
+@page "/demo/tabs"
+@rendermode InteractiveServer
+
+<PageTitle>Tabs — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Tabs">
+        <PageSummary>
+            GupTabs / GupTabsNavigation / GupTab / GupTabPanel — a tab group that
+            mirrors the gov.om <code>gup-tabs</code> design-system component. Three
+            appearances (<code>default</code>, <code>toggle</code>, <code>vertical</code>),
+            an optional <code>IsFullWidth</code>, two-way binding on
+            <code>SelectedIndex</code>, an <code>OnSelectedIndexChange</code> event,
+            and a public <code>SelectTabAsync(index)</code> method.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default appearance</h2>
+            <p class="demo-section-description">
+                Underlined active tab on a horizontal strip. The first tab is selected by
+                default.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Default">
+                        <GupTabsNavigation>
+                            <GupTab Label="First tab"><ChildContent>First tab</ChildContent></GupTab>
+                            <GupTab Label="Second tab"><ChildContent>Second tab</ChildContent></GupTab>
+                            <GupTab Label="Third tab"><ChildContent>Third tab</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Panel for first tab</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Panel for second tab</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Panel for third tab</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ FULL WIDTH ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default · full width</h2>
+            <p class="demo-section-description">
+                <code>IsFullWidth="true"</code> stretches each tab to share the row evenly.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Default" IsFullWidth="true">
+                        <GupTabsNavigation>
+                            <GupTab Label="Overview"><ChildContent>Overview</ChildContent></GupTab>
+                            <GupTab Label="Details"><ChildContent>Details</ChildContent></GupTab>
+                            <GupTab Label="History"><ChildContent>History</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Service overview content.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Detailed service description.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Service request history.</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TOGGLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Toggle appearance</h2>
+            <p class="demo-section-description">
+                Pill segmented-control style — useful for switching between mutually-exclusive
+                views.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Toggle">
+                        <GupTabsNavigation>
+                            <GupTab Label="Day"><ChildContent>Day</ChildContent></GupTab>
+                            <GupTab Label="Week"><ChildContent>Week</ChildContent></GupTab>
+                            <GupTab Label="Month"><ChildContent>Month</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Showing today's activity.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Showing this week's activity.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Showing this month's activity.</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TOGGLE FULL WIDTH ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Toggle · full width</h2>
+            <p class="demo-section-description">
+                Pill toggle stretched to fill the container.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Toggle" IsFullWidth="true">
+                        <GupTabsNavigation>
+                            <GupTab Label="Cards"><ChildContent>Cards</ChildContent></GupTab>
+                            <GupTab Label="List"><ChildContent>List</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Card layout selected.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>List layout selected.</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ VERTICAL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Vertical appearance</h2>
+            <p class="demo-section-description">
+                Stacked vertical list with a leading active-indicator bar. Nav is rendered to
+                the left of the panels.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Vertical">
+                        <GupTabsNavigation>
+                            <GupTab Label="Profile"><ChildContent>Profile</ChildContent></GupTab>
+                            <GupTab Label="Notifications"><ChildContent>Notifications</ChildContent></GupTab>
+                            <GupTab Label="Security"><ChildContent>Security</ChildContent></GupTab>
+                            <GupTab Label="Privacy"><ChildContent>Privacy</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Profile settings panel.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Notification settings panel.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Security settings panel.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Privacy settings panel.</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ DISABLED + PRESELECTED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Disabled tab &amp; pre-selection</h2>
+            <p class="demo-section-description">
+                Set <code>Selected="true"</code> on a tab to pick the initial selection without
+                binding. Add <code>Disabled="true"</code> to keep a tab uninteractive.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Default">
+                        <GupTabsNavigation>
+                            <GupTab Label="Step 1"><ChildContent>Step 1</ChildContent></GupTab>
+                            <GupTab Label="Step 2" Selected="true"><ChildContent>Step 2 (preselected)</ChildContent></GupTab>
+                            <GupTab Label="Step 3" Disabled="true"><ChildContent>Step 3 (disabled)</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Panel one.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Panel two — this opens by default.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Panel three.</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BIND + EVENTS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-SelectedIndex) &amp; events</h2>
+            <p class="demo-section-description">
+                <code>@@bind-SelectedIndex</code> stays in sync with the selected tab in both
+                directions. <code>OnSelectedIndexChange</code> fires whenever the selection
+                changes (programmatic or user-driven).
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupTabs Appearance="GupTabsAppearance.Default"
+                             @bind-SelectedIndex="_boundIndex"
+                             OnSelectedIndexChange="HandleIndexChange">
+                        <GupTabsNavigation>
+                            <GupTab Label="Tab A"><ChildContent>Tab A</ChildContent></GupTab>
+                            <GupTab Label="Tab B"><ChildContent>Tab B</ChildContent></GupTab>
+                            <GupTab Label="Tab C"><ChildContent>Tab C</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>Content for tab A.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Content for tab B.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>Content for tab C.</ChildContent></GupTabPanel>
+                    </GupTabs>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <GupButton Appearance="GupButtonAppearance.Secondary" Kind="GupButtonKind.Button"
+                                   OnClick="@(() => _boundIndex = 0)">
+                            <ChildContent>Select A</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="GupButtonAppearance.Secondary" Kind="GupButtonKind.Button"
+                                   OnClick="@(() => _boundIndex = 1)">
+                            <ChildContent>Select B</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="GupButtonAppearance.Secondary" Kind="GupButtonKind.Button"
+                                   OnClick="@(() => _boundIndex = 2)">
+                            <ChildContent>Select C</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <div data-testid="bind-output" style="display:flex; flex-direction:column; gap:4px; margin:0;">
+                        <p style="margin:0;">
+                            <strong>Bound index:</strong>
+                            <span data-testid="bind-index">@_boundIndex</span>
+                        </p>
+                        <p style="margin:0;">
+                            <strong>OnSelectedIndexChange:</strong>
+                            fired <span data-testid="change-count">@_indexChangeCount</span> times
+                            &nbsp;·&nbsp;
+                            <strong>Last index:</strong>
+                            <span data-testid="last-index">@_lastIndex</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ICONS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With start &amp; end icons</h2>
+            <p class="demo-section-description">
+                <code>IconStart</code> and <code>IconEnd</code> render before and after the tab
+                label.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Default">
+                        <GupTabsNavigation>
+                            <GupTab Label="Inbox">
+                                <IconStart><GupIcon IconName="inbox" Width="20" Height="20" /></IconStart>
+                                <ChildContent>Inbox</ChildContent>
+                            </GupTab>
+                            <GupTab Label="Drafts">
+                                <IconStart><GupIcon IconName="edit_document" Width="20" Height="20" /></IconStart>
+                                <ChildContent>Drafts</ChildContent>
+                            </GupTab>
+                            <GupTab Label="Sent">
+                                <IconStart><GupIcon IconName="send" Width="20" Height="20" /></IconStart>
+                                <ChildContent>Sent</ChildContent>
+                            </GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>You have 3 unread messages.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>2 drafts saved.</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>No sent messages today.</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RTL ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">RTL (Arabic)</h2>
+            <p class="demo-section-description">
+                Wrap the tabs in <code>dir="rtl"</code> — the layout flips automatically; the
+                vertical-active indicator and start/end icons follow the writing direction.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" dir="rtl" style="padding:32px;">
+                    <GupTabs Appearance="GupTabsAppearance.Default">
+                        <GupTabsNavigation>
+                            <GupTab Label="التبويب الأول"><ChildContent>التبويب الأول</ChildContent></GupTab>
+                            <GupTab Label="التبويب الثاني"><ChildContent>التبويب الثاني</ChildContent></GupTab>
+                            <GupTab Label="التبويب الثالث"><ChildContent>التبويب الثالث</ChildContent></GupTab>
+                        </GupTabsNavigation>
+                        <GupTabPanel><ChildContent>لوحة التبويب الأول</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>لوحة التبويب الثاني</ChildContent></GupTabPanel>
+                        <GupTabPanel><ChildContent>لوحة التبويب الثالث</ChildContent></GupTabPanel>
+                    </GupTabs>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private int _boundIndex = 0;
+    private int _indexChangeCount;
+    private int _lastIndex;
+
+    private void HandleIndexChange(int newIndex)
+    {
+        _indexChangeCount++;
+        _lastIndex = newIndex;
+    }
+}

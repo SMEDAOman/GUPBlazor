@@ -1,0 +1,120 @@
+@* Equivalent of <gup-tabs appearance="default|toggle|vertical" is-full-width>
+   A wrapper for a tab group. Owns the index of the currently selected tab and
+   coordinates GupTab (button) children with GupTabPanel (content) children.
+
+   Slot — ChildContent expects exactly one <GupTabsNavigation> followed by one
+   or more <GupTabPanel> elements (matching the gov.om gup-tabs Lit component).
+
+   Two-way binding: @bind-SelectedIndex
+   Events: OnSelectedIndexChange (new index)
+*@
+@implements IDisposable
+
+<div class="gup-tabs gup-tabs--appearance-@AppearanceClass @(IsFullWidth ? "gup-tabs--is-full-width" : "")">
+    <CascadingValue Value="this" IsFixed="true">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    /// <summary>Visual appearance of the tab group.</summary>
+    [Parameter] public GupTabsAppearance Appearance { get; set; } = GupTabsAppearance.Default;
+
+    /// <summary>
+    /// Whether the tabs strip should fill the available width.
+    /// Only relevant when <see cref="Appearance"/> is <c>Default</c> or <c>Toggle</c>.
+    /// </summary>
+    [Parameter] public bool IsFullWidth { get; set; }
+
+    /// <summary>Index of the currently selected tab.</summary>
+    [Parameter] public int SelectedIndex { get; set; }
+    [Parameter] public EventCallback<int> SelectedIndexChanged { get; set; }
+
+    /// <summary>Fires whenever the selected tab index changes.</summary>
+    [Parameter] public EventCallback<int> OnSelectedIndexChange { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private readonly List<GupTab> _tabs = new();
+    private readonly List<GupTabPanel> _panels = new();
+    private bool _hasInitializedFromChildren;
+
+    internal string AppearanceClass => Appearance switch
+    {
+        GupTabsAppearance.Toggle => "toggle",
+        GupTabsAppearance.Vertical => "vertical",
+        _ => "default",
+    };
+
+    /// <summary>Public method matching the gov.om <c>selectTab(index)</c> API.</summary>
+    public Task SelectTabAsync(int index) => SelectInternalAsync(index, fromUser: false);
+
+    internal void RegisterTab(GupTab tab)
+    {
+        if (!_tabs.Contains(tab)) _tabs.Add(tab);
+    }
+
+    internal void UnregisterTab(GupTab tab) => _tabs.Remove(tab);
+
+    internal void RegisterPanel(GupTabPanel panel)
+    {
+        if (!_panels.Contains(panel)) _panels.Add(panel);
+    }
+
+    internal void UnregisterPanel(GupTabPanel panel) => _panels.Remove(panel);
+
+    internal int IndexOfTab(GupTab tab) => _tabs.IndexOf(tab);
+
+    internal bool IsTabSelected(GupTab tab) => IndexOfTab(tab) == SelectedIndex;
+
+    internal bool IsPanelHidden(GupTabPanel panel) => _panels.IndexOf(panel) != SelectedIndex;
+
+    internal Task NotifyTabClickedAsync(GupTab tab)
+    {
+        var idx = IndexOfTab(tab);
+        if (idx < 0) return Task.CompletedTask;
+        return SelectInternalAsync(idx, fromUser: true);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        // Once children have registered themselves, initialise the selected index
+        // from any child marked Selected — only on the first render that finds tabs.
+        if (!_hasInitializedFromChildren && _tabs.Count > 0)
+        {
+            _hasInitializedFromChildren = true;
+            var preselected = _tabs.FindIndex(t => t.Selected);
+            if (preselected >= 0 && preselected != SelectedIndex)
+            {
+                _ = SelectInternalAsync(preselected, fromUser: false);
+            }
+            else
+            {
+                // Re-render so children pick up the parent state (selected/hidden).
+                StateHasChanged();
+            }
+        }
+    }
+
+    private async Task SelectInternalAsync(int index, bool fromUser)
+    {
+        if (index == SelectedIndex && !fromUser) { StateHasChanged(); return; }
+        if (index == SelectedIndex) return;
+
+        SelectedIndex = index;
+
+        if (SelectedIndexChanged.HasDelegate)
+            await SelectedIndexChanged.InvokeAsync(index);
+
+        if (OnSelectedIndexChange.HasDelegate)
+            await OnSelectedIndexChange.InvokeAsync(index);
+
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _tabs.Clear();
+        _panels.Clear();
+    }
+}

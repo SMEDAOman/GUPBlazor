@@ -3671,5 +3671,215 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-tabs / gup-tabs-navigation / gup-tab / gup-tab-panel
+   Mirrors design-system/components/tabs/{tabs,tabs-navigation,tab,tab-panel}.
+   Selectors:
+     - .gup-tabs                        — outer wrapper
+     - .gup-tabs-navigation             — wraps the row/column of tab buttons
+     - .gup-tabs-navigation__list       — the role="tablist" flex container
+     - .gup-tab                         — individual tab button
+     - .gup-tab__content                — label container (uses ::before
+                                          ghost text to keep width stable
+                                          when the label flips to bold)
+     - .gup-tab-panel                   — content panel (hidden when not selected)
+   Modifier classes: --appearance-default | --appearance-toggle | --appearance-vertical
+                     --is-full-width
+   ============================================================ */
+
+.gup-tabs {
+  display: block;
+}
+
+/* When the whole group is vertical, lay nav + panels side-by-side. */
+.gup-tabs--appearance-vertical {
+  display: flex;
+  align-items: stretch;
+  gap: var(--gup-component-5);
+}
+
+.gup-tabs--appearance-vertical .gup-tabs-navigation {
+  flex-shrink: 0;
+}
+
+/* ── Tabs navigation (row of tab buttons) ────────────────── */
+
+.gup-tabs-navigation {
+  display: block;
+}
+
+.gup-tabs-navigation--appearance-default {
+  border-bottom: 1px solid var(--gup-color-border-low);
+}
+
+.gup-tabs-navigation--appearance-toggle:not(.gup-tabs-navigation--is-full-width) {
+  display: flex;
+}
+
+/* When full-width, individual tabs grow to fill the row. */
+.gup-tabs-navigation--appearance-default.gup-tabs-navigation--is-full-width .gup-tabs-navigation__list > *,
+.gup-tabs-navigation--appearance-toggle.gup-tabs-navigation--is-full-width .gup-tabs-navigation__list > * {
+  flex-grow: 1;
+}
+
+.gup-tabs-navigation__list {
+  display: flex;
+}
+
+.gup-tabs-navigation--appearance-toggle .gup-tabs-navigation__list {
+  padding: var(--gup-component-2);
+  gap: var(--gup-component-3);
+  background-color: var(--gup-color-states-base-bg-secondary);
+  border-radius: var(--gup-radius-component-full);
+}
+
+.gup-tabs-navigation--appearance-vertical .gup-tabs-navigation__list {
+  flex-direction: column;
+}
+
+/* ── Tab button ───────────────────────────────────────────── */
+
+.gup-tab {
+  --gup-tab--border-bottom-width: var(--gup-component-2);
+
+  appearance: none;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  color: var(--gup-color-content-link);
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  line-height: var(--line-height-500);
+}
+
+.gup-tab:focus-visible {
+  outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
+  outline-offset: 2px;
+}
+
+.gup-tab:disabled {
+  background-color: var(--gup-color-states-disabled-low);
+  color: var(--gup-color-states-disabled-medium);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.gup-tab[aria-selected="true"] {
+  font-weight: var(--font-weight-base-beta);
+}
+
+/* Width-stabilising ghost copy of the label rendered in bold —
+   keeps the tab from re-flowing when the active tab becomes bold. */
+.gup-tab--appearance-default .gup-tab__content::before,
+.gup-tab--appearance-toggle .gup-tab__content::before {
+  display: block;
+  content: attr(data-title);
+  font-weight: var(--font-weight-base-beta);
+  height: 1px;
+  color: transparent;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+/* Default appearance — underline on the active tab. */
+.gup-tab--appearance-default {
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-4);
+  padding-inline: var(--gup-padding-md);
+  padding-block: var(--gup-component-4);
+  border-bottom: var(--gup-tab--border-bottom-width) solid transparent;
+}
+
+.gup-tab--appearance-default[aria-selected="true"] {
+  border-bottom: var(--gup-tab--border-bottom-width) solid var(--gup-color-content-link);
+}
+
+.gup-tab--appearance-default:hover:not([aria-selected="true"]):not(:disabled) {
+  background-color: var(--gup-color-states-secondary-hover);
+}
+
+/* Full-width variant — center the content of each tab. */
+.gup-tab--appearance-default.gup-tab--is-full-width,
+.gup-tab--appearance-toggle.gup-tab--is-full-width {
+  justify-content: center;
+}
+
+/* Toggle appearance — pill segmented control. */
+.gup-tab--appearance-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--gup-radius-component-full);
+  padding: var(--gup-component-0) var(--gup-padding-sm);
+  gap: var(--gup-component-3);
+  text-align: center;
+  min-height: var(--gup-icon-xl);
+}
+
+.gup-tab--appearance-toggle[aria-selected="true"] {
+  background-color: var(--gup-color-states-base-bg);
+  box-shadow:
+    0 8px 16px 0 rgb(52 48 44 / 3%),
+    0 4px 8px 0 rgb(52 48 44 / 2%),
+    0 1.5px 3px 0 rgb(52 48 44 / 1%),
+    0 0.5px 1px 0 rgb(52 48 44 / 1%);
+}
+
+.gup-tab--appearance-toggle:hover:not([aria-selected="true"]):not(:disabled) {
+  background-color: var(--gup-color-states-secondary-hover);
+}
+
+/* Vertical appearance — left-aligned list with an active leading bar. */
+.gup-tab--appearance-vertical {
+  display: flex;
+  align-items: center;
+  gap: var(--gup-component-4);
+  padding: var(--gup-component-4) var(--gup-component-4) var(--gup-component-4) var(--gup-component-5);
+  border-bottom: 1px solid var(--gup-color-border-medium);
+  width: 100%;
+  text-align: start;
+}
+
+.gup-tab--appearance-vertical .gup-tab__content {
+  flex-grow: 1;
+}
+
+.gup-tab--appearance-vertical[aria-selected="true"] {
+  background-color: var(--gup-color-states-base-bg-control);
+  border-bottom: 1px solid var(--gup-color-border-medium);
+}
+
+.gup-tab--appearance-vertical[aria-selected="true"]::before {
+  position: absolute;
+  content: '';
+  inset-inline-start: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--gup-component-2);
+  height: 100%;
+  background-color: var(--gup-color-content-link);
+}
+
+.gup-tab--appearance-vertical:hover:not([aria-selected="true"]):not(:disabled) {
+  background-color: var(--gup-color-states-secondary-hover);
+}
+
+/* ── Tab panel ───────────────────────────────────────────── */
+
+.gup-tab-panel {
+  display: block;
+  flex-grow: 1;
+}
+
+.gup-tab-panel[hidden] {
+  display: none;
+}
+
+.gup-tab-panel__inner {
+  padding: calc(var(--unit) * 3);
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

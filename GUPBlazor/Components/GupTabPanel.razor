@@ -1,0 +1,37 @@
+@* Equivalent of <gup-tab-panel>
+   A single content panel inside a GupTabs. When nested inside a GupTabs the
+   parent's SelectedIndex drives the hidden state.
+
+   Slot — ChildContent: panel content.
+*@
+@implements IDisposable
+
+<div class="gup-tab-panel" role="tabpanel" hidden="@(IsHidden ? true : null)">
+    <div class="gup-tab-panel__inner">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] private GupTabs? Tabs { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool _registered;
+
+    private bool IsHidden => Tabs?.IsPanelHidden(this) ?? false;
+
+    protected override void OnInitialized()
+    {
+        if (Tabs is not null && !_registered)
+        {
+            Tabs.RegisterPanel(this);
+            _registered = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        if (_registered) Tabs?.UnregisterPanel(this);
+    }
+}

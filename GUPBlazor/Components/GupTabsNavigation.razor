@@ -1,0 +1,20 @@
+@* Equivalent of <gup-tabs-navigation>
+   A wrapper for the tab buttons inside a GupTabs. Reads appearance/full-width
+   from the parent so it can apply the matching layout.
+
+   Slot — ChildContent: GupTab buttons.
+*@
+<div class="gup-tabs-navigation gup-tabs-navigation--appearance-@AppearanceClass @(IsFullWidth ? "gup-tabs-navigation--is-full-width" : "")">
+    <div role="tablist" class="gup-tabs-navigation__list">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] private GupTabs? Tabs { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string AppearanceClass => Tabs?.AppearanceClass ?? "default";
+    private bool IsFullWidth => Tabs?.IsFullWidth ?? false;
+}
