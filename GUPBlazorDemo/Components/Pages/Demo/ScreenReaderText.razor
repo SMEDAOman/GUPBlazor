@@ -1,0 +1,220 @@
+@page "/demo/screenreader-text"
+@rendermode InteractiveServer
+
+<PageTitle>Screenreader Text — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Screenreader Text">
+        <PageSummary>
+            GupScreenReaderText — content visible only to assistive technologies.
+            Visually hidden via the gov.om <code>screenreader-text</code> pattern (a 1×1
+            absolutely-positioned, clipped box) while remaining in the accessibility tree.
+            Supports two-way binding on <code>Text</code>, <code>As</code>, <code>Role</code>,
+            and <code>AriaLive</code>, plus an <code>OnRendered</code> event.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default — text-only slot</h2>
+            <p class="demo-section-description">
+                The text below is only visible to screenreaders. Inspect the DOM to see the
+                <code>&lt;span class="gup-screenreader-text"&gt;</code> wrapper sandwiched
+                between the visible sentences.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <p data-testid="default-example" style="margin:0;">
+                        The text below is only visible to screenreaders:
+                        <GupScreenReaderText>Screenreader text</GupScreenReaderText>
+                        Did you see it?
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TEXT PARAMETER ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Text parameter (no slot)</h2>
+            <p class="demo-section-description">
+                Use the <code>Text</code> parameter when you only need plain text. It's identical
+                to the default-slot form but lighter when binding to a string.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <p data-testid="text-param-example" style="margin:0;">
+                        Save
+                        <GupScreenReaderText Text="your application before continuing" />
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Text)</h2>
+            <p class="demo-section-description">
+                Update the screenreader text at runtime. The visible label below the input
+                shows the bound value; the <code>GupScreenReaderText</code> beneath it carries
+                that same string into the accessibility tree.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupInputField Name="sr-bound-text"
+                                   @bind-Value="_boundText"
+                                   Placeholder="Type here…">Screenreader text</GupInputField>
+
+                    <p style="margin:0;">
+                        <strong>Visible:</strong> The button below has a hidden description —
+                        <GupScreenReaderText @bind-Text="_boundText" OnRendered="HandleRendered" />
+                    </p>
+
+                    <p data-testid="bind-output" style="margin:0;">
+                        <strong>Bound text:</strong> "<span data-testid="bind-value">@_boundText</span>"
+                        &nbsp;·&nbsp;
+                        <strong>OnRendered fired:</strong> <span data-testid="render-count">@_renderCount</span> times
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ AS — DIV WRAPPER ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">As="div" — block-level wrapper</h2>
+            <p class="demo-section-description">
+                Render as a <code>&lt;div&gt;</code> instead of the default <code>&lt;span&gt;</code>
+                when the surrounding markup needs a block-level child (e.g. inside a list or grid).
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <ul style="margin:0; padding-left:20px;">
+                        <li>Form section 1
+                            <GupScreenReaderText As="div" Text="Personal details — three fields, all required" />
+                        </li>
+                        <li>Form section 2
+                            <GupScreenReaderText As="div" Text="Address — two fields, both required" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ LIVE REGION ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Live region (Role + AriaLive)</h2>
+            <p class="demo-section-description">
+                Combine with <code>Role="status"</code> and <code>AriaLive="polite"</code> to
+                announce dynamic updates to screenreader users — a common pattern for
+                form-validation feedback and async status messages. Click the button to push
+                a new announcement.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <div>
+                        <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button"
+                                   OnClick="@AnnounceUpdate">
+                            <ChildContent>Announce update</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <GupScreenReaderText Role="status"
+                                         AriaLive="polite"
+                                         Text="@_announcement" />
+
+                    <p data-testid="announcement-output" style="margin:0;">
+                        <strong>Visible mirror (for the demo):</strong>
+                        "<span data-testid="announcement-value">@_announcement</span>"
+                        &nbsp;·&nbsp; announced
+                        <strong><span data-testid="announce-count">@_announceCount</span></strong> times
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ INSPECTION HELPER ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Inspection helper — temporarily reveal SR text</h2>
+            <p class="demo-section-description">
+                For demonstration purposes only — toggling the checkbox below removes the clip
+                styles so you can see the screenreader text on the page. Don't ship this; the
+                whole point of <code>GupScreenReaderText</code> is that it stays invisible.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupCheckbox Name="sr-reveal"
+                                 @bind-Checked="_reveal">Reveal screenreader text (demo only)</GupCheckbox>
+
+                    <div class="@(_reveal ? "sr-reveal" : "")">
+                        <p style="margin:0;">
+                            Submit
+                            <GupScreenReaderText Text="(this will permanently delete your draft)" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+<style>
+    /* Demo-only — strips the screenreader-only clip so the hidden text
+       is visible on the page. Never use this in production code. */
+    .sr-reveal .gup-screenreader-text {
+        position: static;
+        clip: auto;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 0 4px;
+        white-space: normal;
+        color: var(--gup-color-content-link, #2f57cd);
+        text-decoration: underline dotted;
+        font-style: italic;
+    }
+</style>
+
+@code {
+    // Two-way binding state
+    private string? _boundText = "Save your application before continuing";
+    private int _renderCount;
+
+    // Live region state
+    private string? _announcement = "Idle.";
+    private int _announceCount;
+
+    private void AnnounceUpdate()
+    {
+        _announceCount++;
+        _announcement = $"Update {_announceCount} — your changes were saved at {DateTime.Now:HH:mm:ss}.";
+    }
+
+    // Inspection helper toggle
+    private bool _reveal;
+
+    private void HandleRendered()
+    {
+        // OnRendered fires every time the GupScreenReaderText re-renders — including when
+        // its bound Text changes. We don't call StateHasChanged here (that would feed
+        // back into a re-render and loop forever) — the displayed count refreshes the
+        // next time the parent re-renders for any other reason (typing, clicks, …).
+        _renderCount++;
+    }
+}

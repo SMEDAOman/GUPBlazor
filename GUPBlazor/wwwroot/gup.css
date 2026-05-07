@@ -3524,5 +3524,25 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-screenreader-text
+   ============================================================
+   Mirror of the Angular `screenreader-text` mixin.
+   Visually hides content while keeping it in the accessibility
+   tree — i.e. invisible to sighted users but announced by
+   assistive technologies (NVDA, JAWS, VoiceOver, TalkBack…).
+*/
+.gup-screenreader-text {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: none;
+  white-space: nowrap;
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

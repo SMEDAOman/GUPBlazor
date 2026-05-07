@@ -1,0 +1,82 @@
+@* Equivalent of <gup-screenreader-text>
+   Text that is visible only to assistive technologies (screen readers).
+   Visually hidden via the "screenreader-text" pattern (clip + 1×1 absolute box)
+   while remaining in the accessibility tree.
+
+   Slots / RenderFragments:
+     - ChildContent → the text/content to expose to screen readers (default slot)
+
+   Parameters:
+     - Text → plain-text alternative to ChildContent (use one or the other).
+     - As   → tag name to render — "span" (default) or "div".
+     - Role → optional ARIA role (e.g. "status", "alert") — useful when announcing
+              dynamic updates via aria-live regions.
+     - AriaLive → optional aria-live politeness ("polite" | "assertive" | "off").
+
+   Two-way binding: @bind-Text, @bind-As, @bind-Role, @bind-AriaLive
+   Events: OnRendered (fires on every render — handy when the SR text is updated dynamically)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+@if (string.Equals(As, "div", StringComparison.OrdinalIgnoreCase))
+{
+    <div class="gup-screenreader-text"
+         role="@Role"
+         aria-live="@AriaLive">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Text
+        }
+    </div>
+}
+else
+{
+    <span class="gup-screenreader-text"
+          role="@Role"
+          aria-live="@AriaLive">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Text
+        }
+    </span>
+}
+
+@code {
+    /// <summary>Plain-text content shown only to screen readers. Ignored when <see cref="ChildContent"/> is supplied.</summary>
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public EventCallback<string?> TextChanged { get; set; }
+
+    /// <summary>Rich content for the screenreader-only region — overrides <see cref="Text"/>.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Tag name to render — "span" (default) or "div".</summary>
+    [Parameter] public string As { get; set; } = "span";
+    [Parameter] public EventCallback<string> AsChanged { get; set; }
+
+    /// <summary>Optional ARIA role — e.g. "status" or "alert" for announce-on-update regions.</summary>
+    [Parameter] public string? Role { get; set; }
+    [Parameter] public EventCallback<string?> RoleChanged { get; set; }
+
+    /// <summary>Optional aria-live politeness ("polite", "assertive", or "off").</summary>
+    [Parameter] public string? AriaLive { get; set; }
+    [Parameter] public EventCallback<string?> AriaLiveChanged { get; set; }
+
+    /// <summary>Fires after the component renders — useful when SR text is updated dynamically.</summary>
+    [Parameter] public EventCallback OnRendered { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (OnRendered.HasDelegate)
+        {
+            await OnRendered.InvokeAsync();
+        }
+    }
+}
