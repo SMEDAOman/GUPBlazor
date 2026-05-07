@@ -1,0 +1,246 @@
+@* Equivalent of <gup-pagination kind="numbered|directional" total-pages="..." current-page="...">
+   Page navigation control with two layouts:
+     - Numbered    → page-number buttons with prev/next text buttons
+     - Directional → two large prev/next links (used as a chrome-less prev/next pair)
+
+   Two-way binding: @bind-CurrentPage, @bind-Kind, @bind-TotalPages
+   Events: OnPageChange (fires with the new page number — both before and after binding update)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+@if (Kind == GupPaginationKind.Numbered)
+{
+    <nav aria-label="@AriaLabel" class="gup-pagination__nav">
+        <ul class="gup-pagination">
+            @if (CurrentPage > 1)
+            {
+                <li>
+                    <button type="button"
+                            class="gup-pagination__directional-button"
+                            @onclick="@(() => HandlePageChange(CurrentPage - 1))">
+                        <span class="gup-pagination__arrow-icon">
+                            <GupIcon IconName="arrow-back" Width="24" Height="24" />
+                        </span>
+                        <span class="gup-pagination__text">@PrevLabel</span>
+                    </button>
+                </li>
+            }
+            @foreach (var item in ComputeVisiblePages())
+            {
+                if (item is int p)
+                {
+                    var isCurrent = p == CurrentPage;
+                    var pageNumber = p;
+                    <li class="gup-pagination__page-wrapper">
+                        <button type="button"
+                                class="gup-pagination__page-button @(isCurrent ? "gup-pagination__page-button--is-current" : "")"
+                                aria-current="@(isCurrent ? "page" : "false")"
+                                @onclick="@(() => HandlePageChange(pageNumber))">
+                            <span class="gup-pagination__text">@pageNumber</span>
+                        </button>
+                    </li>
+                }
+                else
+                {
+                    <li class="gup-pagination__page-wrapper">
+                        <button type="button"
+                                class="gup-pagination__page-button"
+                                aria-hidden="true"
+                                disabled>
+                            <span class="gup-pagination__text gup-pagination__text--is-disabled">…</span>
+                        </button>
+                    </li>
+                }
+            }
+            @if (CurrentPage < TotalPages)
+            {
+                <li>
+                    <button type="button"
+                            class="gup-pagination__directional-button"
+                            @onclick="@(() => HandlePageChange(CurrentPage + 1))">
+                        <span class="gup-pagination__text">@NextLabel</span>
+                        <span class="gup-pagination__arrow-icon">
+                            <GupIcon IconName="arrow-forward" Width="24" Height="24" />
+                        </span>
+                    </button>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <nav aria-label="@AriaLabel" class="gup-pagination__nav">
+        <div class="gup-pagination__links-wrapper">
+            @if (!string.IsNullOrEmpty(PrevLabel) && !string.IsNullOrEmpty(PrevLink))
+            {
+                <a href="@PrevLink"
+                   class="gup-pagination__nav-link gup-pagination__nav-link--direction-prev"
+                   rel="prev"
+                   @onclick="HandlePrevLinkClick">
+                    <span class="gup-pagination__arrow-icon">
+                        <GupIcon IconName="arrow-back" Width="24" Height="24" />
+                    </span>
+                    <span class="gup-pagination__text-box">
+                        <span class="gup-pagination__label">@PrevLabel</span>
+                        @if (!string.IsNullOrEmpty(PrevTitle))
+                        {
+                            <span class="gup-pagination__title">@PrevTitle</span>
+                        }
+                    </span>
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(NextLabel) && !string.IsNullOrEmpty(NextLink))
+            {
+                <a href="@NextLink"
+                   class="gup-pagination__nav-link gup-pagination__nav-link--direction-next"
+                   rel="next"
+                   @onclick="HandleNextLinkClick">
+                    <span class="gup-pagination__text-box">
+                        <span class="gup-pagination__label">@NextLabel</span>
+                        @if (!string.IsNullOrEmpty(NextTitle))
+                        {
+                            <span class="gup-pagination__title">@NextTitle</span>
+                        }
+                    </span>
+                    <span class="gup-pagination__arrow-icon">
+                        <GupIcon IconName="arrow-forward" Width="24" Height="24" />
+                    </span>
+                </a>
+            }
+        </div>
+    </nav>
+}
+
+@code {
+    /// <summary>Total number of pages.</summary>
+    [Parameter] public int TotalPages { get; set; } = 10;
+    [Parameter] public EventCallback<int> TotalPagesChanged { get; set; }
+
+    /// <summary>Currently active page (1-based).</summary>
+    [Parameter] public int CurrentPage { get; set; } = 1;
+    [Parameter] public EventCallback<int> CurrentPageChanged { get; set; }
+
+    /// <summary>Layout variant — Numbered (default) or Directional.</summary>
+    [Parameter] public GupPaginationKind Kind { get; set; } = GupPaginationKind.Numbered;
+    [Parameter] public EventCallback<GupPaginationKind> KindChanged { get; set; }
+
+    /// <summary>Label for the "Previous" button/link.</summary>
+    [Parameter] public string PrevLabel { get; set; } = "Previous";
+
+    /// <summary>Title shown beneath the "Previous" label (Directional kind).</summary>
+    [Parameter] public string PrevTitle { get; set; } = "";
+
+    /// <summary>Href for the "Previous" link (Directional kind).</summary>
+    [Parameter] public string PrevLink { get; set; } = "";
+
+    /// <summary>Label for the "Next" button/link.</summary>
+    [Parameter] public string NextLabel { get; set; } = "Next";
+
+    /// <summary>Title shown beneath the "Next" label (Directional kind).</summary>
+    [Parameter] public string NextTitle { get; set; } = "";
+
+    /// <summary>Href for the "Next" link (Directional kind).</summary>
+    [Parameter] public string NextLink { get; set; } = "";
+
+    /// <summary>Accessible label for the surrounding &lt;nav&gt; element.</summary>
+    [Parameter] public string AriaLabel { get; set; } = "Pagination";
+
+    /// <summary>Fires when the active page changes — receives the new page number.</summary>
+    [Parameter] public EventCallback<int> OnPageChange { get; set; }
+
+    /// <summary>Fires when the directional "Previous" link is clicked.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnPrevClick { get; set; }
+
+    /// <summary>Fires when the directional "Next" link is clicked.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnNextClick { get; set; }
+
+    private const int MaxPagesPerView = 7;
+
+    private async Task HandlePageChange(int page)
+    {
+        if (page < 1 || page > TotalPages)
+        {
+            return;
+        }
+
+        if (OnPageChange.HasDelegate)
+        {
+            await OnPageChange.InvokeAsync(page);
+        }
+
+        if (page != CurrentPage)
+        {
+            CurrentPage = page;
+            if (CurrentPageChanged.HasDelegate)
+            {
+                await CurrentPageChanged.InvokeAsync(page);
+            }
+        }
+    }
+
+    private Task HandlePrevLinkClick(MouseEventArgs e) =>
+        OnPrevClick.HasDelegate ? OnPrevClick.InvokeAsync(e) : Task.CompletedTask;
+
+    private Task HandleNextLinkClick(MouseEventArgs e) =>
+        OnNextClick.HasDelegate ? OnNextClick.InvokeAsync(e) : Task.CompletedTask;
+
+    /// <summary>
+    /// Mirrors the visible-pages algorithm in the Lit component:
+    ///   - Up to 7 pages → render them all
+    ///   - Near the start → 1 2 3 4 5 … last
+    ///   - Mid-range      → (current-4) … current … last (truncated leading numbers)
+    ///   - Near the end   → 1 … (last-4) (last-3) (last-2) (last-1) last
+    /// Returns a list whose entries are either int (page number) or string ("…").
+    /// </summary>
+    private List<object> ComputeVisiblePages()
+    {
+        var totalPages = TotalPages;
+        var current = CurrentPage;
+        var pages = Enumerable.Range(1, totalPages).ToList();
+        var lastPage = pages.Count;
+        var visible = new List<object>();
+
+        if (totalPages > MaxPagesPerView)
+        {
+            if (lastPage - current >= 4)
+            {
+                if (current - 1 >= 4)
+                {
+                    // Mid case: take the slice ending at current, then '…' before the very last page.
+                    var startOfPages = pages.Skip(current - 5).ToList();
+                    var extra = new HashSet<int>(pages.Skip(current).Take(pages.Count - current - 1));
+                    var filtered = startOfPages.Where(p => !extra.Contains(p)).Select(p => (object)p).ToList();
+                    if (filtered.Count > 0)
+                    {
+                        filtered.Insert(filtered.Count - 1, "…");
+                    }
+                    visible = filtered;
+                }
+                else
+                {
+                    // Near start: 1 2 3 4 5 … last
+                    var startOfPages = pages.Take(5).ToList();
+                    var extra = new HashSet<int>(pages.Skip(5).Take(lastPage - 1 - 5));
+                    var filtered = startOfPages.Where(p => !extra.Contains(p)).Select(p => (object)p).ToList();
+                    filtered.Add("…");
+                    filtered.Add(lastPage);
+                    visible = filtered;
+                }
+            }
+            if (lastPage - current <= 4)
+            {
+                // Near end: 1 … (last-4) (last-3) (last-2) (last-1) last
+                var tail = pages.Skip(lastPage - 5).Select(p => (object)p).ToList();
+                visible = new List<object> { 1, "…" };
+                visible.AddRange(tail);
+            }
+        }
+        else
+        {
+            visible = pages.Select(p => (object)p).ToList();
+        }
+
+        return visible;
+    }
+}

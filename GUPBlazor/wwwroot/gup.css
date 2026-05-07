@@ -3358,5 +3358,171 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-pagination
+   ------------------------------------------------------------
+   Mirrors design-system/components/pagination/pagination.css.
+   Two layouts:
+     - .gup-pagination          — numbered page buttons + prev/next text
+     - .gup-pagination__links-wrapper — directional prev/next link cards
+   ============================================================ */
+
+.gup-pagination__nav {
+  --gup-pagination--color: var(--gup-color-brand-xhigh);
+  --gup-pagination--item-padding: 8px 20px; /* var(--gup-component-2) var(--gup-component-5) */
+}
+
+.gup-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gup-spacing-component-default, 8px);
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--gup-pagination--color);
+}
+
+.gup-pagination__directional-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px; /* var(--gup-component-3) */
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--gup-pagination--color);
+  font: inherit;
+  border-radius: var(--gup-radius-component-default, 4px);
+}
+
+.gup-pagination__directional-button:hover {
+  background-color: var(--gup-color-states-secondary-hover, rgba(19, 36, 89, 0.06));
+}
+
+.gup-pagination__directional-button:focus-visible {
+  outline: 2px solid var(--gup-color-brand-medium, #2f57cd);
+  outline-offset: 2px;
+}
+
+.gup-pagination__text {
+  text-decoration: underline;
+}
+
+.gup-pagination__text--is-disabled {
+  border-color: transparent;
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.gup-pagination__arrow-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* RTL: flip the arrow horizontally so it still points "back/forward" along the reading flow. */
+[dir="rtl"] .gup-pagination__arrow-icon {
+  transform: scaleX(-1);
+}
+
+.gup-pagination__page-wrapper {
+  display: inline-flex;
+}
+
+.gup-pagination__page-button {
+  min-width: 40px; /* var(--gup-component-8) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--gup-pagination--item-padding);
+  line-height: 24px;
+  border-radius: var(--gup-radius-component-default, 4px);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--gup-pagination--color);
+  font: inherit;
+}
+
+.gup-pagination__page-button:disabled {
+  cursor: default;
+}
+
+.gup-pagination__page-button:focus-visible {
+  outline: 2px solid var(--gup-color-brand-medium, #2f57cd);
+  outline-offset: 2px;
+}
+
+.gup-pagination__page-button:hover:not(.gup-pagination__page-button--is-current):not(:disabled) {
+  background-color: var(--gup-color-states-secondary-hover, rgba(19, 36, 89, 0.06));
+}
+
+.gup-pagination__page-button--is-current {
+  color: var(--gup-color-brand-contrast);
+  background-color: var(--gup-pagination--color);
+  cursor: default;
+}
+
+.gup-pagination__page-button--is-current .gup-pagination__text {
+  text-decoration: none;
+}
+
+/* --- Directional kind --- */
+
+.gup-pagination__links-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gup-radius-component-default, 4px);
+  justify-content: space-between;
+}
+
+.gup-pagination__nav-link {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 12px; /* var(--gup-component-3) */
+  width: 50%;
+  color: var(--gup-pagination--color);
+  text-decoration: none;
+}
+
+.gup-pagination__nav-link--direction-next {
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+.gup-pagination__nav-link--direction-prev {
+  margin-inline-end: auto;
+}
+
+.gup-pagination__text-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: var(--font-size-400, 16px);
+  color: var(--gup-pagination--color);
+}
+
+.gup-pagination__nav-link--direction-next .gup-pagination__text-box {
+  align-items: flex-end;
+}
+
+.gup-pagination__nav-link:hover .gup-pagination__text-box {
+  color: var(--gup-color-content-link, var(--gup-color-brand-medium, #2f57cd));
+}
+
+.gup-pagination__label {
+  font-weight: var(--font-weight-base-beta, 600);
+  line-height: var(--line-height-500, 1.5);
+  width: 100%;
+  text-decoration: underline;
+}
+
+.gup-pagination__title {
+  text-wrap: wrap;
+  text-decoration: underline;
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */
