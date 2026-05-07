@@ -3287,5 +3287,76 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-page-status
+   ------------------------------------------------------------
+   Mirrors design-system/components/page-status/page-status.css.
+   A vertically-stacked block with a circular icon, title,
+   message, and optional action area. Three colour variants:
+   success (green), error (red), and expired (neutral).
+   ============================================================ */
+
+.gup-page-status {
+  --gup-page-status--icon-bg: var(--gup-color-neutral-low);
+  --gup-page-status--icon-color: var(--gup-color-neutral-medium);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gup-spacing-between-content);
+}
+
+.gup-page-status__icon-wrapper {
+  background-color: var(--gup-page-status--icon-bg);
+  color: var(--gup-page-status--icon-color);
+  border-radius: 51%;
+  width: 64px;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gup-page-status__icon-wrapper .gup-icon {
+  color: var(--gup-page-status--icon-color);
+}
+
+.gup-page-status__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gup-spacing-between-text);
+}
+
+.gup-page-status__title {
+  color: var(--gup-color-content-primary);
+  text-align: center;
+  font-size: var(--font-size-600);
+  font-weight: var(--font-weight-base-beta);
+  margin: 0;
+}
+
+.gup-page-status__message {
+  color: var(--gup-color-content-primary);
+  text-align: center;
+  font-size: var(--font-size-550);
+}
+
+.gup-page-status__action {
+  display: flex;
+  justify-content: center;
+}
+
+.gup-page-status--success {
+  --gup-page-status--icon-color: var(--gup-color-neutral-contrast);
+  --gup-page-status--icon-bg: var(--gup-color-positive-medium);
+}
+
+.gup-page-status--error {
+  --gup-page-status--icon-color: var(--gup-color-neutral-contrast);
+  --gup-page-status--icon-bg: var(--gup-color-negative-medium);
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

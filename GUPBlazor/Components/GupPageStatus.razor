@@ -1,0 +1,93 @@
+@* Equivalent of <gup-page-status type="success|error|expired">
+   A page-status block with a circular icon, title, message, and an optional
+   action area (typically a GupButton or GupButtonGroup).
+
+   Slots / RenderFragments:
+     - TitleContent   → rich content for the heading (overrides PageTitle)
+     - ChildContent   → message body (default slot)
+     - ActionContent  → optional action(s) — usually a GupButton / GupButtonGroup
+
+   Two-way binding: @bind-Type, @bind-PageTitle
+   Events: OnActionClick (bubbles clicks from the action area without wiring
+           every button individually)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-page-status @TypeClass()" data-type="@TypeAttr()">
+    <div class="gup-page-status__icon-wrapper">
+        <GupIcon IconName="@IconName()" Width="32" Height="32" />
+    </div>
+    <div class="gup-page-status__content">
+        @if (TitleContent != null || !string.IsNullOrEmpty(PageTitle))
+        {
+            <h2 class="gup-page-status__title">
+                @if (TitleContent != null)
+                {
+                    @TitleContent
+                }
+                else
+                {
+                    @PageTitle
+                }
+            </h2>
+        }
+        @if (ChildContent != null)
+        {
+            <div class="gup-page-status__message">@ChildContent</div>
+        }
+    </div>
+    @if (ActionContent != null)
+    {
+        <div class="gup-page-status__action" @onclick="HandleActionClick">
+            @ActionContent
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>Visual state — Success (green), Error (red), or Expired (neutral).</summary>
+    [Parameter] public GupPageStatusType Type { get; set; } = GupPageStatusType.Success;
+    [Parameter] public EventCallback<GupPageStatusType> TypeChanged { get; set; }
+
+    /// <summary>Plain-text title. Use <see cref="TitleContent"/> for rich content.</summary>
+    [Parameter] public string? PageTitle { get; set; }
+    [Parameter] public EventCallback<string?> PageTitleChanged { get; set; }
+
+    /// <summary>Rich content for the title — overrides <see cref="PageTitle"/>.</summary>
+    [Parameter] public RenderFragment? TitleContent { get; set; }
+
+    /// <summary>Message body rendered beneath the title.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Optional action area — typically a GupButton or GupButtonGroup.</summary>
+    [Parameter] public RenderFragment? ActionContent { get; set; }
+
+    /// <summary>Fires when the action area is clicked (event bubbles up from buttons inside).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnActionClick { get; set; }
+
+    private string IconName() => Type switch
+    {
+        GupPageStatusType.Success => "done",
+        GupPageStatusType.Error   => "close",
+        GupPageStatusType.Expired => "priority-high",
+        _                         => "cancel",
+    };
+
+    private string TypeAttr() => Type switch
+    {
+        GupPageStatusType.Success => "success",
+        GupPageStatusType.Error   => "error",
+        GupPageStatusType.Expired => "expired",
+        _                         => "success",
+    };
+
+    private string TypeClass() => $"gup-page-status--{TypeAttr()}";
+
+    private async Task HandleActionClick(MouseEventArgs e)
+    {
+        if (OnActionClick.HasDelegate)
+        {
+            await OnActionClick.InvokeAsync(e);
+        }
+    }
+}

@@ -1,0 +1,218 @@
+@page "/demo/page-status"
+@rendermode InteractiveServer
+
+<PageTitle>Page Status — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Page Status">
+        <PageSummary>
+            GupPageStatus — a page-level status block with a circular icon, title, message,
+            and optional action area. Three visual states: success, error, and expired.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ SUCCESS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Success</h2>
+            <p class="demo-section-description">
+                <code>Type="GupPageStatusType.Success"</code> — green icon background and a "done" glyph.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupPageStatus Type="GupPageStatusType.Success"
+                                   PageTitle="Your payment has been processed successfully.">
+                        <ChildContent>Payment ID: 22399</ChildContent>
+                        <ActionContent>
+                            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                <ChildContent>Review your application</ChildContent>
+                            </GupButton>
+                        </ActionContent>
+                    </GupPageStatus>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ERROR ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Error</h2>
+            <p class="demo-section-description">
+                <code>Type="GupPageStatusType.Error"</code> — red icon background and a "close" glyph.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupPageStatus Type="GupPageStatusType.Error"
+                                   PageTitle="Your payment has failed.">
+                        <ChildContent>
+                            We tried to charge your card, but something went wrong. Please update your
+                            payment method below to continue.
+                        </ChildContent>
+                        <ActionContent>
+                            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                <ChildContent>Update payment method</ChildContent>
+                            </GupButton>
+                        </ActionContent>
+                    </GupPageStatus>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EXPIRED ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Expired</h2>
+            <p class="demo-section-description">
+                <code>Type="GupPageStatusType.Expired"</code> — neutral icon background and a "priority-high" glyph.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupPageStatus Type="GupPageStatusType.Expired"
+                                   PageTitle="Your application has expired.">
+                        <ChildContent>
+                            Unfortunately, the payment period has ended. You will need to start a new
+                            application. Please exit and submit a new application to proceed.
+                        </ChildContent>
+                        <ActionContent>
+                            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                <ChildContent>Go to dashboard</ChildContent>
+                            </GupButton>
+                        </ActionContent>
+                    </GupPageStatus>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ NO ACTION ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Without an action</h2>
+            <p class="demo-section-description">
+                Omit <code>ActionContent</code> when no follow-up CTA is required.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupPageStatus Type="GupPageStatusType.Success"
+                                   PageTitle="All done.">
+                        <ChildContent>Your changes have been saved.</ChildContent>
+                    </GupPageStatus>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RICH TITLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Rich title (TitleContent)</h2>
+            <p class="demo-section-description">
+                Use <code>TitleContent</code> for inline markup in the heading. It overrides
+                <code>PageTitle</code> when both are provided.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupPageStatus Type="GupPageStatusType.Success">
+                        <TitleContent>
+                            Welcome back, <em>Caesar</em>!
+                        </TitleContent>
+                        <ChildContent>You're signed in.</ChildContent>
+                    </GupPageStatus>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ TWO-WAY BINDING ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Two-way binding (@@bind-Type, @@bind-PageTitle)</h2>
+            <p class="demo-section-description">
+                Switch the <code>Type</code> and <code>PageTitle</code> at runtime — the icon, color,
+                and heading reflect the bound values.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupPageStatus @bind-Type="_boundType" @bind-PageTitle="_boundTitle">
+                        <ChildContent>Bound state — change the controls below.</ChildContent>
+                    </GupPageStatus>
+
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;">
+                        <strong>Type:</strong>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundType = GupPageStatusType.Success; _boundTitle = "Looks good!"; })">
+                            <ChildContent>Success</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundType = GupPageStatusType.Error; _boundTitle = "Something broke."; })">
+                            <ChildContent>Error</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                   OnClick="@(() => { _boundType = GupPageStatusType.Expired; _boundTitle = "Time's up."; })">
+                            <ChildContent>Expired</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    <p data-testid="bind-output" style="margin:0; text-align:center;">
+                        Bound state: type = <strong>@_boundType</strong>,
+                        title = <strong>@_boundTitle</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EVENTS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">OnActionClick event</h2>
+            <p class="demo-section-description">
+                Wire <code>OnActionClick</code> to handle clicks anywhere inside the action area —
+                useful for bubbling up button clicks without subscribing to each button individually.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+
+                    <GupPageStatus Type="GupPageStatusType.Success"
+                                   PageTitle="All set."
+                                   OnActionClick="HandleActionClick">
+                        <ChildContent>Click any of the action buttons below.</ChildContent>
+                        <ActionContent>
+                            <GupButtonGroup>
+                                <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                    <ChildContent>Continue</ChildContent>
+                                </GupButton>
+                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button">
+                                    <ChildContent>View receipt</ChildContent>
+                                </GupButton>
+                            </GupButtonGroup>
+                        </ActionContent>
+                    </GupPageStatus>
+
+                    <p data-testid="event-log" style="margin:0; text-align:center;">
+                        Action clicks: <strong>@_actionClickCount</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    // Two-way binding state
+    private GupPageStatusType _boundType = GupPageStatusType.Success;
+    private string? _boundTitle = "Looks good!";
+
+    // Event-handling state
+    private int _actionClickCount;
+
+    private void HandleActionClick(MouseEventArgs e)
+    {
+        _actionClickCount++;
+    }
+}
