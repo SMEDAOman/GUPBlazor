@@ -24,7 +24,7 @@
                 <button type="button"
                         class="gup-dropdown-apply-btn"
                         data-items-label="@ItemsSelectedButtonLabel"
-                        data-no-sel-label="@NoSelectionButtonLabel"
+                        data-no-sel-label="@EffectiveNoSelectionLabel"
                         onclick="window.__gupDropdown.applySelection(this)">
                     @ApplyButtonLabel
                 </button>
@@ -42,7 +42,18 @@
     [Parameter] public string SearchPlaceholder { get; set; } = "Search...";
     [Parameter] public string ItemsSelectedButtonLabel { get; set; } = "Apply";
     [Parameter] public string NoSelectionButtonLabel { get; set; } = "Done";
+
+    /// <summary>
+    /// Label for the dropdown's confirm/close button in its default (no-selection) state.
+    /// Convenience alias for <see cref="NoSelectionButtonLabel"/> — set either one; if both are
+    /// set, this takes precedence. Pass a localized value (e.g. via LanguageHub) to relabel "Done".
+    /// </summary>
+    [Parameter] public string? DoneButtonText { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    private string ApplyButtonLabel => NoSelectionButtonLabel;
+    private string EffectiveNoSelectionLabel
+        => !string.IsNullOrEmpty(DoneButtonText) ? DoneButtonText! : NoSelectionButtonLabel;
+
+    private string ApplyButtonLabel => EffectiveNoSelectionLabel;
 }

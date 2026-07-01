@@ -22,6 +22,14 @@
     /// <summary>Overrides the wizard's default text for the forward (Continue/Submit) button while this step is active.</summary>
     [Parameter] public string? NextButtonText { get; set; }
 
+    /// <summary>When true, the forward (Continue/Submit) button renders no trailing icon while this step is active
+    /// (e.g. an "Accept and Send" step that should have no arrow or tick).</summary>
+    [Parameter] public bool HideNextIcon { get; set; } = false;
+
+    /// <summary>Overrides the forward (Continue/Submit) button's icon name while this step is active.
+    /// Takes precedence over the wizard-level icon. Ignored when <see cref="HideNextIcon"/> is true.</summary>
+    [Parameter] public string? NextIconName { get; set; }
+
     /// <summary>Overrides the wizard's default text for the Back button while this step is active.</summary>
     [Parameter] public string? BackButtonText { get; set; }
 

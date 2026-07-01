@@ -25,8 +25,9 @@
   font-size: 22px;
   font-weight: 700;
   color: var(--gup-color-content-primary);
-  border-bottom: 2px solid var(--gup-color-brand-medium);
   padding-bottom: 8px;
+  /* No blue underline — the Gov.om design system does not specify a rule under
+     section headings, so it has been removed. */
 }
 
 /* ── Row of variants ── */
@@ -50,8 +51,13 @@
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--gup-color-content-tertiary);
+}
+
+/* Opt-in uppercase for demo swatch/variant labels (previously baked into
+   .demo-card-label, which mangled sentence-case labels used by consumers). */
+.demo-card-label--caps {
+  text-transform: uppercase;
 }
 
 /* ── Full-width card ── */
@@ -66,6 +72,18 @@
   border: 1px solid var(--gup-color-border-low);
   border-radius: var(--gup-radius-component-default);
   padding: 24px;
+}
+
+/* Flat variant — fields sit directly on the page (no white card / border /
+   padding), per the C6 "form white card removal" design. Consumers can use
+   <div class="demo-surface demo-surface--flat"> instead of overriding
+   .demo-surface in their own CSS. */
+.demo-surface--flat {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding-inline: 0;
 }
 
 /* ── Dark surface for inverted/logo ── */
