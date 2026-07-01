@@ -9,13 +9,21 @@
 }
 else if (Type == "rowheader")
 {
-    <th class="gup-table-cell gup-table-cell--rowheader" scope="row">
+    <th class="gup-table-cell gup-table-cell--rowheader" scope="row" data-label="@Label">
+        @if (!string.IsNullOrEmpty(Label))
+        {
+            <span class="gup-table-cell__label" aria-hidden="true">@Label</span>
+        }
         <div class="wrapper">@ChildContent</div>
     </th>
 }
 else
 {
-    <td class="gup-table-cell">
+    <td class="gup-table-cell" data-label="@Label">
+        @if (!string.IsNullOrEmpty(Label))
+        {
+            <span class="gup-table-cell__label" aria-hidden="true">@Label</span>
+        }
         <div class="wrapper">@ChildContent</div>
     </td>
 }
@@ -23,4 +31,12 @@ else
 @code {
     [Parameter] public string Type { get; set; } = "data";
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Field label shown inline above the cell value when the parent
+    /// <see cref="GupTable"/> is in <c>Responsive</c> (stacked-card) mode on
+    /// small screens. Ignored in the classic table layout. Typically set to the
+    /// column header text (e.g. "Terms", "Status").
+    /// </summary>
+    [Parameter] public string? Label { get; set; }
 }

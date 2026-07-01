@@ -5,49 +5,13 @@
    ============================================================ */
 
 /* ------------------------------------------------------------
-   1. FONT FACES
-   Place woff2 files in wwwroot/fonts/ or run download-fonts.ps1
+   1. FONTS
+   Readex Pro (Latin + Arabic, weights 400/700) is loaded from Google Fonts
+   via GUPHTMLHeader.razor:
+     https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700
+   Google serves the correct Latin/Arabic unicode-range subsets, so no
+   self-hosted @font-face is needed here.
    ------------------------------------------------------------ */
-@font-face {
-  font-family: 'Readex Pro';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url('/fonts/readex-pro-latin-400-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Readex Pro';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 700;
-  src: url('/fonts/readex-pro-latin-700-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Readex Pro';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url('/fonts/readex-pro-arabic-400-normal.woff2') format('woff2');
-  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891,
-    U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
-    U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
-}
-@font-face {
-  font-family: 'Readex Pro';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 700;
-  src: url('/fonts/readex-pro-arabic-700-normal.woff2') format('woff2');
-  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891,
-    U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
-    U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
-}
 
 /* ------------------------------------------------------------
    2. CSS CUSTOM PROPERTIES — Design Tokens
@@ -56,44 +20,146 @@
   /* Unit */
   --unit: 4px;
 
-  /* --- Color Palette --- */
-  --gup-color-brand-xhigh: #132459;
-  --gup-color-brand-high: #243d89;
-  --gup-color-brand-medium: #2f57cd;
-  --gup-color-brand-medium-low: #4d78ff;
+  /* --- Color Palette (aligned to Gov.om Design System — LIVE @govom implementation) ---
+     Semantic names (xhigh/high/medium/low/xlow) are the values components consume.
+     The *-medium slots carry the live design-system primary/success/danger/warning
+     colors (#0b5fff etc.), exposed also via the flat --primary/--success/--danger/
+     --warning/--info aliases below. Figma shade values are preserved separately as
+     --gup-color-*-fig-* tokens for design-file mapping. */
+  --gup-color-brand-xhigh: #132450;      /* deep navy — header/secondary text, borders (matches mockup) */
+  --gup-color-brand-high: #243d89;       /* Foundations §2.1 brand-high */
+  --gup-color-brand-medium: #2f57cd;     /* Foundations §2.1 brand-medium (distinct from --primary) */
+  --gup-color-brand-medium-low: #4078ff; /* Figma brand 600 */
   --gup-color-brand-low: #bfd8ff;
-  --gup-color-brand-xlow: #dde9ff;
+  --gup-color-brand-xlow: #d0e6ff;
   --gup-color-brand-contrast: #ffffff;
-  --gup-color-neutral-xhigh: #202024;
-  --gup-color-neutral-high: #27272a;
-  --gup-color-neutral-medium: #3f3f46;
-  --gup-color-neutral-low: #d0d0d4;
-  --gup-color-neutral-xlow: #fcfcfc;
+  --gup-color-neutral-xhigh: #272833;    /* live gray-900 — primary text */
+  --gup-color-neutral-high: #393a4a;     /* live gray-800 */
+  --gup-color-neutral-medium: #545465;   /* live gray-700 */
+  --gup-color-neutral-low: #cdced9;      /* live gray-400 — disabled bg */
+  --gup-color-neutral-xlow: #f7f8f9;     /* live gray-100 — lightest bg */
   --gup-color-neutral-contrast: #ffffff;
-  --gup-color-positive-xhigh: #114c29;
-  --gup-color-positive-high: #157f3c;
-  --gup-color-positive-medium: #16a249;
-  --gup-color-positive-low: #85efac;
-  --gup-color-positive-xlow: #f2fdf5;
+  --gup-color-positive-xhigh: #134029;
+  --gup-color-positive-high: #1b7f3c;
+  --gup-color-positive-medium: #287d3c;  /* live --success */
+  --gup-color-positive-low: #80efac;
+  --gup-color-positive-xlow: #e6fae3;    /* live green-100 */
   --gup-color-positive-contrast: #ffffff;
-  --gup-color-warning-xhigh: #733f12;
-  --gup-color-warning-high: #a26107;
-  --gup-color-warning-medium: #ca8511;
+  --gup-color-warning-xhigh: #733f52;
+  --gup-color-warning-high: #a26507;
+  --gup-color-warning-medium: #b95000;   /* live --warning */
   --gup-color-warning-low: #ffe771;
   --gup-color-warning-xlow: #fefce7;
   --gup-color-warning-contrast: #ffffff;
-  --gup-color-negative-xhigh: #811d1d;
+  --gup-color-negative-xhigh: #b11d1d;
   --gup-color-negative-high: #ba1c1c;
-  --gup-color-negative-medium: #dc2828;
-  --gup-color-negative-low: #ffa0a0;
-  --gup-color-negative-xlow: #fef1f1;
+  --gup-color-negative-medium: #da1414;  /* live --danger */
+  --gup-color-negative-low: #f7ada0;
+  --gup-color-negative-xlow: #fef2f2;    /* live red-100 */
   --gup-color-negative-contrast: #ffffff;
-  --gup-color-brand-accent-xhigh: #11111e;
-  --gup-color-brand-accent-high: #2a324c;
-  --gup-color-brand-accent-medium: #414e77;
-  --gup-color-brand-accent-low: #c9ccdd;
-  --gup-color-brand-accent-xlow: #eceef4;
+
+  /* --- Flat semantic aliases (live @govom token names) --- */
+  --primary: #0b5fff;
+  --success: #287d3c;
+  --danger: #da1414;
+  --warning: #b95000;
+  --info: #2e5aac;
+  --text-primary: #2d2d2d;
+  --text-secondary: #5b5b5b;
+  --text-tertiary: #7e7e7e;
+  --text-muted: #a7a9bc;
+  --text-placeholder: #52525b;
+  --body-color: #272833;
+  --body-bg: #ffffff;
+  --light: #f1f2f5;
+  --dark: #272833;
+  --white: #ffffff;
+  --black: #000000;
+  --border-primary: #c1c1c1;
+  --gup-brand-default: #2d2d2d;
+  --gup-brand-strong: #101010;
+  --gup-brand-secondary: #5b5b5b;
+  --gup-brand-soft: #f5f5f5;
+
+  /* --- Neutral gray scale (Foundations §2.3) --- */
+  --gray-100: #f7f8f9;
+  --gray-200: #f1f2f5;
+  --gray-300: #e7e7ed;
+  --gray-400: #cdced9;
+  --gray-500: #a7a9bc;
+  --gray-600: #6b6c7e;
+  --gray-700: #545465;
+  --gray-800: #393a4a;
+  --gray-900: #272833;
+
+  /* --- Extended blue scale (Foundations §2.4) --- */
+  --blue-100: #eef4fd;
+  --blue-200: #cfddf9;
+  --blue-300: #a3bff0;
+  --blue-400: #7ba0e7;
+  --blue-500: #5a83de;
+  --blue-600: #3968d5;
+  --blue-700: #2453b8;
+  --blue-800: #1b3e8a;
+  --blue-900: #132a5c;
+  --blue-1000: #0a1629;
+  /* Green / red scale anchors (full families available in the design system) */
+  --green-100: #e6fae3;
+  --green-500: #44a935;
+  --green-1000: #0c1d09;
+  --red-100: #fef2f2;
+  --red-500: #ef6b6b;
+  --red-1000: #320d0d;
+
+  --gup-color-brand-accent-xhigh: #111111; /* accent 900 */
+  --gup-color-brand-accent-high: #0a3dac;  /* accent 700 — deep accent blue */
+  --gup-color-brand-accent-medium: #414e77;/* accent 600 — muted accent */
+  --gup-color-brand-accent-low: #36cc8d;   /* accent 400 — teal/green accent */
+  --gup-color-brand-accent-xlow: #eceef4;  /* accent 200 */
   --gup-color-brand-accent-contrast: #ffffff;
+
+  /* --- Design-system numeric shade tokens (map 1:1 to Figma) --- */
+  --gup-color-brand-900: #132450;
+  --gup-color-brand-800: #2a3260;
+  --gup-color-brand-700: #2f97cd;
+  --gup-color-brand-600: #4078ff;
+  --gup-color-brand-500: #bfd8ff;
+  --gup-color-brand-400: #d0e6ff;
+  --gup-color-brand-300: #ffffff;
+  --gup-color-neutral-900: #202024;
+  --gup-color-neutral-800: #272726;
+  --gup-color-neutral-700: #3f3f40;
+  --gup-color-neutral-600: #303034;
+  --gup-color-neutral-300: #fcfcfc;
+  --gup-color-neutral-100: #ffffff;
+  --gup-color-positive-900: #134029;
+  --gup-color-positive-700: #1b7f3c;
+  --gup-color-positive-600: #10a24b;
+  --gup-color-positive-400: #80efac;
+  --gup-color-positive-200: #f2f5f5;
+  --gup-color-positive-100: #ffffff;
+  --gup-color-warning-900: #733f52;
+  --gup-color-warning-700: #a26507;
+  --gup-color-warning-600: #cab551;
+  --gup-color-warning-400: #ffe771;
+  --gup-color-warning-200: #fefce7;
+  --gup-color-warning-100: #ffffff;
+  --gup-color-negative-900: #b11d1d;
+  --gup-color-negative-700: #ba1c1c;
+  /* NOTE: the design-system doc lists negative 600 as #DC9808 (an amber),
+     labelled "secondary warning-error". That is an amber, not a red, so it is
+     NOT used for the red error semantic (--gup-color-negative-medium). It is
+     preserved verbatim here only for fidelity; do not use it for error text. */
+  --gup-color-negative-600-doc: #dc9808;
+  --gup-color-negative-400: #f7ada0;
+  --gup-color-negative-200: #fef5f1;
+  --gup-color-negative-100: #ffffff;
+  --gup-color-brand-accent-900: #111111;
+  --gup-color-brand-accent-700: #0a3dac;
+  --gup-color-brand-accent-600: #414e77;
+  --gup-color-brand-accent-400: #36cc8d;
+  --gup-color-brand-accent-200: #eceef4;
+  --gup-color-brand-accent-100: #ffffff;
 
   /* --- Semantic Colors --- */
   --gup-color-states-base-border: #7a7a83;
@@ -118,6 +184,12 @@
   --gup-color-content-inverted-primary: #ffffff;
   --gup-color-content-inverted-secondary: rgba(255 255 255 / 70%);
   --gup-color-content-link: #132459;
+  /* Semantic content-status text colors (for validation/status messages).
+     Point at the semantic feedback palette. */
+  --gup-color-content-negative: var(--danger);
+  --gup-color-content-positive: var(--success);
+  --gup-color-content-warning: var(--warning);
+  --gup-color-content-info: var(--info);
 
   /* --- Border Colors --- */
   --gup-color-border-medium: #d0d0d4;
@@ -127,7 +199,8 @@
 
   /* --- Background Colors --- */
   --gup-color-background-base: #ffffff;
-  --gup-color-background-canvas: #fefcf9;
+  --gup-color-background-canvas: #fefcf9;   /* wizard/form content surface (cream) */
+  --gup-color-background-page: #e8e8e8;      /* outer page background per Gov.om design system */
   --gup-color-background-overcanvas: #eceef4;
   --gup-color-background-elevated-container: #ffffff;
   --gup-color-background-accent-container: #eceef4;
@@ -175,6 +248,36 @@
   --gup-icon-lg: 28px;
   --gup-icon-xl: 32px;
 
+  /* --- Gov.om GUP spacing scale (pixel-based) --- */
+  --gup-space-0: 0;
+  --gup-space-1: 2px;
+  --gup-space-2: 4px;
+  --gup-space-3: 8px;
+  --gup-space-4: 12px;
+  --gup-space-5: 16px;
+  --gup-space-6: 20px;
+  --gup-space-7: 24px;
+  --gup-space-8: 28px;
+  --gup-space-9: 32px;
+  --gup-space-10: 36px;
+  --gup-space-11: 40px;
+  --gup-space-12: 48px;
+  --gup-space-13: 64px;
+  --gup-space-14: 80px;
+
+  /* --- Gov.om spacer scale (rem-based) --- */
+  --spacer-0: 0;
+  --spacer-1: 0.25rem;   /* 4px */
+  --spacer-2: 0.5rem;    /* 8px */
+  --spacer-3: 1rem;      /* 16px */
+  --spacer-4: 1.5rem;    /* 24px */
+  --spacer-5: 3rem;      /* 48px */
+  --spacer-6: 4.5rem;    /* 72px */
+  --spacer-7: 6rem;      /* 96px */
+  --spacer-8: 7.5rem;    /* 120px */
+  --spacer-9: 9rem;      /* 144px */
+  --spacer-10: 10rem;    /* 160px */
+
   /* --- Semantic Spacing --- */
   --gup-spacing-component-default: 12px;
   --gup-spacing-content-to-cta: 32px;
@@ -195,8 +298,61 @@
   --gup-radius-component-full: 999px;
   --gup-radius-card: 12px;
 
+  /* --- Border radius (Foundations appendix) --- */
+  --border-radius-sm: 0.1875rem;   /* 3px */
+  --border-radius: 0.25rem;        /* 4px */
+  --border-radius-lg: 0.375rem;    /* 6px */
+  --border-radius-circle: 50%;
+  --rounded-pill: 50rem;
+
+  /* --- Box shadows (Foundations appendix) --- */
+  --box-shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  --box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, .175);
+
+  /* --- Transitions (Foundations §5.8) --- */
+  --transition-collapse: height .35s ease;
+  --transition-fade: opacity .15s linear;
+
+  /* --- Aspect ratios (Foundations §5.7) --- */
+  --aspect-ratio: 100%;
+  --aspect-ratio-4-to-3: 75%;
+  --aspect-ratio-16-to-9: 56.25%;
+  --aspect-ratio-8-to-3: 37.5%;
+
+  /* --- Responsive Breakpoints (Gov.om live design system) --- */
+  --gup-breakpoint-mobile: 480px;         /* compact mobile */
+  --gup-breakpoint-mobile-landscape: 600px;
+  --gup-breakpoint-tablet: 767px;         /* sidebar → overlay; single-column */
+  --gup-breakpoint-tablet-landscape: 810px;
+  --gup-breakpoint-small-desktop: 991px;
+  --gup-breakpoint-desktop: 1200px;       /* nav collapse threshold */
+  --gup-breakpoint-wide: 1440px;
+
+  /* Container max-widths (Gov.om) */
+  --gup-container-max-sm: 540px;
+  --gup-container-max-md: 720px;
+  --gup-container-max-lg: 960px;
+  --gup-container-max-xl: 1248px;
+  /* Foundations §5.1 Principle 1: content is capped at 1024px on desktop;
+     the background fills the rest. This is the wizard/page content band. */
+  --gup-content-max: 1024px;
+  --gup-container-max: var(--gup-content-max); /* default page content cap */
+
+  /* Flat aliases matching the Foundations appendix token names. */
+  --container-max-sm: var(--gup-container-max-sm);
+  --container-max-md: var(--gup-container-max-md);
+  --container-max-lg: var(--gup-container-max-lg);
+  --container-max-xl: var(--gup-container-max-xl);
+
+  /* Grid + gutters (Gov.om): 3-column desktop grid, fluid gap. */
+  --gup-gutter: 32px;
+  --gup-grid-columns: 3;
+  --gup-grid-gap: 40px;           /* desktop row/column gap (tablet: 32px) */
+
   /* --- Focus Ring --- */
-  --gup-stroke-focus-ring: 6px;
+  /* Gov.om live spec: 2px solid #9747ff. */
+  --gup-stroke-focus-ring: 2px;
 
   /* --- Shadow Colors --- */
   --gup-color-shadow-color-1: rgba(28 33 51 / 1%);
@@ -205,10 +361,52 @@
   --gup-color-shadow-color-4: rgba(28 33 51 / 4%);
   --gup-color-shadow-color-5: rgba(28 33 51 / 6%);
 
+  /* --- Elevation (Gov.om effect styles) ---
+     shadow-100: subtle — cards, containers, resting elements.
+     shadow-200: elevated — dropdowns, modals, overlapping elements. */
+  --gup-shadow-100:
+    0 1px 2px 0 var(--gup-color-shadow-color-2),
+    0 3px 6px 0 var(--gup-color-shadow-color-3);
+  --gup-shadow-200:
+    0 16px 32px 0 var(--gup-color-shadow-color-5),
+    0 8px 16px 0 var(--gup-color-shadow-color-4),
+    0 3px 6px 0 var(--gup-color-shadow-color-3),
+    0 1px 2px 0 var(--gup-color-shadow-color-2);
+
   /* --- Typography --- */
   --font-base-ltr: 'Readex Pro', sans-serif;
   --font-base-rtl: var(--font-base-ltr);
   --font-base: var(--font-base-ltr);
+
+  /* Font weights (Foundations §3.2) */
+  --font-weight-lighter: lighter;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-bolder: 900;
+
+  /* Heading scale (Foundations §3.4) — live implementation sizes */
+  --h1-font-size: 1.625rem;   /* 26px */
+  --h2-font-size: 1.375rem;   /* 22px */
+  --h3-font-size: 1.1875rem;  /* 19px */
+  --h4-font-size: 1rem;       /* 16px */
+  --h5-font-size: 0.875rem;   /* 14px */
+  --h6-font-size: 0.8125rem;  /* 13px */
+
+  /* Body/display sizes (Foundations §3.3, §3.5) */
+  --font-size-base: 0.875rem; /* 14px */
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;   /* 18px */
+  --lead-font-size: 1.25rem;  /* 20px */
+  --lead-font-weight: 300;
+  --display1-size: 6rem;
+  --display2-size: 5.5rem;
+  --display3-size: 4.5rem;
+  --display4-size: 3.5rem;
+  --display-line-height: 1.2;
+
   --font-size-90: 8px;
   --font-size-200: 12px;
   --font-size-250: 13px;
@@ -223,6 +421,47 @@
   --font-weight-base-beta: bold;
   --font-size-body: var(--font-size-400);
   --line-height-body: var(--line-height-500);
+
+  /* --- Semantic Type Scale (Gov.om Design System) ---
+     Font-size / line-height pairs from the Gov.om type tokens.
+     Weights: body = 400, label = 500 (medium), strong/headline/display = 700.
+     Use via the utility classes below (.gup-text-headline-md, etc.). */
+  --gup-font-weight-regular: 400;
+  --gup-font-weight-medium: 500;
+  --gup-font-weight-bold: 700;
+
+  /* Body (regular) */
+  --gup-body-xl-size: 24px;    --gup-body-xl-line: 32px;
+  --gup-body-lg-size: 20px;    --gup-body-lg-line: 28px;
+  --gup-body-md-size: 16px;    --gup-body-md-line: 24px;
+  --gup-body-sm-size: 14px;    --gup-body-sm-line: 20px;
+  --gup-body-xs-size: 12px;    --gup-body-xs-line: 16px;
+
+  /* Label (medium) */
+  --gup-label-xl-size: 24px;   --gup-label-xl-line: 32px;
+  --gup-label-lg-size: 20px;   --gup-label-lg-line: 28px;
+  --gup-label-md-size: 16px;   --gup-label-md-line: 24px;
+  --gup-label-sm-size: 14px;   --gup-label-sm-line: 20px;
+  --gup-label-xs-size: 12px;   --gup-label-xs-line: 16px;
+  --gup-label-xxs-size: 10px;  --gup-label-xxs-line: 12px;
+
+  /* Strong (bold) */
+  --gup-strong-xl-size: 24px;  --gup-strong-xl-line: 32px;
+  --gup-strong-lg-size: 20px;  --gup-strong-lg-line: 28px;
+  --gup-strong-md-size: 16px;  --gup-strong-md-line: 24px;
+  --gup-strong-sm-size: 14px;  --gup-strong-sm-line: 20px;
+
+  /* Headline (bold) — large sizes scale fluidly on small screens (Foundations §3.10).
+     clamp(min, preferred-vw, design-size): min keeps them readable on ~360px phones. */
+  --gup-headline-xl-size: clamp(28px, 6vw, 40px);  --gup-headline-xl-line: 1.3;
+  --gup-headline-lg-size: clamp(24px, 5vw, 32px);  --gup-headline-lg-line: 1.35;
+  --gup-headline-md-size: clamp(22px, 4.5vw, 28px);--gup-headline-md-line: 1.4;
+  --gup-headline-sm-size: clamp(20px, 4vw, 24px);  --gup-headline-sm-line: 1.35;
+  --gup-headline-xs-size: 20px;  --gup-headline-xs-line: 28px;
+  --gup-headline-xxs-size: 16px; --gup-headline-xxs-line: 24px;
+
+  /* Display (bold, uppercase) — fluid down to 32px on small screens. */
+  --gup-display-md-size: clamp(32px, 7vw, 48px);   --gup-display-md-line: 1.3;
 
   /* --- Directional --- */
   --gup--is-ltr: 1;
@@ -293,6 +532,7 @@ body {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   color: var(--color-body);
+  background-color: var(--gup-color-background-page);
   margin: 0;
 }
 
@@ -300,6 +540,214 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* ------------------------------------------------------------
+   4a. RESPONSIVE LAYOUT SYSTEM (Gov.om live design system)
+   - .gup-container: centered, gutter-padded, capped at container-max (1248px).
+   - .gup-grid: 3-column desktop grid (Gov.om standard); collapses to a single
+     column below 960px. .gup-col-{1..3} span columns; .gup-col-span-2 spans two.
+   Container width variants map to the documented breakpoint caps.
+   ------------------------------------------------------------ */
+.gup-container {
+  width: 100%;
+  max-width: var(--gup-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gup-gutter);
+}
+.gup-container--sm { max-width: var(--gup-container-max-sm); }
+.gup-container--md { max-width: var(--gup-container-max-md); }
+.gup-container--lg { max-width: var(--gup-container-max-lg); }
+.gup-container--xl { max-width: var(--gup-container-max-xl); }
+
+.gup-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gup-grid-columns), minmax(0, 1fr));
+  gap: var(--gup-grid-gap);
+}
+
+.gup-col-1        { grid-column: span 1; }
+.gup-col-2,
+.gup-col-span-2   { grid-column: span 2; }
+.gup-col-3,
+.gup-col-full     { grid-column: 1 / -1; }
+
+/* Responsive behavior — Gov.om Foundations §5.1 principles + §5.3/§5.4.
+   Tablet (720–1024px): fewer columns, 32px side padding.
+   Small tablet (< 750px): padding → 20px.
+   Mobile (< 640px): single-column layout.
+   Small mobile (≤ 576px): compact text. */
+
+/* Tablet (≤ 1024px): maintain 32px side padding; reduce grid gap 40 → 32. */
+@media (max-width: 1024px) {
+  :root {
+    --gup-gutter: 32px;
+    --gup-grid-gap: 32px;
+  }
+}
+
+/* Small tablet / large mobile (< 750px): tighten padding to 20px. */
+@media (max-width: 749px) {
+  :root { --gup-gutter: 20px; }
+}
+
+/* Mobile (< 640px): collapse to a single column. */
+@media (max-width: 639px) {
+  .gup-grid { grid-template-columns: 1fr; }
+  .gup-grid > [class*="gup-col-"] { grid-column: 1 / -1; }
+}
+
+/* --- Responsive visibility utilities (Gov.om §5.1 Principle 3) ---
+   The header's Start/End content is consumer-authored, so labels can't be
+   auto-hidden. Apply .gup-hide-below-mobile to a label span next to an icon
+   to collapse to icon-only below 750px; .gup-show-below-mobile for the inverse
+   (e.g. a hamburger button shown only on small screens). */
+@media (max-width: 749px) {
+  .gup-hide-below-mobile { display: none !important; }
+}
+@media (min-width: 750px) {
+  .gup-show-below-mobile { display: none !important; }
+}
+
+/* ------------------------------------------------------------
+   4b. TYPOGRAPHY UTILITIES (Gov.om semantic type scale)
+   Apply a single class to any text element to get the exact
+   font-size / line-height / weight from the design system.
+   ------------------------------------------------------------ */
+.gup-text-body-xl { font-size: var(--gup-body-xl-size); line-height: var(--gup-body-xl-line); font-weight: var(--gup-font-weight-regular); }
+.gup-text-body-lg { font-size: var(--gup-body-lg-size); line-height: var(--gup-body-lg-line); font-weight: var(--gup-font-weight-regular); }
+.gup-text-body-md { font-size: var(--gup-body-md-size); line-height: var(--gup-body-md-line); font-weight: var(--gup-font-weight-regular); }
+.gup-text-body-sm { font-size: var(--gup-body-sm-size); line-height: var(--gup-body-sm-line); font-weight: var(--gup-font-weight-regular); }
+.gup-text-body-xs { font-size: var(--gup-body-xs-size); line-height: var(--gup-body-xs-line); font-weight: var(--gup-font-weight-regular); }
+
+.gup-text-label-xl  { font-size: var(--gup-label-xl-size);  line-height: var(--gup-label-xl-line);  font-weight: var(--gup-font-weight-medium); }
+.gup-text-label-lg  { font-size: var(--gup-label-lg-size);  line-height: var(--gup-label-lg-line);  font-weight: var(--gup-font-weight-medium); }
+.gup-text-label-md  { font-size: var(--gup-label-md-size);  line-height: var(--gup-label-md-line);  font-weight: var(--gup-font-weight-medium); }
+.gup-text-label-sm  { font-size: var(--gup-label-sm-size);  line-height: var(--gup-label-sm-line);  font-weight: var(--gup-font-weight-medium); }
+.gup-text-label-xs  { font-size: var(--gup-label-xs-size);  line-height: var(--gup-label-xs-line);  font-weight: var(--gup-font-weight-medium); }
+.gup-text-label-xxs { font-size: var(--gup-label-xxs-size); line-height: var(--gup-label-xxs-line); font-weight: var(--gup-font-weight-medium); }
+
+/* Label underline — same sizes as label, with underline decoration. */
+.gup-text-label-underline-xl,
+.gup-text-label-underline-lg,
+.gup-text-label-underline-md,
+.gup-text-label-underline-sm,
+.gup-text-label-underline-xs,
+.gup-text-label-underline-xxs { text-decoration: underline; text-underline-offset: 2px; font-weight: var(--gup-font-weight-medium); }
+.gup-text-label-underline-xl  { font-size: var(--gup-label-xl-size);  line-height: var(--gup-label-xl-line); }
+.gup-text-label-underline-lg  { font-size: var(--gup-label-lg-size);  line-height: var(--gup-label-lg-line); }
+.gup-text-label-underline-md  { font-size: var(--gup-label-md-size);  line-height: var(--gup-label-md-line); }
+.gup-text-label-underline-sm  { font-size: var(--gup-label-sm-size);  line-height: var(--gup-label-sm-line); }
+.gup-text-label-underline-xs  { font-size: var(--gup-label-xs-size);  line-height: var(--gup-label-xs-line); }
+.gup-text-label-underline-xxs { font-size: var(--gup-label-xxs-size); line-height: var(--gup-label-xxs-line); }
+
+.gup-text-strong-xl { font-size: var(--gup-strong-xl-size); line-height: var(--gup-strong-xl-line); font-weight: var(--gup-font-weight-bold); }
+.gup-text-strong-lg { font-size: var(--gup-strong-lg-size); line-height: var(--gup-strong-lg-line); font-weight: var(--gup-font-weight-bold); }
+.gup-text-strong-md { font-size: var(--gup-strong-md-size); line-height: var(--gup-strong-md-line); font-weight: var(--gup-font-weight-bold); }
+.gup-text-strong-sm { font-size: var(--gup-strong-sm-size); line-height: var(--gup-strong-sm-line); font-weight: var(--gup-font-weight-bold); }
+
+.gup-text-headline-xl  { font-size: var(--gup-headline-xl-size);  line-height: var(--gup-headline-xl-line);  font-weight: var(--gup-font-weight-bold); }
+.gup-text-headline-lg  { font-size: var(--gup-headline-lg-size);  line-height: var(--gup-headline-lg-line);  font-weight: var(--gup-font-weight-bold); }
+.gup-text-headline-md  { font-size: var(--gup-headline-md-size);  line-height: var(--gup-headline-md-line);  font-weight: var(--gup-font-weight-bold); }
+.gup-text-headline-sm  { font-size: var(--gup-headline-sm-size);  line-height: var(--gup-headline-sm-line);  font-weight: var(--gup-font-weight-bold); }
+.gup-text-headline-xs  { font-size: var(--gup-headline-xs-size);  line-height: var(--gup-headline-xs-line);  font-weight: var(--gup-font-weight-bold); }
+.gup-text-headline-xxs { font-size: var(--gup-headline-xxs-size); line-height: var(--gup-headline-xxs-line); font-weight: var(--gup-font-weight-bold); }
+
+.gup-text-display-md { font-size: var(--gup-display-md-size); line-height: var(--gup-display-md-line); font-weight: var(--gup-font-weight-bold); text-transform: uppercase; }
+
+/* ------------------------------------------------------------
+   4c. LAYOUT / CONTENT HELPERS (real design-system classes)
+   Production-safe equivalents of the generic layout scaffolding that used to
+   live only in demo.css, so consumers no longer depend on .demo-* classes.
+   Definitions are 1:1 with the demo classes they replace (identical visuals),
+   so the swap is a pure rename:
+     .demo-page         → .gup-page           (full-height page shell / background)
+     .demo-body         → .gup-page-body      (centred max-width page container)
+     .demo-section      → .gup-section        (vertical section stack)
+     .demo-section-title→ .gup-section-title  (section heading, no rule)
+     .demo-row          → .gup-row            (wrapping flex row)
+     .demo-card         → .gup-card           (flex-column cell, min-width 180)
+     .demo-card--full   → .gup-card--full     (full-width cell)
+     .demo-card-label   → .gup-field-label    (small caption/field label)
+     .demo-surface      → .gup-surface        (elevated card) / --flat (C6)
+   For a *semantic* titled section with a footer, prefer <GupFormSection>.
+   ------------------------------------------------------------ */
+.gup-page {
+  background: var(--gup-color-background-canvas);
+  min-height: 100vh;
+  /* font inherits from body (var(--font-base)); kept as a fallback for pages
+     that place .gup-page outside the styled <body> context. */
+  font-family: var(--font-base, 'Readex Pro', sans-serif);
+}
+
+.gup-page-body,
+.gup-body {   /* .gup-body is an alias for a direct demo-body → gup-body rename */
+  max-width: var(--gup-content-max);
+  margin-inline: auto;
+  padding: var(--gup-space-12) var(--gup-space-9) var(--spacer-8);  /* 48px 32px 120px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-space-13);   /* 64px */
+}
+
+.gup-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-space-7);   /* 24px */
+}
+
+.gup-section-title {
+  font-size: var(--gup-headline-xs-size);   /* 20px */
+  line-height: var(--gup-headline-xs-line);
+  font-weight: var(--gup-font-weight-bold);
+  color: var(--gup-color-content-primary);
+  /* No underline — the design system does not specify a rule under section
+     headings (verified against the Foundations docs). */
+}
+
+.gup-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gup-space-5);   /* 16px */
+  align-items: flex-start;
+}
+
+.gup-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-space-3);   /* 8px */
+  flex: 1;
+  min-width: 180px;
+}
+
+.gup-card--full {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.gup-field-label {
+  font-size: var(--gup-label-xs-size);      /* 12px */
+  line-height: var(--gup-label-xs-line);
+  font-weight: var(--gup-font-weight-bold);
+  color: var(--gup-color-content-tertiary);
+  /* Sentence case by default; add .gup-field-label--caps for uppercase. */
+}
+.gup-field-label--caps { text-transform: uppercase; letter-spacing: 0.08em; }
+
+.gup-surface {
+  background: var(--gup-color-background-elevated-container);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-card);
+  padding: var(--gup-padding-md);
+}
+
+/* Flat variant — no card; fields sit directly on the page background (C6). */
+.gup-surface--flat {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding-inline: 0;
 }
 
 /* ------------------------------------------------------------
@@ -347,7 +795,7 @@ body {
 }
 
 .gup-header .navigation {
-  max-width: 1024px;
+  max-width: var(--gup-container-max);
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
@@ -377,12 +825,22 @@ body {
 .gup-header .slot-end {
   flex-grow: 1;
   flex-basis: 0;
+  min-width: 0;       /* allow slots to shrink below their content width so a
+                         longer label on one side can't push the logo off-centre */
+  overflow: hidden;
   display: flex;
   align-items: center;
 }
 
 .gup-header .slot-end {
   justify-content: flex-end;
+}
+
+/* Let long help/exit labels wrap instead of overflowing toward the logo. */
+.gup-header .slot-start .button,
+.gup-header .slot-end .button {
+  white-space: normal;
+  text-align: start;
 }
 
 /* Override button underline inside header */
@@ -403,7 +861,8 @@ body {
 }
 
 .gup-content-header .inner {
-  max-width: 1024px;
+  max-width: var(--gup-container-max);
+  padding-inline: var(--gup-gutter);
   min-height: 100px;
   margin-inline: auto;
   flex-grow: 1;
@@ -420,10 +879,10 @@ body {
 
 .gup-content-header .title {
   width: 100%;
-  font-size: var(--font-size-700);
+  font-size: var(--gup-headline-lg-size);   /* fluid: clamp(24px, 5vw, 32px) */
   font-weight: var(--font-weight-base-beta);
   letter-spacing: -0.64px;
-  line-height: 1;
+  line-height: 1.1;
   margin-top: var(--gup-component-9);
 }
 
@@ -450,15 +909,23 @@ body {
   display: block;
   background-color: var(--gup-color-background-canvas);
   flex: 1;
-  padding-inline: var(--gup-component-8);
+  padding-inline: var(--gup-gutter);
   overflow-y: auto;
 }
 
 .gup-wizard-main .inner {
-  max-width: 632px;
+  /* Gov.om standard layout width: clamp(820px, 59.896vw, 1150px), never wider
+     than the 1024px content cap (Foundations §5.1). This is wider than the old
+     632px so multi-column content (tables, verification reports) fits without
+     horizontal scroll, and the content aligns with the page title band. */
+  width: 100%;
+  max-width: min(var(--gup-content-max), clamp(820px, 59.896vw, 1150px));
   margin-inline: auto;
   padding-top: var(--gup-component-9);
-  /* padding-bottom: 64px; */
+  /* Breathing room above the sticky footer so the last content (e.g. the
+     Accept-and-Send block) doesn't sit flush against it — removes the need for
+     a consumer-side bottom-margin workaround. */
+  padding-bottom: var(--gup-space-13);   /* 64px */
 }
 
 /* ------------------------------------------------------------
@@ -469,15 +936,16 @@ body {
   width: 100%;
   border-top: 1px solid var(--gup-color-border-low);
   background-color: var(--gup-color-background-wizard-bar);
-  padding-inline: var(--gup-component-8);
+  padding-inline: var(--gup-gutter);
   padding-block: var(--gup-component-5);
 }
 
 .gup-wizard-footer .inner {
-  max-width: 1024px;
+  max-width: var(--gup-container-max);
   margin-inline: auto;
   display: flex;
   align-items: center;
+  gap: var(--gup-space-4);   /* keep Back/Continue from touching on narrow screens */
 }
 
 .gup-wizard-footer .track {
@@ -496,6 +964,13 @@ body {
   margin-inline-start: auto;
   display: flex;
   gap: var(--gup-spacing-component-default);
+}
+
+/* RTL: mirror the Back/Continue arrow icons so they point along the reading
+   flow (same pattern as .gup-pagination__arrow-icon). Without this the
+   Continue arrow keeps pointing right in Arabic. */
+[dir="rtl"] .gup-wizard-footer .gup-button .gup-icon {
+  transform: scaleX(-1);
 }
 
 /* ------------------------------------------------------------
@@ -531,7 +1006,7 @@ body {
 
 /* Primary */
 .gup-button--primary .button {
-  background: var(--gup-color-brand-medium);
+  background: var(--primary);
   color: var(--gup-color-neutral-contrast);
   border-color: transparent;
 }
@@ -1216,11 +1691,7 @@ body {
   border: 1px solid var(--gup-toast-border);
   border-radius: var(--gup-radius-card);
   background-color: var(--gup-toast-bg);
-  box-shadow:
-    0 16px 32px 0 var(--gup-color-shadow-color-5),
-    0 8px 16px 0 var(--gup-color-shadow-color-4),
-    0 3px 6px 0 var(--gup-color-shadow-color-3),
-    0 1px 2px 0 var(--gup-color-shadow-color-2);
+  box-shadow: var(--gup-shadow-200);
 }
 
 .gup-toast .inner {
@@ -1349,6 +1820,10 @@ body {
 .gup-table {
   display: block;
   width: 100%;
+  /* Let wide tables scroll horizontally on small screens instead of
+     overflowing the viewport (Foundations §5 responsive behavior). */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .gup-table table {
@@ -1356,6 +1831,8 @@ body {
   border-spacing: 0;
   width: 100%;
   display: table;
+  /* Let cells wrap so the table fits its container; the parent's overflow-x
+     is only a last-resort safety net for genuinely narrow (mobile) screens. */
 }
 
 /* ------------------------------------------------------------
@@ -1384,6 +1861,62 @@ body {
 .gup-table-cell--header .wrapper,
 .gup-table-cell--rowheader .wrapper {
   font-weight: var(--font-weight-base-beta);
+}
+
+/* Inline per-cell field label — only visible in responsive stacked mode. */
+.gup-table-cell__label {
+  display: none;
+}
+
+/* --- Responsive table: stacked cards below the mobile breakpoint ---
+   Opt-in via <GupTable Responsive="true"> + <GupTableCell Label="…">.
+   Each row becomes a bordered card; each cell stacks with its Label shown
+   above the value. Above the breakpoint it renders as a normal table. */
+@media (max-width: 639px) {
+  .gup-table--responsive,
+  .gup-table--responsive table,
+  .gup-table--responsive tbody {
+    display: block;
+    width: 100%;
+  }
+
+  /* Hide the column-header row — per-cell labels replace it. */
+  .gup-table--responsive .gup-table-row:first-child {
+    display: none;
+  }
+
+  .gup-table--responsive .gup-table-row {
+    display: block;
+    border: 1px solid var(--gup-color-border-low);
+    border-radius: var(--gup-radius-component-default);
+    padding: var(--gup-component-3) var(--gup-component-4);
+    margin-bottom: var(--gup-component-4);
+  }
+
+  .gup-table--responsive .gup-table-cell {
+    display: block;
+    border-bottom: none;
+  }
+
+  .gup-table--responsive .gup-table-cell .wrapper {
+    padding-block: var(--gup-component-2);
+    padding-inline-end: 0;
+    min-width: 0;
+  }
+
+  /* Show the inline field label above each value. */
+  .gup-table--responsive .gup-table-cell__label {
+    display: block;
+    font-weight: var(--font-weight-base-beta);
+    font-size: var(--gup-body-xs-size);
+    color: var(--gup-color-content-secondary);
+    margin-bottom: 2px;
+  }
+
+  /* Hide cells that carry no label and no content (e.g. a bare row-number). */
+  .gup-table--responsive .gup-table-cell:empty {
+    display: none;
+  }
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -1725,10 +2258,7 @@ body {
   border-radius: var(--gup-radius-component-default);
   padding: 4px;
   background: var(--gup-color-states-base-bg);
-  box-shadow: 0 16px 32px 0 rgba(0,0,0,0.05),
-              0 8px 16px 0 rgba(0,0,0,0.04),
-              0 3px 6px 0 rgba(0,0,0,0.03),
-              0 1px 2px 0 rgba(0,0,0,0.02);
+  box-shadow: var(--gup-shadow-200);
 }
 
 .gup-dropdown-menu .search-container {
@@ -1964,7 +2494,9 @@ body {
 .gup-file-upload .actions {
   margin-top: var(--gup-spacing-text-to-component);
   display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: calc(3 * var(--unit));
 }
 
 .gup-file-upload .input-wrapper {
@@ -2007,7 +2539,7 @@ body {
 .gup-file-upload .native-input {
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   opacity: 0;
   cursor: pointer;
   width: 100%;
@@ -2229,6 +2761,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: var(--gup-space-5);   /* keep the dialog off the screen edges on mobile */
   outline: 0;
 }
 
@@ -2246,11 +2779,7 @@ body {
   border: 1px solid var(--gup-color-neutral-low);
   background-color: var(--gup-color-neutral-xlow);
   border-radius: var(--gup-radius-card);
-  box-shadow:
-    0 16px 32px 0 var(--gup-color-shadow-color-5),
-    0 8px  16px 0 var(--gup-color-shadow-color-4),
-    0 3px   6px 0 var(--gup-color-shadow-color-3),
-    0 1px   2px 0 var(--gup-color-shadow-color-2);
+  box-shadow: var(--gup-shadow-200);
   padding: var(--gup-padding-md);
   z-index: calc(var(--gup-modal--z-index, 100) + 1);
 }
@@ -2334,16 +2863,25 @@ body {
 
 .gup-dialog--fullscreen {
   max-width: 100vw;
-  max-height: 100vh;
   width: 100vw;
-  height: 100vh;
   border-radius: 0;
   border: 0;
+  /* Header (auto) + scrollable body (1fr) + footer (auto) so the body keeps a
+     real overflow area and the footer (Close) never gets pushed off-screen.
+     dvh tracks the visible area as mobile browser chrome shows/hides; falls
+     back to vh where unsupported. */
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
 }
 
 .gup-dialog--fullscreen .gup-dialog__content {
-  max-height: none;
-  flex: 1 1 auto;
+  min-height: 0;          /* allow the grid track to shrink so overflow engages */
+  max-height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ------------------------------------------------------------
@@ -3094,11 +3632,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--gup-color-states-base-bg, #ffffff);
-  box-shadow:
-    0 16px 32px 0 var(--gup-color-shadow-color-5, rgba(0, 0, 0, 0.10)),
-    0 8px  16px 0 var(--gup-color-shadow-color-4, rgba(0, 0, 0, 0.08)),
-    0 3px   6px 0 var(--gup-color-shadow-color-3, rgba(0, 0, 0, 0.06)),
-    0 1px   2px 0 var(--gup-color-shadow-color-2, rgba(0, 0, 0, 0.04));
+  box-shadow: var(--gup-shadow-200);
   z-index: calc(var(--gup-flyout--z-index, 100) + 1);
   animation-duration: 0.3s;
   animation-timing-function: ease-out;

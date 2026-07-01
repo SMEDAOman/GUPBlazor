@@ -1,5 +1,5 @@
 @* Equivalent of <gup-table> *@
-<div class="gup-table">
+<div class="gup-table @(Responsive ? "gup-table--responsive" : "")">
     <table>
         <tbody>
             @ChildContent
@@ -9,4 +9,12 @@
 
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// When true, the table collapses into stacked cards below the mobile
+    /// breakpoint (each row becomes a bordered card, each cell stacks with its
+    /// <see cref="GupTableCell.Label"/> shown inline). Use for data tables that
+    /// would otherwise overflow narrow screens. Default: false (classic table).
+    /// </summary>
+    [Parameter] public bool Responsive { get; set; }
 }

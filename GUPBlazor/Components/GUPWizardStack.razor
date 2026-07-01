@@ -47,13 +47,13 @@
             {
                 @if (!current.HideDefaultTitle && !string.IsNullOrEmpty(current.Title))
                 {
-                    <h2 style="font-size: 28px; font-weight: 700; margin-top: var(--gup-spacing-between-text); color: var(--gup-color-content-primary);">
+                    <h2 class="gup-text-headline-md" style="margin-top: var(--gup-spacing-between-text); color: var(--gup-color-content-primary);">
                         @current.Title
                     </h2>
                 }
                 @if (!string.IsNullOrEmpty(current.Description))
                 {
-                    <p style="font-size: 24px; margin-top: 8px; color: var(--gup-color-content-primary);">
+                    <p class="gup-text-body-xl" style="margin-top: 8px; color: var(--gup-color-content-primary);">
                         @current.Description
                     </p>
                 }
@@ -75,8 +75,8 @@
                                    Kind="@GupButtonKind.Button"
                                    Type="@GupButtonType.Button"
                                    Disabled="@IsLoading"
-                                   OnClick="HandleBackAsync">
-                            <IconStart><GupIcon IconName="arrow-back" Width="24" Height="24" /></IconStart>
+                                   OnClick="HandleBackAsync"
+                                   IconStart="@BackIconFragment">
                             <ChildContent>@CurrentBackButtonText</ChildContent>
                         </GupButton>
                     }
@@ -86,9 +86,9 @@
                                Kind="@GupButtonKind.Button"
                                Type="@GupButtonType.Button"
                                Disabled="@(IsLoading || CurrentStep?.Locked == true)"
-                               OnClick="HandleContinueAsync">
+                               OnClick="HandleContinueAsync"
+                               IconEnd="@ForwardIconFragment">
                         <ChildContent>@CurrentNextButtonText</ChildContent>
-                        <IconEnd><GupIcon IconName="@(IsLastStep ? "check" : "arrow-forward")" Width="24" Height="24" /></IconEnd>
                     </GupButton>
                 </End>
             </GupWizardFooter>
@@ -117,6 +117,13 @@
     // Stepper
     [Parameter] public bool ShowStepper { get; set; } = true;
     [Parameter] public bool StepperOpen { get; set; } = true;
+
+    /// <summary>
+    /// Format string for the "Step N of M" progress label shown on the collapsible stepper header.
+    /// <c>{0}</c> is the current step number (1-based), <c>{1}</c> is the total number of steps.
+    /// Pass a translated template (e.g. an Arabic "الخطوة {0} من {1}") to localize it.
+    /// </summary>
+    [Parameter] public string StepLabelFormat { get; set; } = "Step {0} of {1}";
     [Parameter] public GupDetailsContentAppearance StepperAppearance { get; set; } = GupDetailsContentAppearance.Sink;
     [Parameter] public string StepperClosedIcon { get; set; } = "add-circle";
     [Parameter] public string StepperOpenIcon { get; set; } = "remove-circle";
@@ -126,6 +133,66 @@
     [Parameter] public string BackButtonText { get; set; } = "Back";
     [Parameter] public string ContinueButtonText { get; set; } = "Continue";
     [Parameter] public string CompleteButtonText { get; set; } = "Submit";
+
+    // Footer button icons
+    /// <summary>Show the leading arrow icon on the Back button. Default: true.</summary>
+    [Parameter] public bool ShowBackIcon { get; set; } = true;
+
+    /// <summary>Show the trailing arrow icon on the Continue (non-final) button. Default: true.</summary>
+    [Parameter] public bool ShowContinueIcon { get; set; } = true;
+
+    /// <summary>Show the trailing check icon on the final Submit/Complete button. Default: true.
+    /// Set false for steps like "Accept and Send" where no arrow/tick is wanted.</summary>
+    [Parameter] public bool ShowCompleteIcon { get; set; } = true;
+
+    /// <summary>Icon name for the Continue (non-final) button. Default: "arrow-forward".</summary>
+    [Parameter] public string ContinueIconName { get; set; } = "arrow-forward";
+
+    /// <summary>Icon name for the final Submit/Complete button. Default: "check".</summary>
+    [Parameter] public string CompleteIconName { get; set; } = "check";
+
+    /// <summary>
+    /// Resolves the forward button's icon, honouring per-step overrides then the wizard-level
+    /// show flags. Returns null when no icon should be rendered.
+    /// </summary>
+    private string? CurrentForwardIcon
+    {
+        get
+        {
+            // A step can opt out of its forward icon (e.g. an "Accept and Send" step).
+            if (CurrentStep?.HideNextIcon == true) return null;
+            // A step can override the icon name outright.
+            if (!string.IsNullOrEmpty(CurrentStep?.NextIconName)) return CurrentStep!.NextIconName;
+
+            if (IsLastStep)
+                return ShowCompleteIcon ? CompleteIconName : null;
+            return ShowContinueIcon ? ContinueIconName : null;
+        }
+    }
+
+    /// <summary>Back button leading icon, or null to render no icon (keeps the button padding clean).</summary>
+    private RenderFragment? BackIconFragment => ShowBackIcon
+        ? builder =>
+        {
+            builder.OpenComponent<GupIcon>(0);
+            builder.AddComponentParameter(1, nameof(GupIcon.IconName), "arrow-back");
+            builder.AddComponentParameter(2, nameof(GupIcon.Width), 24);
+            builder.AddComponentParameter(3, nameof(GupIcon.Height), 24);
+            builder.CloseComponent();
+        }
+        : null;
+
+    /// <summary>Forward (Continue/Submit) button trailing icon, or null to render no icon.</summary>
+    private RenderFragment? ForwardIconFragment => CurrentForwardIcon is { } icon
+        ? builder =>
+        {
+            builder.OpenComponent<GupIcon>(0);
+            builder.AddComponentParameter(1, nameof(GupIcon.IconName), icon);
+            builder.AddComponentParameter(2, nameof(GupIcon.Width), 24);
+            builder.AddComponentParameter(3, nameof(GupIcon.Height), 24);
+            builder.CloseComponent();
+        }
+        : null;
 
     /// <summary>When true, all footer buttons are disabled (e.g. while an async operation is in flight). Reset to false to re-enable navigation.</summary>
     [Parameter] public bool IsLoading { get; set; } = false;
@@ -167,8 +234,9 @@
     {
         get
         {
-            var label = CurrentStep?.StepLabel ?? CurrentStep?.Title;
-            return string.IsNullOrEmpty(label) ? null : (builder => builder.AddContent(0, label));
+            if (_steps.Count == 0) return null;
+            var label = string.Format(StepLabelFormat, CurrentStepIndex + 1, _steps.Count);
+            return builder => builder.AddContent(0, label);
         }
     }
 
