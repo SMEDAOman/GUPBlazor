@@ -182,8 +182,13 @@
     {
         if (_registered)
         {
-            try { await JS.InvokeVoidAsync("__gupDropdown.unregisterCallback", Id); }
-            catch { /* circuit may already be down */ }
+            try
+            {
+                await JS.InvokeVoidAsync("__gupDropdown.unregisterCallback", Id);
+            }
+            catch (JSDisconnectedException) { /* circuit already gone */ }
+            catch (OperationCanceledException) { /* interop cancelled during teardown */ }
+            catch (ObjectDisposedException) { /* JS runtime already disposed */ }
         }
         _selfRef?.Dispose();
     }
