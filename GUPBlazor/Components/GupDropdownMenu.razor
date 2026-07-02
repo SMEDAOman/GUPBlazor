@@ -19,17 +19,20 @@
         <div class="no-results" style="display:none;">
             <span>@NoItemsLabel</span>
         </div>
-        <div class="controls">
-            <div class="controls-track">
-                <button type="button"
-                        class="gup-dropdown-apply-btn"
-                        data-items-label="@ItemsSelectedButtonLabel"
-                        data-no-sel-label="@EffectiveNoSelectionLabel"
-                        onclick="window.__gupDropdown.applySelection(this)">
-                    @ApplyButtonLabel
-                </button>
+        @if (Multiple)
+        {
+            <div class="controls">
+                <div class="controls-track">
+                    <button type="button"
+                            class="gup-dropdown-apply-btn"
+                            data-items-label="@ItemsSelectedButtonLabel"
+                            data-no-sel-label="@EffectiveNoSelectionLabel"
+                            onclick="window.__gupDropdown.applySelection(this)">
+                        @ApplyButtonLabel
+                    </button>
+                </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 
