@@ -903,6 +903,20 @@ body {
 }
 
 /* ------------------------------------------------------------
+   8b. COMPONENT: gup-wizard-stack (wizard root)
+   Full-height flex column so gup-wizard-main (flex:1) fills the space and
+   gup-wizard-footer pins to the viewport bottom — no grey gap below short
+   content or after a re-render. Moved here from an inline style so it can use
+   100dvh (tracks mobile browser chrome) with a 100vh fallback.
+   ------------------------------------------------------------ */
+.gup-wizard-stack {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;      /* fallback for browsers without dvh */
+  height: 100dvh;
+}
+
+/* ------------------------------------------------------------
    9. COMPONENT: gup-wizard-main
    ------------------------------------------------------------ */
 .gup-wizard-main {
