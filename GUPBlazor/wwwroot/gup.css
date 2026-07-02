@@ -523,10 +523,6 @@ textarea { resize: vertical; }
 /* ------------------------------------------------------------
    4. GLOBAL BASE
    ------------------------------------------------------------ */
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: var(--font-base);
   font-size: var(--font-size-body);
@@ -534,12 +530,6 @@ body {
   color: var(--color-body);
   background-color: var(--gup-color-background-page);
   margin: 0;
-}
-
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
 /* ------------------------------------------------------------
@@ -914,6 +904,7 @@ body {
   flex-direction: column;
   height: 100vh;      /* fallback for browsers without dvh */
   height: 100dvh;
+  overflow: hidden;
 }
 
 /* ------------------------------------------------------------
@@ -923,6 +914,7 @@ body {
   display: block;
   background-color: var(--gup-color-background-canvas);
   flex: 1;
+  min-height: 0;
   padding-inline: var(--gup-gutter);
   overflow-y: auto;
 }
