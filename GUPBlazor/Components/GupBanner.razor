@@ -1,7 +1,10 @@
-@* Equivalent of <gup-banner hide-icon type="default|success|warning|error">
-   Named slots: Title, ChildContent (body)
+@* Equivalent of <gup-banner type="neutral|success|warning|error" appearance="outline|filled" hide-icon show-close-button>
+   Named slots: Title, ChildContent (body), ActionButtons (a GupButtonGroup with two buttons)
+   Events: OnClose (fires when the close button is clicked — matches gup-close)
 *@
-<div class="gup-banner @(HideIcon ? "hide-icon" : "") @Type">
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-banner gup-banner--@TypeString() gup-banner--@Appearance @(HideIcon ? "hide-icon" : "")">
     <div class="inner">
         <div class="track">
             @if (!HideIcon)
@@ -10,18 +13,24 @@
                     <GupIcon IconName="@IconForType()" Width="24" Height="24" />
                 </div>
             }
-            @if (TitleContent != null)
-            {
-                <div class="banner-title">@TitleContent</div>
-            }
-            @if (ChildContent != null)
-            {
-                <div class="banner-content">@ChildContent</div>
-            }
+            <div class="banner-body">
+                @if (TitleContent != null)
+                {
+                    <div class="banner-title">@TitleContent</div>
+                }
+                @if (ChildContent != null)
+                {
+                    <div class="banner-content">@ChildContent</div>
+                }
+                @if (ActionButtons != null)
+                {
+                    <div class="banner-action-buttons">@ActionButtons</div>
+                }
+            </div>
         </div>
-        @if (ShowClose)
+        @if (ShowCloseButton)
         {
-            <button class="close-button" aria-label="@CloseLabel" type="button">
+            <button class="close-button" aria-label="@CloseLabel" type="button" @onclick="HandleClose">
                 <GupIcon IconName="close" Width="24" Height="24" />
             </button>
         }
@@ -29,18 +38,45 @@
 </div>
 
 @code {
-    [Parameter] public bool HideIcon { get; set; } 
-    [Parameter] public string Type { get; set; } = "";
-    [Parameter] public bool ShowClose { get; set; } = true;
+    /// <summary>Status of the banner. Default: <c>neutral</c>.</summary>
+    [Parameter] public GupBannerType Type { get; set; } = GupBannerType.Neutral;
+
+    /// <summary>Visual style — outline (default) or filled.</summary>
+    [Parameter] public GupBannerAppearance Appearance { get; set; } = GupBannerAppearance.Outline;
+
+    /// <summary>Hide the leading status icon. Default: false.</summary>
+    [Parameter] public bool HideIcon { get; set; }
+
+    /// <summary>Display the close button. Default: false (matches the design-system default).</summary>
+    [Parameter] public bool ShowCloseButton { get; set; }
+
+    /// <summary>Accessible label for the close button. Only relevant if <see cref="ShowCloseButton"/> is true.</summary>
     [Parameter] public string CloseLabel { get; set; } = "Close";
+
     [Parameter] public RenderFragment? TitleContent { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>Slot for a GupButtonGroup with (typically two) action buttons — matches the action-buttons slot.</summary>
+    [Parameter] public RenderFragment? ActionButtons { get; set; }
+
+    /// <summary>Fires when the close button is clicked (matches the <c>gup-close</c> event).</summary>
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private string TypeString() => Type switch
+    {
+        GupBannerType.Success => "success",
+        GupBannerType.Warning => "warning",
+        GupBannerType.Error   => "error",
+        _                     => "neutral",
+    };
+
     private string IconForType() => Type switch
     {
-        "success" => "check",
-        "warning" => "help-outline",
-        "error"   => "close",
-        _         => "help-outline",
+        GupBannerType.Success => "check-circle",
+        GupBannerType.Warning => "warning-amber",
+        GupBannerType.Error   => "error-outline",
+        _                     => "info",
     };
+
+    private Task HandleClose() => OnClose.InvokeAsync();
 }

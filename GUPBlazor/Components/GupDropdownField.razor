@@ -12,11 +12,12 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JS
 
-<div class="gup-dropdown-field @DisabledClass @InvalidClass"
+<div class="gup-dropdown-field @DisabledClass @InvalidClass @(LabelHidden ? "gup-dropdown-field--label-hidden" : "")"
      id="@Id"
      data-clearable="@Clearable.ToString().ToLowerInvariant()"
+     data-attachment="@Attachment"
      data-multiple-values-label="@MultipleValuesLabel">
-    <label class="label" for="@InputId">@Label</label>
+    <label class="label @(LabelHidden ? "sr-only" : "")" for="@InputId">@Label</label>
     @if (Hint != null)
     {
         <span class="hint">@Hint</span>
@@ -91,6 +92,13 @@
     [Parameter] public string ClearLabel { get; set; } = "Clear";
     [Parameter] public string LoadingLabel { get; set; } = "Loading...";
     [Parameter] public string MultipleValuesLabel { get; set; } = " selected";
+
+    /// <summary>Hide the label visually while keeping it available to screen-readers (matches <c>label-hidden</c>).</summary>
+    [Parameter] public bool LabelHidden { get; set; }
+
+    /// <summary>Positioning of the menu relative to the field (matches <c>attachment</c>), e.g. bottom-start, top-end.</summary>
+    [Parameter] public string Attachment { get; set; } = "bottom-start";
+
     [Parameter] public RenderFragment? Label { get; set; }
     [Parameter] public RenderFragment? Hint { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
@@ -110,6 +118,9 @@
     [Parameter] public EventCallback OnOpen { get; set; }
     [Parameter] public EventCallback OnClose { get; set; }
     [Parameter] public EventCallback OnClear { get; set; }
+
+    /// <summary>Fires when the field fails validation (matches <c>gup-invalid</c>).</summary>
+    [Parameter] public EventCallback OnInvalid { get; set; }
 
     private string Id => $"gup-dd-{Name}";
     private string InputId => $"dropdown-{Name}";
@@ -176,6 +187,12 @@
     public async Task NotifyClose()
     {
         if (OnClose.HasDelegate) await OnClose.InvokeAsync();
+    }
+
+    [JSInvokable]
+    public async Task NotifyInvalid()
+    {
+        if (OnInvalid.HasDelegate) await OnInvalid.InvokeAsync();
     }
 
     public async ValueTask DisposeAsync()

@@ -414,6 +414,33 @@ window.__gupCheckbox = {
     }
 };
 
+// Flyout: after the slide-in animation finishes, clear the panel's transform.
+// The slide uses a transform animation with fill-mode:forwards, which leaves a
+// persistent translateX(0) on the panel at rest. A non-none transform makes the
+// panel a containing block for position:fixed descendants — so a GupDialog (e.g.
+// the fullscreen FileServe upload) opened from INSIDE the flyout would resolve
+// its fixed backdrop against the panel and render clipped inside the flyout
+// instead of over the viewport. translateX(0) is visually a no-op, so removing
+// it after the animation doesn't move the panel but frees fixed children.
+window.__gupFlyout = {
+    clearTransformAfterAnimation(panel) {
+        if (!panel) return;
+        // The slide uses animation-fill-mode:forwards, so the final translateX(0)
+        // keeps applying VIA THE ANIMATION — an inline style.transform='none' is
+        // overridden by the still-filling animation. So we must remove the
+        // animation itself, then force transform:none. Only then does the panel
+        // stop being a containing block for position:fixed descendants (the dialog).
+        const clear = () => {
+            panel.style.animation = 'none';
+            panel.style.transform = 'none';
+        };
+        panel.addEventListener('animationend', clear, { once: true });
+        // Fallback: if animationend never fires (reduced motion / already settled),
+        // clear on the next frame so fixed children are never trapped.
+        requestAnimationFrame(() => requestAnimationFrame(clear));
+    }
+};
+
 // Input field: native HTMLInputElement.showPicker() is JS-only.
 // Also exposes setValue() — used by StrictNumeric to push a filtered value back into the DOM
 // because Blazor's render diff would skip an attribute update that compares equal to the prior render.

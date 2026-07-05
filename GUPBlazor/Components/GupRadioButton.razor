@@ -6,12 +6,15 @@
 @using Microsoft.AspNetCore.Components.Web
 @implements IDisposable
 
-<div class="gup-radio-button">
+<div class="gup-radio-button gup-radio-button--@Size">
     <label class="wrapper">
         <input type="radio" name="@EffectiveName" value="@Value"
                checked="@(IsChecked ? true : null)"
                disabled="@(Disabled ? true : null)"
-               @onchange="HandleChange" />
+               required="@(Required ? true : null)"
+               @onchange="HandleChange"
+               @onfocus="HandleFocus"
+               @onblur="HandleBlur" />
         <div class="box">
             <div class="box-inner">
                 <div class="box-pupil"></div>
@@ -32,9 +35,22 @@
     [Parameter] public string Value { get; set; } = "";
     [Parameter] public bool Selected { get; set; }
     [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Size of the radio button: <c>s</c>, <c>m</c> (default), or <c>l</c>.</summary>
+    [Parameter] public string Size { get; set; } = "m";
+
+    /// <summary>Whether the radio button is required.</summary>
+    [Parameter] public bool Required { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public RenderFragment? Hint { get; set; }
     [Parameter] public EventCallback<string> OnChange { get; set; }
+
+    /// <summary>Fires when the radio button gains focus (matches <c>gup-focus</c>).</summary>
+    [Parameter] public EventCallback OnFocus { get; set; }
+
+    /// <summary>Fires when the radio button loses focus (matches <c>gup-blur</c>).</summary>
+    [Parameter] public EventCallback OnBlur { get; set; }
 
     [CascadingParameter] private GupRadioButtonGroup? Group { get; set; }
 
@@ -83,6 +99,10 @@
             await OnChange.InvokeAsync(Value);
         }
     }
+
+    private Task HandleFocus() => OnFocus.HasDelegate ? OnFocus.InvokeAsync() : Task.CompletedTask;
+
+    private Task HandleBlur() => OnBlur.HasDelegate ? OnBlur.InvokeAsync() : Task.CompletedTask;
 
     internal void RefreshFromGroup() => StateHasChanged();
 

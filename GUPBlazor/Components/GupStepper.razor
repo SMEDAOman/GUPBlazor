@@ -1,11 +1,43 @@
-@* Equivalent of <gup-stepper static-mode> — container for stepper items *@
-<div class="gup-stepper" role="list">
+@* Equivalent of <gup-stepper static-mode wizard-mode continued toggle-all-displayed>
+   Container for gup-stepper-item elements. *@
+<div class="gup-stepper @(StaticMode ? "gup-stepper--static" : "") @(WizardMode ? "gup-stepper--wizard" : "") @(Continued ? "gup-stepper--continued" : "")"
+     role="list"
+     style="--gup-stepper--continued: @(Continued ? 1 : 0);">
+    @if (ToggleAllDisplayed && !WizardMode && !StaticMode)
+    {
+        <div class="gup-stepper-toggle-all">
+            <GupButton Appearance="GupButtonAppearance.Text" Kind="GupButtonKind.Button" OnClick="ToggleAll">
+                <ChildContent>@(_allOpen ? HideAllLabel : ShowAllLabel)</ChildContent>
+            </GupButton>
+        </div>
+    }
     <div class="list">
         @ChildContent
     </div>
 </div>
 
 @code {
-    [Parameter] public bool StaticMode { get; set; } = false;
+    /// <summary>Show a button that toggles all steps open/closed. Ignored in wizard or static mode.</summary>
+    [Parameter] public bool ToggleAllDisplayed { get; set; }
+
+    /// <summary>Label for the "show all" toggle button.</summary>
+    [Parameter] public string ShowAllLabel { get; set; } = "Show all steps";
+
+    /// <summary>Label for the "hide all" toggle button.</summary>
+    [Parameter] public string HideAllLabel { get; set; } = "Hide all steps";
+
+    /// <summary>Wizard mode — all steps open and toggle buttons hidden.</summary>
+    [Parameter] public bool WizardMode { get; set; }
+
+    /// <summary>Static (read-only) mode — toggle functionality is unavailable.</summary>
+    [Parameter] public bool StaticMode { get; set; }
+
+    /// <summary>Whether the stepper appears as continuing from a non-first item.</summary>
+    [Parameter] public bool Continued { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool _allOpen;
+
+    private void ToggleAll() => _allOpen = !_allOpen;
 }

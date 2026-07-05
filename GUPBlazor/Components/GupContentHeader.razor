@@ -1,29 +1,76 @@
 @* Equivalent of <gup-content-header page-title="..." page-subtitle="...">
-   Slots: PageSummary (below title)
+   Slots: Breadcrumbs, PageSubtitleContent, PageTitleContent, PageSummary, ChildContent (content below title)
+   The *Content slots take precedence over the corresponding string props.
 *@
-<div class="gup-content-header @(PageSubtitle != null ? "has-subtitle" : "")">
+<div class="gup-content-header @(HasSubtitle ? "has-subtitle" : "")">
     <div class="inner-wrapper">
         <div class="inner">
+            @if (Breadcrumbs != null)
+            {
+                <div class="slot-breadcrumbs">@Breadcrumbs</div>
+            }
             <div class="header">
-                @if (PageSubtitle != null)
+                @if (HasSubtitle)
                 {
-                    <h2 class="subtitle">@PageSubtitle</h2>
+                    <h2 class="subtitle">
+                        @if (PageSubtitleContent != null)
+                        {
+                            @PageSubtitleContent
+                        }
+                        else
+                        {
+                            @PageSubtitle
+                        }
+                    </h2>
                 }
-                @if (!string.IsNullOrEmpty(PageTitle))
+                @if (HasTitle)
                 {
-                    <h1 class="title">@PageTitle</h1>
+                    <h1 class="title">
+                        @if (PageTitleContent != null)
+                        {
+                            @PageTitleContent
+                        }
+                        else
+                        {
+                            @PageTitle
+                        }
+                    </h1>
                 }
             </div>
             @if (PageSummary != null)
             {
                 <div class="slot-page-summary">@PageSummary</div>
             }
+            @if (ChildContent != null)
+            {
+                <div class="slot-default">@ChildContent</div>
+            }
         </div>
     </div>
 </div>
 
 @code {
+    /// <summary>Page title. Used when the PageTitleContent slot is not provided.</summary>
     [Parameter] public string PageTitle { get; set; } = "";
+
+    /// <summary>Page subtitle (above the title). Used when the PageSubtitleContent slot is not provided.</summary>
     [Parameter] public string? PageSubtitle { get; set; }
+
+    /// <summary>Slot for gup-breadcrumbs. Do not insert anything else here.</summary>
+    [Parameter] public RenderFragment? Breadcrumbs { get; set; }
+
+    /// <summary>Slot for the page title. Takes precedence over the PageTitle prop.</summary>
+    [Parameter] public RenderFragment? PageTitleContent { get; set; }
+
+    /// <summary>Slot for the page subtitle. Takes precedence over the PageSubtitle prop.</summary>
+    [Parameter] public RenderFragment? PageSubtitleContent { get; set; }
+
+    /// <summary>Slot for textual content appearing below the title.</summary>
     [Parameter] public RenderFragment? PageSummary { get; set; }
+
+    /// <summary>Default slot — content below the title.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool HasTitle => PageTitleContent != null || !string.IsNullOrEmpty(PageTitle);
+    private bool HasSubtitle => PageSubtitleContent != null || !string.IsNullOrEmpty(PageSubtitle);
 }

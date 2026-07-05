@@ -14,6 +14,7 @@
      OnClose  — fires when the flyout closes (close button, backdrop, or ESC)
 *@
 @using Microsoft.AspNetCore.Components.Web
+@inject IJSRuntime JS
 
 @if (IsOpen)
 {
@@ -133,6 +134,11 @@
             if (OnOpen.HasDelegate) await OnOpen.InvokeAsync();
             try
             {
+                // Clear the panel's lingering slide transform once the animation
+                // finishes, so a dialog opened inside the flyout isn't trapped by
+                // the panel's containing block (see __gupFlyout).
+                await JS.InvokeVoidAsync("__gupFlyout.clearTransformAfterAnimation", _panelRef);
+
                 if (HideCloseButton)
                 {
                     await _contentRef.FocusAsync();

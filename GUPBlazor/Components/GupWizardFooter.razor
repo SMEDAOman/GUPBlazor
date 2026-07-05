@@ -1,7 +1,7 @@
-@* Equivalent of <gup-wizard-footer>
+@* Equivalent of <gup-wizard-footer nav-aria-label="...">
    Slots: Start (left/back button), End (right/forward button)
 *@
-<footer class="gup-wizard-footer">
+<footer class="gup-wizard-footer" aria-label="@NavAriaLabel">
     <div class="inner">
         <div class="track">
             @if (Start != null)
@@ -17,6 +17,9 @@
 </footer>
 
 @code {
+    /// <summary>Accessible label for the footer navigation region (matches <c>nav-aria-label</c>).</summary>
+    [Parameter] public string? NavAriaLabel { get; set; }
+
     [Parameter] public RenderFragment? Start { get; set; }
     [Parameter] public RenderFragment? End { get; set; }
 }

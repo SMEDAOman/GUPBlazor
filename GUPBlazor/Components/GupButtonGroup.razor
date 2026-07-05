@@ -1,8 +1,13 @@
-@* Equivalent of <gup-button-group> — wraps buttons with gap *@
-<div class="gup-button-group">
+@* Equivalent of <gup-button-group direction="horizontal|vertical|vertical-on-mobile|vertical-reverse-on-mobile">
+   Wraps gup-button elements with a gap. *@
+<div class="gup-button-group gup-button-group--@Direction">
     @ChildContent
 </div>
 
 @code {
+    /// <summary>Direction of the button group. One of horizontal (default),
+    /// vertical, vertical-on-mobile, vertical-reverse-on-mobile.</summary>
+    [Parameter] public string Direction { get; set; } = "horizontal";
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
 }

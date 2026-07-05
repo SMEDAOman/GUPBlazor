@@ -1,13 +1,19 @@
-@* Equivalent of <gup-stepper-item step-number="1" step-type="default|done|selected">
-   Named slot: Label
+@* Equivalent of <gup-stepper-item step-number="1" step-type="default|done|selected|and" open wizard-mode static-mode>
+   Named slot: Label (also settable via the Label attribute)
+   Default slot: ChildContent (collapsible content of the step)
 *@
-<div class="gup-stepper-item gup-stepper-item--@StepType" role="listitem">
+<div class="gup-stepper-item gup-stepper-item--@StepType @(Open ? "is-open" : "") @(StaticMode ? "is-static" : "") @(WizardMode ? "is-wizard" : "")"
+     role="listitem">
     <div class="track">
         <div class="step-number">
             <div class="step-number-inner">
                 @if (StepType == "done")
                 {
                     <GupIcon IconName="check" Width="20" Height="20" />
+                }
+                else if (StepType == "and")
+                {
+                    <span class="step-and-label">@LabelAnd</span>
                 }
                 else
                 {
@@ -16,15 +22,52 @@
             </div>
         </div>
         <div class="static-content">
-            <span class="label">@LabelContent</span>
+            <span class="label">
+                @if (LabelContent != null)
+                {
+                    @LabelContent
+                }
+                else
+                {
+                    @Label
+                }
+            </span>
             @ChildContent
         </div>
     </div>
 </div>
 
 @code {
+    /// <summary>The label of the step (used when the Label slot is not provided).</summary>
+    [Parameter] public string Label { get; set; } = "";
+
+    /// <summary>The number of the step.</summary>
     [Parameter] public string StepNumber { get; set; } = "";
+
+    /// <summary>Type of the step marker: <c>default</c>, <c>done</c>, <c>selected</c>, or <c>and</c>.</summary>
     [Parameter] public string StepType { get; set; } = "default";
+
+    /// <summary>Translatable label for the "and" indicator.</summary>
+    [Parameter] public string LabelAnd { get; set; } = "and";
+
+    /// <summary>Whether the stepper item is in wizard mode.</summary>
+    [Parameter] public bool WizardMode { get; set; }
+
+    /// <summary>Whether the step is static and not interactive (auto-set when inside a static-mode gup-stepper).</summary>
+    [Parameter] public bool StaticMode { get; set; }
+
+    /// <summary>Whether the step is open.</summary>
+    [Parameter] public bool Open { get; set; }
+
+    /// <summary>Translatable label for the accordion "Show" indicator.</summary>
+    [Parameter] public string LabelShow { get; set; } = "Show";
+
+    /// <summary>Translatable label for the accordion "Hide" indicator.</summary>
+    [Parameter] public string LabelHide { get; set; } = "Hide";
+
+    /// <summary>The label content slot. Takes precedence over the Label attribute.</summary>
     [Parameter] public RenderFragment? LabelContent { get; set; }
+
+    /// <summary>The collapsible content of the step.</summary>
     [Parameter] public RenderFragment? ChildContent { get; set; }
 }

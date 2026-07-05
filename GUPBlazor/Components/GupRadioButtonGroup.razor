@@ -2,12 +2,22 @@
    Two-way binding: @bind-Value (selected radio's value)
    Events: OnChange (new selected value)
 *@
-<div class="gup-radio-button-group">
+<div class="gup-radio-button-group @(IsInvalid ? "is-invalid" : "")">
     @if (!string.IsNullOrEmpty(Label))
     {
-        <span class="group-label">@Label</span>
+        <span class="group-label">@Label@(Required ? " *" : "")</span>
     }
-    <div class="options" role="radiogroup" aria-label="@Label">
+    @if (Hint != null)
+    {
+        <span class="group-hint">@Hint</span>
+    }
+    @if (IsInvalid && !string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="group-error" role="alert">@ErrorMessage</div>
+    }
+    <div class="options" role="radiogroup" aria-label="@Label"
+         aria-required="@(Required ? "true" : null)"
+         aria-invalid="@(IsInvalid ? "true" : null)">
         <CascadingValue Value="this" IsFixed="true">
             @ChildContent
         </CascadingValue>
@@ -20,9 +30,40 @@
     [Parameter] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public EventCallback<string?> OnChange { get; set; }
+
+    /// <summary>Whether a selection is required.</summary>
+    [Parameter] public bool Required { get; set; }
+
+    /// <summary>Validation error message shown when <see cref="IsInvalid"/> is true.</summary>
+    [Parameter] public string? ErrorMessage { get; set; }
+
+    /// <summary>Whether the group is in an invalid state.</summary>
+    [Parameter] public bool IsInvalid { get; set; }
+
+    /// <summary>Optional hint slot rendered below the group label.</summary>
+    [Parameter] public RenderFragment? Hint { get; set; }
+
+    /// <summary>Fires when the group fails validation (matches <c>gup-invalid</c>).</summary>
+    [Parameter] public EventCallback OnInvalid { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     private readonly List<GupRadioButton> _children = new();
+    private bool _wasInvalid;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Fire OnInvalid on the transition into the invalid state.
+        if (IsInvalid && !_wasInvalid)
+        {
+            _wasInvalid = true;
+            if (OnInvalid.HasDelegate) await OnInvalid.InvokeAsync();
+        }
+        else if (!IsInvalid && _wasInvalid)
+        {
+            _wasInvalid = false;
+        }
+    }
 
     internal void RegisterChild(GupRadioButton child)
     {

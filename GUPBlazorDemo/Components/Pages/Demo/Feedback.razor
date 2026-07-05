@@ -27,7 +27,7 @@
       <div class="demo-row">
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">Default · hide-icon</span>
-          <GupBanner HideIcon="true" ShowClose="true" CloseLabel="Close">
+          <GupBanner HideIcon="true" ShowCloseButton="true" CloseLabel="Close">
             <TitleContent>Important notice</TitleContent>
             <ChildContent>
               <GupRichText>
@@ -38,7 +38,7 @@
         </div>
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">With icon</span>
-          <GupBanner HideIcon="false" ShowClose="false">
+          <GupBanner HideIcon="false" ShowCloseButton="false">
             <TitleContent>System information</TitleContent>
             <ChildContent>
               <GupRichText>
@@ -49,21 +49,21 @@
         </div>
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">Success</span>
-          <GupBanner Type="success" HideIcon="false" ShowClose="false">
+          <GupBanner Type="GupBannerType.Success" HideIcon="false" ShowCloseButton="false">
             <TitleContent>Application submitted</TitleContent>
             <ChildContent>Your reference number is <strong>REF-20240001</strong>.</ChildContent>
           </GupBanner>
         </div>
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">Warning</span>
-          <GupBanner Type="warning" HideIcon="false" ShowClose="false">
+          <GupBanner Type="GupBannerType.Warning" HideIcon="false" ShowCloseButton="false">
             <TitleContent>Session expiring</TitleContent>
             <ChildContent>Your session will expire in 5 minutes. Please save your progress.</ChildContent>
           </GupBanner>
         </div>
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">Error</span>
-          <GupBanner Type="error" HideIcon="false" ShowClose="false">
+          <GupBanner Type="GupBannerType.Error" HideIcon="false" ShowCloseButton="false">
             <TitleContent>Submission failed</TitleContent>
             <ChildContent>There was a problem processing your request. Please try again later.</ChildContent>
           </GupBanner>

@@ -1,10 +1,59 @@
-@* Equivalent of <gup-link href="..."> *@
-<span class="gup-link">
-    <a href="@Href" target="@Target">@ChildContent</a>
+@* Equivalent of <gup-link kind="link|button" size="s|m|l" severity="primary|secondary|danger" href="..." disabled open-in-new-tab>
+   Default slot: ChildContent (the link label)
+   Events: OnClick (fires when a kind="button" link is clicked — matches gup-click)
+*@
+@using Microsoft.AspNetCore.Components.Web
+
+<span class="gup-link gup-link--@Size gup-link--@Severity @(Disabled ? "is-disabled" : "")">
+    @if (Kind == "button")
+    {
+        <button type="button"
+                class="link"
+                disabled="@(Disabled ? true : null)"
+                @onclick="HandleClick">@ChildContent</button>
+    }
+    else
+    {
+        <a class="link"
+           href="@Href"
+           target="@EffectiveTarget"
+           rel="@(OpenInNewTab ? "noopener noreferrer" : null)">@ChildContent</a>
+    }
 </span>
 
 @code {
+    /// <summary>Whether the link renders as an anchor (default) or an HTML button.</summary>
+    [Parameter] public string Kind { get; set; } = "link";
+
+    /// <summary>Size of the link: <c>s</c>, <c>m</c> (default), or <c>l</c>.</summary>
+    [Parameter] public string Size { get; set; } = "m";
+
+    /// <summary>Visual severity: <c>primary</c> (default), <c>secondary</c>, or <c>danger</c>.</summary>
+    [Parameter] public string Severity { get; set; } = "primary";
+
+    /// <summary>Target URL. Only relevant when <see cref="Kind"/> is <c>link</c>.</summary>
     [Parameter] public string Href { get; set; } = "#";
+
+    /// <summary>Explicit anchor target. Overrides <see cref="OpenInNewTab"/> if set.</summary>
     [Parameter] public string Target { get; set; } = "";
+
+    /// <summary>Open the URL in a new tab. Only applicable when <see cref="Kind"/> is <c>link</c>.</summary>
+    [Parameter] public bool OpenInNewTab { get; set; }
+
+    /// <summary>Disable the link. Only relevant when <see cref="Kind"/> is <c>button</c>.</summary>
+    [Parameter] public bool Disabled { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Fires when a <c>kind="button"</c> link is clicked (matches the <c>gup-click</c> event).</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private string? EffectiveTarget =>
+        !string.IsNullOrEmpty(Target) ? Target : (OpenInNewTab ? "_blank" : null);
+
+    private Task HandleClick(MouseEventArgs args)
+    {
+        if (Disabled) return Task.CompletedTask;
+        return OnClick.InvokeAsync(args);
+    }
 }

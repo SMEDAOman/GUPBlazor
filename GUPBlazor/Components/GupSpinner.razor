@@ -1,6 +1,8 @@
-@* Equivalent of <gup-spinner size="small|medium|large"> — accessible loading indicator.
+@* Equivalent of <gup-spinner size="s|m|l|xl"> — accessible loading indicator.
    Renders the gov.om brand spinner SVG with a continuous rotation animation.
-   Sizes: small=16px, medium=24px (default), large=40px. Pass Pixels to override.
+   Sizes: s=16px, m=24px (default), l=40px, xl=56px. Pass Pixels to override.
+   Legacy small/medium/large values are still accepted for backward compatibility.
+   Set LabelHidden to keep the label for screen-readers only.
 *@
 <span class="gup-spinner-wrapper @SizeClass" role="status">
     <svg class="gup-spinner"
@@ -18,7 +20,7 @@
             <path class="gup-spinner-indicator" d="M40 20C40 25.3043 37.8929 30.3914 34.1421 34.1421C30.3914 37.8929 25.3043 40 20 40L20 20L40 20Z" />
         </g>
     </svg>
-    @if (!string.IsNullOrEmpty(Text))
+    @if (!string.IsNullOrEmpty(Text) && !LabelHidden)
     {
         <span class="gup-spinner-text">@Text</span>
     }
@@ -26,24 +28,40 @@
 </span>
 
 @code {
-    [Parameter] public string Size { get; set; } = "medium";
+    /// <summary>Spinner size: <c>s</c>, <c>m</c> (default), <c>l</c>, or <c>xl</c>.
+    /// Legacy <c>small</c>/<c>medium</c>/<c>large</c> values are also accepted.</summary>
+    [Parameter] public string Size { get; set; } = "m";
+
+    /// <summary>Override the size with an explicit pixel value.</summary>
     [Parameter] public int? Pixels { get; set; }
+
+    /// <summary>Optional label displayed below the spinner (and read by screen-readers). Default: "Loading...".</summary>
     [Parameter] public string Label { get; set; } = "Loading...";
+
+    /// <summary>Optional visible text alongside the spinner. Suppressed when <see cref="LabelHidden"/> is true.</summary>
     [Parameter] public string? Text { get; set; }
+
+    /// <summary>If true, the label/text is hidden visually and available only to screen-readers (matches <c>label-hidden</c>).</summary>
+    [Parameter] public bool LabelHidden { get; set; }
 
     private readonly string MaskId = $"gup-spinner-mask-{Guid.NewGuid():N}";
 
-    private string SizeClass => Size switch
+    // Normalizes both the new (s/m/l/xl) and legacy (small/medium/large) size values.
+    private string SizeKey => Size?.ToLowerInvariant() switch
     {
-        "small" => "gup-spinner--small",
-        "large" => "gup-spinner--large",
-        _       => "gup-spinner--medium",
+        "s" or "small"  => "s",
+        "l" or "large"  => "l",
+        "xl"            => "xl",
+        _               => "m",
     };
 
-    private int RenderedSize => Pixels ?? Size switch
+    private string SizeClass => $"gup-spinner--{SizeKey}";
+
+    private int RenderedSize => Pixels ?? SizeKey switch
     {
-        "small" => 16,
-        "large" => 40,
-        _       => 24,
+        "s"  => 16,
+        "l"  => 40,
+        "xl" => 56,
+        _    => 24,
     };
 }

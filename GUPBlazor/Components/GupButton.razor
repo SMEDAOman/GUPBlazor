@@ -4,12 +4,15 @@
 *@
 @using Microsoft.AspNetCore.Components.Web
 
-<div class="gup-button gup-button--@Appearance.ToString().ToLowerInvariant() @(Disabled ? "is-disabled" : "")">
+<div class="gup-button gup-button--@Appearance.ToString().ToLowerInvariant() @(Inverted ? "gup-button--inverted" : "") @(WithIconOnly ? "gup-button--icon-only" : "") @(Disabled ? "is-disabled" : "")">
     @if (Kind == GupButtonKind.Link)
     {
         <a class="button"
            href="@(Disabled ? null : Href)"
+           target="@(OpenInNewTab ? "_blank" : null)"
+           rel="@(OpenInNewTab ? "noopener noreferrer" : null)"
            aria-disabled="@(Disabled ? "true" : null)"
+           aria-label="@(WithIconOnly ? Label : null)"
            tabindex="@(Disabled ? "-1" : null)"
            @onclick="HandleClick"
            @onclick:preventDefault="Disabled">
@@ -17,7 +20,10 @@
             {
                 <span class="btn-icon-start">@IconStart</span>
             }
-            @ChildContent
+            @if (!WithIconOnly)
+            {
+                @ChildContent
+            }
             @if (IconEnd != null)
             {
                 <span class="btn-icon-end">@IconEnd</span>
@@ -29,12 +35,16 @@
         <button class="button"
                 type="@Type.ToString().ToLowerInvariant()"
                 disabled="@(Disabled ? true : null)"
+                aria-label="@(WithIconOnly ? Label : null)"
                 @onclick="HandleClick">
             @if (IconStart != null)
             {
                 <span class="btn-icon-start">@IconStart</span>
             }
-            @ChildContent
+            @if (!WithIconOnly)
+            {
+                @ChildContent
+            }
             @if (IconEnd != null)
             {
                 <span class="btn-icon-end">@IconEnd</span>
@@ -49,6 +59,20 @@
     [Parameter] public GupButtonType Type { get; set; } = GupButtonType.Button;
     [Parameter] public string? Href { get; set; }
     [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Display only the icon with no text label (matches <c>with-icon-only</c>).
+    /// Provide <see cref="Label"/> for the accessible name.</summary>
+    [Parameter] public bool WithIconOnly { get; set; }
+
+    /// <summary>Whether the button is inverted (for dark backgrounds).</summary>
+    [Parameter] public bool Inverted { get; set; }
+
+    /// <summary>Accessible label used when <see cref="WithIconOnly"/> is true.</summary>
+    [Parameter] public string Label { get; set; } = "";
+
+    /// <summary>Open the URL in a new tab. Only applicable when <see cref="Kind"/> is Link.</summary>
+    [Parameter] public bool OpenInNewTab { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public RenderFragment? IconStart { get; set; }
     [Parameter] public RenderFragment? IconEnd { get; set; }

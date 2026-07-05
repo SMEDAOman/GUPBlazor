@@ -65,7 +65,11 @@
     /// <summary>Fires when a key is pressed inside the textarea.</summary>
     [Parameter] public EventCallback<KeyboardEventArgs> OnKeyPress { get; set; }
 
+    /// <summary>Fires when the textarea enters the invalid state (matches <c>gup-invalid</c>).</summary>
+    [Parameter] public EventCallback OnInvalid { get; set; }
+
     private bool _dirty;
+    private bool _wasInvalid;
 
     private string Id => $"textarea-{Name}";
 
@@ -82,9 +86,20 @@
         }
     }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         _dirty = !string.IsNullOrEmpty(Value);
+
+        // Fire OnInvalid on the transition into the invalid state.
+        if (IsInvalid && !_wasInvalid)
+        {
+            _wasInvalid = true;
+            if (OnInvalid.HasDelegate) await OnInvalid.InvokeAsync();
+        }
+        else if (!IsInvalid && _wasInvalid)
+        {
+            _wasInvalid = false;
+        }
     }
 
     private async Task HandleInput(ChangeEventArgs e)

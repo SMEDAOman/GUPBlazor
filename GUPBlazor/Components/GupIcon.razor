@@ -1,6 +1,6 @@
 @* Renders a Material Symbols Outlined icon via the Google variable font. *@
-<span class="gup-icon material-symbols-outlined"
-      style="font-size:@(Width)px; @AxisStyle()"
+<span class="gup-icon material-symbols-outlined @(RtlFlipEnabled ? "gup-icon--rtl-flip" : "")"
+      style="@InlineStyle()"
       aria-hidden="true">@Normalize(IconName)</span>
 
 @code {
@@ -11,9 +11,19 @@
     [Parameter] public int Weight { get; set; } = 400;
     [Parameter] public int Grade { get; set; } = 0;
 
+    /// <summary>Flip the icon horizontally in RTL layouts (matches <c>rtl-flip-enabled</c>).</summary>
+    [Parameter] public bool RtlFlipEnabled { get; set; }
+
+    /// <summary>Fill color in any CSS format (matches <c>fill-color</c> / <c>--gup-icon--fill-color</c>).</summary>
+    [Parameter] public string? FillColor { get; set; }
+
     private static string Normalize(string name) =>
         string.IsNullOrEmpty(name) ? "" : name.Replace('-', '_');
 
-    private string AxisStyle() =>
-        $"font-variation-settings: 'FILL' {(Filled ? 1 : 0)}, 'wght' {Weight}, 'GRAD' {Grade}, 'opsz' {Width};";
+    private string InlineStyle()
+    {
+        var color = string.IsNullOrEmpty(FillColor) ? "" : $"--gup-icon--fill-color: {FillColor}; ";
+        var axis = $"font-variation-settings: 'FILL' {(Filled ? 1 : 0)}, 'wght' {Weight}, 'GRAD' {Grade}, 'opsz' {Width};";
+        return $"font-size:{Width}px; {color}{axis}";
+    }
 }

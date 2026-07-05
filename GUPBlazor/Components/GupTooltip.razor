@@ -25,6 +25,7 @@
 
 <div class="gup-tooltip @(IsOpen ? "gup-tooltip--open" : "") gup-tooltip--placement-@PlacementString()"
      id="@_id"
+     data-target="@Target"
      style="@WrapperStyle"
      @onkeydown="HandleKeyDown"
      @onmouseenter="HandleMouseEnter"
@@ -68,6 +69,13 @@
 
     /// <summary>Optional hint shown below the title.</summary>
     [Parameter] public string? Hint { get; set; }
+
+    /// <summary>Id of an external target element the tooltip attaches to (matches <c>target</c>).
+    /// When set, the consumer wires the trigger externally; otherwise use the <see cref="Trigger"/> slot.</summary>
+    [Parameter] public string? Target { get; set; }
+
+    /// <summary>Distance in px between the popup and the trigger (matches <c>offset</c>). Default: 8.</summary>
+    [Parameter] public int Offset { get; set; } = 8;
 
     /// <summary>Placement of the popup relative to the trigger. Default: <see cref="GupTooltipPlacement.Bottom"/>.</summary>
     [Parameter] public GupTooltipPlacement Placement { get; set; } = GupTooltipPlacement.Bottom;
@@ -113,14 +121,22 @@
 
     private string PlacementString() => Placement switch
     {
-        GupTooltipPlacement.Top    => "top",
-        GupTooltipPlacement.Left   => "left",
-        GupTooltipPlacement.Right  => "right",
-        _                          => "bottom",
+        GupTooltipPlacement.Top         => "top",
+        GupTooltipPlacement.TopStart    => "top-start",
+        GupTooltipPlacement.TopEnd      => "top-end",
+        GupTooltipPlacement.Left        => "left",
+        GupTooltipPlacement.LeftStart   => "left-start",
+        GupTooltipPlacement.LeftEnd     => "left-end",
+        GupTooltipPlacement.Right       => "right",
+        GupTooltipPlacement.RightStart  => "right-start",
+        GupTooltipPlacement.RightEnd    => "right-end",
+        GupTooltipPlacement.BottomStart => "bottom-start",
+        GupTooltipPlacement.BottomEnd   => "bottom-end",
+        _                               => "bottom",
     };
 
     private string WrapperStyle =>
-        $"--gup-tooltip--max-width-fallback:{MaxWidth}px;--gup-tooltip--max-height-fallback:{MaxHeight}px;";
+        $"--gup-tooltip--max-width-fallback:{MaxWidth}px;--gup-tooltip--max-height-fallback:{MaxHeight}px;--gup-tooltip--offset:{Offset}px;";
 
     /// <summary>Programmatically show the tooltip.</summary>
     public Task ShowAsync() => SetOpenAsync(true);

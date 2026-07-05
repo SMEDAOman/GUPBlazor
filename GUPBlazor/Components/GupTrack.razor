@@ -1,7 +1,7 @@
-@* Equivalent of <gup-track direction="horizontal|vertical" gap="N" horizontal-alignment="..." vertical-alignment="...">
+@* Equivalent of <gup-track direction="horizontal|vertical" gap="N" horizontal-alignment="..." vertical-alignment="..." items-equal is-multiline>
    Gap is in multiples of --unit (4px), so gap=7 → 28px.
 *@
-<div class="gup-track" style="@Style">
+<div class="gup-track @(ItemsEqual ? "gup-track--items-equal" : "") @(IsMultiline ? "gup-track--multiline" : "")" style="@Style">
     @ChildContent
 </div>
 
@@ -10,6 +10,13 @@
     [Parameter] public string Direction { get; set; } = "horizontal";
     [Parameter] public string HorizontalAlignment { get; set; } = "normal";
     [Parameter] public string VerticalAlignment { get; set; } = "normal";
+
+    /// <summary>All items in a row have the same width (equivalent of flex: 1 on children).</summary>
+    [Parameter] public bool ItemsEqual { get; set; }
+
+    /// <summary>Allow items to wrap onto multiple lines (equivalent of flex-wrap).</summary>
+    [Parameter] public bool IsMultiline { get; set; }
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     private string FlexDirection => Direction switch
@@ -38,5 +45,6 @@
     };
 
     private string Style =>
-        $"flex-direction:{FlexDirection}; gap:calc({Gap} * var(--unit)); justify-content:{JustifyContent}; align-items:{AlignItems};";
+        $"flex-direction:{FlexDirection}; gap:calc({Gap} * var(--unit)); justify-content:{JustifyContent}; align-items:{AlignItems};"
+        + (IsMultiline ? " flex-wrap:wrap;" : "");
 }
