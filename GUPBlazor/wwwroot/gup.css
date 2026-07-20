@@ -334,16 +334,14 @@
   --gup-container-max-md: 720px;
   --gup-container-max-lg: 960px;
   --gup-container-max-xl: 1248px;
-  /* Foundations §5.1 Principle 1: content is capped at 1024px on desktop;
-     the background fills the rest. This is the wizard/page content band. */
+  /* Page shell (foundations-layout.md): chrome — header, content header and
+     wizard footer — centres its inner wrapper at 1024px. */
   --gup-content-max: 1024px;
   --gup-container-max: var(--gup-content-max); /* default page content cap */
 
-  /* Flat aliases matching the Foundations appendix token names. */
-  --container-max-sm: var(--gup-container-max-sm);
-  --container-max-md: var(--gup-container-max-md);
-  --container-max-lg: var(--gup-container-max-lg);
-  --container-max-xl: var(--gup-container-max-xl);
+  /* The wizard main column is deliberately narrower than the chrome: a 632px
+     measure constraint for legibility. Do not widen it. */
+  --gup-wizard-main-max: 632px;
 
   /* Grid + gutters (Gov.om): 3-column desktop grid, fluid gap. */
   --gup-gutter: 32px;
@@ -351,8 +349,8 @@
   --gup-grid-gap: 40px;           /* desktop row/column gap (tablet: 32px) */
 
   /* --- Focus Ring --- */
-  /* Gov.om live spec: 2px solid #9747ff. */
-  --gup-stroke-focus-ring: 2px;
+  /* foundations-tokens.md: 6px, colour --gup-color-states-base-focus-ring (#9747ff). */
+  --gup-stroke-focus-ring: 6px;
 
   /* --- Shadow Colors --- */
   --gup-color-shadow-color-1: rgba(28 33 51 / 1%);
@@ -830,16 +828,44 @@ body {
   justify-content: flex-end;
 }
 
-/* Let long help/exit labels wrap instead of overflowing toward the logo. */
+/* Keep the header help/exit labels on a SINGLE line (no wrap). To stop a long
+   one-line label from pushing the centred logo or getting clipped, the labels
+   shrink their font-size on narrow screens (see the mobile override below). */
 .gup-header .slot-start .button,
 .gup-header .slot-end .button {
-  white-space: normal;
+  white-space: nowrap;
   text-align: start;
 }
 
 /* Override button underline inside header */
 .gup-header .gup-button--text .button {
   text-decoration: none;
+}
+
+/* Mobile: shrink the header help/exit label + icon so the single-line label
+   fits the narrow slot without wrapping, clipping, or crowding the centred logo.
+   The icon shrinks with it so the button stays visually balanced. */
+@media (max-width: 749px) {
+  .gup-header .slot-start .button,
+  .gup-header .slot-end .button {
+    font-size: 12px;
+    gap: 4px;
+    padding-inline: 4px;
+  }
+  /* GupIcon renders as a material-symbols span sized by font-size (set inline
+     from its Width param), so shrink via font-size + !important to beat the
+     inline style. */
+  .gup-header .slot-start .button .gup-icon,
+  .gup-header .slot-end .button .gup-icon {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .gup-header .slot-start .button,
+  .gup-header .slot-end .button {
+    font-size: 11px;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -923,19 +949,21 @@ body {
   overflow-y: auto;
 }
 
-.gup-wizard-main .inner {
-  /* Gov.om standard layout width: clamp(820px, 59.896vw, 1150px), never wider
-     than the 1024px content cap (Foundations §5.1). This is wider than the old
-     632px so multi-column content (tables, verification reports) fits without
-     horizontal scroll, and the content aligns with the page title band. */
+.gup-wizard-main > .inner {
+  /* Direct child only: this styles the wizard's own content wrapper. Using a plain
+     descendant selector (.gup-wizard-main .inner) leaked width/max-width/margin and a
+     64px padding-bottom onto every nested .inner — notably GupFileItem's .inner —
+     inflating file rows. The wizard's inner is a direct child (see GupWizardMain.razor),
+     so ">" keeps this rule correct while stopping the bleed. */
+  /* Gov.om standard (foundations-layout.md): the wizard main column is 632px — a
+     measure constraint for line length, not a grid column. Page chrome (header,
+     content header, footer) spans 1024px; the content you read and fill in does not. */
   width: 100%;
-  max-width: min(var(--gup-content-max), clamp(820px, 59.896vw, 1150px));
+  max-width: var(--gup-wizard-main-max);   /* 632px */
   margin-inline: auto;
-  padding-top: var(--gup-component-9);
-  /* Breathing room above the sticky footer so the last content (e.g. the
-     Accept-and-Send block) doesn't sit flush against it — removes the need for
-     a consumer-side bottom-margin workaround. */
-  padding-bottom: var(--gup-space-13);   /* 64px */
+  padding-top: var(--gup-component-9);     /* 40px */
+  /* Raw 64px in the design-system source, not a token. Reproduce as-is. */
+  padding-bottom: 64px;
 }
 
 /* ------------------------------------------------------------
@@ -1092,6 +1120,31 @@ body {
 .gup-button.is-disabled .button .gup-icon,
 .gup-button .button:disabled .gup-icon {
   color: var(--gup-color-states-disabled-medium);
+}
+
+/* Soft-disabled: the disabled *look* without the disabled *behaviour*. The
+   button stays clickable (no pointer-events:none, no `disabled` attribute) so
+   pressing it can run validation and reveal what's missing. Used by the wizard
+   footer's Continue/Submit button via GUPWizardStackStep.SoftLockNext. */
+.gup-button--soft-disabled .button {
+  background: var(--gup-color-states-disabled-low);
+  color: var(--gup-color-states-disabled-medium);
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.gup-button--soft-disabled .button .gup-icon {
+  color: var(--gup-color-states-disabled-medium);
+}
+
+/* Hover hints it IS pressable — nudge toward the enabled look. */
+.gup-button--soft-disabled .button:hover {
+  background: var(--gup-color-states-disabled-medium);
+  color: var(--gup-color-neutral-contrast);
+}
+
+.gup-button--soft-disabled .button:hover .gup-icon {
+  color: var(--gup-color-neutral-contrast);
 }
 
 /* ------------------------------------------------------------
@@ -1312,6 +1365,40 @@ body {
   line-height: var(--line-height-500);
 }
 
+/* Field footer: lays out the hint (start) and the live character counter (end)
+   on one row beneath the input/textarea. The footer owns the top spacing, so the
+   nested hint drops its own margin-top to avoid double spacing. Used by both
+   gup-input-field and gup-textarea-field. */
+.gup-input-field .field-footer,
+.gup-textarea-field .field-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--gup-component-4);
+  margin-top: var(--gup-spacing-component-default);
+}
+
+.gup-input-field .field-footer .hint,
+.gup-textarea-field .field-footer .hint {
+  margin-top: 0;
+}
+
+/* Live character counter ("42 / 100"). Sits at the end of the field footer;
+   when there is no hint it still stays end-aligned. */
+.gup-char-counter {
+  margin-inline-start: auto;
+  color: var(--gup-color-content-secondary);
+  font-size: var(--font-size-300);
+  line-height: var(--line-height-500);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Below the minimum, or at the maximum — signal it in the negative colour. */
+.gup-char-counter--invalid {
+  color: var(--gup-color-negative-medium);
+}
+
 /* Hover state */
 .gup-input-field:hover:not(.disabled):not(.invalid) .field-inner-wrapper {
   box-shadow: 0 0 0 1px var(--gup-color-states-base-border) inset;
@@ -1324,6 +1411,43 @@ body {
 }
 
 .gup-input-field.invalid .label {
+  color: var(--gup-color-negative-medium, #b91c1c);
+}
+
+/* ---- Shared field affordances (added) ------------------------------------ */
+
+/* "(optional)" label suffix — muted, slightly smaller, never bolder than the label. */
+.gup-optional-hint {
+  color: var(--gup-color-content-secondary, #5b5b5b);
+  font-weight: 400;
+  font-size: 0.9em;
+}
+
+/* Invalid state for input/textarea/dropdown is already the design-system's own
+   red border + red label (see .gup-input-field.invalid / .gup-textarea-field.invalid
+   / .gup-dropdown-field--invalid). Nothing extra is layered on top of those.
+
+   Radio/checkbox GROUPS have no bordered input box, and many pages give them an
+   EXTERNAL label (Label="" on the component + a separate <p>), so styling only the
+   internal .group-label leaves no visible signal. Put the standard red border on the
+   options container instead — a real, visible design-system-style red edge that
+   works whether the label is internal or external. Also redden the internal label
+   when present. */
+.gup-radio-button-group.is-invalid .group-label,
+.gup-checkbox-group.is-invalid .group-label {
+  color: var(--gup-color-negative-medium, #b91c1c);
+}
+
+.gup-radio-button-group.is-invalid .options,
+.gup-checkbox-group.is-invalid .options {
+  border: 1px solid var(--gup-color-negative-medium, #b91c1c);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* Redden the group's own label when it's rendered inside the component. */
+.gup-radio-button-group.is-invalid .group-label,
+.gup-checkbox-group.is-invalid .group-label {
   color: var(--gup-color-negative-medium, #b91c1c);
 }
 
@@ -1865,6 +1989,7 @@ body {
    ------------------------------------------------------------ */
 .gup-table-cell {
   display: table-cell;
+  height: 100%;
   border-bottom: 1px solid var(--gup-color-border-low);
 }
 
@@ -1874,6 +1999,12 @@ body {
   min-width: 60px;
   color: var(--gup-color-content-primary);
   text-align: start;
+  text-wrap: wrap;
+  /* The design system wraps at spaces only, so an unbreakable string (long ref
+     number, URL, compound word) widens its column and pushes the table past the
+     632px wizard column. components-table-table-cell.md records this as a gap,
+     not a rule — "implementing them is not a deviation" — so we break them. */
+  overflow-wrap: break-word;
 }
 
 .gup-table-cell--header .wrapper,
@@ -2572,6 +2703,13 @@ body {
   border-color: var(--gup-color-negative-medium);
 }
 
+/* Redden the upload's label in the invalid state too — matches the red-label
+   treatment on other invalid fields. Fires for both HasError (ErrorMessage) and
+   the IsInvalid flag set from a form's validation summary. */
+.gup-file-upload--invalid .label {
+  color: var(--gup-color-negative-medium);
+}
+
 /* ------------------------------------------------------------
    N+1. COMPONENT: gup-file-item
    ------------------------------------------------------------ */
@@ -2640,8 +2778,26 @@ body {
   font-size: var(--font-size-300);
 }
 
-.gup-file-item .inner .gup-button svg {
-  fill: var(--gup-color-brand-xhigh);
+/* File-item action button (typically the delete icon). GupIcon renders a
+   font-glyph <span class="gup-icon">, not an <svg>, so colour the glyph and
+   give a clear hover/focus affordance for the destructive action. */
+.gup-file-item .inner .gup-button .gup-icon {
+  color: var(--gup-color-brand-xhigh);
+  transition: color 0.15s ease;
+}
+
+.gup-file-item .inner .gup-button .button {
+  border-radius: var(--gup-radius-component-default);
+  transition: background 0.15s ease;
+}
+
+.gup-file-item .inner .gup-button .button:hover .gup-icon,
+.gup-file-item .inner .gup-button .button:focus-visible .gup-icon {
+  color: var(--gup-color-negative-medium);
+}
+
+.gup-file-item .inner .gup-button .button:hover {
+  background: var(--gup-color-negative-xlow);
 }
 
 /* ── Spinner ── */
@@ -2781,6 +2937,12 @@ body {
   align-items: center;
   padding: var(--gup-space-5);   /* keep the dialog off the screen edges on mobile */
   outline: 0;
+}
+
+/* A fullscreen dialog must go edge-to-edge — the backdrop's mobile edge padding
+   would otherwise inset it, leaving a dark frame around a "fullscreen" modal. */
+.gup-dialog-backdrop:has(> .gup-dialog--fullscreen) {
+  padding: 0;
 }
 
 .gup-dialog {
@@ -3064,7 +3226,7 @@ body {
 }
 
 .gup-toggle:focus-within .gup-toggle__box {
-  outline: var(--gup-stroke-focus-ring, 2px) solid var(--gup-color-states-base-focus-ring);
+  outline: var(--gup-stroke-focus-ring, 6px) solid var(--gup-color-states-base-focus-ring);
   outline-offset: 3px;
 }
 
@@ -4132,7 +4294,7 @@ body {
 }
 
 .gup-search__input-container:focus-within {
-  outline: var(--gup-stroke-focus-ring, 2px) solid var(--gup-color-states-base-focus-ring);
+  outline: var(--gup-stroke-focus-ring, 6px) solid var(--gup-color-states-base-focus-ring);
   outline-offset: 2px;
   border-color: transparent;
 }
@@ -4189,7 +4351,7 @@ body {
 }
 
 .gup-search__icon-button:focus-visible {
-  outline: var(--gup-stroke-focus-ring, 2px) solid var(--gup-color-states-base-focus-ring);
+  outline: var(--gup-stroke-focus-ring, 6px) solid var(--gup-color-states-base-focus-ring);
   outline-offset: 2px;
 }
 

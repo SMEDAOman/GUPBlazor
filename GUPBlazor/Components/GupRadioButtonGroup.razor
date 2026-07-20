@@ -5,7 +5,13 @@
 <div class="gup-radio-button-group @(IsInvalid ? "is-invalid" : "")">
     @if (!string.IsNullOrEmpty(Label))
     {
-        <span class="group-label">@Label@(Required ? " *" : "")</span>
+        <span class="group-label">
+            @Label
+            @if (!Required)
+            {
+                <span class="gup-optional-hint">@(CascadedLangId == 2 ? " (optional)" : " (اختياري)")</span>
+            }
+        </span>
     }
     @if (Hint != null)
     {
@@ -31,8 +37,11 @@
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public EventCallback<string?> OnChange { get; set; }
 
-    /// <summary>Whether a selection is required.</summary>
-    [Parameter] public bool Required { get; set; }
+    /// <summary>Whether a selection is required. Mandatory by default; set to false to show "(optional)".</summary>
+    [Parameter] public bool Required { get; set; } = true;
+
+    // Cascaded once per page (GupLangId). 2 = English, else Arabic.
+    [CascadingParameter(Name = "GupLangId")] private int CascadedLangId { get; set; } = 2;
 
     /// <summary>Validation error message shown when <see cref="IsInvalid"/> is true.</summary>
     [Parameter] public string? ErrorMessage { get; set; }

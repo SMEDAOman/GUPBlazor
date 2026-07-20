@@ -18,7 +18,10 @@
                     @FileName
                 }
             </h2>
-            <small class="subtitle">@Subtitle</small>
+            @if (!string.IsNullOrEmpty(Subtitle))
+            {
+                <small class="subtitle">@Subtitle</small>
+            }
         </div>
         @ChildContent
     </div>

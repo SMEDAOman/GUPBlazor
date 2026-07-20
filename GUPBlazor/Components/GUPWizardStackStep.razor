@@ -19,6 +19,17 @@
     /// <summary>When true, the wizard's default Continue/Submit button is disabled and <see cref="GUPWizardStack.NextAsync"/> is blocked while this is the active step.</summary>
     [Parameter] public bool Locked { get; set; } = false;
 
+    /// <summary>
+    /// When true, the wizard's default Continue/Submit button renders with the
+    /// disabled *appearance* (greyed) but stays fully clickable, and navigation is
+    /// NOT blocked — so pressing it still runs this step's <see cref="OnNext"/>
+    /// validation, which can surface errors and cancel via <c>args.Cancel</c>.
+    /// Use this instead of <see cref="Locked"/> for "looks disabled until the form
+    /// is complete, but the user can press it to see what's missing". Ignored when
+    /// <see cref="Locked"/> is true (a hard lock wins).
+    /// </summary>
+    [Parameter] public bool SoftLockNext { get; set; } = false;
+
     /// <summary>Overrides the wizard's default text for the forward (Continue/Submit) button while this step is active.</summary>
     [Parameter] public string? NextButtonText { get; set; }
 
@@ -38,6 +49,7 @@
 
     private bool _registered;
     private bool _previousLocked;
+    private bool _previousSoftLockNext;
 
     protected override void OnInitialized()
     {
@@ -49,13 +61,15 @@
         Parent.RegisterStep(this);
         _registered = true;
         _previousLocked = Locked;
+        _previousSoftLockNext = SoftLockNext;
     }
 
     protected override void OnParametersSet()
     {
-        if (_registered && _previousLocked != Locked)
+        if (_registered && (_previousLocked != Locked || _previousSoftLockNext != SoftLockNext))
         {
             _previousLocked = Locked;
+            _previousSoftLockNext = SoftLockNext;
             Parent?.NotifyStepChanged();
         }
     }

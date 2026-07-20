@@ -3,7 +3,7 @@
    Events: OnValueChange (fires on every input), OnChange (fires on change/blur)
 *@
 <div class="gup-textarea-field @(IsInvalid ? "invalid" : "") @(_dirty ? "dirty" : "") @(Disabled ? "disabled" : "")">
-    <label class="label" for="@Id">@ChildContent</label>
+    <label class="label" for="@Id">@ChildContent@OptionalSuffix</label>
 
     @if (IsInvalid && !string.IsNullOrEmpty(ValidationMessage))
     {
@@ -32,10 +32,22 @@
         </div>
     </div>
 
-    @if (HintContent != null)
+    @if (HintContent != null || ShowCounter)
     {
-        <div class="hint" id="@($"{Id}-hint")">
-            @HintContent
+        <div class="field-footer">
+            @if (HintContent != null)
+            {
+                <div class="hint" id="@($"{Id}-hint")">
+                    @HintContent
+                </div>
+            }
+            @if (ShowCounter)
+            {
+                <div class="gup-char-counter @(CounterInvalid ? "gup-char-counter--invalid" : "")"
+                     aria-live="polite">
+                    @CurrentLength / @CounterLimit
+                </div>
+            }
         </div>
     }
 </div>
@@ -47,8 +59,20 @@
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool Readonly { get; set; }
-    [Parameter] public bool Required { get; set; }
+    // Mandatory by default; callers opt out with Required="false" to show "(optional)".
+    [Parameter] public bool Required { get; set; } = true;
     [Parameter] public int Rows { get; set; } = 4;
+
+    // Cascaded once per page (GupLangId). 2 = English, else Arabic.
+    [CascadingParameter(Name = "GupLangId")] private int CascadedLangId { get; set; } = 2;
+
+    private RenderFragment? OptionalSuffix => Required ? null : builder =>
+    {
+        builder.OpenElement(0, "span");
+        builder.AddAttribute(1, "class", "gup-optional-hint");
+        builder.AddContent(2, CascadedLangId == 2 ? " (optional)" : " (اختياري)");
+        builder.CloseElement();
+    };
     [Parameter] public int? Minlength { get; set; }
     [Parameter] public int? Maxlength { get; set; }
     [Parameter] public string? ErrorMessage { get; set; }
@@ -74,6 +98,16 @@
     private string Id => $"textarea-{Name}";
 
     private string ValidationMessage => ErrorMessage ?? "This field is required";
+
+    // Live "X / limit" character counter. Renders only when a min or max length
+    // is set. Prefers the max as the target; falls back to the min when only a
+    // minimum is given. Turns invalid (red) when below the minimum or at the max.
+    private int CurrentLength => Value?.Length ?? 0;
+    private bool ShowCounter => Maxlength.HasValue || Minlength.HasValue;
+    private int CounterLimit => Maxlength ?? Minlength ?? 0;
+    private bool CounterInvalid =>
+        (Minlength.HasValue && CurrentLength < Minlength.Value)
+        || (Maxlength.HasValue && CurrentLength >= Maxlength.Value);
 
     private string? AriaDescribedBy
     {

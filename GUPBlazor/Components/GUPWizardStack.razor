@@ -86,6 +86,7 @@
                                Kind="@GupButtonKind.Button"
                                Type="@GupButtonType.Button"
                                Disabled="@(IsLoading || CurrentStep?.Locked == true)"
+                               SoftDisabled="@(CurrentStep?.SoftLockNext == true)"
                                OnClick="HandleContinueAsync"
                                IconEnd="@ForwardIconFragment">
                         <ChildContent>@CurrentNextButtonText</ChildContent>

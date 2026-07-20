@@ -6,7 +6,7 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JS
 
-<div class="gup-file-upload @(IsFullWidth ? "gup-file-upload--full-width" : "") @(HasError ? "gup-file-upload--invalid" : "")"
+<div class="gup-file-upload @(IsFullWidth ? "gup-file-upload--full-width" : "") @(HasError || IsInvalid ? "gup-file-upload--invalid" : "")"
      id="@Id"
      data-accept="@Accept"
      data-max-file-size="@MaxFileSize"
@@ -61,6 +61,9 @@
     [Parameter] public bool Required { get; set; }
     [Parameter] public bool IsFullWidth { get; set; }
     [Parameter] public string? ErrorMessage { get; set; }
+    /// <summary>Force the invalid (red) border without an error message, e.g. when a
+    /// parent form flags the field from its own validation summary.</summary>
+    [Parameter] public bool IsInvalid { get; set; }
     [Parameter] public bool AllowThumbnails { get; set; }
     [Parameter] public string SizeValidationMessage { get; set; } = "Maximum file size exceeded!";
     [Parameter] public int MaxFileSize { get; set; } = 50;

@@ -17,7 +17,7 @@
      data-clearable="@Clearable.ToString().ToLowerInvariant()"
      data-attachment="@Attachment"
      data-multiple-values-label="@MultipleValuesLabel">
-    <label class="label @(LabelHidden ? "sr-only" : "")" for="@InputId">@Label</label>
+    <label class="label @(LabelHidden ? "sr-only" : "")" for="@InputId">@Label@OptionalSuffix</label>
     @if (Hint != null)
     {
         <span class="hint">@Hint</span>
@@ -84,7 +84,10 @@
     [Parameter] public string Name { get; set; } = "";
     [Parameter] public string Placeholder { get; set; } = "";
     [Parameter] public bool Disabled { get; set; }
-    [Parameter] public bool Required { get; set; }
+    // Mandatory by default; callers opt out with Required="false" to show "(optional)".
+    [Parameter] public bool Required { get; set; } = true;
+    // Lets the parent force the invalid (red) state, e.g. from a form error list.
+    [Parameter] public bool IsInvalid { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public bool Clearable { get; set; }
     [Parameter] public string? ErrorMessage { get; set; }
@@ -125,7 +128,18 @@
     private string Id => $"gup-dd-{Name}";
     private string InputId => $"dropdown-{Name}";
     private string DisabledClass => Disabled ? "gup-dropdown-field--disabled" : "";
-    private string InvalidClass => !string.IsNullOrEmpty(ErrorMessage) ? "gup-dropdown-field--invalid" : "";
+    private string InvalidClass => (IsInvalid || !string.IsNullOrEmpty(ErrorMessage)) ? "gup-dropdown-field--invalid" : "";
+
+    // Cascaded once per page (GupLangId). 2 = English, else Arabic.
+    [CascadingParameter(Name = "GupLangId")] private int CascadedLangId { get; set; } = 2;
+
+    private RenderFragment? OptionalSuffix => Required ? null : builder =>
+    {
+        builder.OpenElement(0, "span");
+        builder.AddAttribute(1, "class", "gup-optional-hint");
+        builder.AddContent(2, CascadedLangId == 2 ? " (optional)" : " (اختياري)");
+        builder.CloseElement();
+    };
 
     private DotNetObjectReference<GupDropdownField>? _selfRef;
     private bool _registered;
