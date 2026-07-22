@@ -60,8 +60,18 @@
             }
 
             @* Renders all <GUPWizardStackStep> components so they register with this stack.
-               Each step renders its own ChildContent only when active. *@
-            @ChildContent
+               Each step renders its own ChildContent only when active — except in ShowAllSteps
+               (read-only) mode, where every step renders and the whole set is disabled. *@
+            @if (ShowAllSteps)
+            {
+                <fieldset disabled style="border:0; padding:0; margin:0; min-inline-size:auto;">
+                    @ChildContent
+                </fieldset>
+            }
+            else
+            {
+                @ChildContent
+            }
 
         </GupWizardMain>
 
@@ -118,6 +128,13 @@
     // Stepper
     [Parameter] public bool ShowStepper { get; set; } = true;
     [Parameter] public bool StepperOpen { get; set; } = true;
+
+    /// <summary>
+    /// Read-only mode: render ALL steps' content stacked (no navigation) and wrap it in a
+    /// disabled &lt;fieldset&gt; so every form control inside is non-editable. Pair with
+    /// ShowStepper=false and ShowFooter=false for a flat, view-only form. Default off.
+    /// </summary>
+    [Parameter] public bool ShowAllSteps { get; set; } = false;
 
     /// <summary>
     /// Format string for the "Step N of M" progress label shown on the collapsible stepper header.
@@ -260,8 +277,10 @@
 
     internal void NotifyStepChanged() => StateHasChanged();
 
+    // In read-only mode (ShowAllSteps) every step renders its content at once — the wizard
+    // becomes a single flat, non-navigable view. Otherwise only the current step is active.
     internal bool IsStepActive(GUPWizardStackStep step)
-        => CurrentStep == step;
+        => ShowAllSteps || CurrentStep == step;
 
     private string GetStepType(int index)
     {
