@@ -22,11 +22,17 @@
 
     @if (ErrorMessageContent != null)
     {
-        <div class="validation-message" id="@ErrorId">@ErrorMessageContent</div>
+        <div class="validation-message" id="@ErrorId">
+            <GupIcon IconName="error" Filled="true" Width="20" Height="20" />
+            <span>@ErrorMessageContent</span>
+        </div>
     }
     else if (ShowValidationMessage)
     {
-        <div class="validation-message" id="@ErrorId">@ResolvedValidationMessage</div>
+        <div class="validation-message" id="@ErrorId">
+            <GupIcon IconName="error" Filled="true" Width="20" Height="20" />
+            <span>@ResolvedValidationMessage</span>
+        </div>
     }
 
     <div class="field-wrapper">

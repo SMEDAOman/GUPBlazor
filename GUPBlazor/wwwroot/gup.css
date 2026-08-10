@@ -685,9 +685,11 @@ body {
 }
 
 .gup-section-title {
-  font-size: var(--gup-headline-xs-size);   /* 20px */
-  line-height: var(--gup-headline-xs-line);
-  font-weight: var(--gup-font-weight-bold);
+  /* Matches .gup-form-section .title (§15): the same heading role must not render
+     two ways depending on which section wrapper the page reached for. */
+  font-size: var(--font-size-600);   /* 24px */
+  line-height: var(--line-height-500);
+  font-weight: var(--gup-font-weight-regular);
   color: var(--gup-color-content-primary);
   /* No underline — the design system does not specify a rule under section
      headings (verified against the Foundations docs). */
@@ -1682,6 +1684,15 @@ body {
   color: var(--gup-color-content-primary);
 }
 
+.gup-radio-button-group .group-error {
+  color: var(--gup-color-negative-medium, #b91c1c);
+  font-size: var(--font-size-300);
+  margin-bottom: var(--gup-spacing-component-default);
+  display: flex;
+  gap: var(--gup-component-3);
+  align-items: center;
+}
+
 .gup-radio-button-group .options {
   display: flex;
   flex-direction: column;
@@ -2347,7 +2358,10 @@ body {
 .gup-dropdown-field .error-message {
   color: var(--gup-color-negative-medium);
   font-size: var(--font-size-300);
-  margin-top: 4px;
+  margin-bottom: var(--gup-spacing-component-default);
+  display: flex;
+  gap: var(--gup-component-3);
+  align-items: center;
 }
 
 .gup-dropdown-field--invalid .label {
@@ -2627,8 +2641,11 @@ body {
 .gup-file-upload .hint,
 .gup-file-upload .error-message,
 .gup-file-upload .size-error-message {
-  margin-top: 4px;
+  margin-bottom: var(--gup-spacing-component-default);
   font-size: var(--font-size-300);
+  display: flex;
+  gap: var(--gup-component-3);
+  align-items: center;
 }
 
 .gup-file-upload .hint {

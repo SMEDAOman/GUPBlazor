@@ -8,7 +8,8 @@
     @if (IsInvalid && !string.IsNullOrEmpty(ValidationMessage))
     {
         <div class="validation-message" id="@($"{Id}-error")">
-            @ValidationMessage
+            <GupIcon IconName="error" Filled="true" Width="20" Height="20" />
+            <span>@ValidationMessage</span>
         </div>
     }
 

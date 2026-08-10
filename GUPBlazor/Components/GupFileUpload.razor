@@ -23,7 +23,10 @@
     }
     @if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="gup-form-validation-message error-message" id="@ErrorId" role="alert">@ErrorMessage</div>
+        <div class="gup-form-validation-message error-message" id="@ErrorId" role="alert">
+            <GupIcon IconName="error" Filled="true" Width="20" Height="20" />
+            <span>@ErrorMessage</span>
+        </div>
     }
     <div class="size-error-message" style="display:none;" role="alert"></div>
 

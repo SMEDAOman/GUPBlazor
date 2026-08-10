@@ -19,7 +19,10 @@
     }
     @if (IsInvalid && !string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="group-error" role="alert">@ErrorMessage</div>
+        <div class="group-error" role="alert">
+            <GupIcon IconName="error" Filled="true" Width="20" Height="20" />
+            <span>@ErrorMessage</span>
+        </div>
     }
     <div class="options" role="radiogroup" aria-label="@Label"
          aria-required="@(Required ? "true" : null)"

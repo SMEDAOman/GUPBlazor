@@ -22,6 +22,8 @@
 
         <GupWizardMain>
 
+            @ErrorSummary
+
             @if (ShowStepper && _steps.Count > 0)
             {
                 <GupDetails Open="@StepperOpen" ContentAppearance="@StepperAppearance"
@@ -125,9 +127,13 @@
     [Parameter] public string? PageSubtitle { get; set; }
     [Parameter] public RenderFragment? PageSummary { get; set; }
 
+    /// <summary>Rendered at the very top of the wizard body, above the stepper, so a
+    /// validation summary stays in one place regardless of which step is active.</summary>
+    [Parameter] public RenderFragment? ErrorSummary { get; set; }
+
     // Stepper
     [Parameter] public bool ShowStepper { get; set; } = true;
-    [Parameter] public bool StepperOpen { get; set; } = true;
+    [Parameter] public bool StepperOpen { get; set; } = false;
 
     /// <summary>
     /// Read-only mode: render ALL steps' content stacked (no navigation) and wrap it in a
