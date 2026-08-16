@@ -26,7 +26,7 @@
 
             @if (ShowStepper && _steps.Count > 0)
             {
-                <GupDetails Open="@StepperOpen" ContentAppearance="@StepperAppearance"
+                <GupDetails @bind-Open="_stepperOpen" ContentAppearance="@StepperAppearance"
                             ClosedIcon="@StepperClosedIcon" OpenIcon="@StepperOpenIcon">
                     <LabelContent>@CurrentStepperLabel</LabelContent>
                     <ChildContent>
@@ -133,7 +133,12 @@
 
     // Stepper
     [Parameter] public bool ShowStepper { get; set; } = true;
+
+    /// <summary>Initial expanded state of the collapsible stepper header. Applied once on
+    /// first render; the user's own toggling wins from then on.</summary>
     [Parameter] public bool StepperOpen { get; set; } = false;
+
+    private bool _stepperOpen;
 
     /// <summary>
     /// Read-only mode: render ALL steps' content stacked (no navigation) and wrap it in a
@@ -263,6 +268,8 @@
             return builder => builder.AddContent(0, label);
         }
     }
+
+    protected override void OnInitialized() => _stepperOpen = StepperOpen;
 
     internal void RegisterStep(GUPWizardStackStep step)
     {
