@@ -420,3 +420,4 @@ FodyWeavers.xsd
 
 # Ignore Playwright MCP files
 .playwright-mcp/
+.vscode/extensions.json
