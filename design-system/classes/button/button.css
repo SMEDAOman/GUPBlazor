@@ -26,20 +26,16 @@
   font-family: inherit;
   cursor: pointer;
   text-decoration: none;
-
   display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: var(--gup-component-4);
-
   padding-block: calc(var(--unit) * 2);
   padding-inline: var(--gup-component-5);
-
   border: 1px solid var(--_border-color);
   border-radius: var(--gup-radius-button);
   background: var(--_background);
   color: var(--_color);
-
   font-size: var(--font-size-400);
   line-height: var(--line-height-500);
   text-align: center;
@@ -57,6 +53,11 @@
 .gup-button .gup-button__icon,
 .gup-button gup-icon {
   --gup-icon--fill-color: var(--_icon-fill);
+}
+
+.gup-button svg {
+  fill: var(--_icon-fill);
+  flex-shrink: 0;
 }
 
 .gup-button__label--sr-only {

@@ -1,12 +1,11 @@
 import { html } from 'lit';
 import { Meta, StoryObj } from '@storybook/web-components';
-import { GupCheckbox, GUP_CHECKBOX_CLASSES, type GupCheckboxOptions } from './checkbox';
+import { GupCheckbox, gupCheckboxClasses, type GupCheckboxOptions } from './checkbox';
+import { gupFormClasses } from '../forms';
 
-// Import the CSS - this would typically be imported in your app's entry point
 import './checkbox.css';
-
-// Import web component for comparison story
-import '../../components/checkbox/checkbox';
+import '../forms.css';
+import '../../../components/src/components/checkbox/checkbox';
 
 interface CheckboxStoryArgs extends GupCheckboxOptions {
   label: string;
@@ -16,7 +15,7 @@ interface CheckboxStoryArgs extends GupCheckboxOptions {
 type Story = StoryObj<CheckboxStoryArgs>;
 
 export default {
-  title: 'Lite Components/Forms/Checkbox',
+  title: 'Lite Components - WIP/Forms/Checkbox',
   tags: ['autodocs', 'BETA'],
   argTypes: {
     checked: {
@@ -73,7 +72,7 @@ export default {
 ## Class-based Checkbox
 
 An alternative to the \`<gup-checkbox>\` web component for users who prefer working with native HTML elements.
-State styling is driven by native input pseudo-classes (\`:checked\`, \`:indeterminate\`, \`:disabled\`) — the checkbox works on click with no JavaScript required. Check and indeterminate icons are rendered via CSS (SVG mask-image), so no icon web components are needed.
+State styling is driven by native input pseudo-classes (\`:checked\`, \`:indeterminate\`, \`:disabled\`) - the checkbox works on click with no JavaScript required. Check and indeterminate icons are rendered via CSS (SVG mask-image), so no icon web components are needed.
 
 ### Usage
 
@@ -90,7 +89,7 @@ State styling is driven by native input pseudo-classes (\`:checked\`, \`:indeter
 
 #### With TypeScript utility:
 \`\`\`typescript
-import { GupCheckbox } from '@gup-ds/components/classes/checkbox';
+import { GupCheckbox } from '@govom/lite-components';
 
 // Create a new checkbox
 const checkbox = GupCheckbox.create({ checked: true });
@@ -130,17 +129,17 @@ const Template = (args: CheckboxStoryArgs) => {
     <label class="${className}">
       <input
         type="checkbox"
-        class="${GUP_CHECKBOX_CLASSES.input}"
+        class="${gupCheckboxClasses.input}"
         ?checked="${args.checked}"
         ?disabled="${args.disabled}"
         .indeterminate="${args.indeterminate ?? false}"
       />
-      <div class="${GUP_CHECKBOX_CLASSES.checkMark}">
-        <div class="${GUP_CHECKBOX_CLASSES.checkMarkInner}"></div>
+      <div class="${gupCheckboxClasses.checkMark}">
+        <div class="${gupCheckboxClasses.checkMarkInner}"></div>
       </div>
-      <div class="${GUP_CHECKBOX_CLASSES.textContainer}">
+      <div class="${gupCheckboxClasses.textContainer}">
         <div>${args.label}</div>
-        ${args.hint ? html`<div class="${GUP_CHECKBOX_CLASSES.hint}">${args.hint}</div>` : ''}
+        ${args.hint ? html`<div class="${gupCheckboxClasses.hint}">${args.hint}</div>` : ''}
       </div>
     </label>
   `;
@@ -204,51 +203,49 @@ export const CheckboxGroup: Story = {
       <legend style="font-size: var(--font-size-500); font-weight: 600; margin-bottom: 4px;">
         Which types of notifications do you want to receive?
       </legend>
-      <div style="color: var(--gup-color-content-secondary); font-size: var(--font-size-300); margin-bottom: 16px;">
-        Select all that apply
-      </div>
+      <div class="${gupFormClasses.hint}" style="margin-bottom: 16px;">Select all that apply</div>
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <label class="gup-checkbox">
-          <input type="checkbox" class="${GUP_CHECKBOX_CLASSES.input}" name="notifications" value="email" />
-          <div class="${GUP_CHECKBOX_CLASSES.checkMark}">
-            <div class="${GUP_CHECKBOX_CLASSES.checkMarkInner}"></div>
+          <input type="checkbox" class="${gupCheckboxClasses.input}" name="notifications" value="email" />
+          <div class="${gupCheckboxClasses.checkMark}">
+            <div class="${gupCheckboxClasses.checkMarkInner}"></div>
           </div>
-          <div class="${GUP_CHECKBOX_CLASSES.textContainer}">
+          <div class="${gupCheckboxClasses.textContainer}">
             <div>Email notifications</div>
-            <div class="${GUP_CHECKBOX_CLASSES.hint}">Receive updates via email</div>
+            <div class="${gupCheckboxClasses.hint}">Receive updates via email</div>
           </div>
         </label>
 
         <label class="gup-checkbox">
-          <input type="checkbox" class="${GUP_CHECKBOX_CLASSES.input}" name="notifications" value="sms" />
-          <div class="${GUP_CHECKBOX_CLASSES.checkMark}">
-            <div class="${GUP_CHECKBOX_CLASSES.checkMarkInner}"></div>
+          <input type="checkbox" class="${gupCheckboxClasses.input}" name="notifications" value="sms" />
+          <div class="${gupCheckboxClasses.checkMark}">
+            <div class="${gupCheckboxClasses.checkMarkInner}"></div>
           </div>
-          <div class="${GUP_CHECKBOX_CLASSES.textContainer}">
+          <div class="${gupCheckboxClasses.textContainer}">
             <div>SMS notifications</div>
-            <div class="${GUP_CHECKBOX_CLASSES.hint}">Receive updates via text message</div>
+            <div class="${gupCheckboxClasses.hint}">Receive updates via text message</div>
           </div>
         </label>
 
         <label class="gup-checkbox">
-          <input type="checkbox" class="${GUP_CHECKBOX_CLASSES.input}" name="notifications" value="push" />
-          <div class="${GUP_CHECKBOX_CLASSES.checkMark}">
-            <div class="${GUP_CHECKBOX_CLASSES.checkMarkInner}"></div>
+          <input type="checkbox" class="${gupCheckboxClasses.input}" name="notifications" value="push" />
+          <div class="${gupCheckboxClasses.checkMark}">
+            <div class="${gupCheckboxClasses.checkMarkInner}"></div>
           </div>
-          <div class="${GUP_CHECKBOX_CLASSES.textContainer}">
+          <div class="${gupCheckboxClasses.textContainer}">
             <div>Push notifications</div>
-            <div class="${GUP_CHECKBOX_CLASSES.hint}">Receive updates via browser push notifications</div>
+            <div class="${gupCheckboxClasses.hint}">Receive updates via browser push notifications</div>
           </div>
         </label>
 
         <label class="gup-checkbox">
-          <input type="checkbox" class="${GUP_CHECKBOX_CLASSES.input}" name="notifications" value="none" disabled />
-          <div class="${GUP_CHECKBOX_CLASSES.checkMark}">
-            <div class="${GUP_CHECKBOX_CLASSES.checkMarkInner}"></div>
+          <input type="checkbox" class="${gupCheckboxClasses.input}" name="notifications" value="none" disabled />
+          <div class="${gupCheckboxClasses.checkMark}">
+            <div class="${gupCheckboxClasses.checkMarkInner}"></div>
           </div>
-          <div class="${GUP_CHECKBOX_CLASSES.textContainer}">
+          <div class="${gupCheckboxClasses.textContainer}">
             <div>In-app notifications</div>
-            <div class="${GUP_CHECKBOX_CLASSES.hint}">Currently unavailable</div>
+            <div class="${gupCheckboxClasses.hint}">Currently unavailable</div>
           </div>
         </label>
       </div>
@@ -260,13 +257,13 @@ export const ComparisonWithWebComponent: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <div>
-        <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">Class-based (native checkbox — click to toggle)</h4>
+        <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">Class-based (native checkbox - click to toggle)</h4>
         <label class="gup-checkbox">
-          <input type="checkbox" class="${GUP_CHECKBOX_CLASSES.input}" />
-          <div class="${GUP_CHECKBOX_CLASSES.checkMark}">
-            <div class="${GUP_CHECKBOX_CLASSES.checkMarkInner}"></div>
+          <input type="checkbox" class="${gupCheckboxClasses.input}" />
+          <div class="${gupCheckboxClasses.checkMark}">
+            <div class="${gupCheckboxClasses.checkMarkInner}"></div>
           </div>
-          <div class="${GUP_CHECKBOX_CLASSES.textContainer}">Native Checkbox</div>
+          <div class="${gupCheckboxClasses.textContainer}">Native Checkbox</div>
         </label>
       </div>
       <div>

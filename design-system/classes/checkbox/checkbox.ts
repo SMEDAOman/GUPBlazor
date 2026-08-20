@@ -3,10 +3,10 @@
  *
  * A utility class for applying GUP checkbox styles to native HTML elements.
  * State styling (checked, indeterminate, disabled) is driven entirely by the
- * native input's pseudo-classes — no JavaScript needed for basic functionality.
+ * native input's pseudo-classes - no JavaScript needed for basic functionality.
  *
  * @example
- * // Pure HTML/CSS approach — works on click with no JS
+ * // Pure HTML/CSS approach - works on click with no JS
  * <label class="gup-checkbox">
  *   <input type="checkbox" class="gup-checkbox__input" />
  *   <div class="gup-checkbox__check-mark">
@@ -37,28 +37,28 @@ export interface GupCheckboxOptions {
   appearance?: CheckboxAppearance;
 }
 
-export const GUP_CHECKBOX_BASE_CLASS = 'gup-checkbox';
+export const gupCheckboxBaseClass = 'gup-checkbox';
 
-export const GUP_CHECKBOX_CLASSES = {
-  base: GUP_CHECKBOX_BASE_CLASS,
-  input: `${GUP_CHECKBOX_BASE_CLASS}__input`,
-  checkMark: `${GUP_CHECKBOX_BASE_CLASS}__check-mark`,
-  checkMarkInner: `${GUP_CHECKBOX_BASE_CLASS}__check-mark-inner`,
-  textContainer: `${GUP_CHECKBOX_BASE_CLASS}__text-container`,
-  hint: `${GUP_CHECKBOX_BASE_CLASS}__hint`,
-  small: `${GUP_CHECKBOX_BASE_CLASS}--small`,
-  circle: `${GUP_CHECKBOX_BASE_CLASS}--circle`,
+export const gupCheckboxClasses = {
+  base: gupCheckboxBaseClass,
+  input: `${gupCheckboxBaseClass}__input`,
+  checkMark: `${gupCheckboxBaseClass}__check-mark`,
+  checkMarkInner: `${gupCheckboxBaseClass}__check-mark-inner`,
+  textContainer: `${gupCheckboxBaseClass}__text-container`,
+  hint: 'gup-form-hint',
+  small: `${gupCheckboxBaseClass}--small`,
+  circle: `${gupCheckboxBaseClass}--circle`,
 } as const;
 
 export class GupCheckbox {
   static getClassNames(options: GupCheckboxOptions = {}): string[] {
-    const classes: string[] = [GUP_CHECKBOX_CLASSES.base];
+    const classes: string[] = [gupCheckboxClasses.base];
 
     if (options.size === 's') {
-      classes.push(GUP_CHECKBOX_CLASSES.small);
+      classes.push(gupCheckboxClasses.small);
     }
     if (options.appearance === 'circle') {
-      classes.push(GUP_CHECKBOX_CLASSES.circle);
+      classes.push(gupCheckboxClasses.circle);
     }
 
     return classes;
@@ -74,7 +74,7 @@ export class GupCheckbox {
     const classes = GupCheckbox.getClassNames(options);
     element.classList.add(...classes);
 
-    const input = element.querySelector(`.${GUP_CHECKBOX_CLASSES.input}`) as HTMLInputElement | null;
+    const input = element.querySelector(`.${gupCheckboxClasses.input}`) as HTMLInputElement | null;
     if (input) {
       input.checked = !!options.checked;
       input.indeterminate = !!options.indeterminate;
@@ -83,7 +83,7 @@ export class GupCheckbox {
   }
 
   static remove(element: HTMLElement): void {
-    element.classList.remove(GUP_CHECKBOX_CLASSES.small, GUP_CHECKBOX_CLASSES.circle);
+    element.classList.remove(gupCheckboxClasses.small, gupCheckboxClasses.circle);
   }
 
   static create(options: GupCheckboxOptions = {}): HTMLLabelElement {
@@ -92,21 +92,21 @@ export class GupCheckbox {
 
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.className = GUP_CHECKBOX_CLASSES.input;
+    input.className = gupCheckboxClasses.input;
     input.checked = !!options.checked;
     input.indeterminate = !!options.indeterminate;
     input.disabled = !!options.disabled;
 
     const checkMark = document.createElement('div');
-    checkMark.className = GUP_CHECKBOX_CLASSES.checkMark;
+    checkMark.className = gupCheckboxClasses.checkMark;
 
     const checkMarkInner = document.createElement('div');
-    checkMarkInner.className = GUP_CHECKBOX_CLASSES.checkMarkInner;
+    checkMarkInner.className = gupCheckboxClasses.checkMarkInner;
 
     checkMark.appendChild(checkMarkInner);
 
     const textContainer = document.createElement('div');
-    textContainer.className = GUP_CHECKBOX_CLASSES.textContainer;
+    textContainer.className = gupCheckboxClasses.textContainer;
 
     label.appendChild(input);
     label.appendChild(checkMark);
@@ -120,7 +120,7 @@ export class GupCheckbox {
   }
 
   static isGupCheckbox(element: HTMLElement): boolean {
-    return element.classList.contains(GUP_CHECKBOX_CLASSES.base);
+    return element.classList.contains(gupCheckboxClasses.base);
   }
 }
 

@@ -1,14 +1,14 @@
 import { html } from 'lit';
 import { Meta, StoryObj } from '@storybook/web-components';
-import { GupButton, GUP_BUTTON_CLASSES, type GupButtonOptions } from './button';
+import { GupButton, gupButtonClasses, type GupButtonOptions } from './button';
 
 // Import the CSS - this would typically be imported in your app's entry point
 import './button.css';
 
 // Import icon component for icon examples
-import '../../components/icon/icon';
+import '../../../components/src/components/icon/icon';
 // Import web component for comparison story
-import '../../components/button/button';
+import '../../../components/src/components/button/button';
 
 interface ButtonStoryArgs extends GupButtonOptions {
   label: string;
@@ -17,7 +17,7 @@ interface ButtonStoryArgs extends GupButtonOptions {
 type Story = StoryObj<ButtonStoryArgs>;
 
 export default {
-  title: 'Lite Components/Button',
+  title: 'Lite Components - WIP/Button',
   tags: ['autodocs', 'BETA'],
   argTypes: {
     appearance: {
@@ -71,7 +71,7 @@ An alternative to the \`<gup-button>\` web component for users who prefer workin
 
 #### With TypeScript utility:
 \`\`\`typescript
-import { GupButton } from '@govom/components/classes/button';
+import { GupButton } from '@govom/lite-components';
 
 // Apply to existing element
 const btn = document.querySelector('button');
@@ -191,7 +191,7 @@ export const WithIconStart: Story = {
 
     return html`
       <button class="${className}" ?disabled="${args.disabled}">
-        <gup-icon class="${GUP_BUTTON_CLASSES.icon}" icon-name="add" height="24" width="24"></gup-icon>
+        <gup-icon class="${gupButtonClasses.icon}" icon-name="add" height="24" width="24"></gup-icon>
         ${args.label}
       </button>
     `;
@@ -211,7 +211,7 @@ export const WithIconEnd: Story = {
     return html`
       <button class="${className}" ?disabled="${args.disabled}">
         ${args.label}
-        <gup-icon class="${GUP_BUTTON_CLASSES.icon}" icon-name="arrow-forward" height="24" width="24"></gup-icon>
+        <gup-icon class="${gupButtonClasses.icon}" icon-name="arrow-forward" height="24" width="24"></gup-icon>
       </button>
     `;
   },
@@ -230,7 +230,7 @@ export const IconOnly: Story = {
 
     return html`
       <button class="${className}" ?disabled="${args.disabled}" title="Add item" aria-label="Add item">
-        <gup-icon class="${GUP_BUTTON_CLASSES.icon}" icon-name="add" height="24" width="24"></gup-icon>
+        <gup-icon class="${gupButtonClasses.icon}" icon-name="add" height="24" width="24"></gup-icon>
       </button>
     `;
   },
@@ -245,7 +245,7 @@ export const ComparisonWithWebComponent: Story = {
       <div>
         <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">Class-based (native button)</h4>
         <button class="${GupButton.getClassName({ appearance: 'primary' })}">
-          <gup-icon class="${GUP_BUTTON_CLASSES.icon}" icon-name="add" height="24" width="24"></gup-icon>
+          <gup-icon class="${gupButtonClasses.icon}" icon-name="add" height="24" width="24"></gup-icon>
           Native Button
         </button>
       </div>

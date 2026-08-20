@@ -30,19 +30,19 @@ export interface GupButtonOptions {
   iconOnly?: boolean;
 }
 
-export const GUP_BUTTON_BASE_CLASS = 'gup-button';
+export const gupButtonBaseClass = 'gup-button';
 
-export const GUP_BUTTON_CLASSES = {
-  base: GUP_BUTTON_BASE_CLASS,
-  primary: `${GUP_BUTTON_BASE_CLASS}--primary`,
-  secondary: `${GUP_BUTTON_BASE_CLASS}--secondary`,
-  text: `${GUP_BUTTON_BASE_CLASS}--text`,
-  danger: `${GUP_BUTTON_BASE_CLASS}--danger`,
-  disabled: `${GUP_BUTTON_BASE_CLASS}--disabled`,
-  inverted: `${GUP_BUTTON_BASE_CLASS}--inverted`,
-  iconOnly: `${GUP_BUTTON_BASE_CLASS}--icon-only`,
-  icon: `${GUP_BUTTON_BASE_CLASS}__icon`,
-  labelSrOnly: `${GUP_BUTTON_BASE_CLASS}__label--sr-only`,
+export const gupButtonClasses = {
+  base: gupButtonBaseClass,
+  primary: `${gupButtonBaseClass}--primary`,
+  secondary: `${gupButtonBaseClass}--secondary`,
+  text: `${gupButtonBaseClass}--text`,
+  danger: `${gupButtonBaseClass}--danger`,
+  disabled: `${gupButtonBaseClass}--disabled`,
+  inverted: `${gupButtonBaseClass}--inverted`,
+  iconOnly: `${gupButtonBaseClass}--icon-only`,
+  icon: `${gupButtonBaseClass}__icon`,
+  labelSrOnly: `${gupButtonBaseClass}__label--sr-only`,
 } as const;
 
 /**
@@ -53,19 +53,19 @@ export class GupButton {
    * Get the CSS class names for a button based on options.
    */
   static getClassNames(options: GupButtonOptions = {}): string[] {
-    const classes: string[] = [GUP_BUTTON_CLASSES.base];
+    const classes: string[] = [gupButtonClasses.base];
 
     const appearance = options.appearance || 'primary';
-    classes.push(GUP_BUTTON_CLASSES[appearance]);
+    classes.push(gupButtonClasses[appearance]);
 
     if (options.disabled) {
-      classes.push(GUP_BUTTON_CLASSES.disabled);
+      classes.push(gupButtonClasses.disabled);
     }
     if (options.inverted) {
-      classes.push(GUP_BUTTON_CLASSES.inverted);
+      classes.push(gupButtonClasses.inverted);
     }
     if (options.iconOnly) {
-      classes.push(GUP_BUTTON_CLASSES.iconOnly);
+      classes.push(gupButtonClasses.iconOnly);
     }
 
     return classes;
@@ -87,7 +87,7 @@ export class GupButton {
   }
 
   static remove(element: HTMLElement): void {
-    const allClasses = Object.values(GUP_BUTTON_CLASSES);
+    const allClasses = Object.values(gupButtonClasses);
     element.classList.remove(...allClasses);
   }
 
@@ -110,7 +110,7 @@ export class GupButton {
   }
 
   static isGupButton(element: HTMLElement): boolean {
-    return element.classList.contains(GUP_BUTTON_CLASSES.base);
+    return element.classList.contains(gupButtonClasses.base);
   }
 }
 

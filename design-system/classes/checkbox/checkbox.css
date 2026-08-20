@@ -1,7 +1,7 @@
 /**
  * GUP Checkbox - Class-based approach
  *
- * Works with native checkbox behavior — clicking the label toggles the input.
+ * Works with native checkbox behavior - clicking the label toggles the input.
  * All state styling (checked, indeterminate, disabled) is driven by the native
  * input's pseudo-classes. Icons are rendered via CSS background-image (SVG),
  * no web component dependencies needed.
@@ -89,10 +89,7 @@
   padding-top: 3px;
 }
 
-.gup-checkbox__hint {
-  color: var(--gup-color-content-secondary);
-  font-size: var(--font-size-300);
-}
+/* .gup-form-hint styles are in forms.css */
 
 .gup-checkbox:hover:has(.gup-checkbox__input:not(:disabled):not(:checked):not(:indeterminate)) {
   --_second-border-color: var(--gup-color-states-base-border);
@@ -128,6 +125,7 @@
 
 .gup-checkbox:has(.gup-checkbox__input:disabled) {
   --_border-color: transparent;
+
   pointer-events: none;
 }
 
