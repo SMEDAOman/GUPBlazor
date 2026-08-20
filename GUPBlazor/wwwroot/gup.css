@@ -2270,6 +2270,20 @@ body {
   margin-bottom: var(--gup-spacing-component-default);
 }
 
+/* LabelHidden — keep the label for assistive tech only, matching
+   .gup-input-field .label.sr-only above. */
+.gup-dropdown-field .label.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .gup-dropdown-field .hint {
   display: block;
   font-size: var(--font-size-300);
@@ -4761,6 +4775,401 @@ body {
   left: calc(var(--gup-tooltip--arrow-size) / -2);
   top: 50%;
   transform: translateY(-50%) rotate(-45deg);
+}
+
+/* ============================================================
+   COMPONENT: gup-data-table
+   Ported from design-system/components/data-table/data-table.css.
+   Shadow-DOM constructs are re-targeted for Blazor:
+     :host / .data-table            → .gup-data-table
+     ::part(field-inner-wrapper|input-wrapper|input)
+                                    → the real inner classes of
+                                      GupInputField / GupDropdownField
+     ::slotted(gup-badge-chip[...]) → .gup-badge-chip--* modifier classes
+   The .data-table--stacked block becomes the (max-width: 639px) media query
+   that .gup-table--responsive already uses, so the controls and the table
+   collapse together.
+   ============================================================ */
+
+.gup-data-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-content-to-cta, 32px);
+  width: 100%;
+  background: var(--gup-color-background-canvas, #fefcf9);
+  padding: var(--gup-spacing-component-default, 12px) var(--gup-spacing-between-content, 24px);
+}
+
+.gup-data-table .gup-button .button {
+  border-radius: var(--gup-radius-button, 8px);
+}
+
+.gup-data-table .data-table-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-component-default, 12px);
+}
+
+.gup-data-table .title {
+  margin: 0;
+  font-family: 'Readex Pro', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.48px;
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-data-table .description {
+  margin: 0;
+  font-family: 'Readex Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--gup-color-content-secondary, #52525b);
+}
+
+.gup-data-table .table-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-form-fields, 20px);
+  position: relative;
+  width: 100%;
+}
+
+.gup-data-table .table-content-wrapper--empty {
+  flex: 1;
+}
+
+.gup-data-table .table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.gup-data-table .table-controls-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-text-to-component, 12px);
+  flex: 1;
+  min-width: 0;
+}
+
+.gup-data-table .table-controls-right {
+  display: flex;
+  gap: var(--gup-spacing-component-default, 12px);
+  align-items: center;
+  position: relative;
+}
+
+/* --- Search --- */
+
+.gup-data-table .search-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-component-default, 12px);
+  width: 520px;
+  max-width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.gup-data-table .search-input {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.gup-data-table .search-input .field-inner-wrapper {
+  border: 1px solid var(--gup-color-states-base-border, #7a7a83);
+  border-radius: var(--gup-radius-component-default, 8px);
+  padding: var(--gup-component-3, 8px) var(--gup-component-4, 12px);
+  gap: var(--gup-component-4, 12px);
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+}
+
+.gup-data-table .search-input .input-wrapper {
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+}
+
+.gup-data-table .search-input .input {
+  font-family: 'Readex Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-data-table .search-input .input::placeholder {
+  color: var(--gup-color-content-tertiary, #7a7a83);
+}
+
+.gup-data-table .search-container .gup-icon {
+  --gup-icon--fill-color: var(--gup-color-content-secondary, #52525b);
+}
+
+.gup-data-table .results-count {
+  font-size: var(--font-size-400, 14px);
+  line-height: var(--line-height-600, 20px);
+  color: var(--gup-color-content-tertiary, #7a7a83);
+}
+
+/* --- Filter button + panel --- */
+
+.gup-data-table .button-group-container {
+  display: flex;
+  gap: var(--gup-spacing-component-default, 12px);
+  align-items: center;
+  padding: 0;
+  position: relative;
+}
+
+.gup-data-table .filter-toggle {
+  display: flex;
+}
+
+/* The Lit rule set the gradient on <gup-button> itself; here it targets the real
+   inner <button> so it wins over the appearance background. */
+.gup-data-table .filter-button-active .gup-button .button {
+  background: linear-gradient(
+      0deg,
+      var(--gup-color-states-primary-active, rgb(26 26 26 / 70%)) 0%,
+      var(--gup-color-states-primary-active, rgb(26 26 26 / 70%)) 100%
+    ),
+    var(--gup-color-brand-medium, #2f57cd);
+}
+
+.gup-data-table .filter-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  inset-inline-end: 0;
+  width: 350px;
+  background: var(--gup-color-states-base-bg, #ffffff);
+  border-radius: var(--gup-radius-component-default, 8px);
+  box-shadow:
+    0 1px 2px 0 rgb(28 33 51 / 2%),
+    0 3px 6px 0 rgb(28 33 51 / 3%),
+    0 8px 16px 0 rgb(28 33 51 / 4%),
+    0 16px 32px 0 rgb(28 33 51 / 6%);
+  z-index: 100;
+  /* The source sets overflow: hidden. That clipped the menu of a Select filter,
+     which renders a real GupDropdownField here rather than the source's text input. */
+  overflow: visible;
+}
+
+.gup-data-table .filter-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-content, 24px);
+  padding: var(--gup-spacing-between-content, 24px);
+}
+
+.gup-data-table .filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-component-default, 12px);
+  position: relative;
+  z-index: 1;
+}
+
+.gup-data-table .filter-field .gup-input-field .input-wrapper,
+.gup-data-table .filter-field .gup-dropdown-field .input-wrapper {
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+}
+
+.gup-data-table .filter-field .gup-input-field .input,
+.gup-data-table .filter-field .gup-dropdown-field .input {
+  background-color: var(--gup-color-states-base-bg, #ffffff);
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-data-table .filter-label {
+  font-family: 'Readex Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--gup-color-content-primary, #27272a);
+}
+
+.gup-data-table .filter-panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gup-spacing-between-items, 8px);
+  padding: var(--gup-spacing-between-text, 16px) var(--gup-spacing-between-content, 24px);
+  border-top: 1px solid var(--gup-color-border-low, #d9d9d9);
+}
+
+/* --- Applied filter chips --- */
+
+.gup-data-table .applied-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gup-spacing-between-items, 8px);
+  align-items: center;
+}
+
+/* --- Empty state --- */
+
+.gup-data-table .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 300px;
+  text-align: center;
+  gap: 8px;
+}
+
+.gup-data-table .empty-state-title {
+  font-family: 'Readex Pro', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.4px;
+  color: var(--gup-color-content-secondary, #52525b);
+  margin: 0;
+}
+
+.gup-data-table .empty-state-description {
+  font-family: 'Readex Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--gup-color-content-secondary, #52525b);
+  margin: 0;
+  max-width: 335px;
+}
+
+/* --- Pagination footer --- */
+
+.gup-data-table .pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gup-spacing-component-default, 12px);
+  width: 100%;
+}
+
+.gup-data-table .items-info {
+  font-family: 'Readex Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--gup-color-content-secondary, #52525b);
+  white-space: nowrap;
+}
+
+/* --- Badge chips inside the table (was ::slotted) --- */
+
+.gup-data-table .gup-badge-chip--positive {
+  background: var(--gup-color-positive-xlow);
+  border: 1px solid var(--gup-color-positive-low);
+  color: var(--gup-color-positive-xhigh);
+}
+
+.gup-data-table .gup-badge-chip--warning {
+  background: var(--gup-color-warning-low);
+  color: var(--gup-color-warning-xhigh);
+}
+
+.gup-data-table .gup-badge-chip--negative.gup-badge-chip--filled {
+  background: var(--gup-color-negative-high);
+  color: var(--gup-color-negative-contrast);
+}
+
+.gup-data-table .gup-badge-chip--brand {
+  background: var(--gup-color-brand-xlow);
+  border: 1px solid var(--gup-color-brand-low);
+  color: var(--gup-color-brand-xhigh);
+}
+
+.gup-data-table .gup-badge-chip--neutral {
+  background: var(--gup-color-neutral-contrast);
+  border: 1px solid var(--gup-color-neutral-low);
+  color: var(--gup-color-neutral-high);
+}
+
+/* --- Mobile control stack ---
+   One markup tree: the desktop controls and the mobile stack are both rendered
+   and swapped by the media query below (was _renderDesktopLayout /
+   _renderMobileLayout in the Lit component). */
+
+.gup-data-table .mobile-filters {
+  display: none;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-text, 16px);
+  width: 100%;
+}
+
+.gup-data-table .mobile-filter-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-component-default, 12px);
+  width: 100%;
+}
+
+.gup-data-table .mobile-filter-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gup-spacing-between-form-fields, 20px);
+  padding: var(--gup-padding-xs, 8px) 0 var(--gup-padding-xs, 8px) var(--gup-spacing-between-content, 24px);
+  border-inline-start: 4px solid var(--gup-color-neutral-medium, #3f3f46);
+}
+
+.gup-data-table .mobile-filters-button--active .gup-button .button {
+  background: linear-gradient(
+      0deg,
+      var(--gup-color-states-primary-active, rgb(26 26 26 / 70%)) 0%,
+      var(--gup-color-states-primary-active, rgb(26 26 26 / 70%)) 100%
+    ),
+    var(--gup-color-brand-medium, #2f57cd);
+  color: var(--gup-color-brand-contrast, #ffffff);
+}
+
+/* Same breakpoint as .gup-table--responsive (see COMPONENT: gup-table) so the
+   controls and the table collapse together. Do not introduce a second one. */
+@media (max-width: 639px) {
+  .gup-data-table {
+    background: var(--gup-color-states-base-bg, #ffffff);
+    padding: var(--gup-spacing-component-default, 12px) var(--gup-spacing-between-form-fields, 20px);
+  }
+
+  .gup-data-table .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gup-spacing-between-text, 16px);
+  }
+
+  .gup-data-table .search-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .gup-data-table .table-controls-right {
+    display: none;
+  }
+
+  .gup-data-table .mobile-filters {
+    display: flex;
+  }
+
+  .gup-data-table .mobile-action-button,
+  .gup-data-table .mobile-filters-button,
+  .gup-data-table .mobile-action-button .gup-button,
+  .gup-data-table .mobile-filters-button .gup-button,
+  .gup-data-table .mobile-action-button .button,
+  .gup-data-table .mobile-filters-button .button {
+    width: 100%;
+  }
+
+  .gup-data-table .pagination-container {
+    align-items: flex-start;
+  }
 }
 
 /* ============================================================

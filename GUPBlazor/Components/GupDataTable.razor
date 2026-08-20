@@ -1,0 +1,716 @@
+@* Equivalent of <gup-data-table title="..." description="..." show-search show-filters ...>
+   Composite table chrome: header, search box, filter panel, applied-filter chips,
+   empty state and a pagination footer wrapped around <GupTable>.
+
+   Two modes, selected by whether Items is set:
+     - Data-driven (Items != null): the component searches, slices and renders rows
+       itself via RowTemplate. This is the only mode where the search box filters.
+     - Manual (Items == null): the consumer supplies ChildContent rows already paged;
+       the component renders chrome only and reports page/search changes via events.
+
+   Two-way binding: @bind-SearchValue, @bind-CurrentPage, @bind-TotalItems,
+                    @bind-ResultsCount, @bind-FilterPanelOpen, @bind-AppliedFilters
+   Events: OnSearch, OnPageChange, OnClearFilters, OnViewClick, OnFilterApply
+*@
+@typeparam TItem
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="gup-data-table">
+    @if (!string.IsNullOrEmpty(TableTitle) || !string.IsNullOrEmpty(Description))
+    {
+        <div class="data-table-header">
+            @if (!string.IsNullOrEmpty(TableTitle))
+            {
+                <h2 class="title">@TableTitle</h2>
+            }
+            @if (!string.IsNullOrEmpty(Description))
+            {
+                <p class="description">@Description</p>
+            }
+        </div>
+    }
+
+    <div class="table-content-wrapper @(IsEmpty ? "table-content-wrapper--empty" : "")">
+        <div class="table-controls">
+            <div class="table-controls-left">
+                @if (ShowSearch)
+                {
+                    <div class="search-container">
+                        <div class="search-input">
+                            <GupInputField Name="@($"{_uid}-search")"
+                                           Type="text"
+                                           Required="false"
+                                           LabelHidden="true"
+                                           Value="@SearchValue"
+                                           Placeholder="@SearchPlaceholder"
+                                           OnValueChange="HandleSearchInput">
+                                <ChildContent>@SearchPlaceholder</ChildContent>
+                                <InputStart>
+                                    <GupIcon IconName="search" Width="24" Height="24" />
+                                </InputStart>
+                            </GupInputField>
+                        </div>
+                        @if (ResultsCount is not null)
+                        {
+                            <span class="results-count">@ResultsCount results</span>
+                        }
+                    </div>
+                }
+            </div>
+
+            @if (ShowFilters)
+            {
+                <div class="table-controls-right">
+                    <div class="button-group-container">
+                        @if (ShowViewButton && !string.IsNullOrEmpty(ViewButtonIcon))
+                        {
+                            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="HandleViewClick">
+                                <IconStart>
+                                    <GupIcon IconName="@ViewButtonIcon" Width="24" Height="24" />
+                                </IconStart>
+                                <ChildContent>@ViewButtonText</ChildContent>
+                            </GupButton>
+                        }
+                        else if (ShowViewButton)
+                        {
+                            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="HandleViewClick">
+                                <ChildContent>@ViewButtonText</ChildContent>
+                            </GupButton>
+                        }
+                        <div class="filter-toggle @(FilterPanelOpen ? "filter-button-active" : "")">
+                            <GupButton Appearance="@(FilterPanelOpen ? GupButtonAppearance.Primary : GupButtonAppearance.Secondary)"
+                                       OnClick="ToggleFilterPanel">
+                                <IconStart>
+                                    <GupIcon IconName="filter-list" Width="24" Height="24" />
+                                </IconStart>
+                                <ChildContent>@($"Filter{AppliedCountSuffix}")</ChildContent>
+                            </GupButton>
+                        </div>
+                    </div>
+
+                    @if (FilterPanelOpen && Filters.Count > 0)
+                    {
+                        <div class="filter-panel">
+                            <div class="filter-panel-content">
+                                @if (FiltersContent is not null)
+                                {
+                                    @FiltersContent
+                                }
+                                else
+                                {
+                                    @foreach (var filter in Filters)
+                                    {
+                                        <div class="filter-field">
+                                            <label class="filter-label">@filter.Label</label>
+                                            @if (filter.Type == GupDataTableFilterType.Select)
+                                            {
+                                                <GupDropdownField Name="@FieldName("desktop", filter)"
+                                                                  Required="false"
+                                                                  LabelHidden="true"
+                                                                  Placeholder="Select"
+                                                                  Value="@FilterValue(filter)"
+                                                                  DisplayValue="@FilterDisplayValue(filter)"
+                                                                  OnChange="@(value => HandleFilterValueChanged(filter, value))">
+                                                    <Label>@filter.Label</Label>
+                                                    <ChildContent>
+                                                        <GupDropdownMenu AriaLabel="@filter.Label">
+                                                            @foreach (var option in filter.Options)
+                                                            {
+                                                                <GupDropdownMenuItem Label="@option.Label"
+                                                                                     Value="@option.Value"
+                                                                                     Selected="@(option.Value == FilterValue(filter))" />
+                                                            }
+                                                        </GupDropdownMenu>
+                                                    </ChildContent>
+                                                </GupDropdownField>
+                                            }
+                                            else
+                                            {
+                                                <GupInputField Name="@FieldName("desktop", filter)"
+                                                               Type="@(filter.Type == GupDataTableFilterType.Date ? "date" : "text")"
+                                                               Required="false"
+                                                               LabelHidden="true"
+                                                               Value="@FilterValue(filter)"
+                                                               OnValueChange="@(value => HandleFilterValueChanged(filter, value))">
+                                                    <ChildContent>@filter.Label</ChildContent>
+                                                </GupInputField>
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="filter-panel-actions">
+                                <GupButton Appearance="@GupButtonAppearance.Text" OnClick="HandleClearPanelFilters">
+                                    <ChildContent>Clear</ChildContent>
+                                </GupButton>
+                                <GupButton OnClick="HandleApplyFilters">
+                                    <ChildContent>@($"Apply{SelectedCountSuffix}")</ChildContent>
+                                </GupButton>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="mobile-filters">
+                    @foreach (var label in MobileActionButtons)
+                    {
+                        var actionLabel = label;
+                        <div class="mobile-action-button">
+                            <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                       OnClick="@(() => HandleMobileActionClick(actionLabel))">
+                                <IconStart>
+                                    <GupIcon IconName="add" Width="24" Height="24" />
+                                </IconStart>
+                                <ChildContent>@actionLabel</ChildContent>
+                            </GupButton>
+                        </div>
+                    }
+
+                    <div class="mobile-filters-button @(FilterPanelOpen ? "mobile-filters-button--active" : "")">
+                        <GupButton Appearance="@(FilterPanelOpen ? GupButtonAppearance.Primary : GupButtonAppearance.Secondary)"
+                                   OnClick="ToggleFilterPanel">
+                            <IconStart>
+                                <GupIcon IconName="@(FilterPanelOpen ? "close" : "filter-list")" Width="24" Height="24" />
+                            </IconStart>
+                            <ChildContent>@($"{FiltersButtonText}{AppliedCountSuffix}")</ChildContent>
+                        </GupButton>
+                    </div>
+
+                    @if (FilterPanelOpen && Filters.Count > 0)
+                    {
+                        <div class="mobile-filter-panel">
+                            <div class="mobile-filter-panel-content">
+                                @if (FiltersContent is not null)
+                                {
+                                    @FiltersContent
+                                }
+                                else
+                                {
+                                    @foreach (var filter in Filters)
+                                    {
+                                        <div class="filter-field">
+                                            <label class="filter-label">@filter.Label</label>
+                                            @if (filter.Type == GupDataTableFilterType.Select)
+                                            {
+                                                <GupDropdownField Name="@FieldName("mobile", filter)"
+                                                                  Required="false"
+                                                                  LabelHidden="true"
+                                                                  Placeholder="Select"
+                                                                  Value="@FilterValue(filter)"
+                                                                  DisplayValue="@FilterDisplayValue(filter)"
+                                                                  OnChange="@(value => HandleFilterValueChanged(filter, value))">
+                                                    <Label>@filter.Label</Label>
+                                                    <ChildContent>
+                                                        <GupDropdownMenu AriaLabel="@filter.Label">
+                                                            @foreach (var option in filter.Options)
+                                                            {
+                                                                <GupDropdownMenuItem Label="@option.Label"
+                                                                                     Value="@option.Value"
+                                                                                     Selected="@(option.Value == FilterValue(filter))" />
+                                                            }
+                                                        </GupDropdownMenu>
+                                                    </ChildContent>
+                                                </GupDropdownField>
+                                            }
+                                            else
+                                            {
+                                                <GupInputField Name="@FieldName("mobile", filter)"
+                                                               Type="@(filter.Type == GupDataTableFilterType.Date ? "date" : "text")"
+                                                               Required="false"
+                                                               LabelHidden="true"
+                                                               Value="@FilterValue(filter)"
+                                                               OnValueChange="@(value => HandleFilterValueChanged(filter, value))">
+                                                    <ChildContent>@filter.Label</ChildContent>
+                                                </GupInputField>
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="filter-panel-actions">
+                                <GupButton Appearance="@GupButtonAppearance.Text" OnClick="HandleClearPanelFilters">
+                                    <ChildContent>Clear</ChildContent>
+                                </GupButton>
+                                <GupButton OnClick="HandleApplyFilters">
+                                    <ChildContent>@($"Apply{SelectedCountSuffix}")</ChildContent>
+                                </GupButton>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        @if (AppliedFilters.Count > 0)
+        {
+            <div class="applied-filters">
+                @foreach (var applied in AppliedFilters)
+                {
+                    var chip = applied;
+                    <GupFilterChip OnClick="@(_ => RemoveAppliedFilter(chip))">
+                        @chip.Label
+                    </GupFilterChip>
+                }
+                <div class="clear-all-button">
+                    <GupButton Appearance="@GupButtonAppearance.Text" OnClick="HandleClearPanelFilters">
+                        <ChildContent>@ClearAllText</ChildContent>
+                    </GupButton>
+                </div>
+            </div>
+        }
+
+        @if (IsEmpty)
+        {
+            <div class="empty-state">
+                <h3 class="empty-state-title">@EmptyTitle</h3>
+                <p class="empty-state-description">@EmptyDescription</p>
+            </div>
+        }
+        else
+        {
+            <GupTable Responsive="Responsive">
+                @if (Columns.Count > 0)
+                {
+                    <GupTableRow>
+                        @foreach (var column in Columns)
+                        {
+                            <GupTableCell Type="header" style="@ColumnStyle(column)">@column.Label</GupTableCell>
+                        }
+                    </GupTableRow>
+                }
+                @if (Items is not null)
+                {
+                    if (RowTemplate is not null)
+                    {
+                        foreach (var item in PagedItems)
+                        {
+                            @RowTemplate(item)
+                        }
+                    }
+                }
+                else
+                {
+                    @ChildContent
+                }
+            </GupTable>
+        }
+    </div>
+
+    <div class="pagination-container">
+        <span class="items-info">@($"{StartItem}-{EndItem} of {EffectiveTotalItems} items")</span>
+        @if (EffectiveTotalItems > 0)
+        {
+            @if (PaginationContent is not null)
+            {
+                @PaginationContent
+            }
+            else
+            {
+                <GupPagination TotalPages="@TotalPages"
+                               CurrentPage="@CurrentPage"
+                               OnPageChange="HandlePageChange" />
+            }
+        }
+    </div>
+</div>
+
+@code {
+    /// <summary>Heading shown above the table. Named <c>TableTitle</c> rather than <c>Title</c>
+    /// to avoid colliding with the HTML <c>title</c> attribute.</summary>
+    [Parameter] public string? TableTitle { get; set; }
+
+    /// <summary>Supporting text shown beneath <see cref="TableTitle"/>.</summary>
+    [Parameter] public string? Description { get; set; }
+
+    /// <summary>Placeholder for the search box. Also used as its accessible label.</summary>
+    [Parameter] public string SearchPlaceholder { get; set; } = "Find data";
+
+    /// <summary>Current search term.</summary>
+    [Parameter] public string? SearchValue { get; set; }
+
+    /// <summary>Fires when <see cref="SearchValue"/> changes — enables <c>@@bind-SearchValue</c>.</summary>
+    [Parameter] public EventCallback<string?> SearchValueChanged { get; set; }
+
+    /// <summary>Match count rendered as "N results" beside the search box. Null hides the label.</summary>
+    [Parameter] public int? ResultsCount { get; set; }
+
+    /// <summary>Fires when <see cref="ResultsCount"/> changes — enables <c>@@bind-ResultsCount</c>.</summary>
+    [Parameter] public EventCallback<int?> ResultsCountChanged { get; set; }
+
+    /// <summary>Total row count across all pages. Drives the item counter, the page count and the
+    /// empty state, so a data-driven consumer must set it (typically <c>Items.Count()</c>) — it is
+    /// not inferred from <see cref="Items"/>. Zero renders the empty state.</summary>
+    [Parameter] public int TotalItems { get; set; }
+
+    /// <summary>Fires when <see cref="TotalItems"/> changes — enables <c>@@bind-TotalItems</c>.</summary>
+    [Parameter] public EventCallback<int> TotalItemsChanged { get; set; }
+
+    /// <summary>Active page, 1-based.</summary>
+    [Parameter] public int CurrentPage { get; set; } = 1;
+
+    /// <summary>Fires when <see cref="CurrentPage"/> changes — enables <c>@@bind-CurrentPage</c>.</summary>
+    [Parameter] public EventCallback<int> CurrentPageChanged { get; set; }
+
+    /// <summary>Rows per page. Values of zero or less fall back to 10.</summary>
+    [Parameter] public int ItemsPerPage { get; set; } = 10;
+
+    /// <summary>Whether the search box is rendered.</summary>
+    [Parameter] public bool ShowSearch { get; set; } = true;
+
+    /// <summary>Whether the filter button, filter panel and view button are rendered.</summary>
+    [Parameter] public bool ShowFilters { get; set; }
+
+    /// <summary>Filters offered in the filter panel.</summary>
+    [Parameter] public IReadOnlyList<GupDataTableFilter> Filters { get; set; } = [];
+
+    /// <summary>Filters the user has applied, rendered as removable chips.</summary>
+    [Parameter] public IReadOnlyList<GupAppliedFilter> AppliedFilters { get; set; } = [];
+
+    /// <summary>Fires when <see cref="AppliedFilters"/> changes — enables <c>@@bind-AppliedFilters</c>.</summary>
+    [Parameter] public EventCallback<IReadOnlyList<GupAppliedFilter>> AppliedFiltersChanged { get; set; }
+
+    /// <summary>Column definitions. When non-empty a header row is rendered from them, and each
+    /// column's <see cref="GupDataTableColumn.Width"/> or <see cref="GupDataTableColumn.Grow"/> sizes it.</summary>
+    [Parameter] public IReadOnlyList<GupDataTableColumn> Columns { get; set; } = [];
+
+    /// <summary>Label for the filter toggle in the mobile control stack.</summary>
+    [Parameter] public string FiltersButtonText { get; set; } = "Filters";
+
+    /// <summary>Label for the button that clears every applied-filter chip.</summary>
+    [Parameter] public string ClearAllText { get; set; } = "Clear all";
+
+    /// <summary>Label for the secondary action button beside the filter toggle.</summary>
+    [Parameter] public string ViewButtonText { get; set; } = "View application";
+
+    /// <summary>Icon name shown before <see cref="ViewButtonText"/>. Null renders no icon.</summary>
+    [Parameter] public string? ViewButtonIcon { get; set; }
+
+    /// <summary>Whether the view button is rendered.</summary>
+    [Parameter] public bool ShowViewButton { get; set; } = true;
+
+    /// <summary>Labels for extra full-width action buttons shown above the mobile filter toggle.</summary>
+    [Parameter] public IReadOnlyList<string> MobileActionButtons { get; set; } = [];
+
+    /// <summary>Heading of the empty state.</summary>
+    [Parameter] public string EmptyTitle { get; set; } = "No applications found";
+
+    /// <summary>Body text of the empty state.</summary>
+    [Parameter] public string EmptyDescription { get; set; } =
+        "There are no applications to display. Create your first application to get started.";
+
+    /// <summary>Whether the filter panel is open.</summary>
+    [Parameter] public bool FilterPanelOpen { get; set; }
+
+    /// <summary>Fires when <see cref="FilterPanelOpen"/> changes — enables <c>@@bind-FilterPanelOpen</c>.</summary>
+    [Parameter] public EventCallback<bool> FilterPanelOpenChanged { get; set; }
+
+    /// <summary>Passed to the inner <see cref="GupTable"/>: collapses rows into stacked cards
+    /// below the mobile breakpoint. Replaces the <c>layout</c> property of the Lit component.</summary>
+    [Parameter] public bool Responsive { get; set; } = true;
+
+    /// <summary>Rows to display. When set, the component performs its own search, filtering and paging.</summary>
+    [Parameter] public IEnumerable<TItem>? Items { get; set; }
+
+    /// <summary>Renders one row. Receives the item for that row.</summary>
+    [Parameter] public RenderFragment<TItem>? RowTemplate { get; set; }
+
+    /// <summary>Projects an item to the text searched by the search box. Defaults to ToString().</summary>
+    [Parameter] public Func<TItem, string>? SearchTextSelector { get; set; }
+
+    /// <summary>Rows supplied directly by the consumer, used when <see cref="Items"/> is null. In that
+    /// mode the consumer owns searching and paging — the search box only raises <see cref="OnSearch"/>,
+    /// and the pagination footer only raises <see cref="OnPageChange"/>.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Replaces the auto-generated filter editors in both filter panels.</summary>
+    [Parameter] public RenderFragment? FiltersContent { get; set; }
+
+    /// <summary>Replaces the built-in <see cref="GupPagination"/> in the footer.</summary>
+    [Parameter] public RenderFragment? PaginationContent { get; set; }
+
+    /// <summary>Fires on every keystroke in the search box, with the new term.</summary>
+    [Parameter] public EventCallback<string?> OnSearch { get; set; }
+
+    /// <summary>Fires when the page changes, with the new page number.</summary>
+    [Parameter] public EventCallback<int> OnPageChange { get; set; }
+
+    /// <summary>Fires when Clear is pressed in the filter panel or the chip row.</summary>
+    [Parameter] public EventCallback OnClearFilters { get; set; }
+
+    /// <summary>Fires when the view button is pressed.</summary>
+    [Parameter] public EventCallback OnViewClick { get; set; }
+
+    /// <summary>Fires when Apply is pressed in the filter panel, with the applied filters.</summary>
+    [Parameter] public EventCallback<IReadOnlyList<GupAppliedFilter>> OnFilterApply { get; set; }
+
+    /// <summary>Fires when one of the <see cref="MobileActionButtons"/> is pressed, with its label.</summary>
+    [Parameter] public EventCallback<string> OnMobileActionClick { get; set; }
+
+    // Per-instance prefix so the ids of the search box and the two filter panels stay
+    // unique when several data tables share a page.
+    private readonly string _uid = Guid.NewGuid().ToString("N")[..8];
+
+    // Pre-filter total, cached lazily so an empty search term can restore it. Invalidated
+    // whenever the consumer changes TotalItems from the outside.
+    private int? _originalTotalItems;
+    private int _lastTotalItems = int.MinValue;
+
+    protected override void OnParametersSet()
+    {
+        if (TotalItems != _lastTotalItems)
+        {
+            _originalTotalItems = null;
+            _lastTotalItems = TotalItems;
+        }
+    }
+
+    private bool IsDataDriven => Items is not null;
+
+    private bool HasSearchTerm => !string.IsNullOrWhiteSpace(SearchValue);
+
+    private int EffectiveItemsPerPage => ItemsPerPage > 0 ? ItemsPerPage : 10;
+
+    private IEnumerable<TItem> FilteredItems
+    {
+        get
+        {
+            if (Items is null)
+            {
+                return [];
+            }
+            if (!HasSearchTerm)
+            {
+                return Items;
+            }
+            var term = SearchValue!.Trim();
+            return Items.Where(item => SearchTextFor(item).Contains(term, StringComparison.OrdinalIgnoreCase));
+        }
+    }
+
+    private string SearchTextFor(TItem item) =>
+        (SearchTextSelector is not null ? SearchTextSelector(item) : item?.ToString()) ?? "";
+
+    private IEnumerable<TItem> PagedItems =>
+        FilteredItems
+            .Skip((Math.Max(CurrentPage, 1) - 1) * EffectiveItemsPerPage)
+            .Take(EffectiveItemsPerPage);
+
+    // The count the footer, page count and empty state work from. While a search is active in
+    // data-driven mode it is the match count, so the chrome stays correct even when the consumer
+    // does not bind TotalItems.
+    private int EffectiveTotalItems => IsDataDriven && HasSearchTerm ? FilteredItems.Count() : TotalItems;
+
+    private bool IsEmpty => EffectiveTotalItems == 0;
+
+    private int TotalPages => (int)Math.Ceiling((double)EffectiveTotalItems / EffectiveItemsPerPage);
+
+    private int StartItem => EffectiveTotalItems == 0 ? 0 : (Math.Max(CurrentPage, 1) - 1) * EffectiveItemsPerPage + 1;
+
+    private int EndItem => Math.Min(Math.Max(CurrentPage, 1) * EffectiveItemsPerPage, EffectiveTotalItems);
+
+    private string AppliedCountSuffix => AppliedFilters.Count > 0 ? $" ({AppliedFilters.Count})" : "";
+
+    private string SelectedCountSuffix
+    {
+        get
+        {
+            var count = Filters.Count(filter =>
+                AppliedFilters.Any(applied => applied.Key == filter.Key && !string.IsNullOrEmpty(applied.Value)));
+            return count > 0 ? $" ({count})" : "";
+        }
+    }
+
+    private string FieldName(string scope, GupDataTableFilter filter) => $"{_uid}-{scope}-{filter.Key}";
+
+    private string? FilterValue(GupDataTableFilter filter) =>
+        AppliedFilters.FirstOrDefault(applied => applied.Key == filter.Key)?.Value;
+
+    private string? FilterDisplayValue(GupDataTableFilter filter)
+    {
+        var value = FilterValue(filter);
+        if (string.IsNullOrEmpty(value))
+        {
+            return null;
+        }
+        return filter.Options.FirstOrDefault(option => option.Value == value)?.Label ?? value;
+    }
+
+    private static string? ColumnStyle(GupDataTableColumn column)
+    {
+        if (!string.IsNullOrEmpty(column.Width))
+        {
+            return $"width: {column.Width}";
+        }
+        return column.Grow ? "width: 100%" : null;
+    }
+
+    private async Task HandleSearchInput(string? value)
+    {
+        SearchValue = value;
+        if (SearchValueChanged.HasDelegate)
+        {
+            await SearchValueChanged.InvokeAsync(value);
+        }
+
+        await ApplySearchAsync();
+
+        if (OnSearch.HasDelegate)
+        {
+            await OnSearch.InvokeAsync(value);
+        }
+    }
+
+    private async Task ApplySearchAsync()
+    {
+        _originalTotalItems ??= TotalItems;
+
+        if (!HasSearchTerm)
+        {
+            await SetResultsCountAsync(null);
+            await SetTotalItemsAsync(_originalTotalItems.Value);
+            return;
+        }
+
+        if (!IsDataDriven)
+        {
+            return;
+        }
+
+        var matches = FilteredItems.Count();
+        await SetResultsCountAsync(matches);
+        await SetTotalItemsAsync(matches);
+        await SetCurrentPageAsync(1, notifyPageChange: false);
+    }
+
+    private async Task SetResultsCountAsync(int? value)
+    {
+        if (ResultsCount == value)
+        {
+            return;
+        }
+        ResultsCount = value;
+        if (ResultsCountChanged.HasDelegate)
+        {
+            await ResultsCountChanged.InvokeAsync(value);
+        }
+    }
+
+    private async Task SetTotalItemsAsync(int value)
+    {
+        if (TotalItems == value)
+        {
+            return;
+        }
+        TotalItems = value;
+        _lastTotalItems = value;
+        if (TotalItemsChanged.HasDelegate)
+        {
+            await TotalItemsChanged.InvokeAsync(value);
+        }
+    }
+
+    private async Task SetCurrentPageAsync(int page, bool notifyPageChange)
+    {
+        if (CurrentPage != page)
+        {
+            CurrentPage = page;
+            if (CurrentPageChanged.HasDelegate)
+            {
+                await CurrentPageChanged.InvokeAsync(page);
+            }
+        }
+
+        if (notifyPageChange && OnPageChange.HasDelegate)
+        {
+            await OnPageChange.InvokeAsync(page);
+        }
+    }
+
+    private Task HandlePageChange(int page) => SetCurrentPageAsync(page, notifyPageChange: true);
+
+    private async Task ToggleFilterPanel()
+    {
+        FilterPanelOpen = !FilterPanelOpen;
+        if (FilterPanelOpenChanged.HasDelegate)
+        {
+            await FilterPanelOpenChanged.InvokeAsync(FilterPanelOpen);
+        }
+    }
+
+    private Task HandleViewClick() =>
+        OnViewClick.HasDelegate ? OnViewClick.InvokeAsync() : Task.CompletedTask;
+
+    private Task HandleMobileActionClick(string label) =>
+        OnMobileActionClick.HasDelegate ? OnMobileActionClick.InvokeAsync(label) : Task.CompletedTask;
+
+    private async Task HandleApplyFilters()
+    {
+        FilterPanelOpen = false;
+        if (FilterPanelOpenChanged.HasDelegate)
+        {
+            await FilterPanelOpenChanged.InvokeAsync(false);
+        }
+        if (OnFilterApply.HasDelegate)
+        {
+            await OnFilterApply.InvokeAsync(AppliedFilters);
+        }
+    }
+
+    private async Task HandleClearPanelFilters()
+    {
+        await SetAppliedFiltersAsync([]);
+        if (OnClearFilters.HasDelegate)
+        {
+            await OnClearFilters.InvokeAsync();
+        }
+    }
+
+    private Task RemoveAppliedFilter(GupAppliedFilter applied) =>
+        SetAppliedFiltersAsync(AppliedFilters.Where(f => f.Key != applied.Key).ToList());
+
+    private Task HandleFilterValueChanged(GupDataTableFilter filter, string? value)
+    {
+        var next = AppliedFilters.ToList();
+        var index = next.FindIndex(applied => applied.Key == filter.Key);
+
+        if (string.IsNullOrEmpty(value))
+        {
+            if (index < 0)
+            {
+                return Task.CompletedTask;
+            }
+            next.RemoveAt(index);
+        }
+        else
+        {
+            var chip = new GupAppliedFilter
+            {
+                Key = filter.Key,
+                Value = value,
+                Label = $"{filter.Label}: {DisplayValueFor(filter, value)}",
+            };
+            if (index < 0)
+            {
+                next.Add(chip);
+            }
+            else
+            {
+                next[index] = chip;
+            }
+        }
+
+        return SetAppliedFiltersAsync(next);
+    }
+
+    private static string DisplayValueFor(GupDataTableFilter filter, string value) =>
+        filter.Options.FirstOrDefault(option => option.Value == value)?.Label ?? value;
+
+    private async Task SetAppliedFiltersAsync(IReadOnlyList<GupAppliedFilter> value)
+    {
+        AppliedFilters = value;
+        if (AppliedFiltersChanged.HasDelegate)
+        {
+            await AppliedFiltersChanged.InvokeAsync(value);
+        }
+    }
+}

@@ -3,13 +3,13 @@
 *@
 @if (Type == "header")
 {
-    <th class="gup-table-cell gup-table-cell--header" scope="col">
+    <th class="gup-table-cell gup-table-cell--header" scope="col" @attributes="AdditionalAttributes">
         <div class="wrapper">@ChildContent</div>
     </th>
 }
 else if (Type == "rowheader")
 {
-    <th class="gup-table-cell gup-table-cell--rowheader" scope="row" data-label="@Label">
+    <th class="gup-table-cell gup-table-cell--rowheader" scope="row" data-label="@Label" @attributes="AdditionalAttributes">
         @if (!string.IsNullOrEmpty(Label))
         {
             <span class="gup-table-cell__label" aria-hidden="true">@Label</span>
@@ -19,7 +19,7 @@ else if (Type == "rowheader")
 }
 else
 {
-    <td class="gup-table-cell" data-label="@Label">
+    <td class="gup-table-cell" data-label="@Label" @attributes="AdditionalAttributes">
         @if (!string.IsNullOrEmpty(Label))
         {
             <span class="gup-table-cell__label" aria-hidden="true">@Label</span>
@@ -39,4 +39,12 @@ else
     /// column header text (e.g. "Terms", "Status").
     /// </summary>
     [Parameter] public string? Label { get; set; }
+
+    /// <summary>
+    /// Any additional attributes (e.g. <c>style="width: 180px"</c>) are splatted onto the
+    /// rendered <c>&lt;th&gt;</c>/<c>&lt;td&gt;</c>. Used by <c>GupDataTable</c> to apply
+    /// <see cref="GupDataTableColumn.Width"/>.
+    /// </summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 }

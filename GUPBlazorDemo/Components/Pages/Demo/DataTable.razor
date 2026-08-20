@@ -1,0 +1,341 @@
+@page "/demo/data-table"
+@rendermode InteractiveServer
+
+<PageTitle>Data Table — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Data Table">
+        <PageSummary>
+            GupDataTable — composite table chrome around <code>GupTable</code>: title and description,
+            a client-side search box, a collapsible filter panel with removable chips, an empty state,
+            and a pagination footer with an "X-Y of N items" counter. Set <code>Items</code> plus
+            <code>RowTemplate</code> to let the component search, slice and render rows itself; leave
+            <code>Items</code> null to supply pre-paged rows as child content and drive paging yourself.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default — search and pagination</h2>
+            <p class="demo-section-description">
+                25 applications, 6 per page. Typing in the search box filters every column,
+                shows the "N results" label, resets the page to 1, and shrinks the item counter;
+                clearing it restores the original total.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataTable Items="Applications"
+                                  SearchTextSelector="SearchText"
+                                  TableTitle="Applications"
+                                  Description="This is a short description"
+                                  Columns="ApplicationColumns"
+                                  ItemsPerPage="6"
+                                  TotalItems="Applications.Count"
+                                  @bind-SearchValue="_defaultSearch"
+                                  @bind-CurrentPage="_defaultPage"
+                                  @bind-ResultsCount="_defaultResults"
+                                  ShowFilters="false">
+                        <RowTemplate Context="app">
+                            <GupTableRow>
+                                <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                <GupTableCell Label="Status">
+                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                </GupTableCell>
+                            </GupTableRow>
+                        </RowTemplate>
+                    </GupDataTable>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ WITH FILTERS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">With filters — text, date and select</h2>
+            <p class="demo-section-description">
+                <code>ShowFilters="true"</code> adds the view button and the filter toggle. The panel
+                carries one editor of each <code>GupDataTableFilterType</code>; picking a value adds a
+                removable chip and bumps the counts on the Filter and Apply buttons. Unlike the Angular
+                source, a <code>Select</code> filter renders a real dropdown bound to its
+                <code>Options</code>.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataTable Items="Applications"
+                                  SearchTextSelector="SearchText"
+                                  TableTitle="Applications"
+                                  Description="Filter by status, reference or date"
+                                  Columns="ApplicationColumns"
+                                  ItemsPerPage="6"
+                                  TotalItems="Applications.Count"
+                                  ShowFilters="true"
+                                  ViewButtonText="Action"
+                                  ViewButtonIcon="download"
+                                  Filters="ApplicationFilters"
+                                  MobileActionButtons="@(new[] { "New application" })"
+                                  @bind-SearchValue="_filterSearch"
+                                  @bind-CurrentPage="_filterPage"
+                                  @bind-ResultsCount="_filterResults"
+                                  @bind-FilterPanelOpen="_filterPanelOpen"
+                                  @bind-AppliedFilters="_appliedFilters"
+                                  OnFilterApply="HandleFilterApply"
+                                  OnClearFilters="@(() => Log("Clear filters"))"
+                                  OnViewClick="@(() => Log("View click"))"
+                                  OnMobileActionClick="@(label => Log($"Mobile action: {label}"))">
+                        <RowTemplate Context="app">
+                            <GupTableRow>
+                                <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                <GupTableCell Label="Status">
+                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                </GupTableCell>
+                            </GupTableRow>
+                        </RowTemplate>
+                    </GupDataTable>
+
+                    <p data-testid="filter-log" style="margin:16px 0 0; padding:0 24px 16px;">
+                        Last event: <strong>@_lastEvent</strong>
+                        &nbsp;·&nbsp; applied: <strong>@_appliedFilters.Count</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ EMPTY STATE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Empty state</h2>
+            <p class="demo-section-description">
+                <code>TotalItems="0"</code> replaces the table with the empty state and adds
+                <code>.table-content-wrapper--empty</code>. The search and filter controls stay visible,
+                and the footer still reports <code>0-0 of 0 items</code> — the pagination control itself
+                is hidden.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataTable TItem="Application"
+                                  Items="NoApplications"
+                                  TableTitle="Applications"
+                                  Description="This is a short description"
+                                  Columns="ApplicationColumns"
+                                  ItemsPerPage="6"
+                                  TotalItems="0"
+                                  ShowFilters="true"
+                                  ViewButtonText="Action"
+                                  Filters="ApplicationFilters"
+                                  @bind-FilterPanelOpen="_emptyPanelOpen" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ SEARCH ONLY ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Search only</h2>
+            <p class="demo-section-description">
+                <code>ShowFilters="false"</code> drops the whole right-hand control group, leaving the
+                search box and the footer. No title or description is set, so the header block is omitted.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface">
+                    <GupDataTable Items="Applications"
+                                  SearchTextSelector="SearchText"
+                                  SearchPlaceholder="Search applications"
+                                  Columns="ApplicationColumns"
+                                  ItemsPerPage="10"
+                                  TotalItems="Applications.Count"
+                                  ShowFilters="false"
+                                  @bind-SearchValue="_searchOnlySearch"
+                                  @bind-CurrentPage="_searchOnlyPage"
+                                  @bind-ResultsCount="_searchOnlyResults"
+                                  OnSearch="@(term => Log($"Search: {term}"))">
+                        <RowTemplate Context="app">
+                            <GupTableRow>
+                                <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                <GupTableCell Label="Status">
+                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                </GupTableCell>
+                            </GupTableRow>
+                        </RowTemplate>
+                    </GupDataTable>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ RESPONSIVE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Responsive — stacked cards below 639px</h2>
+            <p class="demo-section-description">
+                <code>Responsive</code> defaults to true and is passed to the inner <code>GupTable</code>:
+                below 639px each row becomes a bordered card whose cells stack with their
+                <code>Label</code>, the desktop control group is swapped for the full-width mobile stack,
+                and the filter panel opens inline instead of floating. Narrow the window — or drag the
+                resizable frame below — to see the collapse. There is a single breakpoint, shared with
+                <code>.gup-table--responsive</code>.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface"
+                     style="resize:horizontal; overflow:auto; min-width:320px; max-width:100%; width:100%;">
+                    <GupDataTable Items="Applications"
+                                  SearchTextSelector="SearchText"
+                                  TableTitle="Applications"
+                                  Columns="ApplicationColumns"
+                                  ItemsPerPage="4"
+                                  TotalItems="Applications.Count"
+                                  ShowFilters="true"
+                                  ViewButtonText="Action"
+                                  Filters="ApplicationFilters"
+                                  MobileActionButtons="@(new[] { "New application" })"
+                                  Responsive="true"
+                                  @bind-SearchValue="_responsiveSearch"
+                                  @bind-CurrentPage="_responsivePage"
+                                  @bind-ResultsCount="_responsiveResults"
+                                  @bind-FilterPanelOpen="_responsivePanelOpen">
+                        <RowTemplate Context="app">
+                            <GupTableRow>
+                                <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                <GupTableCell Label="Status">
+                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                </GupTableCell>
+                            </GupTableRow>
+                        </RowTemplate>
+                    </GupDataTable>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private sealed record Application(
+        string Number,
+        string Type,
+        string StartDate,
+        string EndDate,
+        string Status,
+        GupBadgeChipAppearance StatusAppearance);
+
+    // Reference dataset shape from design-system/components/data-table/data-table.stories.ts
+    private static readonly IReadOnlyList<Application> Applications = BuildApplications();
+
+    private static readonly IReadOnlyList<Application> NoApplications = [];
+
+    private static readonly IReadOnlyList<GupDataTableColumn> ApplicationColumns =
+    [
+        new() { Key = "number", Label = "Number", Width = "180px" },
+        new() { Key = "type", Label = "Type" },
+        new() { Key = "startDate", Label = "Start date", Width = "130px" },
+        new() { Key = "endDate", Label = "End date", Width = "130px" },
+        new() { Key = "status", Label = "Status", Width = "150px" },
+    ];
+
+    private static readonly IReadOnlyList<GupDataTableFilter> ApplicationFilters =
+    [
+        new() { Key = "reference", Label = "Reference", Type = GupDataTableFilterType.Text },
+        new() { Key = "dateBefore", Label = "Date before", Type = GupDataTableFilterType.Date },
+        new()
+        {
+            Key = "status",
+            Label = "Status",
+            Type = GupDataTableFilterType.Select,
+            Options =
+            [
+                new() { Value = "confirmed", Label = "Confirmed" },
+                new() { Value = "pending", Label = "Pending" },
+                new() { Value = "rejected", Label = "Rejected" },
+                new() { Value = "expired", Label = "Expired" },
+            ],
+        },
+    ];
+
+    private static string SearchText(Application app) =>
+        $"{app.Number} {app.Type} {app.StartDate} {app.EndDate} {app.Status}";
+
+    private static IReadOnlyList<Application> BuildApplications()
+    {
+        var types = new[]
+        {
+            "Registration of Ownership to Heirs",
+            "Transfer of Commercial Licence",
+            "Renewal of Trade Name",
+            "Issuance of Municipality Permit",
+            "Amendment of Company Activity",
+        };
+        var statuses = new (string Label, GupBadgeChipAppearance Appearance)[]
+        {
+            ("Confirmed", GupBadgeChipAppearance.Positive),
+            ("Pending", GupBadgeChipAppearance.Warning),
+            ("Rejected", GupBadgeChipAppearance.Negative),
+            ("Expired", GupBadgeChipAppearance.Neutral),
+            ("In review", GupBadgeChipAppearance.Brand),
+        };
+
+        return Enumerable.Range(0, 25).Select(i =>
+        {
+            var status = statuses[i % statuses.Length];
+            var start = new DateOnly(2024, 1, 1).AddDays(i * 11);
+            return new Application(
+                $"RN07A-{1234567 + i}",
+                types[i % types.Length],
+                start.ToString("yyyy-MM-dd"),
+                start.AddYears(1).ToString("yyyy-MM-dd"),
+                status.Label,
+                status.Appearance);
+        }).ToList();
+    }
+
+    // Default section
+    private string? _defaultSearch;
+    private int _defaultPage = 1;
+    private int? _defaultResults;
+
+    // Filters section
+    private string? _filterSearch;
+    private int _filterPage = 1;
+    private int? _filterResults;
+    private bool _filterPanelOpen;
+    private IReadOnlyList<GupAppliedFilter> _appliedFilters = [];
+    private string _lastEvent = "(none)";
+
+    // Empty-state section
+    private bool _emptyPanelOpen;
+
+    // Search-only section
+    private string? _searchOnlySearch;
+    private int _searchOnlyPage = 1;
+    private int? _searchOnlyResults;
+
+    // Responsive section
+    private string? _responsiveSearch;
+    private int _responsivePage = 1;
+    private int? _responsiveResults;
+    private bool _responsivePanelOpen;
+
+    private void HandleFilterApply(IReadOnlyList<GupAppliedFilter> applied) =>
+        Log($"Apply ({applied.Count})");
+
+    private void Log(string message) => _lastEvent = message;
+}
