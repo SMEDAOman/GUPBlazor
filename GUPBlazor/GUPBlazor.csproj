@@ -11,12 +11,23 @@
     <Company>SMEDAOman</Company>
     <Product>GUPBlazor</Product>
     <RepositoryUrl>https://github.com/SMEDAOman/GUPBlazor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/SMEDAOman/GUPBlazor</PackageProjectUrl>
+    <Description>A Blazor implementation of the GUP (Government Unified Platform) design system by the SMEs Development Authority (Oman). 66 native Blazor components with accessibility, RTL and Arabic localization support.</Description>
+    <PackageTags>blazor;design-system;gup;gov-om;oman;components;ui;accessibility;rtl</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Every public type is documented; self-evident enum members (Primary, Left, S…) are not. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <Version>0.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 

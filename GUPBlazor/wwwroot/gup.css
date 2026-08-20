@@ -5173,5 +5173,77 @@ body {
 }
 
 /* ============================================================
+   COMPONENT: gup-skip-link
+   ============================================================
+   Ported from design-system/components/skip-link/skip-link.css.
+   The source hides :host via the screenreader-text mixin and reveals it on
+   :focus-within; with no shadow root the anchor is the host, so the same two
+   states map to .gup-skip-link and .gup-skip-link:focus.
+*/
+
+.gup-skip-link {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: none;
+  white-space: nowrap;
+}
+
+.gup-skip-link:focus {
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  z-index: 100;
+  overflow: visible;
+  clip: auto;
+  height: auto;
+  width: 100%;
+  margin: 0;
+  padding: calc(var(--unit) * 3);
+  background-color: var(--color-blue-700, #2c64b9);
+  color: var(--color-grey-0, #ffffff);
+  white-space: normal;
+  text-align: start;
+}
+
+/* ============================================================
+   COMPONENT: gup-flag
+   ============================================================
+   Ported from design-system/components/flag/flag.css.
+   The source sets --aspect-ratio / --border-radius on :host per shape
+   attribute; here the same tokens hang off the .gup-flag--* modifiers.
+   Note the source declares 3/4 for the rectangle, which is portrait —
+   the 4x3 artwork is landscape, so this uses 4/3.
+*/
+
+.gup-flag {
+  display: block;
+  width: auto;
+}
+
+.gup-flag--rectangle {
+  --gup-flag--aspect-ratio: 4 / 3;
+  --gup-flag--border-radius: 2px;
+}
+
+.gup-flag--circle {
+  --gup-flag--aspect-ratio: 1;
+  --gup-flag--border-radius: 51%;
+}
+
+.gup-flag__svg {
+  display: block;
+  height: 100%;
+  width: auto;
+  aspect-ratio: var(--gup-flag--aspect-ratio);
+  border-radius: var(--gup-flag--border-radius);
+  object-fit: cover;
+}
+
+/* ============================================================
    END OF BUNDLED STYLES
    ============================================================ */

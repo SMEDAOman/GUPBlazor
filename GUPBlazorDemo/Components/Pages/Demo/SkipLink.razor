@@ -1,0 +1,126 @@
+@page "/demo/skip-link"
+@rendermode InteractiveServer
+
+<PageTitle>Skip Link — Component Demo</PageTitle>
+
+<GupSkipLink Href="#main-content">Skip to content</GupSkipLink>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Skip Link">
+        <PageSummary>
+            GupSkipLink — an anchor that lets keyboard users bypass the header navigation and
+            jump straight to the main content. It is visually hidden until focused, so it only
+            appears on the first <kbd>Tab</kbd> press. This page has one mounted at the very top:
+            click anywhere in the page background, then press <kbd>Tab</kbd> to reveal it.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ TRY IT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Try it</h2>
+            <p class="demo-section-description">
+                The live skip link for this page is rendered above the header. Click on empty page
+                background to move focus to the top of the document, then press <kbd>Tab</kbd> — a
+                blue bar reading "Skip to content" appears across the top. Press <kbd>Enter</kbd>
+                and focus jumps past the navigation to the main content below.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <p style="margin:0;">
+                        Rendered markup — a single anchor, hidden until <code>:focus</code>:
+                    </p>
+                    <pre style="margin:16px 0 0;"><code>&lt;GupSkipLink Href="#main-content"&gt;Skip to content&lt;/GupSkipLink&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ USAGE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Usage</h2>
+            <p class="demo-section-description">
+                Place it as the <strong>first focusable element</strong> on the page — before the
+                header — and give the main content region a matching <code>id</code>. The
+                <code>tabindex="-1"</code> on the target makes it focusable programmatically, so
+                the jump moves focus and not just the scroll position.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <pre style="margin:0;"><code>&lt;GupSkipLink Href="#main-content"&gt;Skip to content&lt;/GupSkipLink&gt;
+
+&lt;GupHeader NavAriaLabel="Main navigation"&gt;
+    ...
+&lt;/GupHeader&gt;
+
+&lt;main id="main-content" tabindex="-1"&gt;
+    ...
+&lt;/main&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CUSTOM TARGET ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Custom target and label</h2>
+            <p class="demo-section-description">
+                <code>Href</code> defaults to <code>#main-content</code>. Override it to point at
+                any element on the page, and pass your own label as the child content — for
+                example a localized string.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <pre style="margin:0;"><code>&lt;GupSkipLink Href="#search-results"&gt;Skip to results&lt;/GupSkipLink&gt;
+
+&lt;GupSkipLink Href="#main-content"&gt;تخطي إلى المحتوى&lt;/GupSkipLink&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ACCESSIBILITY ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Accessibility</h2>
+            <p class="demo-section-description">
+                A skip link is the standard way to satisfy
+                <strong>WCAG 2.4.1 Bypass Blocks (Level A)</strong>. Without one, keyboard and
+                screen-reader users must tab through every navigation item on every page before
+                reaching the content.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupCallout>
+                        The link is hidden with the <code>screenreader-text</code> clip pattern
+                        rather than <code>display:none</code>, so it stays in the focus order and
+                        in the accessibility tree. Never hide it in a way that removes it from
+                        the tab sequence.
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <main id="main-content" tabindex="-1">
+        <div class="demo-body">
+            <section class="demo-section">
+                <h2 class="demo-section-title">Main content</h2>
+                <p class="demo-section-description">
+                    This is the region referenced by <code>#main-content</code>. Activating the
+                    skip link moves focus here, past the header navigation above.
+                </p>
+            </section>
+        </div>
+    </main>
+
+</div>

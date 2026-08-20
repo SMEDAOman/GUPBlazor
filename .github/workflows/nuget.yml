@@ -16,11 +16,11 @@ jobs:
       - name: 'Restore packages'
         run: dotnet restore GUPBlazor/GUPBlazor.csproj
       - name: 'Build project'
-        run: dotnet build GUPBlazor/GUPBlazor.csproj --no-restore
+        run: dotnet build GUPBlazor/GUPBlazor.csproj --no-restore --configuration Release
 
       
       - name: 'Pack project'
-        run: dotnet pack GUPBlazor/GUPBlazor.csproj --no-restore --no-build --configuration Debug --output output
+        run: dotnet pack GUPBlazor/GUPBlazor.csproj --no-restore --no-build --configuration Release --output output
 
       - name: "Push package"
         run: dotnet nuget push output\*.nupkg -k ${{ secrets.NUGETKEY }} -s https://api.nuget.org/v3/index.json

@@ -1,9 +1,9 @@
-@* Equivalent of <gup-image src="..." alt="..." width="..." height="..." loading="lazy|eager" error-message="...">
+﻿@* Equivalent of <gup-image src="..." alt="..." width="..." height="..." loading="lazy|eager" error-message="...">
    A component for displaying images with branded captions and graceful error fallback.
 
    Slots / RenderFragments:
-     - CaptionContent → optional caption rendered in a <figcaption> beneath the image
-     - ErrorContent   → optional custom error UI (replaces the default error message
+     - CaptionContent â†’ optional caption rendered in a <figcaption> beneath the image
+     - ErrorContent   â†’ optional custom error UI (replaces the default error message
                         when the image fails to load)
 
    Two-way binding: @bind-Src, @bind-Alt, @bind-ErrorMessage, @bind-Loading, @bind-Width, @bind-Height
@@ -54,7 +54,7 @@ else
     [Parameter] public string ErrorMessage { get; set; } = "Error loading image";
     [Parameter] public EventCallback<string> ErrorMessageChanged { get; set; }
 
-    /// <summary>Image loading strategy — lazy or eager. When null, the attribute is omitted.</summary>
+    /// <summary>Image loading strategy â€” lazy or eager. When null, the attribute is omitted.</summary>
     [Parameter] public GupImageLoading? Loading { get; set; }
     [Parameter] public EventCallback<GupImageLoading?> LoadingChanged { get; set; }
 
@@ -66,16 +66,16 @@ else
     [Parameter] public int? Height { get; set; }
     [Parameter] public EventCallback<int?> HeightChanged { get; set; }
 
-    /// <summary>Optional caption rendered in a <figcaption> below the image.</summary>
+    /// <summary>Optional caption rendered in a <c>&lt;figcaption&gt;</c> below the image.</summary>
     [Parameter] public RenderFragment? CaptionContent { get; set; }
 
-    /// <summary>Optional custom error UI — when provided, replaces the default error message.</summary>
+    /// <summary>Optional custom error UI â€” when provided, replaces the default error message.</summary>
     [Parameter] public RenderFragment? ErrorContent { get; set; }
 
-    /// <summary>Fires when the underlying <img> emits an error event (image failed to load).</summary>
+    /// <summary>Fires when the underlying <c>&lt;img&gt;</c> emits an error event (image failed to load).</summary>
     [Parameter] public EventCallback OnError { get; set; }
 
-    /// <summary>Fires when the underlying <img> finishes loading successfully.</summary>
+    /// <summary>Fires when the underlying <c>&lt;img&gt;</c> finishes loading successfully.</summary>
     [Parameter] public EventCallback OnLoad { get; set; }
 
     private bool _hasError;
@@ -83,7 +83,7 @@ else
 
     protected override void OnParametersSet()
     {
-        // Reset error state if Src changes — gives the new image a chance to load.
+        // Reset error state if Src changes â€” gives the new image a chance to load.
         if (!string.Equals(_lastSrc, Src, StringComparison.Ordinal))
         {
             _hasError = false;

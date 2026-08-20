@@ -1,0 +1,56 @@
+@* Equivalent of <gup-flag country-name="om" shape="rectangle|circle" size="20">
+   Renders a country flag from the SVG set bundled under wwwroot/flags.
+
+   CountryName accepts either an English country name ("Oman") or an ISO 3166-1
+   alpha-2 code ("om"), matched case-insensitively. Unknown values render nothing.
+
+   The browser fetches each SVG on demand and caches it, so a page only downloads
+   the flags it actually shows.
+*@
+<div class="gup-flag gup-flag--@ShapeString()" style="@SizeStyle()">
+    @if (Code is not null)
+    {
+        <img class="gup-flag__svg"
+             src="@Source"
+             alt="@AltText"
+             title="@Label"
+             loading="lazy"
+             decoding="async" />
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// English country name (e.g. <c>Oman</c>) or ISO 3166-1 alpha-2 code (e.g. <c>om</c>).
+    /// Matching ignores case. An unrecognised value renders an empty placeholder of the
+    /// same size rather than throwing.
+    /// </summary>
+    [Parameter] public string? CountryName { get; set; }
+
+    /// <summary>Shape of the flag: 4:3 rectangle (default) or 1:1 circle.</summary>
+    [Parameter] public GupFlagShape Shape { get; set; } = GupFlagShape.Rectangle;
+
+    /// <summary>Height of the flag in pixels; the width follows from <see cref="Shape"/>. Default: 20.</summary>
+    [Parameter] public int Size { get; set; } = 20;
+
+    /// <summary>
+    /// Alternative text for the image. Defaults to the resolved country name. Set to an empty
+    /// string when the flag is decorative and the country is already named in adjacent text.
+    /// </summary>
+    [Parameter] public string? Alt { get; set; }
+
+    /// <summary>Base path the bundled flag SVGs are served from.</summary>
+    [Parameter] public string BasePath { get; set; } = "_content/GUPBlazor/flags";
+
+    private string? Code => GupFlagCountries.ResolveCode(CountryName);
+
+    private string? Label => GupFlagCountries.GetName(Code);
+
+    private string AltText => Alt ?? Label ?? "";
+
+    private string Source => $"{BasePath.TrimEnd('/')}/{(Shape == GupFlagShape.Circle ? "1x1" : "4x3")}/{Code}.svg";
+
+    private string ShapeString() => Shape == GupFlagShape.Circle ? "circle" : "rectangle";
+
+    private string SizeStyle() => $"height: {Size}px;";
+}

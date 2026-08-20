@@ -1,4 +1,4 @@
-namespace GUPBlazor.Components;
+﻿namespace GUPBlazor.Components;
 
 public enum GupBadgeType
 {

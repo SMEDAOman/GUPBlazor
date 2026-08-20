@@ -1,0 +1,20 @@
+@* Equivalent of <gup-skip-link href="#main-content">
+   Anchor that lets keyboard users bypass the header navigation and jump straight
+   to the main content. Visually hidden until it receives focus (first Tab press).
+
+   The target element must exist on the page — e.g. <main id="main-content" tabindex="-1">.
+*@
+<a class="gup-skip-link" href="@Href">@ChildContent</a>
+
+@code {
+    /// <summary>
+    /// Fragment link (including <c>#</c>) to the main content block, e.g. <c>#main-content</c>.
+    /// An element with that id must exist on the page, otherwise the link does nothing.
+    /// </summary>
+    [Parameter] public string Href { get; set; } = "#main-content";
+
+    /// <summary>
+    /// Link text. Use phrasing content only — avoid nesting links or buttons.
+    /// </summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

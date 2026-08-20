@@ -1,0 +1,185 @@
+@page "/demo/flag"
+@rendermode InteractiveServer
+
+<PageTitle>Flag — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Flag">
+        <PageSummary>
+            GupFlag — displays a country flag as an SVG. <code>CountryName</code> accepts either an
+            English country name or an ISO 3166-1 alpha-2 code, matched case-insensitively.
+            Flags ship with the package and are fetched on demand, so a page only downloads the
+            ones it actually shows.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <!-- ══ DEFAULT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Default — rectangle</h2>
+            <p class="demo-section-description">
+                The default shape is a 4:3 rectangle with lightly rounded corners, 20px tall.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTrack Direction="horizontal" Gap="3">
+                        <GupFlag CountryName="om" />
+                        <GupFlag CountryName="ae" />
+                        <GupFlag CountryName="sa" />
+                        <GupFlag CountryName="kw" />
+                        <GupFlag CountryName="qa" />
+                        <GupFlag CountryName="bh" />
+                    </GupTrack>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CODE OR NAME ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Code or country name</h2>
+            <p class="demo-section-description">
+                Both forms resolve to the same flag. Matching ignores case and surrounding
+                whitespace, so <code>om</code>, <code>OM</code> and <code>Oman</code> are equivalent.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTrack Direction="horizontal" Gap="4">
+                        <span><GupFlag CountryName="om" /> <code>"om"</code></span>
+                        <span><GupFlag CountryName="Oman" /> <code>"Oman"</code></span>
+                        <span><GupFlag CountryName="CH" /> <code>"CH"</code></span>
+                        <span><GupFlag CountryName="Switzerland" /> <code>"Switzerland"</code></span>
+                    </GupTrack>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ CIRCLE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Circle shape</h2>
+            <p class="demo-section-description">
+                <code>Shape="GupFlagShape.Circle"</code> switches to the 1:1 artwork and rounds it
+                fully — useful next to avatars or in dense lists.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTrack Direction="horizontal" Gap="3">
+                        <GupFlag CountryName="om" Shape="@GupFlagShape.Circle" Size="32" />
+                        <GupFlag CountryName="ch" Shape="@GupFlagShape.Circle" Size="32" />
+                        <GupFlag CountryName="jp" Shape="@GupFlagShape.Circle" Size="32" />
+                        <GupFlag CountryName="br" Shape="@GupFlagShape.Circle" Size="32" />
+                        <GupFlag CountryName="in" Shape="@GupFlagShape.Circle" Size="32" />
+                    </GupTrack>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ SIZE ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Size</h2>
+            <p class="demo-section-description">
+                <code>Size</code> sets the height in pixels; the width follows from the shape's
+                aspect ratio.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTrack Direction="horizontal" Gap="3" VerticalAlignment="center">
+                        <GupFlag CountryName="om" Size="16" />
+                        <GupFlag CountryName="om" Size="24" />
+                        <GupFlag CountryName="om" Size="40" />
+                        <GupFlag CountryName="om" Size="64" />
+                        <GupFlag CountryName="om" Size="96" />
+                    </GupTrack>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ IN CONTEXT ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">In context</h2>
+            <p class="demo-section-description">
+                Flags are usually paired with the country name in text. When the name is already
+                written beside the flag, pass <code>Alt=""</code> so screen readers don't announce
+                it twice.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTrack Direction="vertical" Gap="3">
+                        @foreach (var c in new[] { "om", "ae", "sa", "kw" })
+                        {
+                            <GupTrack Direction="horizontal" Gap="2" VerticalAlignment="center">
+                                <GupFlag CountryName="@c" Alt="" Size="20" />
+                                <span>@GupFlagCountries.GetName(c)</span>
+                            </GupTrack>
+                        }
+                    </GupTrack>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ UNKNOWN ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Unknown country</h2>
+            <p class="demo-section-description">
+                An unrecognised name or code renders an empty box of the requested size rather than
+                throwing, so bad data degrades quietly. Below: a valid flag, then
+                <code>"zz"</code> and <code>"Atlantis"</code>.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupTrack Direction="horizontal" Gap="3">
+                        <GupFlag CountryName="om" Size="32" />
+                        <GupFlag CountryName="zz" Size="32" />
+                        <GupFlag CountryName="Atlantis" Size="32" />
+                    </GupTrack>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ALL FLAGS ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">All @GupFlagCountries.Codes.Count() flags</h2>
+            <p class="demo-section-description">
+                Every bundled flag. Each SVG is fetched lazily by the browser, so this page is the
+                only one that pulls the whole set.
+            </p>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <div style="display:flex; flex-wrap:wrap; gap:12px;">
+                        @foreach (var iso in GupFlagCountries.Codes)
+                        {
+                            <GupFlag CountryName="@iso" Size="24" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ ATTRIBUTION ══ -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">Attribution</h2>
+            <div class="demo-card--full">
+                <div class="demo-surface" style="padding:32px;">
+                    <GupCallout>
+                        Flag artwork comes from the
+                        <a href="https://github.com/lipis/flag-icons">flag-icons</a> project,
+                        MIT licensed. The licence ships with the package at
+                        <code>_content/GUPBlazor/flags/LICENSE.txt</code>.
+                    </GupCallout>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

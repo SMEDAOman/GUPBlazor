@@ -2,6 +2,7 @@ using GUPBlazor.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+/// <summary>Registration helpers for the GUPBlazor component library.</summary>
 public static class GUPBlazorServiceCollectionExtensions
 {
     /// <summary>

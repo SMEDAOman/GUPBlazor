@@ -8,8 +8,8 @@
      - Manual (Items == null): the consumer supplies ChildContent rows already paged;
        the component renders chrome only and reports page/search changes via events.
 
-   Two-way binding: @bind-SearchValue, @bind-CurrentPage, @bind-TotalItems,
-                    @bind-ResultsCount, @bind-FilterPanelOpen, @bind-AppliedFilters
+   Two-way binding: @bind-SearchValue, @bind-CurrentPage, @bind-ResultsCount,
+                    @bind-FilterPanelOpen, @bind-AppliedFilters
    Events: OnSearch, OnPageChange, OnClearFilters, OnViewClick, OnFilterApply
 *@
 @typeparam TItem
@@ -92,61 +92,9 @@
                     {
                         <div class="filter-panel">
                             <div class="filter-panel-content">
-                                @if (FiltersContent is not null)
-                                {
-                                    @FiltersContent
-                                }
-                                else
-                                {
-                                    @foreach (var filter in Filters)
-                                    {
-                                        <div class="filter-field">
-                                            <label class="filter-label">@filter.Label</label>
-                                            @if (filter.Type == GupDataTableFilterType.Select)
-                                            {
-                                                <GupDropdownField Name="@FieldName("desktop", filter)"
-                                                                  Required="false"
-                                                                  LabelHidden="true"
-                                                                  Placeholder="Select"
-                                                                  Value="@FilterValue(filter)"
-                                                                  DisplayValue="@FilterDisplayValue(filter)"
-                                                                  OnChange="@(value => HandleFilterValueChanged(filter, value))">
-                                                    <Label>@filter.Label</Label>
-                                                    <ChildContent>
-                                                        <GupDropdownMenu AriaLabel="@filter.Label">
-                                                            @foreach (var option in filter.Options)
-                                                            {
-                                                                <GupDropdownMenuItem Label="@option.Label"
-                                                                                     Value="@option.Value"
-                                                                                     Selected="@(option.Value == FilterValue(filter))" />
-                                                            }
-                                                        </GupDropdownMenu>
-                                                    </ChildContent>
-                                                </GupDropdownField>
-                                            }
-                                            else
-                                            {
-                                                <GupInputField Name="@FieldName("desktop", filter)"
-                                                               Type="@(filter.Type == GupDataTableFilterType.Date ? "date" : "text")"
-                                                               Required="false"
-                                                               LabelHidden="true"
-                                                               Value="@FilterValue(filter)"
-                                                               OnValueChange="@(value => HandleFilterValueChanged(filter, value))">
-                                                    <ChildContent>@filter.Label</ChildContent>
-                                                </GupInputField>
-                                            }
-                                        </div>
-                                    }
-                                }
+                                @FilterEditors("desktop")
                             </div>
-                            <div class="filter-panel-actions">
-                                <GupButton Appearance="@GupButtonAppearance.Text" OnClick="HandleClearPanelFilters">
-                                    <ChildContent>Clear</ChildContent>
-                                </GupButton>
-                                <GupButton OnClick="HandleApplyFilters">
-                                    <ChildContent>@($"Apply{SelectedCountSuffix}")</ChildContent>
-                                </GupButton>
-                            </div>
+                            @FilterPanelActions
                         </div>
                     }
                 </div>
@@ -180,61 +128,9 @@
                     {
                         <div class="mobile-filter-panel">
                             <div class="mobile-filter-panel-content">
-                                @if (FiltersContent is not null)
-                                {
-                                    @FiltersContent
-                                }
-                                else
-                                {
-                                    @foreach (var filter in Filters)
-                                    {
-                                        <div class="filter-field">
-                                            <label class="filter-label">@filter.Label</label>
-                                            @if (filter.Type == GupDataTableFilterType.Select)
-                                            {
-                                                <GupDropdownField Name="@FieldName("mobile", filter)"
-                                                                  Required="false"
-                                                                  LabelHidden="true"
-                                                                  Placeholder="Select"
-                                                                  Value="@FilterValue(filter)"
-                                                                  DisplayValue="@FilterDisplayValue(filter)"
-                                                                  OnChange="@(value => HandleFilterValueChanged(filter, value))">
-                                                    <Label>@filter.Label</Label>
-                                                    <ChildContent>
-                                                        <GupDropdownMenu AriaLabel="@filter.Label">
-                                                            @foreach (var option in filter.Options)
-                                                            {
-                                                                <GupDropdownMenuItem Label="@option.Label"
-                                                                                     Value="@option.Value"
-                                                                                     Selected="@(option.Value == FilterValue(filter))" />
-                                                            }
-                                                        </GupDropdownMenu>
-                                                    </ChildContent>
-                                                </GupDropdownField>
-                                            }
-                                            else
-                                            {
-                                                <GupInputField Name="@FieldName("mobile", filter)"
-                                                               Type="@(filter.Type == GupDataTableFilterType.Date ? "date" : "text")"
-                                                               Required="false"
-                                                               LabelHidden="true"
-                                                               Value="@FilterValue(filter)"
-                                                               OnValueChange="@(value => HandleFilterValueChanged(filter, value))">
-                                                    <ChildContent>@filter.Label</ChildContent>
-                                                </GupInputField>
-                                            }
-                                        </div>
-                                    }
-                                }
+                                @FilterEditors("mobile")
                             </div>
-                            <div class="filter-panel-actions">
-                                <GupButton Appearance="@GupButtonAppearance.Text" OnClick="HandleClearPanelFilters">
-                                    <ChildContent>Clear</ChildContent>
-                                </GupButton>
-                                <GupButton OnClick="HandleApplyFilters">
-                                    <ChildContent>@($"Apply{SelectedCountSuffix}")</ChildContent>
-                                </GupButton>
-                            </div>
+                            @FilterPanelActions
                         </div>
                     }
                 </div>
@@ -314,6 +210,70 @@
     </div>
 </div>
 
+@* Shared by the desktop and mobile panels. The scope argument only namespaces the field
+   ids, since both panels are always rendered and CSS shows one. *@
+@code {
+    private RenderFragment<string> FilterEditors => scope =>
+    @<text>
+        @if (FiltersContent is not null)
+        {
+            @FiltersContent
+        }
+        else
+        {
+            @foreach (var filter in Filters)
+            {
+                <div class="filter-field">
+                    <label class="filter-label">@filter.Label</label>
+                    @if (filter.Type == GupDataTableFilterType.Select)
+                    {
+                        <GupDropdownField Name="@FieldName(scope, filter)"
+                                          Required="false"
+                                          LabelHidden="true"
+                                          Placeholder="Select"
+                                          Value="@FilterValue(filter)"
+                                          DisplayValue="@FilterDisplayValue(filter)"
+                                          OnChange="@(value => HandleFilterValueChanged(filter, value))">
+                            <Label>@filter.Label</Label>
+                            <ChildContent>
+                                <GupDropdownMenu AriaLabel="@filter.Label">
+                                    @foreach (var option in filter.Options)
+                                    {
+                                        <GupDropdownMenuItem Label="@option.Label"
+                                                             Value="@option.Value"
+                                                             Selected="@(option.Value == FilterValue(filter))" />
+                                    }
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    }
+                    else
+                    {
+                        <GupInputField Name="@FieldName(scope, filter)"
+                                       Type="@(filter.Type == GupDataTableFilterType.Date ? "date" : "text")"
+                                       Required="false"
+                                       LabelHidden="true"
+                                       Value="@FilterValue(filter)"
+                                       OnValueChange="@(value => HandleFilterValueChanged(filter, value))">
+                            <ChildContent>@filter.Label</ChildContent>
+                        </GupInputField>
+                    }
+                </div>
+            }
+        }
+    </text>;
+
+    private RenderFragment FilterPanelActions =>
+    @<div class="filter-panel-actions">
+        <GupButton Appearance="@GupButtonAppearance.Text" OnClick="HandleClearPanelFilters">
+            <ChildContent>Clear</ChildContent>
+        </GupButton>
+        <GupButton OnClick="HandleApplyFilters">
+            <ChildContent>@($"Apply{SelectedCountSuffix}")</ChildContent>
+        </GupButton>
+    </div>;
+}
+
 @code {
     /// <summary>Heading shown above the table. Named <c>TableTitle</c> rather than <c>Title</c>
     /// to avoid colliding with the HTML <c>title</c> attribute.</summary>
@@ -337,13 +297,12 @@
     /// <summary>Fires when <see cref="ResultsCount"/> changes — enables <c>@@bind-ResultsCount</c>.</summary>
     [Parameter] public EventCallback<int?> ResultsCountChanged { get; set; }
 
-    /// <summary>Total row count across all pages. Drives the item counter, the page count and the
-    /// empty state, so a data-driven consumer must set it (typically <c>Items.Count()</c>) — it is
-    /// not inferred from <see cref="Items"/>. Zero renders the empty state.</summary>
+    /// <summary>Unfiltered row count across all pages. Drives the item counter, the page count and
+    /// the empty state, so a data-driven consumer must set it (typically <c>Items.Count()</c>) — it
+    /// is not inferred from <see cref="Items"/>. Zero renders the empty state. The component never
+    /// writes to it: while a search is active the chrome narrows to the match count internally, so
+    /// this stays the consumer's own total.</summary>
     [Parameter] public int TotalItems { get; set; }
-
-    /// <summary>Fires when <see cref="TotalItems"/> changes — enables <c>@@bind-TotalItems</c>.</summary>
-    [Parameter] public EventCallback<int> TotalItemsChanged { get; set; }
 
     /// <summary>Active page, 1-based.</summary>
     [Parameter] public int CurrentPage { get; set; } = 1;
@@ -450,20 +409,6 @@
     // unique when several data tables share a page.
     private readonly string _uid = Guid.NewGuid().ToString("N")[..8];
 
-    // Pre-filter total, cached lazily so an empty search term can restore it. Invalidated
-    // whenever the consumer changes TotalItems from the outside.
-    private int? _originalTotalItems;
-    private int _lastTotalItems = int.MinValue;
-
-    protected override void OnParametersSet()
-    {
-        if (TotalItems != _lastTotalItems)
-        {
-            _originalTotalItems = null;
-            _lastTotalItems = TotalItems;
-        }
-    }
-
     private bool IsDataDriven => Items is not null;
 
     private bool HasSearchTerm => !string.IsNullOrWhiteSpace(SearchValue);
@@ -560,25 +505,22 @@
         }
     }
 
+    // TotalItems is never written here: it is the consumer's unfiltered total, and
+    // EffectiveTotalItems already narrows to the match count while a search is active.
     private async Task ApplySearchAsync()
     {
-        _originalTotalItems ??= TotalItems;
-
-        if (!HasSearchTerm)
-        {
-            await SetResultsCountAsync(null);
-            await SetTotalItemsAsync(_originalTotalItems.Value);
-            return;
-        }
-
         if (!IsDataDriven)
         {
             return;
         }
 
-        var matches = FilteredItems.Count();
-        await SetResultsCountAsync(matches);
-        await SetTotalItemsAsync(matches);
+        if (!HasSearchTerm)
+        {
+            await SetResultsCountAsync(null);
+            return;
+        }
+
+        await SetResultsCountAsync(FilteredItems.Count());
         await SetCurrentPageAsync(1, notifyPageChange: false);
     }
 
@@ -592,20 +534,6 @@
         if (ResultsCountChanged.HasDelegate)
         {
             await ResultsCountChanged.InvokeAsync(value);
-        }
-    }
-
-    private async Task SetTotalItemsAsync(int value)
-    {
-        if (TotalItems == value)
-        {
-            return;
-        }
-        TotalItems = value;
-        _lastTotalItems = value;
-        if (TotalItemsChanged.HasDelegate)
-        {
-            await TotalItemsChanged.InvokeAsync(value);
         }
     }
 

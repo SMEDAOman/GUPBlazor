@@ -1,5 +1,6 @@
-namespace GUPBlazor.Components;
+﻿namespace GUPBlazor.Components;
 
+/// <summary>Visual style of a <c>GupDivider</c>.</summary>
 public enum GupDividerAppearance
 {
     Default,
@@ -7,6 +8,7 @@ public enum GupDividerAppearance
     Inverse,
 }
 
+/// <summary>Which edges of the content a <c>GupDivider</c> draws on.</summary>
 public enum GupDividerLocation
 {
     Bottom,
