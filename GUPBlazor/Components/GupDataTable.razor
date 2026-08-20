@@ -83,7 +83,7 @@
                                 <IconStart>
                                     <GupIcon IconName="filter-list" Width="24" Height="24" />
                                 </IconStart>
-                                <ChildContent>@($"Filter{AppliedCountSuffix}")</ChildContent>
+                                <ChildContent>@($"{FiltersButtonText}{AppliedCountSuffix}")</ChildContent>
                             </GupButton>
                         </div>
                     </div>
@@ -332,7 +332,7 @@
     /// column's <see cref="GupDataTableColumn.Width"/> or <see cref="GupDataTableColumn.Grow"/> sizes it.</summary>
     [Parameter] public IReadOnlyList<GupDataTableColumn> Columns { get; set; } = [];
 
-    /// <summary>Label for the filter toggle in the mobile control stack.</summary>
+    /// <summary>Label for the filter toggle, in both the desktop and mobile control stacks.</summary>
     [Parameter] public string FiltersButtonText { get; set; } = "Filters";
 
     /// <summary>Label for the button that clears every applied-filter chip.</summary>

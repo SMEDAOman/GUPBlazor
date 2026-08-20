@@ -372,14 +372,12 @@
         if (OnKeyDown.HasDelegate) await OnKeyDown.InvokeAsync(e);
     }
 
+    // The date/time picker is opened from the leading icon, not on focus — tabbing
+    // through the field would otherwise pop it open and block typing a value manually.
     private async Task HandleFocus(FocusEventArgs e)
     {
         _focused = true;
         if (OnFocus.HasDelegate) await OnFocus.InvokeAsync(e);
-        if ((IsDate || IsTime) && !Disabled && !Readonly)
-        {
-            await TryShowPickerAsync();
-        }
     }
 
     private void HandleBlur(FocusEventArgs _)
@@ -408,6 +406,13 @@
     /// <summary>Shows the native HTML picker (eg date or time popup) when supported.</summary>
     public async Task ShowPickerAsync()
     {
+        await TryShowPickerAsync();
+    }
+
+    private async Task ShowPickerFromIconAsync()
+    {
+        if (Disabled || Readonly) return;
+        await FocusInternal();
         await TryShowPickerAsync();
     }
 
@@ -443,11 +448,11 @@
         }
         else if (IsDate)
         {
-            BuildIconButton(builder, "calendar-today", "Click to pick a date");
+            BuildIconButton(builder, "calendar-today", "Click to pick a date", ShowPickerFromIconAsync);
         }
         else if (IsTime)
         {
-            BuildIconButton(builder, "schedule", "Click to pick time");
+            BuildIconButton(builder, "schedule", "Click to pick time", ShowPickerFromIconAsync);
         }
         else if (InputStart != null)
         {
@@ -481,14 +486,14 @@
         }
     };
 
-    private void BuildIconButton(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder builder, string iconName, string label)
+    private void BuildIconButton(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder builder, string iconName, string label, Func<Task>? onClick = null)
     {
         builder.OpenElement(0, "button");
         builder.AddAttribute(1, "type", "button");
         builder.AddAttribute(2, "class", "input-affix-btn");
         builder.AddAttribute(3, "aria-label", label);
         if (Disabled) builder.AddAttribute(4, "disabled", true);
-        builder.AddAttribute(5, "onclick", EventCallback.Factory.Create(this, FocusInternal));
+        builder.AddAttribute(5, "onclick", EventCallback.Factory.Create(this, onClick ?? FocusInternal));
         builder.OpenComponent<GupIcon>(6);
         builder.AddAttribute(7, "IconName", iconName);
         builder.AddAttribute(8, "Width", 24);

@@ -961,7 +961,10 @@ body {
      measure constraint for line length, not a grid column. Page chrome (header,
      content header, footer) spans 1024px; the content you read and fill in does not. */
   width: 100%;
-  max-width: var(--gup-wizard-main-max);   /* 632px */
+  /* Upstream's --gup-wizard-main--max-width wins if set; --gup-wizard-main-max is the
+     name this package has shipped since v0.0.20 and stays supported so consumer
+     overrides keep working. */
+  max-width: var(--gup-wizard-main--max-width, var(--gup-wizard-main-max, 632px));
   margin-inline: auto;
   padding-top: var(--gup-component-9);     /* 40px */
   /* Raw 64px in the design-system source, not a token. Reproduce as-is. */
@@ -1480,10 +1483,26 @@ body {
   color: var(--gup-color-states-disabled-medium);
 }
 
-/* RTL support: tel and email keep LTR for the input */
+/* RTL support: date, time, tel and email hold LTR content (digits and addresses
+   never mirror), but stay right-aligned so the field still reads as part of an
+   RTL form. Mirrors input-field.css upstream. */
+.gup-input-field[data-type="date"] .field-inner-wrapper,
+.gup-input-field[data-type="time"] .field-inner-wrapper,
 .gup-input-field[data-type="tel"] .field-inner-wrapper,
 .gup-input-field[data-type="email"] .field-inner-wrapper {
   direction: ltr;
+}
+
+.gup-input-field[data-type="tel"] .input,
+.gup-input-field[data-type="email"] .input {
+  direction: ltr;
+}
+
+.gup-input-field[data-type="date"] .input:dir(rtl),
+.gup-input-field[data-type="time"] .input:dir(rtl),
+.gup-input-field[data-type="tel"] .input:dir(rtl),
+.gup-input-field[data-type="email"] .input:dir(rtl) {
+  text-align: right;
 }
 
 /* ------------------------------------------------------------
