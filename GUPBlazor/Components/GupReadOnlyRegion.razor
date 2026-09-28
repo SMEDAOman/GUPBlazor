@@ -1,0 +1,24 @@
+@* Marks a region as read-only. Does two things:
+   1. Cascades GupReadOnly, which the GUP field components honour natively
+      (real disabled/readonly attributes, so keyboard and screen readers agree).
+   2. Blocks pointer interaction on the region itself, which catches bespoke
+      markup a page hand-rolls outside the component library.
+   The cascade is the real fix; the pointer block is the safety net. *@
+
+<CascadingValue Value="ReadOnly" Name="GupReadOnly">
+    @if (ReadOnly)
+    {
+        <div class="gup-readonly-region" aria-disabled="true" style="pointer-events:none;">
+            @ChildContent
+        </div>
+    }
+    else
+    {
+        @ChildContent
+    }
+</CascadingValue>
+
+@code {
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

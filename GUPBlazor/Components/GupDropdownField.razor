@@ -30,7 +30,7 @@
         </div>
     }
     <div class="field-wrapper"
-         onclick="@(Disabled || Loading ? "" : $"window.__gupDropdown.toggle('{Id}')")">
+         onclick="@(EffectiveDisabled || Loading ? "" : $"window.__gupDropdown.toggle('{Id}')")">
         <div class="field-inner-wrapper">
             <div class="input-wrapper">
                 <input class="input"
@@ -43,7 +43,7 @@
                        aria-expanded="false"
                        placeholder="@(Loading ? LoadingLabel : Placeholder)"
                        value="@DisplayValue"
-                       disabled="@(Disabled ? true : null)" />
+                       disabled="@(EffectiveDisabled ? true : null)" />
             </div>
             <div class="field-end-slot">
                 @if (Loading)
@@ -87,6 +87,14 @@
     [Parameter] public string Name { get; set; } = "";
     [Parameter] public string Placeholder { get; set; } = "";
     [Parameter] public bool Disabled { get; set; }
+
+    // Optional page-wide read-only, cascaded by an ancestor as GupReadOnly (or by
+    // GupReadOnlyRegion). Absent cascade = false, so behaviour is unchanged for
+    // callers that never set it.
+    [CascadingParameter(Name = "GupReadOnly")] private bool CascadedReadOnly { get; set; }
+
+    private bool EffectiveDisabled => Disabled || CascadedReadOnly;
+
     // Mandatory by default; callers opt out with Required="false" to show "(optional)".
     [Parameter] public bool Required { get; set; } = true;
     // Lets the parent force the invalid (red) state, e.g. from a form error list.
@@ -130,7 +138,7 @@
 
     private string Id => $"gup-dd-{Name}";
     private string InputId => $"dropdown-{Name}";
-    private string DisabledClass => Disabled ? "gup-dropdown-field--disabled" : "";
+    private string DisabledClass => EffectiveDisabled ? "gup-dropdown-field--disabled" : "";
     private string InvalidClass => (IsInvalid || !string.IsNullOrEmpty(ErrorMessage)) ? "gup-dropdown-field--invalid" : "";
 
     // Cascaded once per page (GupLangId). 2 = English, else Arabic.

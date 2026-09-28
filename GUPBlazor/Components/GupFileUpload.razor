@@ -30,6 +30,10 @@
     }
     <div class="size-error-message" style="display:none;" role="alert"></div>
 
+    @* Read-only hides the picker entirely: a disabled file input is meaningless, and
+       already-uploaded files stay listed below. *@
+    @if (!CascadedReadOnly)
+    {
     <div class="gup-track actions">
         <div class="input-wrapper">
             <span class="file-input">
@@ -51,11 +55,17 @@
             <div class="extra-action-slot">@ExtraAction</div>
         }
     </div>
+    }
 
     <div class="uploaded-files" style="display:none;"></div>
 </div>
 
 @code {
+    // Optional page-wide read-only, cascaded by an ancestor as GupReadOnly (or by
+    // GupReadOnlyRegion). Absent cascade = false, so behaviour is unchanged for
+    // callers that never set it.
+    [CascadingParameter(Name = "GupReadOnly")] private bool CascadedReadOnly { get; set; }
+
     [Parameter] public string Name { get; set; } = "";
     [Parameter] public string FileInputLabel { get; set; } = "Choose file";
     [Parameter] public string ItemDeleteLabel { get; set; } = "Remove the file";

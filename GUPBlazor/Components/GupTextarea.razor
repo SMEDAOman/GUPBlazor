@@ -2,7 +2,7 @@
    Two-way binding: @bind-Value
    Events: OnValueChange (fires on every input), OnChange (fires on change/blur)
 *@
-<div class="gup-textarea-field @(IsInvalid ? "invalid" : "") @(_dirty ? "dirty" : "") @(Disabled ? "disabled" : "")">
+<div class="gup-textarea-field @(IsInvalid ? "invalid" : "") @(_dirty ? "dirty" : "") @(EffectiveDisabled ? "disabled" : "")">
     <label class="label" for="@Id">@ChildContent@OptionalSuffix</label>
 
     @if (IsInvalid && !string.IsNullOrEmpty(ValidationMessage))
@@ -22,8 +22,8 @@
                       minlength="@(Minlength?.ToString())"
                       maxlength="@(Maxlength?.ToString())"
                       placeholder="@Placeholder"
-                      disabled="@(Disabled ? true : null)"
-                      readonly="@(Readonly ? true : null)"
+                      disabled="@(EffectiveDisabled ? true : null)"
+                      readonly="@(EffectiveReadonly ? true : null)"
                       required="@(Required ? true : null)"
                       aria-invalid="@(IsInvalid ? "true" : "false")"
                       aria-describedby="@AriaDescribedBy"
@@ -59,6 +59,16 @@
     [Parameter] public string? Value { get; set; }
     [Parameter] public EventCallback<string?> ValueChanged { get; set; }
     [Parameter] public bool Disabled { get; set; }
+
+    // Optional page-wide read-only, cascaded by an ancestor as GupReadOnly (or by
+    // GupReadOnlyRegion). Absent cascade = false, so behaviour is unchanged for
+    // callers that never set it.
+    [CascadingParameter(Name = "GupReadOnly")] private bool CascadedReadOnly { get; set; }
+
+    private bool EffectiveDisabled => Disabled || CascadedReadOnly;
+
+    private bool EffectiveReadonly => Readonly || CascadedReadOnly;
+
     [Parameter] public bool Readonly { get; set; }
     // Mandatory by default; callers opt out with Required="false" to show "(optional)".
     [Parameter] public bool Required { get; set; } = true;
@@ -139,7 +149,7 @@
 
     private async Task HandleInput(ChangeEventArgs e)
     {
-        if (Disabled || Readonly) return;
+        if (EffectiveDisabled || EffectiveReadonly) return;
         var newValue = e.Value?.ToString();
         Value = newValue;
         _dirty = !string.IsNullOrEmpty(newValue);
@@ -149,7 +159,7 @@
 
     private async Task HandleChange(ChangeEventArgs e)
     {
-        if (Disabled || Readonly) return;
+        if (EffectiveDisabled || EffectiveReadonly) return;
         var newValue = e.Value?.ToString();
         Value = newValue;
         if (OnChange.HasDelegate) await OnChange.InvokeAsync(newValue);

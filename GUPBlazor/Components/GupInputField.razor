@@ -61,8 +61,8 @@
                        min="@Min"
                        max="@Max"
                        step="@(Step?.ToString())"
-                       disabled="@(Disabled ? true : null)"
-                       readonly="@(Readonly ? true : null)"
+                       disabled="@(EffectiveDisabled ? true : null)"
+                       readonly="@(EffectiveReadonly ? true : null)"
                        required="@(Required ? true : null)"
                        role="@InputRole"
                        aria-controls="@AriaControlsId"
@@ -130,6 +130,16 @@
     // Language for the auto "(optional)" suffix, cascaded once per page from the
     // form (see GupLangId). 2 = English, else Arabic — matching the app convention.
     [CascadingParameter(Name = "GupLangId")] private int CascadedLangId { get; set; } = 2;
+
+    // Optional page-wide read-only, cascaded by an ancestor as GupReadOnly (or by
+    // GupReadOnlyRegion). Absent cascade = false, so behaviour is unchanged for
+    // callers that never set it. A field can
+    // still opt itself out with Readonly="false" only by not being cascaded — the
+    // cascade deliberately wins, so one flag locks the whole form.
+    [CascadingParameter(Name = "GupReadOnly")] private bool CascadedReadOnly { get; set; }
+
+    private bool EffectiveReadonly => Readonly || CascadedReadOnly;
+    private bool EffectiveDisabled => Disabled || CascadedReadOnly;
 
     private RenderFragment? OptionalSuffix => Required ? null : builder =>
     {
@@ -243,7 +253,7 @@
     {
         get
         {
-            if (Disabled || Readonly) return false;
+            if (EffectiveDisabled || EffectiveReadonly) return false;
             var val = Value ?? "";
 
             if (Required && string.IsNullOrEmpty(val)) return true;
@@ -303,7 +313,8 @@
             if (EffectiveInvalid) parts.Add("invalid");
             if (_dirty) parts.Add("dirty");
             if (_focused) parts.Add("focused");
-            if (Disabled) parts.Add("disabled");
+            if (EffectiveDisabled) parts.Add("disabled");
+            if (EffectiveReadonly) parts.Add("readonly");
             if (Required) parts.Add("required");
             if (Prefix != null) parts.Add("has-prefix");
             if (Suffix != null) parts.Add("has-suffix");
@@ -335,7 +346,7 @@
 
     private async Task HandleInput(ChangeEventArgs e)
     {
-        if (Disabled || Readonly) return;
+        if (EffectiveDisabled || EffectiveReadonly) return;
         var newValue = e.Value?.ToString();
 
         if (StrictNumeric && (IsNumeric || IsTel) && !string.IsNullOrEmpty(newValue))
@@ -360,7 +371,7 @@
 
     private async Task HandleChange(ChangeEventArgs e)
     {
-        if (Disabled || Readonly) return;
+        if (EffectiveDisabled || EffectiveReadonly) return;
         var newValue = e.Value?.ToString();
         Value = newValue;
         _interacted = true;
@@ -395,7 +406,7 @@
 
     private async Task FocusInternal()
     {
-        if (Disabled) return;
+        if (EffectiveDisabled) return;
         try { await _inputRef.FocusAsync(); }
         catch { /* element not yet rendered */ }
     }
@@ -411,7 +422,7 @@
 
     private async Task ShowPickerFromIconAsync()
     {
-        if (Disabled || Readonly) return;
+        if (EffectiveDisabled || EffectiveReadonly) return;
         await FocusInternal();
         await TryShowPickerAsync();
     }
@@ -471,7 +482,7 @@
             builder.AddAttribute(2, "class", "input-affix-btn");
             builder.AddAttribute(3, "title", label);
             builder.AddAttribute(4, "aria-label", label);
-            if (Disabled) builder.AddAttribute(5, "disabled", true);
+            if (EffectiveDisabled) builder.AddAttribute(5, "disabled", true);
             builder.AddAttribute(6, "onclick", EventCallback.Factory.Create(this, TogglePasswordVisibility));
             builder.OpenComponent<GupIcon>(7);
             builder.AddAttribute(8, "IconName", icon);
@@ -492,7 +503,7 @@
         builder.AddAttribute(1, "type", "button");
         builder.AddAttribute(2, "class", "input-affix-btn");
         builder.AddAttribute(3, "aria-label", label);
-        if (Disabled) builder.AddAttribute(4, "disabled", true);
+        if (EffectiveDisabled) builder.AddAttribute(4, "disabled", true);
         builder.AddAttribute(5, "onclick", EventCallback.Factory.Create(this, onClick ?? FocusInternal));
         builder.OpenComponent<GupIcon>(6);
         builder.AddAttribute(7, "IconName", iconName);

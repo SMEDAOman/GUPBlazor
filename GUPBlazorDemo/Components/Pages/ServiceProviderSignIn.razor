@@ -1,4 +1,7 @@
 @page "/sign-in"
+@rendermode RenderMode.InteractiveServer
+@inject NavigationManager Nav
+@inject ToastService ToastSvc
 
 <PageTitle>Sign In — Gov.om Templates</PageTitle>
 
@@ -7,7 +10,8 @@
     <GupHeader NavAriaLabel="Service Navigation Header">
         <Start>
             <GupTrack Direction="horizontal" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button"
+                           OnClick="@(() => Nav.NavigateTo("/"))">
                     <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
                     <ChildContent>Cancel</ChildContent>
                 </GupButton>
@@ -15,7 +19,8 @@
         </Start>
         <End>
             <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button"
+                           OnClick="@(() => ToastSvc.Show("Language switching is not wired in this template", "neutral", 4000))">
                     <IconStart><GupIcon IconName="language" Width="24" Height="24" /></IconStart>
                     <ChildContent>العربية</ChildContent>
                 </GupButton>

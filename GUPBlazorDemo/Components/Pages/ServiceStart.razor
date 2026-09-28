@@ -1,5 +1,6 @@
 @page "/service-start"
 @rendermode InteractiveServer
+@inject NavigationManager Nav
 
 <PageTitle>Service Start — Gov.om Templates</PageTitle>
 
@@ -18,7 +19,8 @@
     <HeaderStart>
         
         <GupTrack Direction="horizontal" Gap="2">
-            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button"
+                       OnClick="@(() => Nav.NavigateTo("/"))">
                 <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
                 <ChildContent>Save &amp; exit</ChildContent>
             </GupButton>
@@ -27,7 +29,8 @@
 
     <HeaderEnd>
         <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
-            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button"
+                       OnClick="@(() => Nav.NavigateTo("/help"))">
                 <IconStart><GupIcon IconName="live-help" Width="24" Height="24" /></IconStart>
                 <ChildContent>Do you need help?</ChildContent>
             </GupButton>

@@ -1,0 +1,235 @@
+@page "/demo/read-only-cascade"
+@rendermode RenderMode.InteractiveServer
+@inject NavigationManager Nav
+
+<PageTitle>Read-only cascade — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+    @* Kind.Button + NavigateTo: GupButton swallows Kind.Link navigation on an
+       interactive page, because it attaches @onclick to the anchor. *@
+    <GupHeader NavAriaLabel="Demo Navigation">
+        <Start>
+            <GupTrack Direction="horizontal" Gap="2">
+                <GupButton Appearance="@GupButtonAppearance.Text"
+                           Kind="@GupButtonKind.Button"
+                           OnClick="@(() => Nav.NavigateTo("/"))">
+                    <ChildContent>← Back to demo</ChildContent>
+                </GupButton>
+            </GupTrack>
+        </Start>
+    </GupHeader>
+
+    <GupContentHeader PageTitle="Read-only cascade">
+        <PageSummary>
+            One cascaded flag locks every field on a page. Toggle it and check that nothing
+            below accepts input, including via keyboard.
+        </PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Toggle</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupTrack Direction="horizontal" Gap="3">
+                            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ToggleReadOnly">
+                                <ChildContent>@(_readOnly ? "Unlock the form" : "Lock the form")</ChildContent>
+                            </GupButton>
+                            @* GupBadge is a status dot; the label sits beside it. *@
+                            <GupTrack Direction="horizontal" Gap="2" VerticalAlignment="center">
+                                <GupBadge Type="@(_readOnly ? GupBadgeType.Negative : GupBadgeType.Positive)"
+                                          AriaLabel="@(_readOnly ? "Locked" : "Editable")" />
+                                <span>@(_readOnly ? "Locked" : "Editable")</span>
+                            </GupTrack>
+                        </GupTrack>
+
+                        <p style="margin-top:16px;">
+                            Producers: wrap a region in <code>&lt;CascadingValue Value="flag" Name="GupReadOnly"&gt;</code>,
+                            or use <code>&lt;GupReadOnlyRegion ReadOnly="flag"&gt;</code>, which cascades the same
+                            value and additionally blocks pointer events for markup that is not built
+                            from these components.
+                        </p>
+
+                        <h3 style="margin-top:16px;">What to check when locked</h3>
+                        <ul>
+                            <li>Typing into any text field, textarea or number field does nothing.</li>
+                            <li>The dropdown does not open; the checkbox and radios do not change.</li>
+                            <li>The file picker is gone entirely, not merely greyed out.</li>
+                            <li>Tabbing through the form skips the inputs instead of landing on them.</li>
+                            <li>No "This field is required" appears on an empty locked field.</li>
+                            <li>The date and password affix buttons are disabled, not just inert.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @* Everything below sits inside the cascade. *@
+        <CascadingValue Value="_readOnly" Name="GupReadOnly">
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Input fields (GupInputField)</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupFormList>
+                            <GupInputField Name="ro-text" Type="text" @bind-Value="_text">Full name</GupInputField>
+                            <GupInputField Name="ro-email" Type="email" @bind-Value="_email">Email address</GupInputField>
+                            @* Affix buttons: the picker and the show/hide toggle must disable too. *@
+                            <GupInputField Name="ro-date" Type="date" @bind-Value="_date">Date of birth</GupInputField>
+                            <GupInputField Name="ro-password" Type="password" @bind-Value="_password">Password</GupInputField>
+                            @* Required + empty: must not show a validation error while locked. *@
+                            <GupInputField Name="ro-required" Type="text" @bind-Value="_required" Required="true">Required, left empty</GupInputField>
+                            @* Already opted out locally; the cascade must not un-disable it. *@
+                            <GupInputField Name="ro-own-disabled" Type="text" Disabled="true">Disabled on its own</GupInputField>
+                        </GupFormList>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Textarea (GupTextarea)</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupTextarea Name="ro-textarea" @bind-Value="_notes" MaxLength="500">Notes</GupTextarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Dropdown (GupDropdownField)</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupDropdownField Name="ro-dropdown" Placeholder="Select a sector" @bind-Value="_sector">
+                            <Label>Business sector</Label>
+                            <ChildContent>
+                                <GupDropdownMenu>
+                                    <GupDropdownMenuItem Label="Manufacturing" Value="manufacturing" />
+                                    <GupDropdownMenuItem Label="Services" Value="services" />
+                                    <GupDropdownMenuItem Label="Agriculture" Value="agriculture" />
+                                </GupDropdownMenu>
+                            </ChildContent>
+                        </GupDropdownField>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Checkbox and radios</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <GupCheckbox Name="ro-check" @bind-Checked="_agreed"><ChildContent>I agree to the terms</ChildContent></GupCheckbox>
+
+                        <div style="margin-top:16px;">
+                            <GupRadioButtonGroup Label="Preferred contact" Name="ro-radio" @bind-Value="_choice">
+                                <GupRadioButton Name="ro-radio" Value="email">
+                                    <ChildContent>Email</ChildContent>
+                                </GupRadioButton>
+                                <GupRadioButton Name="ro-radio" Value="sms">
+                                    <ChildContent>SMS</ChildContent>
+                                </GupRadioButton>
+                            </GupRadioButtonGroup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">File upload (GupFileUpload)</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        @* The picker is removed rather than disabled: a dead file input is
+                           meaningless, and already-uploaded files stay listed. *@
+                        <GupFileUpload Name="ro-upload" Accept=".pdf,.png,.jpg">
+                            <ChildContent>Supporting document</ChildContent>
+                        </GupFileUpload>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </CascadingValue>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">GupReadOnlyRegion</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <p>
+                            Same cascade, plus <code>pointer-events:none</code> and
+                            <code>aria-disabled</code> on the wrapper — the safety net for
+                            hand-rolled markup. The raw input below is not a GUP component, so
+                            only the region blocks it.
+                        </p>
+                        <GupReadOnlyRegion ReadOnly="_readOnly">
+                            <GupFormList>
+                                <GupInputField Name="ro-region-field" Type="text" @bind-Value="_regionText">Inside the region</GupInputField>
+                            </GupFormList>
+                            <label style="display:block; margin-top:12px;">
+                                Plain HTML input (not a GUP component)
+                                <input type="text" @bind="_rawText" style="display:block; margin-top:4px; padding:8px;" />
+                            </label>
+                        </GupReadOnlyRegion>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2 class="demo-section-title">Bound values</h2>
+            <div class="demo-row">
+                <div class="demo-card demo-card--full">
+                    <div class="demo-surface">
+                        <p>
+                            Every value below is bound to a field above. While the form is
+                            locked they must all stay exactly as they are — if one changes,
+                            the lock leaked.
+                        </p>
+                        <GupTable>
+                            <GupTableRow><GupTableCell Type="rowheader">Full name</GupTableCell><GupTableCell>@Show(_text)</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Email</GupTableCell><GupTableCell>@Show(_email)</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Notes</GupTableCell><GupTableCell>@Show(_notes)</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Sector</GupTableCell><GupTableCell>@Show(_sector)</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Agreed</GupTableCell><GupTableCell>@_agreed</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Contact</GupTableCell><GupTableCell>@Show(_choice)</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Inside region</GupTableCell><GupTableCell>@Show(_regionText)</GupTableCell></GupTableRow>
+                            <GupTableRow><GupTableCell Type="rowheader">Plain input</GupTableCell><GupTableCell>@Show(_rawText)</GupTableCell></GupTableRow>
+                        </GupTable>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+@code {
+    private bool _readOnly;
+
+    private void ToggleReadOnly() => _readOnly = !_readOnly;
+
+    private string? _text = "Fatma Al Balushi";
+    private string? _email = "fatma@example.om";
+    private string? _date = "1990-04-17";
+    private string? _password = "";
+    private string? _required = "";
+    private string? _notes = "Existing notes from the saved request.";
+    private string? _sector = "manufacturing";
+    private bool _agreed = true;
+    private string? _choice = "email";
+    private string? _regionText = "Inside the region";
+    private string? _rawText = "Plain input";
+
+    private static string Show(string? v) => string.IsNullOrEmpty(v) ? "(empty)" : v;
+}

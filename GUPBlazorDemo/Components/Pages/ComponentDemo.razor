@@ -1,21 +1,12 @@
 @page "/"
-@inject NavigationManager Nav
 
 <PageTitle>Component Demo — Gov.om Design System</PageTitle>
 
 <div class="demo-page">
 
-    <GupHeader NavAriaLabel="Demo Navigation">
-        <Start>
-            <GupTrack Direction="horizontal" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Primary"
-                           Kind="@GupButtonKind.Button"
-                           OnClick="@(() => Nav.NavigateTo("/"))">
-                    <ChildContent>← Back to templates</ChildContent>
-                </GupButton>
-            </GupTrack>
-        </Start>
-    </GupHeader>
+    @* Header kept for the Gov.om logo; the old "Back to templates" button navigated to
+       "/" from "/" and no templates page exists in this app. *@
+    <GupHeader NavAriaLabel="Demo Navigation" />
 
     <GupContentHeader PageTitle="Component Demo">
         <PageSummary>All Gov.om design-system Blazor components, organized by category.</PageSummary>
@@ -47,6 +38,11 @@
             <a href="/demo/forms" class="demo-index-card">
                 <h3>Form Components (all-in-one)</h3>
                 <p>Input fields, form sections, checkboxes, radio buttons, and dropdowns.</p>
+            </a>
+
+            <a href="/demo/read-only-cascade" class="demo-index-card">
+                <h3>Read-only cascade</h3>
+                <p>Lock every field on a page with one cascaded flag, plus GupReadOnlyRegion.</p>
             </a>
 
             <a href="/demo/file-upload" class="demo-index-card">

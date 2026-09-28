@@ -1,4 +1,7 @@
 @page "/application-completed"
+@rendermode RenderMode.InteractiveServer
+@inject NavigationManager Nav
+@inject ToastService ToastSvc
 
 <PageTitle>Application Completed — Gov.om Templates</PageTitle>
 
@@ -7,7 +10,8 @@
     <GupHeader NavAriaLabel="Service Navigation Header">
         <Start>
             <GupTrack Direction="horizontal" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button"
+                           OnClick="@(() => Nav.NavigateTo("/"))">
                     <IconStart><GupIcon IconName="close" Width="24" Height="24" /></IconStart>
                     <ChildContent>Cancel</ChildContent>
                 </GupButton>
@@ -15,7 +19,8 @@
         </Start>
         <End>
             <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button">
+                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Button" Type="@GupButtonType.Button"
+                           OnClick="@(() => Nav.NavigateTo("/help"))">
                     <IconStart><GupIcon IconName="help-outline" Width="24" Height="24" /></IconStart>
                     <ChildContent>Do you need help?</ChildContent>
                 </GupButton>
@@ -83,8 +88,8 @@
             </GupTrack>
 
             <GupButtonGroup>
-                <GupButton Appearance="@GupButtonAppearance.Primary">Go to Gov.om Dashboard</GupButton>
-                <GupButton Appearance="@GupButtonAppearance.Secondary">Download Certificate</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => Nav.NavigateTo("/"))">Go to Gov.om Dashboard</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => ToastSvc.Show("Certificate download is not wired in this template", "neutral", 4000))">Download Certificate</GupButton>
             </GupButtonGroup>
 
         </GupTrack>

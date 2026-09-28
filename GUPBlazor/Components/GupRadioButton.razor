@@ -10,7 +10,7 @@
     <label class="wrapper">
         <input type="radio" name="@EffectiveName" value="@Value"
                checked="@(IsChecked ? true : null)"
-               disabled="@(Disabled ? true : null)"
+               disabled="@(EffectiveDisabled ? true : null)"
                required="@(Required ? true : null)"
                @onchange="HandleChange"
                @onfocus="HandleFocus"
@@ -35,6 +35,13 @@
     [Parameter] public string Value { get; set; } = "";
     [Parameter] public bool Selected { get; set; }
     [Parameter] public bool Disabled { get; set; }
+
+    // Optional page-wide read-only, cascaded by an ancestor as GupReadOnly (or by
+    // GupReadOnlyRegion). Absent cascade = false, so behaviour is unchanged for
+    // callers that never set it.
+    [CascadingParameter(Name = "GupReadOnly")] private bool CascadedReadOnly { get; set; }
+
+    private bool EffectiveDisabled => Disabled || CascadedReadOnly;
 
     /// <summary>Size of the radio button: <c>s</c>, <c>m</c> (default), or <c>l</c>.</summary>
     [Parameter] public string Size { get; set; } = "m";
@@ -83,7 +90,7 @@
 
     private async Task HandleChange(ChangeEventArgs e)
     {
-        if (Disabled) return;
+        if (EffectiveDisabled) return;
 
         if (Group is not null)
         {
