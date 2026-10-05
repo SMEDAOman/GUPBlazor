@@ -114,7 +114,7 @@
   --gup-color-brand-accent-xhigh: #111111; /* accent 900 */
   --gup-color-brand-accent-high: #0a3dac;  /* accent 700 — deep accent blue */
   --gup-color-brand-accent-medium: #414e77;/* accent 600 — muted accent */
-  --gup-color-brand-accent-low: #36cc8d;   /* accent 400 — teal/green accent */
+  --gup-color-brand-accent-low: #c9ccdd;   /* upstream tokens/src/variables/color.css */
   --gup-color-brand-accent-xlow: #eceef4;  /* accent 200 */
   --gup-color-brand-accent-contrast: #ffffff;
 
@@ -1420,6 +1420,20 @@ body {
 }
 
 /* ---- Shared field affordances (added) ------------------------------------ */
+
+/* Chrome/Safari paint autofilled inputs blue and ignore background-color on them;
+   the inset shadow is the only way to restore the field background. */
+.gup-input-field input:-webkit-autofill,
+.gup-input-field input:-webkit-autofill:hover,
+.gup-input-field input:-webkit-autofill:focus,
+.gup-input-field input:-webkit-autofill:active,
+.gup-textarea-field textarea:-webkit-autofill,
+.gup-textarea-field textarea:-webkit-autofill:hover,
+.gup-textarea-field textarea:-webkit-autofill:focus {
+  box-shadow: 0 0 0 100px var(--gup-color-states-base-bg, #ffffff) inset;
+  -webkit-text-fill-color: var(--gup-color-content-primary);
+  caret-color: var(--gup-color-content-primary);
+}
 
 /* "(optional)" label suffix — muted, slightly smaller, never bolder than the label. */
 .gup-optional-hint {
