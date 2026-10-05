@@ -1815,13 +1815,42 @@ body {
    22. COMPONENT: gup-banner
    ------------------------------------------------------------ */
 .gup-banner {
+  --_border-color: var(--gup-color-neutral-low);
+  --_icon-color: var(--gup-color-neutral-medium);
+  --_bg-color: transparent;
+
   display: block;
   max-width: 600px;
   padding: var(--gup-padding-md);
   border-radius: var(--gup-radius-card);
-  border: 1px solid var(--gup-color-neutral-low);
+  border: 1px solid var(--_border-color);
+  background-color: var(--_bg-color);
   color: var(--gup-color-content-primary);
   line-height: var(--line-height-500);
+}
+
+/* Type variants — token values mirror design-system/classes/banner/banner.css;
+   the selectors target this component's class names, not the BEM ones. */
+.gup-banner--success {
+  --_border-color: var(--gup-color-positive-low);
+  --_icon-color: var(--gup-color-positive-medium);
+  --_bg-color: var(--gup-color-positive-xlow);
+}
+
+.gup-banner--warning {
+  --_border-color: var(--gup-color-warning-low);
+  --_icon-color: var(--gup-color-warning-contrast);
+  --_bg-color: var(--gup-color-warning-xlow);
+}
+
+.gup-banner--error {
+  --_border-color: var(--gup-color-negative-low);
+  --_icon-color: var(--gup-color-negative-medium);
+  --_bg-color: var(--gup-color-negative-xlow);
+}
+
+.gup-banner .banner-icon .gup-icon {
+  color: var(--_icon-color);
 }
 
 .gup-banner .inner {

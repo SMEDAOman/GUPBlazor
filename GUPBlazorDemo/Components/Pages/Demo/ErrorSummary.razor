@@ -1,0 +1,171 @@
+@page "/demo/error-summary"
+
+@* Mirrors GUP.Portal/General/FormErrorSummary.razor. That component lives in
+   GUP.Portal (not the design system), so the markup is replicated here rather
+   than referenced — keep the two in step when either changes. *@
+
+<PageTitle>Error Summary — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+  <GupHeader NavAriaLabel="Demo Navigation">
+    <Start>
+      <GupTrack Direction="horizontal" Gap="2">
+        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
+          <ChildContent>← Back to demo</ChildContent>
+        </GupButton>
+      </GupTrack>
+    </Start>
+  </GupHeader>
+
+  <GupContentHeader PageTitle="Form Error Summary">
+    <PageSummary>
+      The validation summary shown at the top of a wizard step when Continue is pressed
+      with missing or invalid fields. Built on GupBanner (Type=Error).
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Single error</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">One missing field · matches the Storybook banner/with-form-error story</span>
+          <div class="form-error-summary" role="alert">
+            <GupBanner Type="GupBannerType.Error">
+              <TitleContent>There is a problem</TitleContent>
+              <ChildContent>
+                <p class="form-error-summary__intro">
+                  It looks like we're missing a few details. Please provide the following information to continue:
+                </p>
+                <ul>
+                  <li>
+                    <button type="button" class="form-error-summary__link">
+                      Please enter upload Previous Qualification Certificate (PhD)
+                    </button>
+                  </li>
+                </ul>
+              </ChildContent>
+            </GupBanner>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Multiple errors</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">Each entry focuses its field on click</span>
+          <div class="form-error-summary" role="alert">
+            <GupBanner Type="GupBannerType.Error">
+              <TitleContent>There is a problem</TitleContent>
+              <ChildContent>
+                <p class="form-error-summary__intro">
+                  It looks like we're missing a few details. Please provide the following information to continue:
+                </p>
+                <ul>
+                  <li><button type="button" class="form-error-summary__link">Please enter your mobile number</button></li>
+                  <li><button type="button" class="form-error-summary__link">Please select a governorate</button></li>
+                  <li><button type="button" class="form-error-summary__link">Please upload a copy of your commercial registry</button></li>
+                </ul>
+              </ChildContent>
+            </GupBanner>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Non-focusable entries</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full">
+          <span class="demo-card-label">No Field set — renders as plain text, not a link</span>
+          <div class="form-error-summary" role="alert">
+            <GupBanner Type="GupBannerType.Error">
+              <TitleContent>There is a problem</TitleContent>
+              <ChildContent>
+                <p class="form-error-summary__intro">
+                  It looks like we're missing a few details. Please provide the following information to continue:
+                </p>
+                <ul>
+                  <li>All the fields are mandatory</li>
+                </ul>
+              </ChildContent>
+            </GupBanner>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Arabic (RTL)</h2>
+      <div class="demo-row">
+        <div class="demo-card demo-card--full" dir="rtl">
+          <span class="demo-card-label">Same component, right-to-left</span>
+          <div class="form-error-summary" role="alert">
+            <GupBanner Type="GupBannerType.Error">
+              <TitleContent>توجد مشكلة</TitleContent>
+              <ChildContent>
+                <p class="form-error-summary__intro">
+                  يبدو أن بعض التفاصيل ناقصة. يرجى تقديم المعلومات التالية للمتابعة:
+                </p>
+                <ul>
+                  <li><button type="button" class="form-error-summary__link">يرجى إدخال رقم الهاتف المحمول</button></li>
+                  <li><button type="button" class="form-error-summary__link">يرجى اختيار المحافظة</button></li>
+                </ul>
+              </ChildContent>
+            </GupBanner>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<style>
+    /* Copied from GUP.Portal/wwwroot/app.css so the demo renders standalone. */
+    .form-error-summary {
+        margin-bottom: 24px;
+    }
+
+    .form-error-summary__intro {
+        margin: 0 0 12px;
+    }
+
+    /* gup.css resets ol/ul to list-style:none globally, so the markers are
+       restored here the same way .gup-rich-text does it. */
+    .form-error-summary ul {
+        margin: 0;
+        padding-inline-start: 1.5em;
+        list-style: revert;
+        color: var(--gup-color-content-primary, #202024);
+    }
+
+    .form-error-summary li + li {
+        margin-block-start: 4px;
+    }
+
+    /* inline so the marker sits beside the first line and wrapped text aligns
+       under the text, not under the bullet. */
+    .form-error-summary__link {
+        display: inline;
+        text-align: start;
+        font: inherit;
+        font-weight: 700;
+        color: var(--gup-color-negative-high, #ba1c1c);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        cursor: pointer;
+        background: none;
+        border: 0;
+        padding: 0;
+    }
+
+    .form-error-summary__link:hover,
+    .form-error-summary__link:focus-visible {
+        text-decoration: none;
+    }
+</style>

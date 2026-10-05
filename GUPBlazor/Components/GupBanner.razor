@@ -10,7 +10,7 @@
             @if (!HideIcon)
             {
                 <div class="banner-icon">
-                    <GupIcon IconName="@IconForType()" Width="24" Height="24" />
+                    <GupIcon IconName="@IconForType()" Width="24" Height="24" Filled="true" />
                 </div>
             }
             <div class="banner-body">
@@ -70,11 +70,13 @@
         _                     => "neutral",
     };
 
+    // Material Symbols glyph names — "error_outline"/"warning_amber" are the older
+    // Material Icons spellings and render as the literal text in this font.
     private string IconForType() => Type switch
     {
         GupBannerType.Success => "check-circle",
-        GupBannerType.Warning => "warning-amber",
-        GupBannerType.Error   => "error-outline",
+        GupBannerType.Warning => "warning",
+        GupBannerType.Error   => "cancel",
         _                     => "info",
     };
 
