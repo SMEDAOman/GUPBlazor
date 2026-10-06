@@ -1,4 +1,4 @@
-@page "/demo/inputs/dropdown"
+﻿@page "/demo/inputs/dropdown"
 @rendermode InteractiveServer
 
 <PageTitle>Dropdown — Component Demo</PageTitle>
@@ -31,6 +31,8 @@
                             <Label>Governorate</Label>
                             <ChildContent>
                                 <GupDropdownMenu>
+                                    @* Value 0 is the placeholder convention; it renders muted. *@
+                                    <GupDropdownMenuItem Label="Please Select" Value="0" Selected="true" />
                                     <GupDropdownMenuItem Label="Muscat" Value="muscat" />
                                     <GupDropdownMenuItem Label="Dhofar" Value="dhofar" />
                                     <GupDropdownMenuItem Label="Musandam" Value="musandam" />

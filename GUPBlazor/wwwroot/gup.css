@@ -2631,6 +2631,12 @@ body {
   color: var(--gup-color-content-tertiary);
 }
 
+/* The "Please Select" row (value 0) is a prompt, not a choice: mute it so it
+   reads differently from the real options under it. */
+.gup-dropdown-menu-item[data-value="0"] .button .item-content {
+  color: var(--gup-color-content-tertiary);
+}
+
 /* ── Dropdown field end slot (clear + arrow) ── */
 .gup-dropdown-field .field-end-slot {
   display: flex;
