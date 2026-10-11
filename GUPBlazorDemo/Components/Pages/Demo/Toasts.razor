@@ -6,15 +6,6 @@
 
 <div class="demo-page">
 
-  <GupHeader NavAriaLabel="Demo Navigation">
-    <Start>
-      <GupTrack Direction="horizontal" Gap="2">
-        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
-          <ChildContent>← Back to demo</ChildContent>
-        </GupButton>
-      </GupTrack>
-    </Start>
-  </GupHeader>
 
   <GupContentHeader PageTitle="Toasts (GupToast / GupToastContainer)">
     <PageSummary>Short messages displayed to the user. Inject <code>ToastService</code> and call <code>Show()</code> from any page — the global container in <code>MainLayout</code> renders them.</PageSummary>
@@ -67,7 +58,7 @@
       <div class="demo-row">
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">Click a button to push a toast (auto-dismisses after 10s)</span>
-          <GupTrack Direction="horizontal" Gap="2">
+          <GupTrack Direction="horizontal" Gap="2" IsMultiline="true">
             <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => Push("neutral"))">
               <ChildContent>Open neutral</ChildContent>
             </GupButton>

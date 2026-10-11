@@ -5,7 +5,10 @@
 
 <PageTitle>Application Completed — Gov.om Templates</PageTitle>
 
-<div style="display: flex; flex-direction: column; height: 100vh;">
+@* .gup-wizard-stack supplies the page shell: min-height:100dvh so a short page still
+   fills the viewport (no grey background under the footer), while the document itself
+   scrolls — header and content-header travel with it, matching upstream. *@
+<div class="gup-wizard-stack">
 
     <GupHeader NavAriaLabel="Service Navigation Header">
         <Start>
@@ -87,9 +90,11 @@
                 </GupTable>
             </GupTrack>
 
-            <GupButtonGroup>
+            @* vertical-on-mobile: side by side where there is room, stacked full-width below 639px. *@
+            <GupButtonGroup Direction="vertical-on-mobile">
                 <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="@(() => Nav.NavigateTo("/"))">Go to Gov.om Dashboard</GupButton>
                 <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => ToastSvc.Show("Certificate download is not wired in this template", "neutral", 4000))">Download Certificate</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Text" OnClick="@(() => ToastSvc.Show("Feedback is not wired in this template", "neutral", 4000))">Give Feedback</GupButton>
             </GupButtonGroup>
 
         </GupTrack>

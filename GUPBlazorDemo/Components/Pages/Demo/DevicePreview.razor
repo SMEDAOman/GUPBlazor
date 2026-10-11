@@ -1,0 +1,264 @@
+@page "/demo/device-preview"
+@rendermode InteractiveServer
+
+@* Renders any demo route inside a width-constrained iframe so CSS media queries fire at
+   phone/tablet widths. An iframe is the only way to do this honestly: transform:scale or a
+   plain resizable div narrows the painted box but the viewport stays desktop-width, so
+   @@media never matches and gup.css's 749/639/599/380px rules never engage. *@
+
+<PageTitle>Device Preview — Component Demo</PageTitle>
+
+<div class="demo-page">
+
+
+    <GupContentHeader PageTitle="Device Preview">
+        <PageSummary>View any demo page at a real phone or tablet viewport. Media queries fire exactly as they would on the device.</PageSummary>
+    </GupContentHeader>
+
+    <div class="demo-body">
+
+        <section class="demo-section">
+            <div class="dp-toolbar">
+
+                <div class="dp-field">
+                    <label class="dp-label" for="dp-page">Page</label>
+                    <select id="dp-page" class="dp-select" @bind="Route">
+                        @foreach (var g in Routes.GroupBy(r => r.Group))
+                        {
+                            <optgroup label="@g.Key">
+                                @foreach (var r in g)
+                                {
+                                    <option value="@r.Path">@r.Label</option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+
+                <div class="dp-field">
+                    <label class="dp-label" for="dp-device">Device</label>
+                    <select id="dp-device" class="dp-select" @bind="DeviceName">
+                        @foreach (var d in Devices)
+                        {
+                            <option value="@d.Name">@d.Name (@d.Width×@d.Height)</option>
+                        }
+                        <option value="@CustomName">Custom…</option>
+                    </select>
+                </div>
+
+                <div class="dp-field dp-field--narrow">
+                    <label class="dp-label" for="dp-w">Width</label>
+                    <input id="dp-w" class="dp-input" type="number" min="240" max="1600" step="1"
+                           @bind="Width" @bind:event="onchange" />
+                </div>
+
+                <div class="dp-field dp-field--narrow">
+                    <label class="dp-label" for="dp-h">Height</label>
+                    <input id="dp-h" class="dp-input" type="number" min="320" max="2000" step="1"
+                           @bind="Height" @bind:event="onchange" />
+                </div>
+
+                <div class="dp-field dp-field--grow">
+                    <span class="dp-label">&nbsp;</span>
+                    <div class="dp-actions">
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="Rotate">
+                            <IconStart><GupIcon IconName="screen-rotation" Width="20" Height="20" /></IconStart>
+                            <ChildContent>Rotate</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="Reload">
+                            <IconStart><GupIcon IconName="refresh" Width="20" Height="20" /></IconStart>
+                            <ChildContent>Reload</ChildContent>
+                        </GupButton>
+                        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link"
+                                   Href="@_route" OpenInNewTab="true">
+                            <IconStart><GupIcon IconName="open-in-new" Width="20" Height="20" /></IconStart>
+                            <ChildContent>Open alone</ChildContent>
+                        </GupButton>
+                    </div>
+                </div>
+
+            </div>
+
+            @* Which gup.css breakpoints are active at this width — the point of the tool. *@
+            <div class="dp-breakpoints" role="status" aria-live="polite">
+                <span class="dp-bp-current">@_width px</span>
+                @foreach (var bp in Breakpoints)
+                {
+                    <span class="dp-bp @(bp.Matches(_width) ? "dp-bp--on" : "")"
+                          title="@bp.Note">@bp.Label</span>
+                }
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <div class="dp-stage">
+                <div class="dp-device" style="width:@(_width)px;">
+                    <div class="dp-bezel">
+                        <span class="dp-notch"></span>
+                        <span class="dp-chrome-label">@_deviceName · @_width×@_height</span>
+                    </div>
+                    @* @key forces a new element when the nonce or route changes, so Reload
+                       really remounts the frame instead of being diffed away. *@
+                    <iframe @key="@($"{_route}#{_nonce}")"
+                            class="dp-frame"
+                            src="@FrameSrc"
+                            title="@($"Device preview: {CurrentLabel}")"
+                            style="width:@(_width)px; height:@(_height)px;"></iframe>
+                </div>
+            </div>
+            <p class="demo-section-description dp-foot">
+                The frame is a real nested browsing context, so its viewport width is genuinely
+                <code>@_width px</code> — <code>@@media</code>, <code>dvh</code>, container queries and
+                <code>pointer:&nbsp;coarse</code>-independent rules all behave as on-device. What it does
+                <strong>not</strong> reproduce: touch input (your pointer is still a mouse, so
+                <code>@@media (pointer: coarse)</code> stays unmatched), device pixel ratio, OS fonts, the
+                on-screen keyboard, or iOS Safari's dynamic toolbar. Verify those on hardware.
+            </p>
+        </section>
+
+    </div>
+
+</div>
+
+@code {
+    private const string CustomName = "Custom";
+
+    private record Device(string Name, int Width, int Height);
+    private record DemoRoute(string Group, string Label, string Path);
+    private record Bp(string Label, string Note, Func<int, bool> Matches);
+
+    // Widths are CSS px (layout viewport), which is what media queries read.
+    private static readonly Device[] Devices =
+    [
+        new("iPhone SE",        375,  667),
+        new("iPhone 15",        393,  852),
+        new("iPhone 15 Pro Max",430,  932),
+        new("Galaxy S24",       360,  800),
+        new("Small Android",    320,  640),
+        new("iPad mini",        744, 1133),
+        new("iPad Pro 11",      834, 1194),
+        new("Desktop",         1280,  800),
+    ];
+
+    // The breakpoints that actually exist in gup.css, so the strip reflects reality.
+    private static readonly Bp[] Breakpoints =
+    [
+        new("≤380",  "Header action labels shrink to 11px",                w => w <= 380),
+        new("≤599",  "Breadcrumbs collapse to first + last",               w => w <= 599),
+        new("≤639",  "Tables stack into cards; data-table controls stack", w => w <= 639),
+        new("≤749",  "Gutter 32→20px; header labels shrink to 12px",       w => w <= 749),
+        new("≤1024", "Gutter and grid gap settle at 32px",                 w => w <= 1024),
+    ];
+
+    private static readonly DemoRoute[] Routes =
+    [
+        new DemoRoute("Templates",  "Service start (full wizard)", "/service-start"),
+        new DemoRoute("Templates",  "Application completed",       "/application-completed"),
+        new DemoRoute("Templates",  "Sign in",                     "/sign-in"),
+        new DemoRoute("Templates",  "Help",                        "/help"),
+        new DemoRoute("Templates",  "Templates index",             "/templates"),
+
+        new DemoRoute("High value on mobile", "Data table (stacks ≤639px)", "/demo/data-table"),
+        new DemoRoute("High value on mobile", "Forms (all-in-one)",         "/demo/forms"),
+        new DemoRoute("High value on mobile", "Layout",                     "/demo/layout"),
+        new DemoRoute("High value on mobile", "Data display",               "/demo/data-display"),
+        new DemoRoute("High value on mobile", "Dialogs",                    "/demo/dialogs"),
+        new DemoRoute("High value on mobile", "Flyout",                     "/demo/flyout"),
+        new DemoRoute("High value on mobile", "Toasts",                     "/demo/toasts"),
+        new DemoRoute("High value on mobile", "Pagination",                 "/demo/pagination"),
+        new DemoRoute("High value on mobile", "Breadcrumbs (≤599px)",       "/demo/breadcrumbs"),
+        new DemoRoute("High value on mobile", "Tabs",                       "/demo/tabs"),
+        new DemoRoute("High value on mobile", "File upload",                "/demo/file-upload"),
+        new DemoRoute("High value on mobile", "Error summary",              "/demo/error-summary"),
+
+        new DemoRoute("Inputs", "Text",     "/demo/inputs/text"),
+        new DemoRoute("Inputs", "Number",   "/demo/inputs/number"),
+        new DemoRoute("Inputs", "Tel",      "/demo/inputs/tel"),
+        new DemoRoute("Inputs", "Email",    "/demo/inputs/email"),
+        new DemoRoute("Inputs", "Date",     "/demo/inputs/date"),
+        new DemoRoute("Inputs", "Password", "/demo/inputs/password"),
+        new DemoRoute("Inputs", "Textarea", "/demo/inputs/textarea"),
+        new DemoRoute("Inputs", "Checkbox", "/demo/inputs/checkbox"),
+        new DemoRoute("Inputs", "Radio",    "/demo/inputs/radio"),
+        new DemoRoute("Inputs", "Toggle",   "/demo/inputs/toggle"),
+
+        new DemoRoute("Components", "Accordion",         "/demo/accordion"),
+        new DemoRoute("Components", "Avatar",            "/demo/avatar"),
+        new DemoRoute("Components", "Badges",            "/demo/badges"),
+        new DemoRoute("Components", "Badge chips",       "/demo/badge-chips"),
+        new DemoRoute("Components", "Branding",          "/demo/branding"),
+        new DemoRoute("Components", "Buttons",           "/demo/buttons"),
+        new DemoRoute("Components", "Callout",           "/demo/callout"),
+        new DemoRoute("Components", "Data sheet",        "/demo/data-sheet"),
+        new DemoRoute("Components", "Details",           "/demo/details"),
+        new DemoRoute("Components", "Divider",           "/demo/divider"),
+        new DemoRoute("Components", "Feedback",          "/demo/feedback"),
+        new DemoRoute("Components", "Filter chip",       "/demo/filter-chip"),
+        new DemoRoute("Components", "Flag",              "/demo/flag"),
+        new DemoRoute("Components", "Form section",      "/demo/form-section"),
+        new DemoRoute("Components", "Icons",             "/demo/icons"),
+        new DemoRoute("Components", "Image",             "/demo/image"),
+        new DemoRoute("Components", "Page status",       "/demo/page-status"),
+        new DemoRoute("Components", "Read-only cascade", "/demo/read-only-cascade"),
+        new DemoRoute("Components", "Screenreader text", "/demo/screenreader-text"),
+        new DemoRoute("Components", "Search",            "/demo/search"),
+        new DemoRoute("Components", "Skip link",         "/demo/skip-link"),
+        new DemoRoute("Components", "Spinner",           "/demo/spinner"),
+        new DemoRoute("Components", "Tooltip",           "/demo/tooltip"),
+        new DemoRoute("Components", "Component index",   "/"),
+    ];
+
+    private string _route = "/service-start";
+    private string _deviceName = "Galaxy S24";
+    private int _width = 360;
+    private int _height = 800;
+
+    // Bumped to force the iframe to remount on Reload (same src would otherwise no-op).
+    private int _nonce;
+
+    private string FrameSrc => _nonce == 0 ? _route : $"{_route}{(_route.Contains('?') ? '&' : '?')}dp={_nonce}";
+
+    private string CurrentLabel => Routes.FirstOrDefault(r => r.Path == _route)?.Label ?? _route;
+
+    private string Route
+    {
+        get => _route;
+        set { if (value != _route) { _route = value; _nonce = 0; } }
+    }
+
+    // Picking a preset snaps the dimensions; picking "Custom" leaves them where they are.
+    private string DeviceName
+    {
+        get => _deviceName;
+        set
+        {
+            _deviceName = value;
+            if (Devices.FirstOrDefault(d => d.Name == value) is { } d)
+            {
+                _width = d.Width;
+                _height = d.Height;
+            }
+        }
+    }
+
+    // Typing a dimension drops the preset label, since it no longer describes the frame.
+    private int Width
+    {
+        get => _width;
+        set { _width = Math.Clamp(value, 240, 1600); _deviceName = CustomName; }
+    }
+
+    private int Height
+    {
+        get => _height;
+        set { _height = Math.Clamp(value, 320, 2000); _deviceName = CustomName; }
+    }
+
+    private void Rotate()
+    {
+        (_width, _height) = (_height, _width);
+        _deviceName = CustomName;
+    }
+
+    private void Reload() => _nonce++;
+}

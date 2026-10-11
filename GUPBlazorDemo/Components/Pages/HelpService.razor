@@ -5,7 +5,10 @@
 
 <PageTitle>Help — Gov.om Templates</PageTitle>
 
-<div style="display: flex; flex-direction: column; height: 100vh;">
+@* .gup-wizard-stack supplies the shell. This page has no gup-wizard-main, so its own
+   content div carries flex:1 and the canvas background — without it the grey page
+   background would show under the footer on a short page. *@
+<div class="gup-wizard-stack">
 
     <GupHeader NavAriaLabel="Service Navigation Header">
         <Start>
@@ -31,9 +34,9 @@
     <GupContentHeader PageTitle="Get help using our service" />
 
     <div style="background-color: var(--gup-color-background-canvas); flex: 1;">
-        <div style="max-width: 1024px; margin-inline: auto; padding: 32px; padding-bottom: 80px;">
+        <div style="max-width: 632px; margin-inline: auto; padding: 32px; padding-bottom: 80px;">
 
-            <GupTrack Direction="vertical" Gap="9" style="max-width: 632px;">
+            <GupTrack Direction="vertical" Gap="9">
 
                 <GupTrack Direction="vertical" Gap="4">
                     <h2 style="font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: -0.4px; margin: 0; color: var(--gup-color-content-primary);">

@@ -1,5 +1,32 @@
 @inherits LayoutComponentBase
 
-@Body
+@* Storybook-style shell: a persistent catalogue sidebar beside the page canvas.
+   Pages render their own GupContentHeader and are not aware of this — the
+   design-system chrome is max-width + margin-inline:auto, so it re-centres in the
+   narrower canvas.
+
+   The layout itself stays statically rendered: a layout cannot take @rendermode
+   because Body is a RenderFragment and will not serialise. The drawer is driven by
+   a CSS-only checkbox so it works regardless, and the interactive parts (filter,
+   active-route tracking) live in DemoSidebar. *@
+
+<div class="demo-shell">
+
+    <input type="checkbox" id="demo-nav-toggle" class="demo-shell__toggle" />
+
+    <DemoSidebar @rendermode="InteractiveServer" />
+
+    @* Dimmed backdrop; only interactive while the drawer is open on small screens. *@
+    <label for="demo-nav-toggle" class="demo-shell__scrim" aria-hidden="true"></label>
+
+    <div class="demo-shell__canvas">
+        <label for="demo-nav-toggle" class="demo-shell__burger" aria-label="Open navigation">
+            <GupIcon IconName="menu" Width="24" Height="24" />
+            <span>Catalogue</span>
+        </label>
+        @Body
+    </div>
+
+</div>
 
 <GupToastContainer @rendermode="InteractiveServer" />

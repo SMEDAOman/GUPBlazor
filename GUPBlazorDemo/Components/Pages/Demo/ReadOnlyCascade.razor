@@ -8,17 +8,6 @@
 
     @* Kind.Button + NavigateTo: GupButton swallows Kind.Link navigation on an
        interactive page, because it attaches @onclick to the anchor. *@
-    <GupHeader NavAriaLabel="Demo Navigation">
-        <Start>
-            <GupTrack Direction="horizontal" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text"
-                           Kind="@GupButtonKind.Button"
-                           OnClick="@(() => Nav.NavigateTo("/"))">
-                    <ChildContent>← Back to demo</ChildContent>
-                </GupButton>
-            </GupTrack>
-        </Start>
-    </GupHeader>
 
     <GupContentHeader PageTitle="Read-only cascade">
         <PageSummary>

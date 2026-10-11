@@ -5,15 +5,6 @@
 
 <div class="demo-page">
 
-    <GupHeader NavAriaLabel="Demo Navigation">
-        <Start>
-            <GupTrack Direction="horizontal" Gap="2">
-                <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
-                    <ChildContent>← Back to demo</ChildContent>
-                </GupButton>
-            </GupTrack>
-        </Start>
-    </GupHeader>
 
     <GupContentHeader PageTitle="Breadcrumbs">
         <PageSummary>GupBreadcrumbs &amp; GupBreadcrumbsItem — a navigation trail with two-way binding for current state and click events.</PageSummary>
@@ -55,7 +46,8 @@
             <h2 class="demo-section-title">Two-way binding (@@bind-Current)</h2>
             <div class="demo-card--full">
                 <div class="demo-surface">
-                    <GupTrack Direction="horizontal" Gap="2">
+                    @* IsMultiline: three fixed-width buttons overflow a 360px viewport otherwise. *@
+                    <GupTrack Direction="horizontal" Gap="2" IsMultiline="true">
                         <GupButton Appearance="@GupButtonAppearance.Secondary"
                                    Kind="@GupButtonKind.Button"
                                    OnClick="@(() => _currentIndex = 0)">

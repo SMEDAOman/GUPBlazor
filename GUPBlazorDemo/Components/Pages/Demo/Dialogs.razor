@@ -5,15 +5,6 @@
 
 <div class="demo-page">
 
-  <GupHeader NavAriaLabel="Demo Navigation">
-    <Start>
-      <GupTrack Direction="horizontal" Gap="2">
-        <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link" Href="/">
-          <ChildContent>← Back to demo</ChildContent>
-        </GupButton>
-      </GupTrack>
-    </Start>
-  </GupHeader>
 
   <GupContentHeader PageTitle="Dialog (GupDialog)">
     <PageSummary>A modal dialog with a heading, content, and action buttons. Bind <code>IsOpen</code> to control visibility — listen to <code>OnClose</code> to react to close events.</PageSummary>
@@ -76,7 +67,7 @@
       <div class="demo-row">
         <div class="demo-card demo-card--full">
           <span class="demo-card-label">Size="small|medium|large|xl|fullscreen" — controls the modal's max-width (and viewport coverage for fullscreen)</span>
-          <GupTrack Direction="horizontal" Gap="2">
+          <GupTrack Direction="horizontal" Gap="2" IsMultiline="true">
             <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="@(() => _smallOpen = true)">
               <ChildContent>Small (320px)</ChildContent>
             </GupButton>

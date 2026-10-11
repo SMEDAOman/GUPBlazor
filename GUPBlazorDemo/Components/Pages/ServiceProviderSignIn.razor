@@ -5,7 +5,10 @@
 
 <PageTitle>Sign In — Gov.om Templates</PageTitle>
 
-<div style="display: flex; flex-direction: column; height: 100vh;">
+@* .gup-wizard-stack supplies the page shell: min-height:100dvh so a short page still
+   fills the viewport (no grey background under the footer), while the document itself
+   scrolls — header and content-header travel with it, matching upstream. *@
+<div class="gup-wizard-stack">
 
     <GupHeader NavAriaLabel="Service Navigation Header">
         <Start>

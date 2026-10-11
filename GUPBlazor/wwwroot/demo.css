@@ -74,6 +74,15 @@
   padding: 24px;
 }
 
+/* ~52 demo pages hardcode style="padding:32px" on a surface. At 360px that 64px of
+   horizontal padding starves the component inside — full-width tabs clipped their last
+   label. !important is required only because it must beat those inline styles. */
+@media (max-width: 749px) {
+  .demo-surface {
+    padding: 16px !important;
+  }
+}
+
 /* Flat variant — fields sit directly on the page (no white card / border /
    padding), per the C6 "form white card removal" design. Consumers can use
    <div class="demo-surface demo-surface--flat"> instead of overriding
@@ -163,6 +172,609 @@
 .demo-wizard-strip .gup-wizard-main .inner {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+/* ── Form error summary (ErrorSummary.razor) ──
+   The demo had no styles for this, so the <button> fell back to inline-block and the list
+   marker aligned to its LAST line box — the bullet appeared beside the final wrapped line.
+   These rules mirror the ones already proven in GUP.Portal's app.css. */
+.form-error-summary__intro {
+  margin: 0 0 12px;
+}
+
+/* gup.css resets ol/ul to list-style:none globally, so restore markers here. */
+.form-error-summary ul {
+  margin: 0;
+  padding-inline-start: 1.5em;
+  list-style: revert;
+  color: var(--gup-color-content-primary);
+}
+
+.form-error-summary li + li {
+  margin-block-start: 4px;
+}
+
+/* display:inline is the fix: the marker sits beside the FIRST line and wrapped text
+   aligns under the text rather than under the bullet. */
+.form-error-summary__link {
+  display: inline;
+  text-align: start;
+  font: inherit;
+  font-weight: 700;
+  color: var(--gup-color-negative-high, #ba1c1c);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.form-error-summary__link:hover,
+.form-error-summary__link:focus-visible {
+  text-decoration: none;
+}
+
+/* ── Device preview (DevicePreview.razor) ──
+   The frame is a real iframe, so its viewport width genuinely drives @media. Styles here
+   are the surrounding chrome only; nothing leaks into the framed page. */
+.dp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  padding: 20px 24px;
+  background: var(--gup-color-background-elevated-container);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+}
+
+.dp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.dp-field--narrow { width: 92px; flex-shrink: 0; }
+.dp-field--grow   { margin-inline-start: auto; }
+
+.dp-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gup-color-content-tertiary);
+}
+
+.dp-select,
+.dp-input {
+  font-family: inherit;
+  /* 16px: below this, iOS Safari zooms the page on focus. */
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 8px 12px;
+  color: var(--gup-color-content-primary);
+  background: var(--gup-color-states-base-bg, #fff);
+  border: 1px solid var(--gup-color-border-medium, #c9c9ce);
+  border-radius: var(--gup-radius-component-small);
+  min-height: 44px;
+}
+
+.dp-select { min-width: 220px; max-width: 420px; }
+.dp-input  { width: 100%; }
+
+.dp-select:focus-visible,
+.dp-input:focus-visible {
+  outline: 2px solid var(--gup-color-brand-medium);
+  outline-offset: 2px;
+}
+
+.dp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Breakpoint strip — which gup.css media queries are live at the current width. */
+.dp-breakpoints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.dp-bp-current {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gup-color-content-primary);
+  margin-inline-end: 4px;
+}
+
+.dp-bp {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--gup-color-border-low);
+  color: var(--gup-color-content-tertiary);
+  background: transparent;
+  cursor: help;
+}
+
+.dp-bp--on {
+  border-color: var(--gup-color-brand-medium);
+  background: var(--gup-color-brand-xlow, #dde9ff);
+  color: var(--gup-color-brand-high, #2a3260);
+}
+
+/* Stage — scrolls horizontally when the chosen width exceeds the column. */
+.dp-stage {
+  overflow-x: auto;
+  padding: 24px;
+  background: var(--gup-color-background-overcanvas, #f1efea);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+  display: flex;
+  justify-content: center;
+}
+
+.dp-device {
+  flex-shrink: 0;
+  background: #1a1a1f;
+  border-radius: 20px;
+  padding: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+  max-width: 100%;
+}
+
+.dp-bezel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 24px;
+}
+
+.dp-notch {
+  position: absolute;
+  inset-inline: 50%;
+  translate: -50% 0;
+  width: 52px;
+  height: 5px;
+  border-radius: 999px;
+  background: #3d3d47;
+}
+
+.dp-chrome-label {
+  position: absolute;
+  inset-inline-start: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #85838f;
+  white-space: nowrap;
+}
+
+.dp-frame {
+  display: block;
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+  max-width: 100%;
+}
+
+.dp-foot { margin: 0; }
+
+@media (max-width: 749px) {
+  .dp-field--grow { margin-inline-start: 0; }
+  .dp-select { min-width: 0; width: 100%; }
+  .dp-stage { padding: 12px; }
+}
+
+/* ── Code samples ──
+   Demo pages use raw <pre>/<code> with no styling, so a long sample pushed the page
+   wide and forced a horizontal scrollbar at 360px. <pre> does not wrap by default:
+   scroll it inside its own box instead of letting it stretch the layout. */
+.demo-page pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  padding: 16px;
+  background: var(--gup-color-background-overcanvas, #f1efea);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-component-default);
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.demo-page pre code {
+  /* The <pre> owns the box; the inner <code> must not re-apply chrome. */
+  display: block;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: inherit;
+  white-space: pre;
+}
+
+/* Inline <code> inside prose — 196 of these across the demo, all previously
+   unstyled. anywhere lets a long token break rather than widen its container. */
+.demo-page code {
+  font-family: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: var(--gup-radius-component-small);
+  background: var(--gup-color-background-overcanvas, #f1efea);
+  overflow-wrap: anywhere;
+}
+
+/* ── Catalogue shell (MainLayout.razor) ──
+   Persistent sidebar + page canvas. Pages are unaware of it: the design-system
+   chrome is max-width + margin-inline:auto, so it re-centres in the canvas. */
+.demo-shell {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Checkbox drives the mobile drawer with no JS. */
+.demo-shell__toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.demo-shell__sidebar {
+  flex: 0 0 272px;
+  width: 272px;
+  display: flex;
+  flex-direction: column;
+  background: var(--gup-color-background-elevated-container, #fff);
+  border-inline-end: 1px solid var(--gup-color-border-low);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.demo-shell__canvas {
+  flex: 1;
+  min-width: 0;   /* without this a wide child stretches the flex item instead of scrolling */
+}
+
+.demo-nav__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--gup-color-border-low);
+}
+
+.demo-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+  min-width: 0;
+}
+
+.demo-nav__brand strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gup-color-content-primary);
+  line-height: 1.3;
+}
+
+.demo-nav__brand em {
+  display: block;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--gup-color-content-tertiary);
+  line-height: 1.3;
+}
+
+.demo-nav__close {
+  display: none;   /* drawer-only */
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--gup-radius-component-small);
+  cursor: pointer;
+  color: var(--gup-color-content-secondary);
+}
+
+.demo-nav__search { padding: 12px 16px; }
+
+.demo-nav__input {
+  font-family: inherit;
+  /* 16px: below this, iOS Safari zooms the page on focus. */
+  font-size: 16px;
+  line-height: 1.4;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  color: var(--gup-color-content-primary);
+  background: var(--gup-color-states-base-bg, #fff);
+  border: 1px solid var(--gup-color-border-medium, #c9c9ce);
+  border-radius: var(--gup-radius-component-small);
+}
+
+.demo-nav__input::placeholder {
+  color: var(--gup-color-content-secondary);
+  opacity: 1;
+}
+
+.demo-nav__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.demo-nav__input:focus-visible {
+  outline: 2px solid var(--gup-color-brand-medium);
+  outline-offset: 1px;
+}
+
+.demo-nav__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 8px 32px;
+}
+
+.demo-nav__group { margin-bottom: 18px; }
+
+.demo-nav__group-title {
+  margin: 0;
+  padding: 8px 8px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--gup-color-content-tertiary);
+}
+
+.demo-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.demo-nav__link {
+  display: block;
+  padding: 8px 10px;
+  min-height: 36px;
+  border-radius: var(--gup-radius-component-small);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--gup-color-content-secondary);
+  text-decoration: none;
+}
+
+.demo-nav__link:hover {
+  background: var(--gup-color-states-secondary-hover);
+  color: var(--gup-color-content-primary);
+}
+
+.demo-nav__link:focus-visible {
+  outline: 2px solid var(--gup-color-brand-medium);
+  outline-offset: -2px;
+}
+
+.demo-nav__link--current {
+  background: var(--gup-color-brand-xlow, #dde9ff);
+  color: var(--gup-color-brand-high, #2a3260);
+  font-weight: 700;
+}
+
+.demo-nav__empty {
+  padding: 16px 10px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--gup-color-content-tertiary);
+}
+
+/* Burger + scrim exist only below the breakpoint. */
+.demo-shell__burger { display: none; }
+.demo-shell__scrim { display: none; }
+
+@media (max-width: 1023px) {
+  .demo-shell__sidebar {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 1100;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-out;
+    box-shadow: var(--gup-shadow-200);
+  }
+
+  [dir="rtl"] .demo-shell__sidebar { transform: translateX(100%); }
+
+  .demo-shell__toggle:checked ~ .demo-shell__sidebar { transform: translateX(0); }
+
+  .demo-shell__toggle:checked ~ .demo-shell__scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1099;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .demo-nav__close { display: flex; }
+
+  .demo-shell__burger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0 0 12px;
+    padding: 8px 14px 8px 10px;
+    min-height: 44px;
+    border: 1px solid var(--gup-color-border-low);
+    border-radius: var(--gup-radius-button, 999px);
+    background: var(--gup-color-states-base-bg, #fff);
+    color: var(--gup-color-content-primary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-shell__sidebar { transition: none; }
+  }
+}
+
+/* ── Reference index (ComponentDemo.razor) ── */
+.ref-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 16px 0;
+  background: var(--gup-color-background-canvas);
+}
+
+.ref-search {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.ref-search__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gup-color-content-tertiary);
+}
+
+.ref-search__input {
+  font-family: inherit;
+  /* 16px: below this, iOS Safari zooms the page on focus. */
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px 14px;
+  min-height: 44px;
+  width: 100%;
+  color: var(--gup-color-content-primary);
+  background: var(--gup-color-states-base-bg, #fff);
+  border: 1px solid var(--gup-color-border-medium, #c9c9ce);
+  border-radius: var(--gup-radius-component-default);
+}
+
+/* Match the design system's own fields, which set this explicitly — the browser
+   default is a different grey and reads as a disabled value rather than a hint. */
+.ref-search__input::placeholder {
+  color: var(--gup-color-content-secondary);
+  opacity: 1;   /* Firefox dims placeholders by default */
+}
+
+/* type=search adds a proprietary clear button in WebKit that sits oddly next to
+   the field's own styling; the Clear control in the toolbar replaces it. */
+.ref-search__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ref-search__input:focus-visible {
+  outline: 2px solid var(--gup-color-brand-medium);
+  outline-offset: 2px;
+}
+
+.ref-search__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--gup-color-content-secondary);
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+.ref-search__clear {
+  font: inherit;
+  font-weight: 600;
+  color: var(--gup-color-brand-medium);
+  background: none;
+  border: 0;
+  padding: 6px 4px;
+  min-height: 32px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.ref-search__clear:hover { text-decoration: none; }
+
+.ref-section__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ref-section__count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gup-color-content-tertiary);
+  background: var(--gup-color-background-overcanvas, #f1efea);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.ref-section__intro {
+  margin: -16px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gup-color-content-secondary);
+  max-width: 68ch;
+}
+
+/* The route, shown small at the foot of each card so the index doubles as a
+   route map when someone is wiring links by hand. */
+.ref-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ref-card__route {
+  margin-top: auto;
+  padding-top: 10px;
+  font-family: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  color: var(--gup-color-content-tertiary);
+  overflow-wrap: anywhere;
+}
+
+.ref-empty {
+  align-items: center;
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--gup-color-content-secondary);
+}
+
+.ref-empty__text {
+  margin: 12px 0 20px;
+  font-size: 16px;
+}
+
+@media (max-width: 639px) {
+  .ref-toolbar { position: static; padding-top: 0; }
+  .ref-search__meta { padding-bottom: 0; }
 }
 
 /* ── Demo index cards ── */
