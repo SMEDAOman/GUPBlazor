@@ -560,15 +560,19 @@ body {
 .gup-col-3,
 .gup-col-full     { grid-column: 1 / -1; }
 
-/* Responsive behavior — Gov.om Foundations §5.1 principles + §5.3/§5.4.
-   Tablet (720–1024px): fewer columns, 32px side padding.
-   Small tablet (< 750px): padding → 20px.
-   Mobile (< 640px): single-column layout.
-   Small mobile (≤ 576px): compact text. */
+/* Responsive behavior — Gov.om Foundations §5.1 principles.
+   P1  ≥1024px : content capped at --gup-content-max, background fills the rest.
+   P2  ≤1024px : fewer columns (3 → 2), 32px side padding.
+   P3  <750px  : padding → 20px; nav labels collapse to icons via
+                 .gup-hide-below-mobile (opt-in — header slots are consumer-authored).
+   P4  <640px  : single column; GupDataTable moves filters to the top. */
 
-/* Tablet (≤ 1024px): maintain 32px side padding; reduce grid gap 40 → 32. */
+/* Tablet (≤ 1024px): fewer columns (3 → 2 per Principle 2), 32px side padding,
+   grid gap 40 → 32. The column reduction was missing until now: the grid held at 3
+   columns through the whole 720–1024 band and dropped straight to 1 at 639px. */
 @media (max-width: 1024px) {
   :root {
+    --gup-grid-columns: 2;
     --gup-gutter: 32px;
     --gup-grid-gap: 32px;
   }
@@ -926,29 +930,38 @@ body {
 
 /* ------------------------------------------------------------
    8b. COMPONENT: gup-wizard-stack (wizard root)
-   Full-height flex column so gup-wizard-main (flex:1) fills the space and
-   gup-wizard-footer pins to the viewport bottom — no grey gap below short
-   content or after a re-render. Moved here from an inline style so it can use
-   100dvh (tracks mobile browser chrome) with a 100vh fallback.
+   Matches the upstream template shell: `display:flex; flex-direction:column;
+   height:100%` (service-start.stories.ts). The PAGE scrolls — header and
+   content-header travel with it, as they do in Storybook.
+
+   This previously used 100dvh + overflow:hidden to pin the footer, which made
+   gup-wizard-main the only scroller. On a 360x800 phone that left the fixed
+   chrome owning ~74% of the viewport, and it diverged from upstream, so it was
+   reverted. min-height keeps short pages filling the viewport without trapping
+   tall ones.
    ------------------------------------------------------------ */
 .gup-wizard-stack {
   display: flex;
   flex-direction: column;
-  height: 100vh;      /* fallback for browsers without dvh */
-  height: 100dvh;
-  overflow: hidden;
+  /* min-height (not height) so the page still grows and scrolls normally.
+     dvh rather than 100%: percentage needs an ancestor with a definite height,
+     and a consumer whose html/body have none would collapse the shell to content
+     height, letting the grey --gup-color-background-page show under the footer.
+     dvh needs no ancestor and tracks mobile browser chrome. */
+  min-height: 100vh;   /* fallback for browsers without dvh */
+  min-height: 100dvh;
 }
 
 /* ------------------------------------------------------------
    9. COMPONENT: gup-wizard-main
    ------------------------------------------------------------ */
+/* Upstream is `display:block; height:100%` with NO overflow — it is not a scroll
+   container. flex:1 is kept so the canvas background still fills a short page. */
 .gup-wizard-main {
   display: block;
   background-color: var(--gup-color-background-canvas);
   flex: 1;
-  min-height: 0;
   padding-inline: var(--gup-gutter);
-  overflow-y: auto;
 }
 
 .gup-wizard-main > .inner {
@@ -1159,6 +1172,45 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gup-component-4);
+}
+
+/* Direction modifiers. GupButtonGroup has always emitted these classes and
+   documented the four values, but nothing implemented them — every group rendered
+   horizontal, and on a narrow screen the buttons wrapped to their own lines at
+   natural width instead of filling the row. The inner .button is already
+   width:100%, so stretching the host is all that is needed. */
+.gup-button-group--vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Stretching the host is not enough on its own: GUPBlazor's inner .button is
+   inline-flex with no width (upstream's is width:100%), so it would sit at natural
+   width inside a stretched host. Always-vertical groups get it at every width. */
+.gup-button-group--vertical > .gup-button > .button {
+  width: 100%;
+}
+
+/* The common case for a service page: side by side with room, stacked and
+   full-width on a phone. Shares the mobile breakpoint used elsewhere. */
+@media (max-width: 639px) {
+  .gup-button-group--vertical-on-mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Same, but the primary action ends up on top when markup order puts it last. */
+  .gup-button-group--vertical-reverse-on-mobile {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  /* Only below the breakpoint — above it these groups are a normal row and their
+     buttons should hug their labels. */
+  .gup-button-group--vertical-on-mobile > .gup-button > .button,
+  .gup-button-group--vertical-reverse-on-mobile > .gup-button > .button {
+    width: 100%;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -1942,12 +1994,16 @@ body {
 .gup-toast .close-button {
   background: none;
   border: 0;
+  /* The 22px glyph alone left a sub-24px target, failing WCAG 2.2 2.5.8. */
   padding: 0;
+  min-width: 24px;
+  min-height: 24px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: inherit;
+  flex-shrink: 0;
 }
 
 .gup-toast .close-button .gup-icon {
@@ -1977,6 +2033,8 @@ body {
   bottom: 0;
   inset-inline-end: 0;
   padding: 20px;
+  /* Clear the iOS home indicator, which otherwise overlaps the close button. */
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   max-width: 600px;
   width: 100%;
   z-index: var(--gup-toast-container--z-index, 1000);
@@ -2085,7 +2143,11 @@ body {
   font-weight: var(--font-weight-base-beta);
 }
 
-/* Inline per-cell field label — only visible in responsive stacked mode. */
+/* Inline per-cell field label — only visible in responsive stacked mode.
+   display:none also hides it from screen readers here, which is what we want:
+   on desktop the <th scope="col"> headers supply the field name. In stacked mode
+   that header row is hidden, so this label becomes the only field name and must
+   stay announceable — hence no aria-hidden on the span. */
 .gup-table-cell__label {
   display: none;
 }
@@ -5310,6 +5372,25 @@ body {
   aspect-ratio: var(--gup-flag--aspect-ratio);
   border-radius: var(--gup-flag--border-radius);
   object-fit: cover;
+}
+
+@media (pointer: coarse) {
+  .gup-dialog__close-button,
+  .gup-flyout-close-button,
+  .gup-toast .close-button,
+  .gup-dropdown-clear-btn,
+  .gup-input-field .input-affix-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .gup-details .inner summary.label {
+    min-height: 44px;
+  }
+
+  .gup-toggle {
+    min-height: 44px;
+  }
 }
 
 /* ============================================================

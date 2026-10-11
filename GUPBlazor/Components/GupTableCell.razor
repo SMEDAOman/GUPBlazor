@@ -12,7 +12,7 @@ else if (Type == "rowheader")
     <th class="gup-table-cell gup-table-cell--rowheader" scope="row" data-label="@Label" @attributes="AdditionalAttributes">
         @if (!string.IsNullOrEmpty(Label))
         {
-            <span class="gup-table-cell__label" aria-hidden="true">@Label</span>
+            <span class="gup-table-cell__label">@Label</span>
         }
         <div class="wrapper">@ChildContent</div>
     </th>
@@ -22,7 +22,7 @@ else
     <td class="gup-table-cell" data-label="@Label" @attributes="AdditionalAttributes">
         @if (!string.IsNullOrEmpty(Label))
         {
-            <span class="gup-table-cell__label" aria-hidden="true">@Label</span>
+            <span class="gup-table-cell__label">@Label</span>
         }
         <div class="wrapper">@ChildContent</div>
     </td>
