@@ -989,6 +989,8 @@ body {
    ------------------------------------------------------------ */
 .gup-wizard-footer {
   display: block;
+  position: sticky;
+  bottom: 0;
   width: 100%;
   border-top: 1px solid var(--gup-color-border-low);
   background-color: var(--gup-color-background-wizard-bar);
