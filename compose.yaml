@@ -1,0 +1,20 @@
+name: gup-design-system
+
+services:
+  gallery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gup-blazor-gallery:latest
+    container_name: gup-gallery
+    ports:
+      - "${DEMO_PORT:-8080}:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      DataProtection__KeyRingPath: /keys
+    volumes:
+      - dp-keys:/keys
+    restart: unless-stopped
+
+volumes:
+  dp-keys:

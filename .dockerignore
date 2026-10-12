@@ -1,0 +1,21 @@
+**/.git
+**/.github
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/node_modules
+**/*.user
+**/*.suo
+**/Dockerfile*
+**/compose*.yaml
+**/compose*.yml
+**/docker-compose*.yml
+**/.dockerignore
+**/*.md
+**/*.png
+**/design-system
+**/snapshot-*.yml
+
+# Packed into the library nupkg by GUPBlazor.csproj
+!GUPBlazor/README.md

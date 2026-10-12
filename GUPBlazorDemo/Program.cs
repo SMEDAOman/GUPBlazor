@@ -1,4 +1,5 @@
 using GUPBlazorDemo.Components;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace GUPBlazorDemo
 {
@@ -13,6 +14,14 @@ namespace GUPBlazorDemo
                 .AddInteractiveServerComponents();
 
             builder.Services.AddGUPBlazor();
+
+            // Persist the key ring so antiforgery cookies survive a container restart.
+            var keyRing = builder.Configuration["DataProtection:KeyRingPath"];
+            if (!string.IsNullOrWhiteSpace(keyRing))
+            {
+                builder.Services.AddDataProtection()
+                    .PersistKeysToFileSystem(new DirectoryInfo(keyRing));
+            }
 
             var app = builder.Build();
 
