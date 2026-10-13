@@ -19,3 +19,6 @@
 
 # Packed into the library nupkg by GUPBlazor.csproj
 !GUPBlazor/README.md
+
+# Served by the app; the blanket *.png rule above would drop it.
+!GUPBlazorDemo/wwwroot/favicon.png

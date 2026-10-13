@@ -19,6 +19,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 EXPOSE 8080
 ENV ASPNETCORE_HTTP_PORTS=8080
+# Set here too, so `docker run` without compose does not fall back to
+# Development and serve the developer exception page.
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV DataProtection__KeyRingPath=/keys
 RUN mkdir -p /keys && chown $APP_UID:$APP_UID /keys
 USER $APP_UID
 COPY --from=build /app/publish .
