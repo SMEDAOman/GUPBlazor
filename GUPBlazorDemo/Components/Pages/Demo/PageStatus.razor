@@ -1,7 +1,7 @@
 @page "/demo/page-status"
 @rendermode InteractiveServer
 
-<PageTitle>Page Status — Component Demo</PageTitle>
+<PageTitle>Page Status — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -22,17 +22,17 @@
                 <code>Type="GupPageStatusType.Success"</code> — green icon background and a "done" glyph.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPageStatus Type="GupPageStatusType.Success"
-                                   PageTitle="Your payment has been processed successfully.">
-                        <ChildContent>Payment ID: 22399</ChildContent>
-                        <ActionContent>
-                            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
-                                <ChildContent>Review your application</ChildContent>
-                            </GupButton>
-                        </ActionContent>
-                    </GupPageStatus>
-                </div>
+                <DemoExample Id="success" File="PageStatus.razor" style="padding:32px;">
+                      <GupPageStatus Type="GupPageStatusType.Success"
+                                     PageTitle="Your payment has been processed successfully.">
+                          <ChildContent>Payment ID: 22399</ChildContent>
+                          <ActionContent>
+                              <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                  <ChildContent>Review your application</ChildContent>
+                              </GupButton>
+                          </ActionContent>
+                      </GupPageStatus>
+                </DemoExample>
             </div>
         </section>
 
@@ -43,20 +43,20 @@
                 <code>Type="GupPageStatusType.Error"</code> — red icon background and a "close" glyph.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPageStatus Type="GupPageStatusType.Error"
-                                   PageTitle="Your payment has failed.">
-                        <ChildContent>
-                            We tried to charge your card, but something went wrong. Please update your
-                            payment method below to continue.
-                        </ChildContent>
-                        <ActionContent>
-                            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
-                                <ChildContent>Update payment method</ChildContent>
-                            </GupButton>
-                        </ActionContent>
-                    </GupPageStatus>
-                </div>
+                <DemoExample Id="error" File="PageStatus.razor" style="padding:32px;">
+                      <GupPageStatus Type="GupPageStatusType.Error"
+                                     PageTitle="Your payment has failed.">
+                          <ChildContent>
+                              We tried to charge your card, but something went wrong. Please update your
+                              payment method below to continue.
+                          </ChildContent>
+                          <ActionContent>
+                              <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                  <ChildContent>Update payment method</ChildContent>
+                              </GupButton>
+                          </ActionContent>
+                      </GupPageStatus>
+                </DemoExample>
             </div>
         </section>
 
@@ -67,20 +67,20 @@
                 <code>Type="GupPageStatusType.Expired"</code> — neutral icon background and a "priority-high" glyph.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPageStatus Type="GupPageStatusType.Expired"
-                                   PageTitle="Your application has expired.">
-                        <ChildContent>
-                            Unfortunately, the payment period has ended. You will need to start a new
-                            application. Please exit and submit a new application to proceed.
-                        </ChildContent>
-                        <ActionContent>
-                            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
-                                <ChildContent>Go to dashboard</ChildContent>
-                            </GupButton>
-                        </ActionContent>
-                    </GupPageStatus>
-                </div>
+                <DemoExample Id="expired" File="PageStatus.razor" style="padding:32px;">
+                      <GupPageStatus Type="GupPageStatusType.Expired"
+                                     PageTitle="Your application has expired.">
+                          <ChildContent>
+                              Unfortunately, the payment period has ended. You will need to start a new
+                              application. Please exit and submit a new application to proceed.
+                          </ChildContent>
+                          <ActionContent>
+                              <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                  <ChildContent>Go to dashboard</ChildContent>
+                              </GupButton>
+                          </ActionContent>
+                      </GupPageStatus>
+                </DemoExample>
             </div>
         </section>
 
@@ -91,12 +91,12 @@
                 Omit <code>ActionContent</code> when no follow-up CTA is required.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPageStatus Type="GupPageStatusType.Success"
-                                   PageTitle="All done.">
-                        <ChildContent>Your changes have been saved.</ChildContent>
-                    </GupPageStatus>
-                </div>
+                <DemoExample Id="without-an-action" File="PageStatus.razor" style="padding:32px;">
+                      <GupPageStatus Type="GupPageStatusType.Success"
+                                     PageTitle="All done.">
+                          <ChildContent>Your changes have been saved.</ChildContent>
+                      </GupPageStatus>
+                </DemoExample>
             </div>
         </section>
 
@@ -108,14 +108,14 @@
                 <code>PageTitle</code> when both are provided.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPageStatus Type="GupPageStatusType.Success">
-                        <TitleContent>
-                            Welcome back, <em>Caesar</em>!
-                        </TitleContent>
-                        <ChildContent>You're signed in.</ChildContent>
-                    </GupPageStatus>
-                </div>
+                <DemoExample Id="rich-title-titlecontent" File="PageStatus.razor" style="padding:32px;">
+                      <GupPageStatus Type="GupPageStatusType.Success">
+                          <TitleContent>
+                              Welcome back, <em>Caesar</em>!
+                          </TitleContent>
+                          <ChildContent>You're signed in.</ChildContent>
+                      </GupPageStatus>
+                </DemoExample>
             </div>
         </section>
 
@@ -127,33 +127,33 @@
                 and heading reflect the bound values.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-type-bind-pagetitle" File="PageStatus.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupPageStatus @bind-Type="_boundType" @bind-PageTitle="_boundTitle">
-                        <ChildContent>Bound state — change the controls below.</ChildContent>
-                    </GupPageStatus>
+                      <GupPageStatus @bind-Type="_boundType" @bind-PageTitle="_boundTitle">
+                          <ChildContent>Bound state — change the controls below.</ChildContent>
+                      </GupPageStatus>
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;">
-                        <strong>Type:</strong>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundType = GupPageStatusType.Success; _boundTitle = "Looks good!"; })">
-                            <ChildContent>Success</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundType = GupPageStatusType.Error; _boundTitle = "Something broke."; })">
-                            <ChildContent>Error</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundType = GupPageStatusType.Expired; _boundTitle = "Time's up."; })">
-                            <ChildContent>Expired</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;">
+                          <strong>Type:</strong>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundType = GupPageStatusType.Success; _boundTitle = "Looks good!"; })">
+                              <ChildContent>Success</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundType = GupPageStatusType.Error; _boundTitle = "Something broke."; })">
+                              <ChildContent>Error</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundType = GupPageStatusType.Expired; _boundTitle = "Time's up."; })">
+                              <ChildContent>Expired</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <p data-testid="bind-output" style="margin:0; text-align:center;">
-                        Bound state: type = <strong>@_boundType</strong>,
-                        title = <strong>@_boundTitle</strong>
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin:0; text-align:center;">
+                          Bound state: type = <strong>@_boundType</strong>,
+                          title = <strong>@_boundTitle</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -165,28 +165,28 @@
                 useful for bubbling up button clicks without subscribing to each button individually.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="onactionclick-event" File="PageStatus.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupPageStatus Type="GupPageStatusType.Success"
-                                   PageTitle="All set."
-                                   OnActionClick="HandleActionClick">
-                        <ChildContent>Click any of the action buttons below.</ChildContent>
-                        <ActionContent>
-                            <GupButtonGroup>
-                                <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
-                                    <ChildContent>Continue</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button">
-                                    <ChildContent>View receipt</ChildContent>
-                                </GupButton>
-                            </GupButtonGroup>
-                        </ActionContent>
-                    </GupPageStatus>
+                      <GupPageStatus Type="GupPageStatusType.Success"
+                                     PageTitle="All set."
+                                     OnActionClick="HandleActionClick">
+                          <ChildContent>Click any of the action buttons below.</ChildContent>
+                          <ActionContent>
+                              <GupButtonGroup>
+                                  <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button">
+                                      <ChildContent>Continue</ChildContent>
+                                  </GupButton>
+                                  <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button">
+                                      <ChildContent>View receipt</ChildContent>
+                                  </GupButton>
+                              </GupButtonGroup>
+                          </ActionContent>
+                      </GupPageStatus>
 
-                    <p data-testid="event-log" style="margin:0; text-align:center;">
-                        Action clicks: <strong>@_actionClickCount</strong>
-                    </p>
-                </div>
+                      <p data-testid="event-log" style="margin:0; text-align:center;">
+                          Action clicks: <strong>@_actionClickCount</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 

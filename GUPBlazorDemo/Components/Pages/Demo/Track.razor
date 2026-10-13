@@ -1,0 +1,107 @@
+@page "/demo/track"
+
+@rendermode InteractiveServer
+<PageTitle>Track — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Track">
+    <PageSummary>
+      The spacing primitive. Use it instead of ad-hoc margins so gaps stay on the design
+      system scale.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Gap scale</h2>
+      <p class="demo-note">Gap is a step on the scale, not a pixel value.</p>
+      <div class="demo-stack">
+        @foreach (var gap in new[] { 1, 2, 3, 4, 6, 8 })
+        {
+          <div class="demo-card--full">
+            <span class="demo-card-label">Gap @gap</span>
+            <DemoExample Id="gap-gap" File="Track.razor">
+                <GupTrack Gap="@gap">
+                  <GupBadgeChip>One</GupBadgeChip>
+                  <GupBadgeChip>Two</GupBadgeChip>
+                  <GupBadgeChip>Three</GupBadgeChip>
+                </GupTrack>
+            </DemoExample>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Direction</h2>
+      <div class="demo-row">
+        <div class="demo-card">
+          <DemoExample Id="horizontal-default" File="Track.razor" Label="Horizontal (default)">
+              <GupTrack Gap="3">
+                <GupButton Appearance="GupButtonAppearance.Secondary">Back</GupButton>
+                <GupButton Appearance="GupButtonAppearance.Primary">Continue</GupButton>
+              </GupTrack>
+          </DemoExample>
+        </div>
+        <div class="demo-card">
+          <DemoExample Id="vertical" File="Track.razor" Label="Vertical">
+              <GupTrack Gap="3" Direction="vertical">
+                <GupButton Appearance="GupButtonAppearance.Secondary">Back</GupButton>
+                <GupButton Appearance="GupButtonAppearance.Primary">Continue</GupButton>
+              </GupTrack>
+          </DemoExample>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Alignment</h2>
+      <div class="demo-row">
+        <div class="demo-card">
+          <DemoExample Id="horizontal-end" File="Track.razor" Label="Horizontal: end">
+              <GupTrack Gap="3" HorizontalAlignment="end">
+                <GupButton Appearance="GupButtonAppearance.Text">Cancel</GupButton>
+                <GupButton Appearance="GupButtonAppearance.Primary">Submit</GupButton>
+              </GupTrack>
+          </DemoExample>
+        </div>
+        <div class="demo-card">
+          <DemoExample Id="horizontal-space-between" File="Track.razor" Label="Horizontal: space-between">
+              <GupTrack Gap="3" HorizontalAlignment="space-between">
+                <GupButton Appearance="GupButtonAppearance.Secondary">Back</GupButton>
+                <GupButton Appearance="GupButtonAppearance.Primary">Continue</GupButton>
+              </GupTrack>
+          </DemoExample>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Equal items</h2>
+      <p class="demo-note">ItemsEqual gives every child the same width — useful for a row of cards.</p>
+      <DemoExample Id="equal-items" File="Track.razor">
+          <GupTrack Gap="3" ItemsEqual="true">
+            <GupButton Appearance="GupButtonAppearance.Secondary">One</GupButton>
+            <GupButton Appearance="GupButtonAppearance.Secondary">Two</GupButton>
+            <GupButton Appearance="GupButtonAppearance.Secondary">Three</GupButton>
+          </GupTrack>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Multiline</h2>
+      <p class="demo-note">IsMultiline lets the row wrap instead of overflowing.</p>
+      <div class="demo-surface">
+        <GupTrack Gap="2" IsMultiline="true">
+          @foreach (var n in Enumerable.Range(1, 12))
+          {
+            <GupBadgeChip>Chip @n</GupBadgeChip>
+          }
+        </GupTrack>
+      </div>
+    </section>
+
+  </div>
+</div>

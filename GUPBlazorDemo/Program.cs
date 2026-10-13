@@ -14,6 +14,8 @@ namespace GUPBlazorDemo
                 .AddInteractiveServerComponents();
 
             builder.Services.AddGUPBlazor();
+            builder.Services.AddSingleton<DesignTokenCatalogue>();
+            builder.Services.AddSingleton<ExampleSourceProvider>();
 
             // Persist the key ring so antiforgery cookies survive a container restart.
             var keyRing = builder.Configuration["DataProtection:KeyRingPath"];

@@ -7,12 +7,8 @@
 
 <aside class="demo-shell__sidebar" aria-label="Component catalogue">
     <div class="demo-nav__head">
-        <a href="/" class="demo-nav__brand">
-            <GupLogo Size="36" />
-            <span>
-                <strong>Gov.om</strong>
-                <em>Blazor reference</em>
-            </span>
+        <a href="/" class="demo-nav__brand" title="Gov.om">
+            <GupLogo Appearance="horizontal" Size="30" Title="Gov.om" />
         </a>
         <label for="demo-nav-toggle" class="demo-nav__close" aria-label="Close navigation">
             <GupIcon IconName="close" Width="24" Height="24" />
@@ -20,33 +16,86 @@
     </div>
 
     <div class="demo-nav__search">
+        <GupIcon IconName="search" Width="18" Height="18" />
         <input class="demo-nav__input" type="search" autocomplete="off" aria-label="Find a component"
-               placeholder="Find a component…"
+               placeholder="Search"
                @bind="Filter" @bind:event="oninput" />
+        @if (!string.IsNullOrWhiteSpace(Filter))
+        {
+            <button type="button" class="demo-nav__search-clear" aria-label="Clear search"
+                    @onclick="@(() => Filter = "")">
+                <GupIcon IconName="close" Width="16" Height="16" />
+            </button>
+        }
     </div>
 
     <nav class="demo-nav__scroll">
         @foreach (var section in DemoNav.Sections)
         {
-            var items = Matching(section).ToList();
-            if (items.Count == 0) { continue; }
+            var items = Matching(section.Entries, section.Title).ToList();
+            var groups = (section.Groups ?? [])
+                .Select(g => (Group: g, Items: Matching(g.Entries, section.Title + " " + g.Title).ToList()))
+                .Where(g => g.Items.Count > 0)
+                .ToList();
+
+            if (items.Count == 0 && groups.Count == 0) { continue; }
 
             <div class="demo-nav__group">
-                <h2 class="demo-nav__group-title">@section.Title</h2>
-                <ul class="demo-nav__list">
-                    @foreach (var e in items)
+                <h2 class="demo-nav__group-title">
+                    @if (section.Icon is not null)
                     {
-                        <li>
-                            <a href="@e.Href"
-                               class="demo-nav__link @(IsCurrent(e.Href) ? "demo-nav__link--current" : "")"
-                               aria-current="@(IsCurrent(e.Href) ? "page" : null)">@e.Title</a>
-                        </li>
+                        <GupIcon IconName="@section.Icon" Width="15" Height="15" />
                     }
-                </ul>
+                    <span>@section.Title</span>
+                </h2>
+
+                @if (items.Count > 0)
+                {
+                    <ul class="demo-nav__list">
+                        @foreach (var e in items)
+                        {
+                            <li>
+                                <a href="@e.Href"
+                                   class="demo-nav__link @(IsCurrent(e.Href) ? "demo-nav__link--current" : "")"
+                                   aria-current="@(IsCurrent(e.Href) ? "page" : null)">@e.Title</a>
+                            </li>
+                        }
+                    </ul>
+                }
+
+                @foreach (var (group, groupItems) in groups)
+                {
+                    var open = IsExpanded(group, groupItems);
+                    <div class="demo-nav__folder">
+                        <button type="button" class="demo-nav__folder-toggle" aria-expanded="@open.ToString().ToLowerInvariant()"
+                                @onclick="() => ToggleFolder(group.Title)">
+                            <GupIcon IconName="@(open ? "expand_more" : "chevron_right")" Width="18" Height="18" />
+                            @if (group.Icon is not null)
+                            {
+                                <GupIcon IconName="@group.Icon" Width="16" Height="16" />
+                            }
+                            <span class="demo-nav__folder-label">@group.Title</span>
+                            <span class="demo-nav__folder-count">@groupItems.Count</span>
+                        </button>
+                        @if (open)
+                        {
+                            <ul class="demo-nav__list demo-nav__list--nested">
+                                @foreach (var e in groupItems)
+                                {
+                                    <li>
+                                        <a href="@e.Href"
+                                           class="demo-nav__link @(IsCurrent(e.Href) ? "demo-nav__link--current" : "")"
+                                           aria-current="@(IsCurrent(e.Href) ? "page" : null)">@e.Title</a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                }
             </div>
         }
 
-        @if (!string.IsNullOrWhiteSpace(Filter) && DemoNav.Sections.All(s => !Matching(s).Any()))
+        @if (!string.IsNullOrWhiteSpace(Filter) && !DemoNav.AllEntries.Any(MatchesFilter))
         {
             <p class="demo-nav__empty">No page matches &ldquo;@Filter&rdquo;.</p>
         }
@@ -80,14 +129,33 @@
     private bool IsCurrent(string href) =>
         string.Equals(_path, href, StringComparison.OrdinalIgnoreCase);
 
-    private IEnumerable<DemoEntry> Matching(DemoSection s)
+    private readonly HashSet<string> _expanded = new(StringComparer.OrdinalIgnoreCase);
+
+    private void ToggleFolder(string title)
     {
-        if (string.IsNullOrWhiteSpace(Filter)) return s.Entries;
+        if (!_expanded.Remove(title)) { _expanded.Add(title); }
+    }
+
+    // Folders start closed; a filter, or the current page living inside one, opens it.
+    private bool IsExpanded(DemoGroup group, List<DemoEntry> items) =>
+        !string.IsNullOrWhiteSpace(Filter)
+        || items.Any(e => IsCurrent(e.Href))
+        || _expanded.Contains(group.Title);
+
+    private bool MatchesFilter(DemoEntry e)
+    {
+        if (string.IsNullOrWhiteSpace(Filter)) return true;
         var q = Filter.Trim();
-        return s.Entries.Where(e =>
-            e.Title.Contains(q, StringComparison.OrdinalIgnoreCase) ||
-            e.Href.Contains(q, StringComparison.OrdinalIgnoreCase) ||
-            s.Title.Contains(q, StringComparison.OrdinalIgnoreCase));
+        return e.Title.Contains(q, StringComparison.OrdinalIgnoreCase)
+            || e.Href.Contains(q, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private IEnumerable<DemoEntry> Matching(DemoEntry[] entries, string context)
+    {
+        if (string.IsNullOrWhiteSpace(Filter)) return entries;
+        var q = Filter.Trim();
+        if (context.Contains(q, StringComparison.OrdinalIgnoreCase)) return entries;
+        return entries.Where(MatchesFilter);
     }
 
     public void Dispose() => Nav.LocationChanged -= OnLocationChanged;

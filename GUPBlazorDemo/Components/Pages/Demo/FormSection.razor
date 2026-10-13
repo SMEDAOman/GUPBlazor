@@ -1,7 +1,7 @@
 @page "/demo/form-section"
 @rendermode InteractiveServer
 
-<PageTitle>Form Section — Component Demo</PageTitle>
+<PageTitle>Form Section — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -24,18 +24,18 @@
                 The simplest form section: a heading above a group of form fields.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="background: var(--gup-color-background-canvas);" data-testid="default-section">
-                    <GupFormSection>
-                        <Title>Personal information</Title>
-                        <ChildContent>
-                            <GupFormList>
-                                <GupInputField Name="default-first-name" Type="text">First name</GupInputField>
-                                <GupInputField Name="default-last-name" Type="text">Last name</GupInputField>
-                                <GupInputField Name="default-national-id" Type="text">National ID</GupInputField>
-                            </GupFormList>
-                        </ChildContent>
-                    </GupFormSection>
-                </div>
+                <DemoExample Id="default-title-content" File="FormSection.razor" style="background: var(--gup-color-background-canvas);" data-testid="default-section">
+                      <GupFormSection>
+                          <Title>Personal information</Title>
+                          <ChildContent>
+                              <GupFormList>
+                                  <GupInputField Name="default-first-name" Type="text">First name</GupInputField>
+                                  <GupInputField Name="default-last-name" Type="text">Last name</GupInputField>
+                                  <GupInputField Name="default-national-id" Type="text">National ID</GupInputField>
+                              </GupFormList>
+                          </ChildContent>
+                      </GupFormSection>
+                </DemoExample>
             </div>
         </section>
 
@@ -47,35 +47,35 @@
                 The footer is separated from the body by <code>--gup-spacing-content-to-cta</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="background: var(--gup-color-background-canvas);" data-testid="footer-section">
-                    <GupFormSection>
-                        <Title>Contact details</Title>
-                        <ChildContent>
-                            <GupFormList>
-                                <GupInputField Name="footer-email" Type="email">Email</GupInputField>
-                                <GupInputField Name="footer-phone" Type="tel">Mobile number</GupInputField>
-                            </GupFormList>
-                        </ChildContent>
-                        <FooterContent>
-                            <GupButtonGroup>
-                                <GupButton Appearance="@GupButtonAppearance.Primary"
-                                           Kind="@GupButtonKind.Button"
-                                           OnClick="HandleSave">
-                                    <ChildContent>Save</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                           Kind="@GupButtonKind.Button"
-                                           OnClick="HandleCancel">
-                                    <ChildContent>Cancel</ChildContent>
-                                </GupButton>
-                            </GupButtonGroup>
-                        </FooterContent>
-                    </GupFormSection>
+                <DemoExample Id="with-footer-action-buttons" File="FormSection.razor" style="background: var(--gup-color-background-canvas);" data-testid="footer-section">
+                      <GupFormSection>
+                          <Title>Contact details</Title>
+                          <ChildContent>
+                              <GupFormList>
+                                  <GupInputField Name="footer-email" Type="email">Email</GupInputField>
+                                  <GupInputField Name="footer-phone" Type="tel">Mobile number</GupInputField>
+                              </GupFormList>
+                          </ChildContent>
+                          <FooterContent>
+                              <GupButtonGroup>
+                                  <GupButton Appearance="@GupButtonAppearance.Primary"
+                                             Kind="@GupButtonKind.Button"
+                                             OnClick="HandleSave">
+                                      <ChildContent>Save</ChildContent>
+                                  </GupButton>
+                                  <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                             Kind="@GupButtonKind.Button"
+                                             OnClick="HandleCancel">
+                                      <ChildContent>Cancel</ChildContent>
+                                  </GupButton>
+                              </GupButtonGroup>
+                          </FooterContent>
+                      </GupFormSection>
 
-                    <p data-testid="footer-log" style="margin: 8px 0 0;">
-                        Last footer action: <strong>@_lastFooterAction</strong>
-                    </p>
-                </div>
+                      <p data-testid="footer-log" style="margin: 8px 0 0;">
+                          Last footer action: <strong>@_lastFooterAction</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -87,36 +87,36 @@
                 <code>margin-block: var(--gup-spacing-between-sections)</code> handles the spacing.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="background: var(--gup-color-background-canvas);">
-                    <GupFormSection>
-                        <Title>Section 1 — Applicant</Title>
-                        <ChildContent>
-                            <GupFormList>
-                                <GupInputField Name="multi-name" Type="text">Full name</GupInputField>
-                                <GupInputField Name="multi-civil-id" Type="text">Civil ID</GupInputField>
-                            </GupFormList>
-                        </ChildContent>
-                    </GupFormSection>
+                <DemoExample Id="multiple-form-sections" File="FormSection.razor" style="background: var(--gup-color-background-canvas);">
+                      <GupFormSection>
+                          <Title>Section 1 — Applicant</Title>
+                          <ChildContent>
+                              <GupFormList>
+                                  <GupInputField Name="multi-name" Type="text">Full name</GupInputField>
+                                  <GupInputField Name="multi-civil-id" Type="text">Civil ID</GupInputField>
+                              </GupFormList>
+                          </ChildContent>
+                      </GupFormSection>
 
-                    <GupFormSection>
-                        <Title>Section 2 — Address</Title>
-                        <ChildContent>
-                            <GupFormList>
-                                <GupInputField Name="multi-street" Type="text">Street</GupInputField>
-                                <GupInputField Name="multi-city" Type="text">City</GupInputField>
-                                <GupInputField Name="multi-postcode" Type="text">Postcode</GupInputField>
-                            </GupFormList>
-                        </ChildContent>
-                        <FooterContent>
-                            <GupButtonGroup>
-                                <GupButton Appearance="@GupButtonAppearance.Primary"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>Continue</ChildContent>
-                                </GupButton>
-                            </GupButtonGroup>
-                        </FooterContent>
-                    </GupFormSection>
-                </div>
+                      <GupFormSection>
+                          <Title>Section 2 — Address</Title>
+                          <ChildContent>
+                              <GupFormList>
+                                  <GupInputField Name="multi-street" Type="text">Street</GupInputField>
+                                  <GupInputField Name="multi-city" Type="text">City</GupInputField>
+                                  <GupInputField Name="multi-postcode" Type="text">Postcode</GupInputField>
+                              </GupFormList>
+                          </ChildContent>
+                          <FooterContent>
+                              <GupButtonGroup>
+                                  <GupButton Appearance="@GupButtonAppearance.Primary"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>Continue</ChildContent>
+                                  </GupButton>
+                              </GupButtonGroup>
+                          </FooterContent>
+                      </GupFormSection>
+                </DemoExample>
             </div>
         </section>
 
@@ -128,15 +128,15 @@
                 <code>Title</code> slot.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="background: var(--gup-color-background-canvas);">
-                    <GupFormSection Heading="Quick heading via parameter">
-                        <ChildContent>
-                            <p style="margin: 0; color: var(--gup-color-content-primary);">
-                                The heading above was set with <code>Heading="..."</code>.
-                            </p>
-                        </ChildContent>
-                    </GupFormSection>
-                </div>
+                <DemoExample Id="heading-string-string-parameter" File="FormSection.razor" style="background: var(--gup-color-background-canvas);">
+                      <GupFormSection Heading="Quick heading via parameter">
+                          <ChildContent>
+                              <p style="margin: 0; color: var(--gup-color-content-primary);">
+                                  The heading above was set with <code>Heading="..."</code>.
+                              </p>
+                          </ChildContent>
+                      </GupFormSection>
+                </DemoExample>
             </div>
         </section>
 
@@ -147,32 +147,31 @@
                 Bind the heading to a parent variable and update it at runtime — the section reflects the bound value.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface"
-                     style="background: var(--gup-color-background-canvas); display:flex; flex-direction:column; gap:16px;">
+                <DemoExample Id="two-way-binding-bind-heading" File="FormSection.razor" style="background: var(--gup-color-background-canvas); display:flex; flex-direction:column; gap:16px;">
 
-                    <div data-testid="bound-section">
-                        <GupFormSection @bind-Heading="_boundHeading">
-                            <ChildContent>
-                                <p style="margin: 0; color: var(--gup-color-content-primary);">
-                                    The heading is bound to a parent variable. Edit it below and the title updates live.
-                                </p>
-                            </ChildContent>
-                        </GupFormSection>
-                    </div>
+                      <div data-testid="bound-section">
+                          <GupFormSection @bind-Heading="_boundHeading">
+                              <ChildContent>
+                                  <p style="margin: 0; color: var(--gup-color-content-primary);">
+                                      The heading is bound to a parent variable. Edit it below and the title updates live.
+                                  </p>
+                              </ChildContent>
+                          </GupFormSection>
+                      </div>
 
-                    <label style="display:flex; flex-direction:column; gap:8px; max-width:480px;">
-                        <span style="font-weight: var(--font-weight-base-beta);">Heading</span>
-                        <input data-testid="heading-input"
-                               type="text"
-                               value="@_boundHeading"
-                               @oninput="OnHeadingInput"
-                               style="padding:8px 12px; border:1px solid var(--gup-color-border-medium); border-radius:4px; font-size:16px;" />
-                    </label>
+                      <label style="display:flex; flex-direction:column; gap:8px; max-width:480px;">
+                          <span style="font-weight: var(--font-weight-base-beta);">Heading</span>
+                          <input data-testid="heading-input"
+                                 type="text"
+                                 value="@_boundHeading"
+                                 @oninput="OnHeadingInput"
+                                 style="padding:8px 12px; border:1px solid var(--gup-color-border-medium); border-radius:4px; font-size:16px;" />
+                      </label>
 
-                    <p data-testid="bind-output" style="margin:0;">
-                        Bound heading: <strong>@_boundHeading</strong>
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin:0;">
+                          Bound heading: <strong>@_boundHeading</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -184,40 +183,39 @@
                 Useful when wrapping multiple footer buttons without binding each one individually.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface"
-                     style="background: var(--gup-color-background-canvas); display:flex; flex-direction:column; gap:16px;">
+                <DemoExample Id="onfooterclick-event" File="FormSection.razor" style="background: var(--gup-color-background-canvas); display:flex; flex-direction:column; gap:16px;">
 
-                    <div data-testid="footer-click-section">
-                    <GupFormSection OnFooterClick="HandleFooterAreaClick">
-                        <Title>Footer click delegation</Title>
-                        <ChildContent>
-                            <p style="margin: 0; color: var(--gup-color-content-primary);">
-                                Click any of the buttons below — the parent component logs the click.
-                            </p>
-                        </ChildContent>
-                        <FooterContent>
-                            <GupButtonGroup>
-                                <GupButton Appearance="@GupButtonAppearance.Primary"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>Action 1</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>Action 2</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Text"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>Action 3</ChildContent>
-                                </GupButton>
-                            </GupButtonGroup>
-                        </FooterContent>
-                    </GupFormSection>
-                    </div>
+                      <div data-testid="footer-click-section">
+                      <GupFormSection OnFooterClick="HandleFooterAreaClick">
+                          <Title>Footer click delegation</Title>
+                          <ChildContent>
+                              <p style="margin: 0; color: var(--gup-color-content-primary);">
+                                  Click any of the buttons below — the parent component logs the click.
+                              </p>
+                          </ChildContent>
+                          <FooterContent>
+                              <GupButtonGroup>
+                                  <GupButton Appearance="@GupButtonAppearance.Primary"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>Action 1</ChildContent>
+                                  </GupButton>
+                                  <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>Action 2</ChildContent>
+                                  </GupButton>
+                                  <GupButton Appearance="@GupButtonAppearance.Text"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>Action 3</ChildContent>
+                                  </GupButton>
+                              </GupButtonGroup>
+                          </FooterContent>
+                      </GupFormSection>
+                      </div>
 
-                    <p data-testid="footer-click-log" style="margin:0;">
-                        Footer area clicks: <strong>@_footerClickCount</strong>
-                    </p>
-                </div>
+                      <p data-testid="footer-click-log" style="margin:0;">
+                          Footer area clicks: <strong>@_footerClickCount</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -229,23 +227,23 @@
                 or links inside the heading.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="background: var(--gup-color-background-canvas);">
-                    <GupFormSection>
-                        <Title>
-                            <span style="display:inline-flex; align-items:center; gap:8px;">
-                                Identity verification
-                                <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive" IsFilled="true">
-                                    <ChildContent>Verified</ChildContent>
-                                </GupBadgeChip>
-                            </span>
-                        </Title>
-                        <ChildContent>
-                            <p style="margin: 0; color: var(--gup-color-content-primary);">
-                                The Title slot can contain any markup — here it's combined with a badge chip.
-                            </p>
-                        </ChildContent>
-                    </GupFormSection>
-                </div>
+                <DemoExample Id="rich-title-content" File="FormSection.razor" style="background: var(--gup-color-background-canvas);">
+                      <GupFormSection>
+                          <Title>
+                              <span style="display:inline-flex; align-items:center; gap:8px;">
+                                  Identity verification
+                                  <GupBadgeChip Appearance="@GupBadgeChipAppearance.Positive" IsFilled="true">
+                                      <ChildContent>Verified</ChildContent>
+                                  </GupBadgeChip>
+                              </span>
+                          </Title>
+                          <ChildContent>
+                              <p style="margin: 0; color: var(--gup-color-content-primary);">
+                                  The Title slot can contain any markup — here it's combined with a badge chip.
+                              </p>
+                          </ChildContent>
+                      </GupFormSection>
+                </DemoExample>
             </div>
         </section>
 
@@ -256,29 +254,29 @@
                 Form sections work in RTL out of the box — spacing uses logical properties.
             </p>
             <div class="demo-card--full" dir="rtl">
-                <div class="demo-surface" style="background: var(--gup-color-background-canvas);">
-                    <GupFormSection>
-                        <Title>المعلومات الشخصية</Title>
-                        <ChildContent>
-                            <GupFormList>
-                                <GupInputField Name="rtl-first-name" Type="text">الاسم الأول</GupInputField>
-                                <GupInputField Name="rtl-last-name" Type="text">اسم العائلة</GupInputField>
-                            </GupFormList>
-                        </ChildContent>
-                        <FooterContent>
-                            <GupButtonGroup>
-                                <GupButton Appearance="@GupButtonAppearance.Primary"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>حفظ</ChildContent>
-                                </GupButton>
-                                <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>إلغاء</ChildContent>
-                                </GupButton>
-                            </GupButtonGroup>
-                        </FooterContent>
-                    </GupFormSection>
-                </div>
+                <DemoExample Id="rtl-arabic" File="FormSection.razor" style="background: var(--gup-color-background-canvas);">
+                      <GupFormSection>
+                          <Title>المعلومات الشخصية</Title>
+                          <ChildContent>
+                              <GupFormList>
+                                  <GupInputField Name="rtl-first-name" Type="text">الاسم الأول</GupInputField>
+                                  <GupInputField Name="rtl-last-name" Type="text">اسم العائلة</GupInputField>
+                              </GupFormList>
+                          </ChildContent>
+                          <FooterContent>
+                              <GupButtonGroup>
+                                  <GupButton Appearance="@GupButtonAppearance.Primary"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>حفظ</ChildContent>
+                                  </GupButton>
+                                  <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>إلغاء</ChildContent>
+                                  </GupButton>
+                              </GupButtonGroup>
+                          </FooterContent>
+                      </GupFormSection>
+                </DemoExample>
             </div>
         </section>
 

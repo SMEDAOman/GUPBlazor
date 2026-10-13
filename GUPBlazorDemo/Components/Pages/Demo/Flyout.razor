@@ -1,7 +1,7 @@
 @page "/demo/flyout"
 @rendermode InteractiveServer
 
-<PageTitle>Flyout — Component Demo</PageTitle>
+<PageTitle>Flyout — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -120,36 +120,36 @@
         Switch the slide direction at runtime — the flyout reflects the bound value.
       </p>
       <div class="demo-card--full">
-        <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+        <DemoExample Id="two-way-binding-bind-position" File="Flyout.razor" style="display:flex; flex-direction:column; gap:16px;">
 
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <GupButton Appearance="@GupButtonAppearance.Secondary"
-                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Right)">
-              <ChildContent>Right</ChildContent>
-            </GupButton>
-            <GupButton Appearance="@GupButtonAppearance.Secondary"
-                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Left)">
-              <ChildContent>Left</ChildContent>
-            </GupButton>
-            <GupButton Appearance="@GupButtonAppearance.Secondary"
-                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Top)">
-              <ChildContent>Top</ChildContent>
-            </GupButton>
-            <GupButton Appearance="@GupButtonAppearance.Secondary"
-                       OnClick="@(() => _boundPosition = GupFlyoutPosition.Bottom)">
-              <ChildContent>Bottom</ChildContent>
-            </GupButton>
-          </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <GupButton Appearance="@GupButtonAppearance.Secondary"
+                         OnClick="@(() => _boundPosition = GupFlyoutPosition.Right)">
+                <ChildContent>Right</ChildContent>
+              </GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Secondary"
+                         OnClick="@(() => _boundPosition = GupFlyoutPosition.Left)">
+                <ChildContent>Left</ChildContent>
+              </GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Secondary"
+                         OnClick="@(() => _boundPosition = GupFlyoutPosition.Top)">
+                <ChildContent>Top</ChildContent>
+              </GupButton>
+              <GupButton Appearance="@GupButtonAppearance.Secondary"
+                         OnClick="@(() => _boundPosition = GupFlyoutPosition.Bottom)">
+                <ChildContent>Bottom</ChildContent>
+              </GupButton>
+            </div>
 
-          <GupButton Appearance="@GupButtonAppearance.Primary"
-                     OnClick="@(() => _boundOpen = true)">
-            <ChildContent>Open bound flyout (@_boundPosition)</ChildContent>
-          </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _boundOpen = true)">
+              <ChildContent>Open bound flyout (@_boundPosition)</ChildContent>
+            </GupButton>
 
-          <p data-testid="bind-output" style="margin:0;">
-            Bound position: <strong>@_boundPosition</strong>
-          </p>
-        </div>
+            <p data-testid="bind-output" style="margin:0;">
+              Bound position: <strong>@_boundPosition</strong>
+            </p>
+        </DemoExample>
       </div>
     </section>
 

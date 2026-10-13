@@ -1,0 +1,89 @@
+@page "/demo/table-cell"
+
+@rendermode InteractiveServer
+<PageTitle>Table &amp; table cell — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Table & table cell">
+    <PageSummary>
+      The table primitives — GupTable, GupTableRow and GupTableCell. For the full chrome
+      with search and pagination, see <a href="/demo/data-table">Data table</a>.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Basic table</h2>
+      <DemoExample Id="basic-table" File="TableCellDemo.razor">
+          <GupTable>
+            <GupTableRow>
+              <GupTableCell Type="head">Reference</GupTableCell>
+              <GupTableCell Type="head">Service</GupTableCell>
+              <GupTableCell Type="head">Status</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>OM-2026-4471</GupTableCell>
+              <GupTableCell>Licence renewal</GupTableCell>
+              <GupTableCell>Approved</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>OM-2026-4472</GupTableCell>
+              <GupTableCell>New registration</GupTableCell>
+              <GupTableCell>Under review</GupTableCell>
+            </GupTableRow>
+          </GupTable>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Responsive</h2>
+      <p class="demo-note">
+        With Responsive set, each cell takes its header as a Label and the table collapses
+        into stacked rows on a narrow screen. Check it at 360px in
+        <a href="/demo/device-preview">Device Preview</a>.
+      </p>
+      <DemoExample Id="responsive" File="TableCellDemo.razor">
+          <GupTable Responsive="true">
+            <GupTableRow>
+              <GupTableCell Type="head">Reference</GupTableCell>
+              <GupTableCell Type="head">Service</GupTableCell>
+              <GupTableCell Type="head">Status</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell Label="Reference">OM-2026-4471</GupTableCell>
+              <GupTableCell Label="Service">Licence renewal</GupTableCell>
+              <GupTableCell Label="Status">Approved</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell Label="Reference">OM-2026-4472</GupTableCell>
+              <GupTableCell Label="Service">New registration</GupTableCell>
+              <GupTableCell Label="Status">Under review</GupTableCell>
+            </GupTableRow>
+          </GupTable>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With status badges</h2>
+      <DemoExample Id="with-status-badges" File="TableCellDemo.razor">
+          <GupTable>
+            <GupTableRow>
+              <GupTableCell Type="head">Reference</GupTableCell>
+              <GupTableCell Type="head">Status</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>OM-2026-4471</GupTableCell>
+              <GupTableCell><GupBadge Type="GupBadgeType.Positive" /> Approved</GupTableCell>
+            </GupTableRow>
+            <GupTableRow>
+              <GupTableCell>OM-2026-4473</GupTableCell>
+              <GupTableCell><GupBadge Type="GupBadgeType.Negative" /> Rejected</GupTableCell>
+            </GupTableRow>
+          </GupTable>
+      </DemoExample>
+    </section>
+
+  </div>
+</div>

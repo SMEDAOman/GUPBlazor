@@ -1,0 +1,95 @@
+@page "/demo/versions"
+
+<PageTitle>Versions — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Versions">
+    <PageSummary>What ships, where it comes from, and how it maps to the upstream design system.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <p class="doc-lede">
+        Unlike the upstream monorepo, which splits into separate component, token, icon,
+        React and Angular packages, the Blazor port ships as a single NuGet package. The
+        tokens, components and icon wiring all live in <code>GUPBlazor</code>.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Package</h2>
+      <div class="demo-surface">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th scope="col">Package</th>
+              <th scope="col">Version</th>
+              <th scope="col">Target framework</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><code>GUPBlazor</code></th>
+              <td>@Version</td>
+              <td><code>net10.0</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Published at
+        <a href="https://www.nuget.org/packages/GUPBlazor" target="_blank" rel="noopener">nuget.org/packages/GUPBlazor</a>.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Upstream reference</h2>
+      <p>
+        Component behaviour and design tokens are ported from the gov.om design system. The
+        repository vendors a read-only snapshot of that source under
+        <code>design-system/</code> as the porting reference.
+      </p>
+      <div class="demo-surface">
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Source</th>
+              <td><a href="https://github.com/Gov-om/design-system" target="_blank" rel="noopener">github.com/Gov-om/design-system</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Live Storybook</th>
+              <td><a href="https://storybook.service.gov.om/" target="_blank" rel="noopener">storybook.service.gov.om</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        The design tokens in this library are kept in step with the live design system
+        rather than the vendored snapshot, which predates the current token naming.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Versioning</h2>
+      <p>
+        The package follows semantic versioning while below <code>1.0.0</code>: the minor
+        number moves for changes that alter rendered output or a component API, the patch
+        number for fixes that do not. Pin an exact version if you need the visual output to
+        stay fixed between upgrades.
+      </p>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private const string Version = "0.3.0";
+}

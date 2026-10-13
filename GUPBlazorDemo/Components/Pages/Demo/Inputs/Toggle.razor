@@ -1,7 +1,7 @@
 @page "/demo/inputs/toggle"
 @rendermode InteractiveServer
 
-<PageTitle>Toggle — Component Demo</PageTitle>
+<PageTitle>Toggle — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,20 +16,18 @@
             <h2 class="demo-section-title">Default</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Unchecked</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-default">
-                            <ChildContent>Default</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="unchecked" File="Toggle.razor" Label="Unchecked">
+                          <GupToggle Name="t-default">
+                              <ChildContent>Default</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Checked</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-checked" Checked="true">
-                            <ChildContent>Default</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="checked" File="Toggle.razor" Label="Checked">
+                          <GupToggle Name="t-checked" Checked="true">
+                              <ChildContent>Default</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -67,20 +65,18 @@
             <h2 class="demo-section-title">Knob Location</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Knob before (default)</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-knob-before" KnobLocation="before">
-                            <ChildContent>Knob before label</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="knob-before-default" File="Toggle.razor" Label="Knob before (default)">
+                          <GupToggle Name="t-knob-before" KnobLocation="before">
+                              <ChildContent>Knob before label</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Knob after</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-knob-after" KnobLocation="after">
-                            <ChildContent>Knob after label</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="knob-after" File="Toggle.razor" Label="Knob after">
+                          <GupToggle Name="t-knob-after" KnobLocation="after">
+                              <ChildContent>Knob after label</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -101,20 +97,18 @@
             <h2 class="demo-section-title">Disabled States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Unchecked + disabled</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-disabled" Disabled="true">
-                            <ChildContent>This option is disabled</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="unchecked-disabled" File="Toggle.razor" Label="Unchecked + disabled">
+                          <GupToggle Name="t-disabled" Disabled="true">
+                              <ChildContent>This option is disabled</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Checked + disabled</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-checked-disabled" Checked="true" Disabled="true">
-                            <ChildContent>Checked &amp; disabled</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="checked-disabled" File="Toggle.razor" Label="Checked + disabled">
+                          <GupToggle Name="t-checked-disabled" Checked="true" Disabled="true">
+                              <ChildContent>Checked &amp; disabled</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -123,21 +117,19 @@
             <h2 class="demo-section-title">Readonly</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Readonly, unchecked</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-readonly" Readonly="true">
-                            <ChildContent>Readonly toggle</ChildContent>
-                            <Hint>You can focus me, but I can't be changed.</Hint>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="readonly-unchecked" File="Toggle.razor" Label="Readonly, unchecked">
+                          <GupToggle Name="t-readonly" Readonly="true">
+                              <ChildContent>Readonly toggle</ChildContent>
+                              <Hint>You can focus me, but I can't be changed.</Hint>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Readonly, checked</span>
-                    <div class="demo-surface">
-                        <GupToggle Name="t-readonly-checked" Readonly="true" Checked="true">
-                            <ChildContent>Readonly &amp; checked</ChildContent>
-                        </GupToggle>
-                    </div>
+                    <DemoExample Id="readonly-checked" File="Toggle.razor" Label="Readonly, checked">
+                          <GupToggle Name="t-readonly-checked" Readonly="true" Checked="true">
+                              <ChildContent>Readonly &amp; checked</ChildContent>
+                          </GupToggle>
+                    </DemoExample>
                 </div>
             </div>
         </section>

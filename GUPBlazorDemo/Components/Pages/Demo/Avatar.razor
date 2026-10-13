@@ -1,7 +1,7 @@
 @page "/demo/avatar"
 @rendermode InteractiveServer
 
-<PageTitle>Avatar — Component Demo</PageTitle>
+<PageTitle>Avatar — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -18,22 +18,19 @@
                 <h2 class="demo-section-title">Sizes</h2>
                 <div class="demo-row">
                     <div class="demo-card">
-                        <span class="demo-card-label">Small (default)</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.S" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
-                        </div>
+                        <DemoExample Id="small-default" File="Avatar.razor" Label="Small (default)">
+                              <GupAvatar Size="@GupAvatarSize.S" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Medium</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.M" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
-                        </div>
+                        <DemoExample Id="medium" File="Avatar.razor" Label="Medium">
+                              <GupAvatar Size="@GupAvatarSize.M" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Large</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
-                        </div>
+                        <DemoExample Id="large" File="Avatar.razor" Label="Large">
+                              <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" AriaLabel="Caesar Moussalli" />
+                        </DemoExample>
                     </div>
                 </div>
             </section>
@@ -43,22 +40,19 @@
                 <h2 class="demo-section-title">No label — fallback person icon</h2>
                 <div class="demo-row">
                     <div class="demo-card">
-                        <span class="demo-card-label">Small</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.S" AriaLabel="Anonymous user" />
-                        </div>
+                        <DemoExample Id="small" File="Avatar.razor" Label="Small">
+                              <GupAvatar Size="@GupAvatarSize.S" AriaLabel="Anonymous user" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Medium</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.M" AriaLabel="Anonymous user" />
-                        </div>
+                        <DemoExample Id="medium-2" File="Avatar.razor" Label="Medium">
+                              <GupAvatar Size="@GupAvatarSize.M" AriaLabel="Anonymous user" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Large</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L" AriaLabel="Anonymous user" />
-                        </div>
+                        <DemoExample Id="large-2" File="Avatar.razor" Label="Large">
+                              <GupAvatar Size="@GupAvatarSize.L" AriaLabel="Anonymous user" />
+                        </DemoExample>
                     </div>
                 </div>
             </section>
@@ -96,28 +90,25 @@
                 <h2 class="demo-section-title">With picture</h2>
                 <div class="demo-row">
                     <div class="demo-card">
-                        <span class="demo-card-label">Small</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.S"
-                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                       Alt="Some Profile" />
-                        </div>
+                        <DemoExample Id="small-2" File="Avatar.razor" Label="Small">
+                              <GupAvatar Size="@GupAvatarSize.S"
+                                         Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                         Alt="Some Profile" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Medium</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.M"
-                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                       Alt="Some Profile" />
-                        </div>
+                        <DemoExample Id="medium-3" File="Avatar.razor" Label="Medium">
+                              <GupAvatar Size="@GupAvatarSize.M"
+                                         Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                         Alt="Some Profile" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Large</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L"
-                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                       Alt="Some Profile" />
-                        </div>
+                        <DemoExample Id="large-3" File="Avatar.razor" Label="Large">
+                              <GupAvatar Size="@GupAvatarSize.L"
+                                         Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                         Alt="Some Profile" />
+                        </DemoExample>
                     </div>
                 </div>
             </section>
@@ -127,40 +118,35 @@
                 <h2 class="demo-section-title">With status badge</h2>
                 <div class="demo-row">
                     <div class="demo-card">
-                        <span class="demo-card-label">Neutral</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Neutral"
-                                       StatusAriaLabel="Pending" />
-                        </div>
+                        <DemoExample Id="neutral" File="Avatar.razor" Label="Neutral">
+                              <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Neutral"
+                                         StatusAriaLabel="Pending" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Positive</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Positive"
-                                       StatusAriaLabel="Online" />
-                        </div>
+                        <DemoExample Id="positive" File="Avatar.razor" Label="Positive">
+                              <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Positive"
+                                         StatusAriaLabel="Online" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Negative</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Negative"
-                                       StatusAriaLabel="Error" />
-                        </div>
+                        <DemoExample Id="negative" File="Avatar.razor" Label="Negative">
+                              <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Negative"
+                                         StatusAriaLabel="Error" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Offline</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Offline"
-                                       StatusAriaLabel="Offline" />
-                        </div>
+                        <DemoExample Id="offline" File="Avatar.razor" Label="Offline">
+                              <GupAvatar Size="@GupAvatarSize.L" Label="Caesar Moussalli" Status="@GupBadgeType.Offline"
+                                         StatusAriaLabel="Offline" />
+                        </DemoExample>
                     </div>
                     <div class="demo-card">
-                        <span class="demo-card-label">Image + status</span>
-                        <div class="demo-surface">
-                            <GupAvatar Size="@GupAvatarSize.L"
-                                       Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                                       Alt="Some Profile" Status="@GupBadgeType.Positive" StatusAriaLabel="Online" />
-                        </div>
+                        <DemoExample Id="image-status" File="Avatar.razor" Label="Image + status">
+                              <GupAvatar Size="@GupAvatarSize.L"
+                                         Src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                                         Alt="Some Profile" Status="@GupBadgeType.Positive" StatusAriaLabel="Online" />
+                        </DemoExample>
                     </div>
                 </div>
             </section>

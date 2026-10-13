@@ -1,7 +1,7 @@
 @page "/demo/flag"
 @rendermode InteractiveServer
 
-<PageTitle>Flag — Component Demo</PageTitle>
+<PageTitle>Flag — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -24,16 +24,16 @@
                 The default shape is a 4:3 rectangle with lightly rounded corners, 20px tall.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupTrack Direction="horizontal" Gap="3">
-                        <GupFlag CountryName="om" />
-                        <GupFlag CountryName="ae" />
-                        <GupFlag CountryName="sa" />
-                        <GupFlag CountryName="kw" />
-                        <GupFlag CountryName="qa" />
-                        <GupFlag CountryName="bh" />
-                    </GupTrack>
-                </div>
+                <DemoExample Id="default-rectangle" File="Flag.razor" style="padding:32px;">
+                      <GupTrack Direction="horizontal" Gap="3">
+                          <GupFlag CountryName="om" />
+                          <GupFlag CountryName="ae" />
+                          <GupFlag CountryName="sa" />
+                          <GupFlag CountryName="kw" />
+                          <GupFlag CountryName="qa" />
+                          <GupFlag CountryName="bh" />
+                      </GupTrack>
+                </DemoExample>
             </div>
         </section>
 
@@ -45,14 +45,14 @@
                 whitespace, so <code>om</code>, <code>OM</code> and <code>Oman</code> are equivalent.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupTrack Direction="horizontal" Gap="4">
-                        <span><GupFlag CountryName="om" /> <code>"om"</code></span>
-                        <span><GupFlag CountryName="Oman" /> <code>"Oman"</code></span>
-                        <span><GupFlag CountryName="CH" /> <code>"CH"</code></span>
-                        <span><GupFlag CountryName="Switzerland" /> <code>"Switzerland"</code></span>
-                    </GupTrack>
-                </div>
+                <DemoExample Id="code-or-country-name" File="Flag.razor" style="padding:32px;">
+                      <GupTrack Direction="horizontal" Gap="4">
+                          <span><GupFlag CountryName="om" /> <code>"om"</code></span>
+                          <span><GupFlag CountryName="Oman" /> <code>"Oman"</code></span>
+                          <span><GupFlag CountryName="CH" /> <code>"CH"</code></span>
+                          <span><GupFlag CountryName="Switzerland" /> <code>"Switzerland"</code></span>
+                      </GupTrack>
+                </DemoExample>
             </div>
         </section>
 
@@ -64,15 +64,15 @@
                 fully — useful next to avatars or in dense lists.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupTrack Direction="horizontal" Gap="3">
-                        <GupFlag CountryName="om" Shape="@GupFlagShape.Circle" Size="32" />
-                        <GupFlag CountryName="ch" Shape="@GupFlagShape.Circle" Size="32" />
-                        <GupFlag CountryName="jp" Shape="@GupFlagShape.Circle" Size="32" />
-                        <GupFlag CountryName="br" Shape="@GupFlagShape.Circle" Size="32" />
-                        <GupFlag CountryName="in" Shape="@GupFlagShape.Circle" Size="32" />
-                    </GupTrack>
-                </div>
+                <DemoExample Id="circle-shape" File="Flag.razor" style="padding:32px;">
+                      <GupTrack Direction="horizontal" Gap="3">
+                          <GupFlag CountryName="om" Shape="@GupFlagShape.Circle" Size="32" />
+                          <GupFlag CountryName="ch" Shape="@GupFlagShape.Circle" Size="32" />
+                          <GupFlag CountryName="jp" Shape="@GupFlagShape.Circle" Size="32" />
+                          <GupFlag CountryName="br" Shape="@GupFlagShape.Circle" Size="32" />
+                          <GupFlag CountryName="in" Shape="@GupFlagShape.Circle" Size="32" />
+                      </GupTrack>
+                </DemoExample>
             </div>
         </section>
 
@@ -84,15 +84,15 @@
                 aspect ratio.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupTrack Direction="horizontal" Gap="3" VerticalAlignment="center">
-                        <GupFlag CountryName="om" Size="16" />
-                        <GupFlag CountryName="om" Size="24" />
-                        <GupFlag CountryName="om" Size="40" />
-                        <GupFlag CountryName="om" Size="64" />
-                        <GupFlag CountryName="om" Size="96" />
-                    </GupTrack>
-                </div>
+                <DemoExample Id="size" File="Flag.razor" style="padding:32px;">
+                      <GupTrack Direction="horizontal" Gap="3" VerticalAlignment="center">
+                          <GupFlag CountryName="om" Size="16" />
+                          <GupFlag CountryName="om" Size="24" />
+                          <GupFlag CountryName="om" Size="40" />
+                          <GupFlag CountryName="om" Size="64" />
+                          <GupFlag CountryName="om" Size="96" />
+                      </GupTrack>
+                </DemoExample>
             </div>
         </section>
 
@@ -128,13 +128,13 @@
                 <code>"zz"</code> and <code>"Atlantis"</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupTrack Direction="horizontal" Gap="3">
-                        <GupFlag CountryName="om" Size="32" />
-                        <GupFlag CountryName="zz" Size="32" />
-                        <GupFlag CountryName="Atlantis" Size="32" />
-                    </GupTrack>
-                </div>
+                <DemoExample Id="unknown-country" File="Flag.razor" style="padding:32px;">
+                      <GupTrack Direction="horizontal" Gap="3">
+                          <GupFlag CountryName="om" Size="32" />
+                          <GupFlag CountryName="zz" Size="32" />
+                          <GupFlag CountryName="Atlantis" Size="32" />
+                      </GupTrack>
+                </DemoExample>
             </div>
         </section>
 
@@ -161,14 +161,14 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Attribution</h2>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupCallout>
-                        Flag artwork comes from the
-                        <a href="https://github.com/lipis/flag-icons">flag-icons</a> project,
-                        MIT licensed. The licence ships with the package at
-                        <code>_content/GUPBlazor/flags/LICENSE.txt</code>.
-                    </GupCallout>
-                </div>
+                <DemoExample Id="attribution" File="Flag.razor" style="padding:32px;">
+                      <GupCallout>
+                          Flag artwork comes from the
+                          <a href="https://github.com/lipis/flag-icons">flag-icons</a> project,
+                          MIT licensed. The licence ships with the package at
+                          <code>_content/GUPBlazor/flags/LICENSE.txt</code>.
+                      </GupCallout>
+                </DemoExample>
             </div>
         </section>
 

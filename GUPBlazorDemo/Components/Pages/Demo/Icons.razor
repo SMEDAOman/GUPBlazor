@@ -1,7 +1,7 @@
 @page "/demo/icons"
 @rendermode RenderMode.InteractiveServer
 
-<PageTitle>Icons — Component Demo</PageTitle>
+<PageTitle>Icons — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -126,24 +126,24 @@
       <h2 class="demo-section-title">Color</h2>
       <div class="demo-card--full">
         <span class="demo-card-label">Glyph inherits CSS <code>color</code> from its parent</span>
-        <div class="demo-surface demo-row" style="gap: 24px; flex-wrap: wrap;">
-          <div class="icon-tile" style="color: var(--gup-color-brand-xhigh);">
-            <GupIcon IconName="palette" Width="32" />
-            <code>brand-xhigh</code>
-          </div>
-          <div class="icon-tile" style="color: var(--gup-color-positive-high);">
-            <GupIcon IconName="check_circle" Width="32" Filled="true" />
-            <code>positive-high</code>
-          </div>
-          <div class="icon-tile" style="color: var(--gup-color-warning-high);">
-            <GupIcon IconName="warning" Width="32" Filled="true" />
-            <code>warning-high</code>
-          </div>
-          <div class="icon-tile" style="color: var(--gup-color-negative-high);">
-            <GupIcon IconName="error" Width="32" Filled="true" />
-            <code>negative-high</code>
-          </div>
-        </div>
+        <DemoExample Id="glyph-inherits-css-color-from-its-parent" File="Icons.razor" SurfaceClass="demo-row" style="gap: 24px; flex-wrap: wrap;">
+            <div class="icon-tile" style="color: var(--gup-color-brand-xhigh);">
+              <GupIcon IconName="palette" Width="32" />
+              <code>brand-xhigh</code>
+            </div>
+            <div class="icon-tile" style="color: var(--gup-color-positive-high);">
+              <GupIcon IconName="check_circle" Width="32" Filled="true" />
+              <code>positive-high</code>
+            </div>
+            <div class="icon-tile" style="color: var(--gup-color-warning-high);">
+              <GupIcon IconName="warning" Width="32" Filled="true" />
+              <code>warning-high</code>
+            </div>
+            <div class="icon-tile" style="color: var(--gup-color-negative-high);">
+              <GupIcon IconName="error" Width="32" Filled="true" />
+              <code>negative-high</code>
+            </div>
+        </DemoExample>
       </div>
     </section>
 
@@ -152,24 +152,24 @@
       <h2 class="demo-section-title">Inside buttons</h2>
       <div class="demo-card--full">
         <span class="demo-card-label">Icon color follows the button variant via per-context CSS</span>
-        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
-          <GupButton Appearance="@GupButtonAppearance.Primary">
-            <IconStart><GupIcon IconName="download" Width="20" /></IconStart>
-            <ChildContent>Download</ChildContent>
-          </GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Secondary">
-            <IconStart><GupIcon IconName="edit" Width="20" /></IconStart>
-            <ChildContent>Edit</ChildContent>
-          </GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Text">
-            <ChildContent>Continue</ChildContent>
-            <IconEnd><GupIcon IconName="arrow_forward" Width="20" /></IconEnd>
-          </GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true">
-            <IconStart><GupIcon IconName="lock" Width="20" /></IconStart>
-            <ChildContent>Disabled</ChildContent>
-          </GupButton>
-        </div>
+        <DemoExample Id="icon-color-follows-the-button-variant-via-per-context-css" File="Icons.razor" SurfaceClass="demo-row" style="gap: 12px; flex-wrap: wrap;">
+            <GupButton Appearance="@GupButtonAppearance.Primary">
+              <IconStart><GupIcon IconName="download" Width="20" /></IconStart>
+              <ChildContent>Download</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary">
+              <IconStart><GupIcon IconName="edit" Width="20" /></IconStart>
+              <ChildContent>Edit</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Text">
+              <ChildContent>Continue</ChildContent>
+              <IconEnd><GupIcon IconName="arrow_forward" Width="20" /></IconEnd>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true">
+              <IconStart><GupIcon IconName="lock" Width="20" /></IconStart>
+              <ChildContent>Disabled</ChildContent>
+            </GupButton>
+        </DemoExample>
       </div>
     </section>
 

@@ -1,0 +1,46 @@
+@page "/demo/rich-text"
+
+@rendermode InteractiveServer
+<PageTitle>Rich text — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Rich text">
+    <PageSummary>Styles long-form content coming from a CMS or editor, where you do not control the markup.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Prose block</h2>
+      <DemoExample Id="prose-block" File="RichText.razor">
+          <GupRichText>
+            <h2>Applying for a licence</h2>
+            <p>
+              Before you start, make sure you have your commercial registration number and a
+              copy of the lease agreement for the premises. The application takes about
+              fifteen minutes to complete.
+            </p>
+            <h3>What you will need</h3>
+            <ul>
+              <li>Commercial registration number</li>
+              <li>A copy of the lease agreement</li>
+              <li>Proof of payment for the application fee</li>
+            </ul>
+            <h3>After you apply</h3>
+            <p>
+              You will receive a decision within <strong>five working days</strong>. If more
+              information is needed, we will contact you using the details on your
+              <a href="/demo/forms">application form</a>.
+            </p>
+            <ol>
+              <li>We check your documents</li>
+              <li>An inspector visits the premises</li>
+              <li>The licence is issued</li>
+            </ol>
+          </GupRichText>
+      </DemoExample>
+    </section>
+
+  </div>
+</div>

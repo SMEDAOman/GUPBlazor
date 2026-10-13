@@ -1,0 +1,59 @@
+@page "/demo/header"
+
+@rendermode InteractiveServer
+<PageTitle>Header — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Header">
+    <PageSummary>The service header that sits at the top of every page — brand at the start, actions at the end.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Standard</h2>
+      <DemoExample Id="standard" File="HeaderDemo.razor">
+          <GupHeader>
+            <Start>
+              <GupLogo Appearance="horizontal" Size="32" />
+            </Start>
+            <End>
+              <GupButton Appearance="GupButtonAppearance.Text">
+                <IconStart><GupIcon IconName="language" Width="20" Height="20" /></IconStart>
+                <ChildContent>العربية</ChildContent>
+              </GupButton>
+            </End>
+          </GupHeader>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With an account area</h2>
+      <DemoExample Id="with-an-account-area" File="HeaderDemo.razor">
+          <GupHeader>
+            <Start>
+              <GupLogo Appearance="horizontal" Size="32" />
+            </Start>
+            <End>
+              <GupTrack Gap="3" VerticalAlignment="center">
+                <GupButton Appearance="GupButtonAppearance.Text">
+                  <IconStart><GupIcon IconName="language" Width="20" Height="20" /></IconStart>
+                  <ChildContent>العربية</ChildContent>
+                </GupButton>
+                <GupAvatar Label="Ahmed Al Balushi" />
+              </GupTrack>
+            </End>
+          </GupHeader>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">In context</h2>
+      <p class="demo-note">
+        See the header as part of a whole page on <a href="/service-start">Service Start</a>.
+      </p>
+    </section>
+
+  </div>
+</div>

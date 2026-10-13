@@ -1,6 +1,7 @@
 @page "/demo/layout"
 
-<PageTitle>Layout — Component Demo</PageTitle>
+@rendermode InteractiveServer
+<PageTitle>Layout — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -17,33 +18,30 @@
 
       <div class="demo-row">
         <div class="demo-card demo-card--full">
-          <span class="demo-card-label">Horizontal (default) · gap=3</span>
-          <div class="demo-surface">
-            <GupTrack Direction="horizontal" Gap="3">
-              <GupButton Appearance="@GupButtonAppearance.Primary">Item 1</GupButton>
-              <GupButton Appearance="@GupButtonAppearance.Secondary">Item 2</GupButton>
-              <GupButton Appearance="@GupButtonAppearance.Secondary">Item 3</GupButton>
-            </GupTrack>
-          </div>
+          <DemoExample Id="horizontal-default-gap-3" File="Layout.razor" Label="Horizontal (default) · gap=3">
+              <GupTrack Direction="horizontal" Gap="3">
+                <GupButton Appearance="@GupButtonAppearance.Primary">Item 1</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Secondary">Item 2</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Secondary">Item 3</GupButton>
+              </GupTrack>
+          </DemoExample>
         </div>
         <div class="demo-card demo-card--full">
-          <span class="demo-card-label">Horizontal · horizontal-alignment=right</span>
-          <div class="demo-surface">
-            <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="3">
-              <GupButton Appearance="@GupButtonAppearance.Secondary">Cancel</GupButton>
-              <GupButton Appearance="@GupButtonAppearance.Primary">Confirm</GupButton>
-            </GupTrack>
-          </div>
+          <DemoExample Id="horizontal-horizontal-alignment-right" File="Layout.razor" Label="Horizontal · horizontal-alignment=right">
+              <GupTrack Direction="horizontal" HorizontalAlignment="right" Gap="3">
+                <GupButton Appearance="@GupButtonAppearance.Secondary">Cancel</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Primary">Confirm</GupButton>
+              </GupTrack>
+          </DemoExample>
         </div>
         <div class="demo-card demo-card--full">
-          <span class="demo-card-label">Vertical · gap=4</span>
-          <div class="demo-surface">
-            <GupTrack Direction="vertical" Gap="4">
-              <GupButton Appearance="@GupButtonAppearance.Primary">Action 1</GupButton>
-              <GupButton Appearance="@GupButtonAppearance.Secondary">Action 2</GupButton>
-              <GupButton Appearance="@GupButtonAppearance.Text">Action 3</GupButton>
-            </GupTrack>
-          </div>
+          <DemoExample Id="vertical-gap-4" File="Layout.razor" Label="Vertical · gap=4">
+              <GupTrack Direction="vertical" Gap="4">
+                <GupButton Appearance="@GupButtonAppearance.Primary">Action 1</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Secondary">Action 2</GupButton>
+                <GupButton Appearance="@GupButtonAppearance.Text">Action 3</GupButton>
+              </GupTrack>
+          </DemoExample>
         </div>
       </div>
     </section>

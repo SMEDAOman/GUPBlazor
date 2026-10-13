@@ -1,0 +1,118 @@
+@page "/demo/patterns/add-row"
+@rendermode InteractiveServer
+
+<PageTitle>Add row — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Add row">
+    <PageSummary>
+      Building up a list of items inside a form — a table of what has been added, and a
+      flyout carrying the form that adds to it.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">The pattern</h2>
+      <div class="demo-surface">
+        <GupFormSection Heading="Partners">
+          <ChildContent>
+          @if (_rows.Count == 0)
+          {
+            <p class="demo-note">No partners added yet.</p>
+          }
+          else
+          {
+            <GupTable Responsive="true">
+              <GupTableRow>
+                <GupTableCell Type="head">Name</GupTableCell>
+                <GupTableCell Type="head">Role</GupTableCell>
+                <GupTableCell Type="head">Share</GupTableCell>
+                <GupTableCell Type="head">Actions</GupTableCell>
+              </GupTableRow>
+              @foreach (var row in _rows)
+              {
+                <GupTableRow>
+                  <GupTableCell Label="Name">@row.Name</GupTableCell>
+                  <GupTableCell Label="Role">@row.Role</GupTableCell>
+                  <GupTableCell Label="Share">@row.Share</GupTableCell>
+                  <GupTableCell Label="Actions">
+                    <GupButton Appearance="GupButtonAppearance.Text" OnClick="() => Remove(row)">
+                      <ChildContent>Remove</ChildContent>
+                    </GupButton>
+                  </GupTableCell>
+                </GupTableRow>
+              }
+            </GupTable>
+          }
+
+          </ChildContent>
+          <FooterContent>
+            <GupButton Appearance="GupButtonAppearance.Secondary" OnClick="() => _open = true">
+              <IconStart><GupIcon IconName="add-circle" Width="20" Height="20" /></IconStart>
+              <ChildContent>Add a partner</ChildContent>
+            </GupButton>
+          </FooterContent>
+        </GupFormSection>
+      </div>
+    </section>
+
+    <GupFlyout IsOpen="_open" Heading="Add a partner" OnClose="Close">
+      <ChildContent>
+      <GupFormList>
+        <GupInputField Name="ar-name" Type="text" @bind-Value="_name">Full name</GupInputField>
+        <GupInputField Name="ar-role" Type="text" @bind-Value="_role">Role</GupInputField>
+        <GupInputField Name="ar-share" Type="text" @bind-Value="_share">
+          <ChildContent>Ownership share</ChildContent>
+          <Hint>As a percentage, for example 25%.</Hint>
+        </GupInputField>
+      </GupFormList>
+      </ChildContent>
+      <FooterContent>
+        <GupButtonGroup>
+          <GupButton Appearance="GupButtonAppearance.Primary" OnClick="Add">Add partner</GupButton>
+          <GupButton Appearance="GupButtonAppearance.Text" OnClick="Close">Cancel</GupButton>
+        </GupButtonGroup>
+      </FooterContent>
+    </GupFlyout>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Notes</h2>
+      <ul class="doc-list">
+        <li>The form lives in a <a href="/demo/flyout">flyout</a>, not inline — on a phone an inline sub-form pushes the rest of the page out of view.</li>
+        <li>The empty state says so in words rather than showing an empty table.</li>
+        <li>The table is responsive, so each row stacks with its labels on a narrow screen.</li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private record Row(string Name, string Role, string Share);
+
+    private readonly List<Row> _rows = [new("Ahmed Al Balushi", "Managing partner", "60%")];
+    private bool _open;
+    private string? _name;
+    private string? _role;
+    private string? _share;
+
+    private void Add()
+    {
+        if (!string.IsNullOrWhiteSpace(_name))
+        {
+            _rows.Add(new Row(_name!, _role ?? "—", _share ?? "—"));
+        }
+        Close();
+    }
+
+    private void Remove(Row row) => _rows.Remove(row);
+
+    private void Close()
+    {
+        _open = false;
+        _name = _role = _share = null;
+    }
+}

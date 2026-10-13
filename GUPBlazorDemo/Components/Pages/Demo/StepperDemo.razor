@@ -1,0 +1,47 @@
+@page "/demo/stepper"
+@rendermode InteractiveServer
+
+<PageTitle>Stepper — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Stepper">
+    <PageSummary>Progress through a multi-step service, with each step in a complete, current or upcoming state.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Wizard mode</h2>
+      <p class="demo-note">The form used in a service wizard — the current step is expanded.</p>
+      <DemoExample Id="wizard-mode" File="StepperDemo.razor">
+          <GupStepper WizardMode="true">
+            <GupStepperItem StepNumber="1" Label="Business details" StepType="complete" WizardMode="true" />
+            <GupStepperItem StepNumber="2" Label="Premises" StepType="current" WizardMode="true" Open="true" />
+            <GupStepperItem StepNumber="3" Label="Documents" WizardMode="true" />
+            <GupStepperItem StepNumber="4" Label="Review and submit" WizardMode="true" />
+          </GupStepper>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Static mode</h2>
+      <p class="demo-note">A read-only summary of progress, with no interaction.</p>
+      <DemoExample Id="static-mode" File="StepperDemo.razor">
+          <GupStepper StaticMode="true">
+            <GupStepperItem StepNumber="1" Label="Submitted" StepType="complete" StaticMode="true" />
+            <GupStepperItem StepNumber="2" Label="Under review" StepType="current" StaticMode="true" />
+            <GupStepperItem StepNumber="3" Label="Decision" StaticMode="true" />
+          </GupStepper>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">In context</h2>
+      <p class="demo-note">
+        <a href="/service-start">Service Start</a> shows the stepper driving a real wizard.
+      </p>
+    </section>
+
+  </div>
+</div>

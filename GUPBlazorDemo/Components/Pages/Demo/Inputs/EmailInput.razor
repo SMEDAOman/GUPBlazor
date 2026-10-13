@@ -1,7 +1,7 @@
 @page "/demo/inputs/email"
 @rendermode InteractiveServer
 
-<PageTitle>Email Input — Component Demo</PageTitle>
+<PageTitle>Email Input — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,20 +16,18 @@
             <h2 class="demo-section-title">Basic</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Default</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-default" Type="email">Email address</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="default" File="EmailInput.razor" Label="Default">
+                          <GupFormList>
+                              <GupInputField Name="email-default" Type="email">Email address</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With placeholder</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-placeholder" Type="email" Placeholder="name@example.com">Email address</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-placeholder" File="EmailInput.razor" Label="With placeholder">
+                          <GupFormList>
+                              <GupInputField Name="email-placeholder" Type="email" Placeholder="name@example.com">Email address</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -38,28 +36,25 @@
             <h2 class="demo-section-title">States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Pre-filled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-value" Type="email" Value="ahmed@gov.om">Work email</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="pre-filled" File="EmailInput.razor" Label="Pre-filled">
+                          <GupFormList>
+                              <GupInputField Name="email-value" Type="email" Value="ahmed@gov.om">Work email</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Read-only</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-readonly" Type="email" Value="verified@gov.om" Readonly="true">Verified email</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="read-only" File="EmailInput.razor" Label="Read-only">
+                          <GupFormList>
+                              <GupInputField Name="email-readonly" Type="email" Value="verified@gov.om" Readonly="true">Verified email</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Disabled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-disabled" Type="email" Disabled="true">Disabled email</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="disabled" File="EmailInput.razor" Label="Disabled">
+                          <GupFormList>
+                              <GupInputField Name="email-disabled" Type="email" Disabled="true">Disabled email</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -68,36 +63,33 @@
             <h2 class="demo-section-title">Validation</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Self-validates format</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-format" Type="email" Placeholder="Try typing 'not-an-email'">
-                                <ChildContent>Email address</ChildContent>
-                                <Hint>Error appears once you blur the field with an invalid address.</Hint>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="self-validates-format" File="EmailInput.razor" Label="Self-validates format">
+                          <GupFormList>
+                              <GupInputField Name="email-format" Type="email" Placeholder="Try typing 'not-an-email'">
+                                  <ChildContent>Email address</ChildContent>
+                                  <Hint>Error appears once you blur the field with an invalid address.</Hint>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Required</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-required" Type="email" Required="true">Email address</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="required" File="EmailInput.razor" Label="Required">
+                          <GupFormList>
+                              <GupInputField Name="email-required" Type="email" Required="true">Email address</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Custom error message</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="email-custom-error"
-                                           Type="email"
-                                           Placeholder="name@example.com"
-                                           ErrorMessage="@("Please use your @gov.om work email.")">
-                                Work email
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="custom-error-message" File="EmailInput.razor" Label="Custom error message">
+                          <GupFormList>
+                              <GupInputField Name="email-custom-error"
+                                             Type="email"
+                                             Placeholder="name@example.com"
+                                             ErrorMessage="@("Please use your @gov.om work email.")">
+                                  Work email
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>

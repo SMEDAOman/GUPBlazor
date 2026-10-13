@@ -1,7 +1,7 @@
 @page "/demo/pagination"
 @rendermode InteractiveServer
 
-<PageTitle>Pagination — Component Demo</PageTitle>
+<PageTitle>Pagination — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -26,9 +26,9 @@
                 when there are more than 7 pages.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPagination TotalPages="10" CurrentPage="3" />
-                </div>
+                <DemoExample Id="numbered-default" File="Pagination.razor" style="padding:32px;">
+                      <GupPagination TotalPages="10" CurrentPage="3" />
+                </DemoExample>
             </div>
         </section>
 
@@ -40,20 +40,20 @@
                 show the three layouts: near start, mid-range, and near end.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:24px; padding:32px;">
-                    <div>
-                        <p style="margin:0 0 8px; color:#52525b;">Near start (page 2 of 25)</p>
-                        <GupPagination TotalPages="25" CurrentPage="2" />
-                    </div>
-                    <div>
-                        <p style="margin:0 0 8px; color:#52525b;">Mid-range (page 12 of 25)</p>
-                        <GupPagination TotalPages="25" CurrentPage="12" />
-                    </div>
-                    <div>
-                        <p style="margin:0 0 8px; color:#52525b;">Near end (page 23 of 25)</p>
-                        <GupPagination TotalPages="25" CurrentPage="23" />
-                    </div>
-                </div>
+                <DemoExample Id="numbered-ellipsis-truncation" File="Pagination.razor" style="display:flex; flex-direction:column; gap:24px; padding:32px;">
+                      <div>
+                          <p style="margin:0 0 8px; color:#52525b;">Near start (page 2 of 25)</p>
+                          <GupPagination TotalPages="25" CurrentPage="2" />
+                      </div>
+                      <div>
+                          <p style="margin:0 0 8px; color:#52525b;">Mid-range (page 12 of 25)</p>
+                          <GupPagination TotalPages="25" CurrentPage="12" />
+                      </div>
+                      <div>
+                          <p style="margin:0 0 8px; color:#52525b;">Near end (page 23 of 25)</p>
+                          <GupPagination TotalPages="25" CurrentPage="23" />
+                      </div>
+                </DemoExample>
             </div>
         </section>
 
@@ -66,32 +66,32 @@
                 directional prev/next text buttons).
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-currentpage" File="Pagination.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupPagination TotalPages="25"
-                                   @bind-CurrentPage="_boundPage"
-                                   OnPageChange="HandlePageChange" />
+                      <GupPagination TotalPages="25"
+                                     @bind-CurrentPage="_boundPage"
+                                     OnPageChange="HandlePageChange" />
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;">
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundPage = 1)">
-                            <ChildContent>Jump to first</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundPage = 13)">
-                            <ChildContent>Jump to middle</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundPage = 25)">
-                            <ChildContent>Jump to last</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;">
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundPage = 1)">
+                              <ChildContent>Jump to first</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundPage = 13)">
+                              <ChildContent>Jump to middle</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundPage = 25)">
+                              <ChildContent>Jump to last</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <p data-testid="bind-output" style="margin:0; text-align:center;">
-                        Bound page: <strong>@_boundPage</strong> &nbsp;·&nbsp;
-                        OnPageChange fired: <strong>@_pageChangeCount</strong> times
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin:0; text-align:center;">
+                          Bound page: <strong>@_boundPage</strong> &nbsp;·&nbsp;
+                          OnPageChange fired: <strong>@_pageChangeCount</strong> times
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -103,15 +103,15 @@
                 a label, title, and href for each side.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPagination Kind="GupPaginationKind.Directional"
-                                   PrevLabel="Previous"
-                                   PrevTitle="Rub your eyes and purify your heart – and prize above all else in the world those who love you and who wish you well"
-                                   PrevLink="#prev"
-                                   NextLabel="Next"
-                                   NextTitle="But Art is a punitive sentence, not a birthright"
-                                   NextLink="#next" />
-                </div>
+                <DemoExample Id="directional-previous-next" File="Pagination.razor" style="padding:32px;">
+                      <GupPagination Kind="GupPaginationKind.Directional"
+                                     PrevLabel="Previous"
+                                     PrevTitle="Rub your eyes and purify your heart – and prize above all else in the world those who love you and who wish you well"
+                                     PrevLink="#prev"
+                                     NextLabel="Next"
+                                     NextTitle="But Art is a punitive sentence, not a birthright"
+                                     NextLink="#next" />
+                </DemoExample>
             </div>
         </section>
 
@@ -122,12 +122,12 @@
                 Omit the next link when there is no following page (the last page in a guided flow).
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPagination Kind="GupPaginationKind.Directional"
-                                   PrevLabel="Previous"
-                                   PrevTitle="Rub your eyes and purify your heart – and prize above all else in the world those who love you and who wish you well"
-                                   PrevLink="#prev" />
-                </div>
+                <DemoExample Id="directional-previous-only" File="Pagination.razor" style="padding:32px;">
+                      <GupPagination Kind="GupPaginationKind.Directional"
+                                     PrevLabel="Previous"
+                                     PrevTitle="Rub your eyes and purify your heart – and prize above all else in the world those who love you and who wish you well"
+                                     PrevLink="#prev" />
+                </DemoExample>
             </div>
         </section>
 
@@ -138,12 +138,12 @@
                 Omit the previous link when there is no preceding page.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupPagination Kind="GupPaginationKind.Directional"
-                                   NextLabel="Next"
-                                   NextTitle="But Art is a punitive sentence, not a birthright"
-                                   NextLink="#next" />
-                </div>
+                <DemoExample Id="directional-next-only" File="Pagination.razor" style="padding:32px;">
+                      <GupPagination Kind="GupPaginationKind.Directional"
+                                     NextLabel="Next"
+                                     NextTitle="But Art is a punitive sentence, not a birthright"
+                                     NextLink="#next" />
+                </DemoExample>
             </div>
         </section>
 
@@ -155,23 +155,23 @@
                 the directional links — useful for analytics or navigation interception.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="directional-onprevclick-onnextclick-events" File="Pagination.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupPagination Kind="GupPaginationKind.Directional"
-                                   PrevLabel="Previous"
-                                   PrevTitle="Section 3 — accommodation"
-                                   PrevLink="javascript:void(0)"
-                                   NextLabel="Next"
-                                   NextTitle="Section 5 — review & submit"
-                                   NextLink="javascript:void(0)"
-                                   OnPrevClick="@(_ => Log("Prev"))"
-                                   OnNextClick="@(_ => Log("Next"))" />
+                      <GupPagination Kind="GupPaginationKind.Directional"
+                                     PrevLabel="Previous"
+                                     PrevTitle="Section 3 — accommodation"
+                                     PrevLink="javascript:void(0)"
+                                     NextLabel="Next"
+                                     NextTitle="Section 5 — review & submit"
+                                     NextLink="javascript:void(0)"
+                                     OnPrevClick="@(_ => Log("Prev"))"
+                                     OnNextClick="@(_ => Log("Next"))" />
 
-                    <p data-testid="event-log" style="margin:0; text-align:center;">
-                        Last clicked: <strong>@_lastDirectionalClick</strong>
-                        &nbsp;·&nbsp; total: <strong>@_directionalClickCount</strong>
-                    </p>
-                </div>
+                      <p data-testid="event-log" style="margin:0; text-align:center;">
+                          Last clicked: <strong>@_lastDirectionalClick</strong>
+                          &nbsp;·&nbsp; total: <strong>@_directionalClickCount</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -182,34 +182,34 @@
                 Switch the layout at runtime — same component, two presentations.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-kind" File="Pagination.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <div style="display:flex; gap:8px; align-items:center; justify-content:center;">
-                        <strong>Kind:</strong>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _kind = GupPaginationKind.Numbered)">
-                            <ChildContent>Numbered</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _kind = GupPaginationKind.Directional)">
-                            <ChildContent>Directional</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; align-items:center; justify-content:center;">
+                          <strong>Kind:</strong>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _kind = GupPaginationKind.Numbered)">
+                              <ChildContent>Numbered</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _kind = GupPaginationKind.Directional)">
+                              <ChildContent>Directional</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <GupPagination @bind-Kind="_kind"
-                                   TotalPages="12"
-                                   CurrentPage="4"
-                                   PrevLabel="Previous"
-                                   PrevTitle="Step 3 — your details"
-                                   PrevLink="#prev"
-                                   NextLabel="Next"
-                                   NextTitle="Step 5 — confirm"
-                                   NextLink="#next" />
+                      <GupPagination @bind-Kind="_kind"
+                                     TotalPages="12"
+                                     CurrentPage="4"
+                                     PrevLabel="Previous"
+                                     PrevTitle="Step 3 — your details"
+                                     PrevLink="#prev"
+                                     NextLabel="Next"
+                                     NextTitle="Step 5 — confirm"
+                                     NextLink="#next" />
 
-                    <p style="margin:0; text-align:center;">
-                        Bound kind: <strong>@_kind</strong>
-                    </p>
-                </div>
+                      <p style="margin:0; text-align:center;">
+                          Bound kind: <strong>@_kind</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -221,18 +221,18 @@
                 <code>dir="rtl"</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" dir="rtl" style="display:flex; flex-direction:column; gap:24px; padding:32px;">
-                    <GupPagination TotalPages="25" CurrentPage="6"
-                                   PrevLabel="السابق" NextLabel="التالي" />
+                <DemoExample Id="rtl-arabic" File="Pagination.razor" dir="rtl" style="display:flex; flex-direction:column; gap:24px; padding:32px;">
+                      <GupPagination TotalPages="25" CurrentPage="6"
+                                     PrevLabel="السابق" NextLabel="التالي" />
 
-                    <GupPagination Kind="GupPaginationKind.Directional"
-                                   PrevLabel="السابق"
-                                   PrevTitle="القسم الثالث — الإقامة"
-                                   PrevLink="#prev"
-                                   NextLabel="التالي"
-                                   NextTitle="القسم الخامس — المراجعة"
-                                   NextLink="#next" />
-                </div>
+                      <GupPagination Kind="GupPaginationKind.Directional"
+                                     PrevLabel="السابق"
+                                     PrevTitle="القسم الثالث — الإقامة"
+                                     PrevLink="#prev"
+                                     NextLabel="التالي"
+                                     NextTitle="القسم الخامس — المراجعة"
+                                     NextLink="#next" />
+                </DemoExample>
             </div>
         </section>
 

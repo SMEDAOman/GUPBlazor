@@ -1,7 +1,7 @@
 @page "/demo/data-table"
 @rendermode InteractiveServer
 
-<PageTitle>Data Table — Component Demo</PageTitle>
+<PageTitle>Data Table — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -27,31 +27,31 @@
                 clearing it restores the original total.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupDataTable Items="Applications"
-                                  SearchTextSelector="SearchText"
-                                  TableTitle="Applications"
-                                  Description="This is a short description"
-                                  Columns="ApplicationColumns"
-                                  ItemsPerPage="6"
-                                  TotalItems="Applications.Count"
-                                  @bind-SearchValue="_defaultSearch"
-                                  @bind-CurrentPage="_defaultPage"
-                                  @bind-ResultsCount="_defaultResults"
-                                  ShowFilters="false">
-                        <RowTemplate Context="app">
-                            <GupTableRow>
-                                <GupTableCell Label="Number">@app.Number</GupTableCell>
-                                <GupTableCell Label="Type">@app.Type</GupTableCell>
-                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
-                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
-                                <GupTableCell Label="Status">
-                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
-                                </GupTableCell>
-                            </GupTableRow>
-                        </RowTemplate>
-                    </GupDataTable>
-                </div>
+                <DemoExample Id="default-search-and-pagination" File="DataTable.razor">
+                      <GupDataTable Items="Applications"
+                                    SearchTextSelector="SearchText"
+                                    TableTitle="Applications"
+                                    Description="This is a short description"
+                                    Columns="ApplicationColumns"
+                                    ItemsPerPage="6"
+                                    TotalItems="Applications.Count"
+                                    @bind-SearchValue="_defaultSearch"
+                                    @bind-CurrentPage="_defaultPage"
+                                    @bind-ResultsCount="_defaultResults"
+                                    ShowFilters="false">
+                          <RowTemplate Context="app">
+                              <GupTableRow>
+                                  <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                  <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                  <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                  <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                  <GupTableCell Label="Status">
+                                      <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                  </GupTableCell>
+                              </GupTableRow>
+                          </RowTemplate>
+                      </GupDataTable>
+                </DemoExample>
             </div>
         </section>
 
@@ -66,46 +66,46 @@
                 <code>Options</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupDataTable Items="Applications"
-                                  SearchTextSelector="SearchText"
-                                  TableTitle="Applications"
-                                  Description="Filter by status, reference or date"
-                                  Columns="ApplicationColumns"
-                                  ItemsPerPage="6"
-                                  TotalItems="Applications.Count"
-                                  ShowFilters="true"
-                                  ViewButtonText="Action"
-                                  ViewButtonIcon="download"
-                                  Filters="ApplicationFilters"
-                                  MobileActionButtons="@(new[] { "New application" })"
-                                  @bind-SearchValue="_filterSearch"
-                                  @bind-CurrentPage="_filterPage"
-                                  @bind-ResultsCount="_filterResults"
-                                  @bind-FilterPanelOpen="_filterPanelOpen"
-                                  @bind-AppliedFilters="_appliedFilters"
-                                  OnFilterApply="HandleFilterApply"
-                                  OnClearFilters="@(() => Log("Clear filters"))"
-                                  OnViewClick="@(() => Log("View click"))"
-                                  OnMobileActionClick="@(label => Log($"Mobile action: {label}"))">
-                        <RowTemplate Context="app">
-                            <GupTableRow>
-                                <GupTableCell Label="Number">@app.Number</GupTableCell>
-                                <GupTableCell Label="Type">@app.Type</GupTableCell>
-                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
-                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
-                                <GupTableCell Label="Status">
-                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
-                                </GupTableCell>
-                            </GupTableRow>
-                        </RowTemplate>
-                    </GupDataTable>
+                <DemoExample Id="with-filters-text-date-and-select" File="DataTable.razor">
+                      <GupDataTable Items="Applications"
+                                    SearchTextSelector="SearchText"
+                                    TableTitle="Applications"
+                                    Description="Filter by status, reference or date"
+                                    Columns="ApplicationColumns"
+                                    ItemsPerPage="6"
+                                    TotalItems="Applications.Count"
+                                    ShowFilters="true"
+                                    ViewButtonText="Action"
+                                    ViewButtonIcon="download"
+                                    Filters="ApplicationFilters"
+                                    MobileActionButtons="@(new[] { "New application" })"
+                                    @bind-SearchValue="_filterSearch"
+                                    @bind-CurrentPage="_filterPage"
+                                    @bind-ResultsCount="_filterResults"
+                                    @bind-FilterPanelOpen="_filterPanelOpen"
+                                    @bind-AppliedFilters="_appliedFilters"
+                                    OnFilterApply="HandleFilterApply"
+                                    OnClearFilters="@(() => Log("Clear filters"))"
+                                    OnViewClick="@(() => Log("View click"))"
+                                    OnMobileActionClick="@(label => Log($"Mobile action: {label}"))">
+                          <RowTemplate Context="app">
+                              <GupTableRow>
+                                  <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                  <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                  <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                  <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                  <GupTableCell Label="Status">
+                                      <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                  </GupTableCell>
+                              </GupTableRow>
+                          </RowTemplate>
+                      </GupDataTable>
 
-                    <p data-testid="filter-log" style="margin:16px 0 0; padding:0 24px 16px;">
-                        Last event: <strong>@_lastEvent</strong>
-                        &nbsp;·&nbsp; applied: <strong>@_appliedFilters.Count</strong>
-                    </p>
-                </div>
+                      <p data-testid="filter-log" style="margin:16px 0 0; padding:0 24px 16px;">
+                          Last event: <strong>@_lastEvent</strong>
+                          &nbsp;·&nbsp; applied: <strong>@_appliedFilters.Count</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -119,19 +119,19 @@
                 is hidden.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupDataTable TItem="Application"
-                                  Items="NoApplications"
-                                  TableTitle="Applications"
-                                  Description="This is a short description"
-                                  Columns="ApplicationColumns"
-                                  ItemsPerPage="6"
-                                  TotalItems="0"
-                                  ShowFilters="true"
-                                  ViewButtonText="Action"
-                                  Filters="ApplicationFilters"
-                                  @bind-FilterPanelOpen="_emptyPanelOpen" />
-                </div>
+                <DemoExample Id="empty-state" File="DataTable.razor">
+                      <GupDataTable TItem="Application"
+                                    Items="NoApplications"
+                                    TableTitle="Applications"
+                                    Description="This is a short description"
+                                    Columns="ApplicationColumns"
+                                    ItemsPerPage="6"
+                                    TotalItems="0"
+                                    ShowFilters="true"
+                                    ViewButtonText="Action"
+                                    Filters="ApplicationFilters"
+                                    @bind-FilterPanelOpen="_emptyPanelOpen" />
+                </DemoExample>
             </div>
         </section>
 
@@ -143,31 +143,31 @@
                 search box and the footer. No title or description is set, so the header block is omitted.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupDataTable Items="Applications"
-                                  SearchTextSelector="SearchText"
-                                  SearchPlaceholder="Search applications"
-                                  Columns="ApplicationColumns"
-                                  ItemsPerPage="10"
-                                  TotalItems="Applications.Count"
-                                  ShowFilters="false"
-                                  @bind-SearchValue="_searchOnlySearch"
-                                  @bind-CurrentPage="_searchOnlyPage"
-                                  @bind-ResultsCount="_searchOnlyResults"
-                                  OnSearch="@(term => Log($"Search: {term}"))">
-                        <RowTemplate Context="app">
-                            <GupTableRow>
-                                <GupTableCell Label="Number">@app.Number</GupTableCell>
-                                <GupTableCell Label="Type">@app.Type</GupTableCell>
-                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
-                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
-                                <GupTableCell Label="Status">
-                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
-                                </GupTableCell>
-                            </GupTableRow>
-                        </RowTemplate>
-                    </GupDataTable>
-                </div>
+                <DemoExample Id="search-only" File="DataTable.razor">
+                      <GupDataTable Items="Applications"
+                                    SearchTextSelector="SearchText"
+                                    SearchPlaceholder="Search applications"
+                                    Columns="ApplicationColumns"
+                                    ItemsPerPage="10"
+                                    TotalItems="Applications.Count"
+                                    ShowFilters="false"
+                                    @bind-SearchValue="_searchOnlySearch"
+                                    @bind-CurrentPage="_searchOnlyPage"
+                                    @bind-ResultsCount="_searchOnlyResults"
+                                    OnSearch="@(term => Log($"Search: {term}"))">
+                          <RowTemplate Context="app">
+                              <GupTableRow>
+                                  <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                  <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                  <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                  <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                  <GupTableCell Label="Status">
+                                      <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                  </GupTableCell>
+                              </GupTableRow>
+                          </RowTemplate>
+                      </GupDataTable>
+                </DemoExample>
             </div>
         </section>
 
@@ -183,36 +183,35 @@
                 <code>.gup-table--responsive</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface"
-                     style="resize:horizontal; overflow:auto; min-width:320px; max-width:100%; width:100%;">
-                    <GupDataTable Items="Applications"
-                                  SearchTextSelector="SearchText"
-                                  TableTitle="Applications"
-                                  Columns="ApplicationColumns"
-                                  ItemsPerPage="4"
-                                  TotalItems="Applications.Count"
-                                  ShowFilters="true"
-                                  ViewButtonText="Action"
-                                  Filters="ApplicationFilters"
-                                  MobileActionButtons="@(new[] { "New application" })"
-                                  Responsive="true"
-                                  @bind-SearchValue="_responsiveSearch"
-                                  @bind-CurrentPage="_responsivePage"
-                                  @bind-ResultsCount="_responsiveResults"
-                                  @bind-FilterPanelOpen="_responsivePanelOpen">
-                        <RowTemplate Context="app">
-                            <GupTableRow>
-                                <GupTableCell Label="Number">@app.Number</GupTableCell>
-                                <GupTableCell Label="Type">@app.Type</GupTableCell>
-                                <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
-                                <GupTableCell Label="End date">@app.EndDate</GupTableCell>
-                                <GupTableCell Label="Status">
-                                    <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
-                                </GupTableCell>
-                            </GupTableRow>
-                        </RowTemplate>
-                    </GupDataTable>
-                </div>
+                <DemoExample Id="responsive-stacked-cards-below-639px" File="DataTable.razor" style="resize:horizontal; overflow:auto; min-width:320px; max-width:100%; width:100%;">
+                      <GupDataTable Items="Applications"
+                                    SearchTextSelector="SearchText"
+                                    TableTitle="Applications"
+                                    Columns="ApplicationColumns"
+                                    ItemsPerPage="4"
+                                    TotalItems="Applications.Count"
+                                    ShowFilters="true"
+                                    ViewButtonText="Action"
+                                    Filters="ApplicationFilters"
+                                    MobileActionButtons="@(new[] { "New application" })"
+                                    Responsive="true"
+                                    @bind-SearchValue="_responsiveSearch"
+                                    @bind-CurrentPage="_responsivePage"
+                                    @bind-ResultsCount="_responsiveResults"
+                                    @bind-FilterPanelOpen="_responsivePanelOpen">
+                          <RowTemplate Context="app">
+                              <GupTableRow>
+                                  <GupTableCell Label="Number">@app.Number</GupTableCell>
+                                  <GupTableCell Label="Type">@app.Type</GupTableCell>
+                                  <GupTableCell Label="Start date">@app.StartDate</GupTableCell>
+                                  <GupTableCell Label="End date">@app.EndDate</GupTableCell>
+                                  <GupTableCell Label="Status">
+                                      <GupBadgeChip Appearance="@app.StatusAppearance">@app.Status</GupBadgeChip>
+                                  </GupTableCell>
+                              </GupTableRow>
+                          </RowTemplate>
+                      </GupDataTable>
+                </DemoExample>
             </div>
         </section>
 

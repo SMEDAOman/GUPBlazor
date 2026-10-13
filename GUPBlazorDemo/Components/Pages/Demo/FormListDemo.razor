@@ -1,0 +1,49 @@
+@page "/demo/form-list"
+
+@rendermode InteractiveServer
+<PageTitle>Form list — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Form list">
+    <PageSummary>
+      Stacks form fields with the spacing the design system expects between them, so you do
+      not set margins on fields yourself.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Stacked fields</h2>
+      <DemoExample Id="stacked-fields" File="FormListDemo.razor">
+          <GupFormList>
+            <GupInputField Name="fl-first" Type="text">First name</GupInputField>
+            <GupInputField Name="fl-last" Type="text">Last name</GupInputField>
+            <GupInputField Name="fl-email" Type="email">Email address</GupInputField>
+          </GupFormList>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Mixed controls</h2>
+      <p class="demo-note">Any field component can sit in the list, not just text inputs.</p>
+      <DemoExample Id="mixed-controls" File="FormListDemo.razor">
+          <GupFormList>
+            <GupInputField Name="fl-company" Type="text">Company name</GupInputField>
+            <GupTextarea Name="fl-notes" Rows="3">Additional notes</GupTextarea>
+            <GupToggle Name="fl-updates">Send me updates about this application</GupToggle>
+          </GupFormList>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Inside a form section</h2>
+      <p class="demo-note">
+        A <a href="/demo/form-section">form section</a> gives the group a heading; the form
+        list handles the spacing inside it.
+      </p>
+    </section>
+
+  </div>
+</div>

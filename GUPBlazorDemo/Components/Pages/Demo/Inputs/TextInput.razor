@@ -1,7 +1,7 @@
 @page "/demo/inputs/text"
 @rendermode InteractiveServer
 
-<PageTitle>Text Input — Component Demo</PageTitle>
+<PageTitle>Text Input — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,28 +16,25 @@
             <h2 class="demo-section-title">Basic Text Inputs</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Default</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-default" Type="text">Full name</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="default" File="TextInput.razor" Label="Default">
+                          <GupFormList>
+                              <GupInputField Name="txt-default" Type="text">Full name</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With placeholder</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-placeholder" Type="text" Placeholder="e.g. Ahmed Al Habsi">Full name</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-placeholder" File="TextInput.razor" Label="With placeholder">
+                          <GupFormList>
+                              <GupInputField Name="txt-placeholder" Type="text" Placeholder="e.g. Ahmed Al Habsi">Full name</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Required</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-required" Type="text" Required="true">Required field</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="required" File="TextInput.razor" Label="Required">
+                          <GupFormList>
+                              <GupInputField Name="txt-required" Type="text" Required="true">Required field</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -46,36 +43,32 @@
             <h2 class="demo-section-title">States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Pre-filled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-value" Type="text" Value="Ahmed Al Habsi">Full name</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="pre-filled" File="TextInput.razor" Label="Pre-filled">
+                          <GupFormList>
+                              <GupInputField Name="txt-value" Type="text" Value="Ahmed Al Habsi">Full name</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Read-only</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-readonly" Type="text" Value="Cannot edit" Readonly="true">Read-only field</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="read-only" File="TextInput.razor" Label="Read-only">
+                          <GupFormList>
+                              <GupInputField Name="txt-readonly" Type="text" Value="Cannot edit" Readonly="true">Read-only field</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Disabled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-disabled" Type="text" Disabled="true">Disabled field</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="disabled" File="TextInput.razor" Label="Disabled">
+                          <GupFormList>
+                              <GupInputField Name="txt-disabled" Type="text" Disabled="true">Disabled field</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Label hidden</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-label-hidden" Type="text" LabelHidden="true" Placeholder="Search…">Search</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="label-hidden" File="TextInput.razor" Label="Label hidden">
+                          <GupFormList>
+                              <GupInputField Name="txt-label-hidden" Type="text" LabelHidden="true" Placeholder="Search…">Search</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -84,54 +77,50 @@
             <h2 class="demo-section-title">Hint &amp; Validation</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">With hint</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-hint" Type="text">
-                                <ChildContent>Civil ID number</ChildContent>
-                                <Hint>Enter the number as shown on your ID card.</Hint>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-hint" File="TextInput.razor" Label="With hint">
+                          <GupFormList>
+                              <GupInputField Name="txt-hint" Type="text">
+                                  <ChildContent>Civil ID number</ChildContent>
+                                  <Hint>Enter the number as shown on your ID card.</Hint>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Invalid (default message)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-invalid" Type="text" Required="true" IsInvalid="true">Required field</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="invalid-default-message" File="TextInput.razor" Label="Invalid (default message)">
+                          <GupFormList>
+                              <GupInputField Name="txt-invalid" Type="text" Required="true" IsInvalid="true">Required field</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Custom error message</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-invalid-custom"
-                                           Type="text"
-                                           IsInvalid="true"
-                                           ErrorMessage="Please enter a valid message of 10–100 characters.">
-                                Your message
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="custom-error-message" File="TextInput.razor" Label="Custom error message">
+                          <GupFormList>
+                              <GupInputField Name="txt-invalid-custom"
+                                             Type="text"
+                                             IsInvalid="true"
+                                             ErrorMessage="Please enter a valid message of 10–100 characters.">
+                                  Your message
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Toggle invalid</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-invalid-toggle"
-                                           Type="text"
-                                           IsInvalid="@_toggleInvalid"
-                                           ErrorMessage="This message is shown only when invalid.">
-                                Watch the validation message
-                            </GupInputField>
-                        </GupFormList>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                   Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _toggleInvalid = !_toggleInvalid)">
-                            <ChildContent>Toggle invalid (@(_toggleInvalid ? "on" : "off"))</ChildContent>
-                        </GupButton>
-                    </div>
+                    <DemoExample Id="toggle-invalid" File="TextInput.razor" Label="Toggle invalid">
+                          <GupFormList>
+                              <GupInputField Name="txt-invalid-toggle"
+                                             Type="text"
+                                             IsInvalid="@_toggleInvalid"
+                                             ErrorMessage="This message is shown only when invalid.">
+                                  Watch the validation message
+                              </GupInputField>
+                          </GupFormList>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                     Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _toggleInvalid = !_toggleInvalid)">
+                              <ChildContent>Toggle invalid (@(_toggleInvalid ? "on" : "off"))</ChildContent>
+                          </GupButton>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -140,38 +129,35 @@
             <h2 class="demo-section-title">Prefix &amp; Suffix</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">With prefix</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-prefix" Type="text" Placeholder="12345678">
-                                <ChildContent>Bank account</ChildContent>
-                                <Prefix>OMR</Prefix>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-prefix" File="TextInput.razor" Label="With prefix">
+                          <GupFormList>
+                              <GupInputField Name="txt-prefix" Type="text" Placeholder="12345678">
+                                  <ChildContent>Bank account</ChildContent>
+                                  <Prefix>OMR</Prefix>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With suffix</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-suffix" Type="text" Placeholder="example">
-                                <ChildContent>Domain</ChildContent>
-                                <Suffix>.gov.om</Suffix>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-suffix" File="TextInput.razor" Label="With suffix">
+                          <GupFormList>
+                              <GupInputField Name="txt-suffix" Type="text" Placeholder="example">
+                                  <ChildContent>Domain</ChildContent>
+                                  <Suffix>.gov.om</Suffix>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Both</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-both-affix" Type="text" Placeholder="amount">
-                                <ChildContent>Total</ChildContent>
-                                <Prefix>OMR</Prefix>
-                                <Suffix>.000</Suffix>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="both" File="TextInput.razor" Label="Both">
+                          <GupFormList>
+                              <GupInputField Name="txt-both-affix" Type="text" Placeholder="amount">
+                                  <ChildContent>Total</ChildContent>
+                                  <Prefix>OMR</Prefix>
+                                  <Suffix>.000</Suffix>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -180,49 +166,46 @@
             <h2 class="demo-section-title">Input-start &amp; Input-end slots</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">With input-start (search icon)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-input-start" Type="text" Placeholder="Search…">
-                                <ChildContent>Search</ChildContent>
-                                <InputStart>
-                                    <GupIcon IconName="search" Width="20" Height="20" />
-                                </InputStart>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-input-start-search-icon" File="TextInput.razor" Label="With input-start (search icon)">
+                          <GupFormList>
+                              <GupInputField Name="txt-input-start" Type="text" Placeholder="Search…">
+                                  <ChildContent>Search</ChildContent>
+                                  <InputStart>
+                                      <GupIcon IconName="search" Width="20" Height="20" />
+                                  </InputStart>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With input-end (chevron)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-input-end" Type="text" Placeholder="Pick an option…">
-                                <ChildContent>Selector</ChildContent>
-                                <InputEnd>
-                                    <GupIcon IconName="keyboard-arrow-down" Width="20" Height="20" />
-                                </InputEnd>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-input-end-chevron" File="TextInput.razor" Label="With input-end (chevron)">
+                          <GupFormList>
+                              <GupInputField Name="txt-input-end" Type="text" Placeholder="Pick an option…">
+                                  <ChildContent>Selector</ChildContent>
+                                  <InputEnd>
+                                      <GupIcon IconName="keyboard-arrow-down" Width="20" Height="20" />
+                                  </InputEnd>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">All slots</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-all-slots" Type="text" Placeholder="123.456">
-                                <ChildContent>Amount</ChildContent>
-                                <Prefix>OMR</Prefix>
-                                <Suffix>.000</Suffix>
-                                <InputStart>
-                                    <GupIcon IconName="search" Width="20" Height="20" />
-                                </InputStart>
-                                <InputEnd>
-                                    <GupIcon IconName="keyboard-arrow-down" Width="20" Height="20" />
-                                </InputEnd>
-                                <Hint>Every slot is filled in this example.</Hint>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="all-slots" File="TextInput.razor" Label="All slots">
+                          <GupFormList>
+                              <GupInputField Name="txt-all-slots" Type="text" Placeholder="123.456">
+                                  <ChildContent>Amount</ChildContent>
+                                  <Prefix>OMR</Prefix>
+                                  <Suffix>.000</Suffix>
+                                  <InputStart>
+                                      <GupIcon IconName="search" Width="20" Height="20" />
+                                  </InputStart>
+                                  <InputEnd>
+                                      <GupIcon IconName="keyboard-arrow-down" Width="20" Height="20" />
+                                  </InputEnd>
+                                  <Hint>Every slot is filled in this example.</Hint>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -231,36 +214,32 @@
             <h2 class="demo-section-title">Length &amp; Pattern Constraints</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Max char limit (10)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-maxlen" Type="text" MaxLength="10" Placeholder="Up to 10 chars">Short text</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="max-char-limit-10" File="TextInput.razor" Label="Max char limit (10)">
+                          <GupFormList>
+                              <GupInputField Name="txt-maxlen" Type="text" MaxLength="10" Placeholder="Up to 10 chars">Short text</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Numeric (validates, doesn't filter)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-numeric" Type="numeric" Placeholder="0-9 only">Numeric value</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="numeric-validates-doesn-t-filter" File="TextInput.razor" Label="Numeric (validates, doesn't filter)">
+                          <GupFormList>
+                              <GupInputField Name="txt-numeric" Type="numeric" Placeholder="0-9 only">Numeric value</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Numeric (StrictNumeric — filters non-digits)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-numeric-strict" Type="numeric" StrictNumeric="true" Placeholder="Try typing letters">Strict numeric value</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="numeric-strictnumeric-filters-non-digits" File="TextInput.razor" Label="Numeric (StrictNumeric — filters non-digits)">
+                          <GupFormList>
+                              <GupInputField Name="txt-numeric-strict" Type="numeric" StrictNumeric="true" Placeholder="Try typing letters">Strict numeric value</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Strict 4-digit PIN</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="txt-pin" Type="numeric" StrictNumeric="true" Pattern="\d{4,4}" MaxLength="4" Placeholder="4-digit PIN">Enter your 4-digit PIN</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="strict-4-digit-pin" File="TextInput.razor" Label="Strict 4-digit PIN">
+                          <GupFormList>
+                              <GupInputField Name="txt-pin" Type="numeric" StrictNumeric="true" Pattern="\d{4,4}" MaxLength="4" Placeholder="4-digit PIN">Enter your 4-digit PIN</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>

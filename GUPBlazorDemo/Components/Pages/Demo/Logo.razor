@@ -1,0 +1,69 @@
+@page "/demo/logo"
+
+@rendermode InteractiveServer
+<PageTitle>Logo — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Logo">
+    <PageSummary>GupLogo in icon and horizontal lockups, recoloured for light, brand and dark surfaces.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Appearance</h2>
+      <div class="demo-row">
+        <div class="demo-card">
+          <DemoExample Id="icon" File="Logo.razor" Label="Icon (default)"
+                       SurfaceClass="demo-logo-surface">
+            <GupLogo Size="60" />
+          </DemoExample>
+        </div>
+        <div class="demo-card">
+          <DemoExample Id="horizontal" File="Logo.razor" Label="Horizontal lockup"
+                       SurfaceClass="demo-logo-surface">
+            <GupLogo Appearance="horizontal" Size="44" />
+          </DemoExample>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">On different surfaces</h2>
+      <div class="demo-row">
+        <div class="demo-card">
+          <span class="demo-card-label">On brand background</span>
+          <div class="demo-surface" style="background: var(--gup-color-brand-medium); --gup-logo--color: #ffffff;">
+            <GupLogo Size="56" />
+          </div>
+        </div>
+        <div class="demo-card">
+          <span class="demo-card-label">On dark background</span>
+          <div class="demo-surface--dark" style="--gup-logo--color: #ffffff;">
+            <GupLogo Appearance="horizontal" Size="40" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Sizes</h2>
+      <p class="demo-note">Size sets the height in px; the width scales with the artwork.</p>
+      <div class="demo-surface demo-row" style="gap: 24px; align-items: center; flex-wrap: wrap; --gup-logo--color: var(--gup-color-brand-medium);">
+        <GupLogo Size="24" />
+        <GupLogo Size="32" />
+        <GupLogo Size="48" />
+        <GupLogo Size="64" />
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">As a link</h2>
+      <div class="demo-surface" style="--gup-logo--color: var(--gup-color-brand-medium);">
+        <GupLogo Size="40" Href="/" Title="Go to the home page" />
+      </div>
+    </section>
+
+  </div>
+</div>

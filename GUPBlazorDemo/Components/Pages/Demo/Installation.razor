@@ -1,0 +1,117 @@
+@page "/demo/installation"
+
+<PageTitle>Installation — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Installation">
+    <PageSummary>Add the package, register the services, and wire up the styles and scripts.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">1. Install the package</h2>
+      <p>
+        <code>GUPBlazor</code> targets <code>net10.0</code> and is published on
+        <a href="https://www.nuget.org/packages/GUPBlazor" target="_blank" rel="noopener">nuget.org</a>.
+      </p>
+
+      <h3 class="doc-subheading">.NET CLI</h3>
+      <pre class="doc-code"><code>dotnet add package GUPBlazor</code></pre>
+
+      <h3 class="doc-subheading">Package Manager Console</h3>
+      <pre class="doc-code"><code>Install-Package GUPBlazor</code></pre>
+
+      <h3 class="doc-subheading">PackageReference</h3>
+      <pre class="doc-code"><code>&lt;PackageReference Include="GUPBlazor" Version="@CurrentVersion" /&gt;</code></pre>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">2. Register the services</h2>
+      <p>In <code>Program.cs</code>, call <code>AddGUPBlazor()</code> on the service collection:</p>
+      <pre class="doc-code"><code>var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
+builder.Services.AddGUPBlazor();</code></pre>
+      <p>
+        This registers the services the components depend on, including the toast and
+        dialog hosts.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">3. Add the styles and scripts</h2>
+      <p>
+        In <code>App.razor</code> (or <code>_Host.cshtml</code> for Blazor Server), put
+        <code>&lt;GUPHTMLHeader /&gt;</code> inside <code>&lt;head&gt;</code> and
+        <code>&lt;GUPHTMLFooter /&gt;</code> just before the closing
+        <code>&lt;/body&gt;</code> tag:
+      </p>
+      <pre class="doc-code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;base href="/" /&gt;
+
+    &lt;GUPHTMLHeader /&gt;
+
+    &lt;HeadOutlet /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;Routes /&gt;
+    &lt;script src="_framework/blazor.web.js"&gt;&lt;/script&gt;
+
+    &lt;GUPHTMLFooter /&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <p>
+        <code>GUPHTMLHeader</code> brings in the stylesheet, the icon font and the meta
+        tags the design system expects. <code>GUPHTMLFooter</code> adds the scripts and the
+        containers that overlay components render into, so it has to come after
+        <code>blazor.web.js</code>.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">4. Import the namespace</h2>
+      <p>Add the library to <code>Components/_Imports.razor</code> so the components resolve without a per-file using:</p>
+      <pre class="doc-code"><code>@("@using GUPBlazor.Components")
+@("@using GUPBlazor.Services")</code></pre>
+      <p>
+        <code>GUPBlazor.Services</code> is what gives you <code>ToastService</code> and the
+        other injectables; leave it out and the components still render, but
+        <code>@("@inject ToastService")</code> will not resolve.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">5. Use a component</h2>
+      <pre class="doc-code"><code>&lt;GupButton Appearance="GupButtonAppearance.Primary"&gt;
+    Continue
+&lt;/GupButton&gt;</code></pre>
+      <p>
+        Every page in the sidebar shows its component rendered alongside the markup that
+        produced it — that is the fastest way to find the parameter you need.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Hosting models</h2>
+      <p>
+        The installation steps are the same for Blazor Server, WebAssembly, Blazor Web App
+        and Blazor Hybrid. Interactive components need an interactive render mode — in a
+        Blazor Web App, components rendered with static SSR will display but will not
+        respond to input.
+      </p>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private const string CurrentVersion = "0.3.0";
+}

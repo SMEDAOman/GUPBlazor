@@ -1,7 +1,7 @@
 @page "/demo/screenreader-text"
 @rendermode InteractiveServer
 
-<PageTitle>Screenreader Text — Component Demo</PageTitle>
+<PageTitle>Screenreader Text — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -27,13 +27,13 @@
                 between the visible sentences.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <p data-testid="default-example" style="margin:0;">
-                        The text below is only visible to screenreaders:
-                        <GupScreenReaderText>Screenreader text</GupScreenReaderText>
-                        Did you see it?
-                    </p>
-                </div>
+                <DemoExample Id="default-text-only-slot" File="ScreenReaderText.razor" style="padding:32px;">
+                      <p data-testid="default-example" style="margin:0;">
+                          The text below is only visible to screenreaders:
+                          <GupScreenReaderText>Screenreader text</GupScreenReaderText>
+                          Did you see it?
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -45,12 +45,12 @@
                 to the default-slot form but lighter when binding to a string.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <p data-testid="text-param-example" style="margin:0;">
-                        Save
-                        <GupScreenReaderText Text="your application before continuing" />
-                    </p>
-                </div>
+                <DemoExample Id="text-parameter-no-slot" File="ScreenReaderText.razor" style="padding:32px;">
+                      <p data-testid="text-param-example" style="margin:0;">
+                          Save
+                          <GupScreenReaderText Text="your application before continuing" />
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -63,23 +63,23 @@
                 that same string into the accessibility tree.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-text" File="ScreenReaderText.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupInputField Name="sr-bound-text"
-                                   @bind-Value="_boundText"
-                                   Placeholder="Type here…">Screenreader text</GupInputField>
+                      <GupInputField Name="sr-bound-text"
+                                     @bind-Value="_boundText"
+                                     Placeholder="Type here…">Screenreader text</GupInputField>
 
-                    <p style="margin:0;">
-                        <strong>Visible:</strong> The button below has a hidden description —
-                        <GupScreenReaderText @bind-Text="_boundText" OnRendered="HandleRendered" />
-                    </p>
+                      <p style="margin:0;">
+                          <strong>Visible:</strong> The button below has a hidden description —
+                          <GupScreenReaderText @bind-Text="_boundText" OnRendered="HandleRendered" />
+                      </p>
 
-                    <p data-testid="bind-output" style="margin:0;">
-                        <strong>Bound text:</strong> "<span data-testid="bind-value">@_boundText</span>"
-                        &nbsp;·&nbsp;
-                        <strong>OnRendered fired:</strong> <span data-testid="render-count">@_renderCount</span> times
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin:0;">
+                          <strong>Bound text:</strong> "<span data-testid="bind-value">@_boundText</span>"
+                          &nbsp;·&nbsp;
+                          <strong>OnRendered fired:</strong> <span data-testid="render-count">@_renderCount</span> times
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -91,16 +91,16 @@
                 when the surrounding markup needs a block-level child (e.g. inside a list or grid).
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <ul style="margin:0; padding-left:20px;">
-                        <li>Form section 1
-                            <GupScreenReaderText As="div" Text="Personal details — three fields, all required" />
-                        </li>
-                        <li>Form section 2
-                            <GupScreenReaderText As="div" Text="Address — two fields, both required" />
-                        </li>
-                    </ul>
-                </div>
+                <DemoExample Id="as-div-block-level-wrapper" File="ScreenReaderText.razor" style="padding:32px;">
+                      <ul style="margin:0; padding-left:20px;">
+                          <li>Form section 1
+                              <GupScreenReaderText As="div" Text="Personal details — three fields, all required" />
+                          </li>
+                          <li>Form section 2
+                              <GupScreenReaderText As="div" Text="Address — two fields, both required" />
+                          </li>
+                      </ul>
+                </DemoExample>
             </div>
         </section>
 
@@ -114,26 +114,26 @@
                 a new announcement.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="live-region-role-arialive" File="ScreenReaderText.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <div>
-                        <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button"
-                                   OnClick="@AnnounceUpdate">
-                            <ChildContent>Announce update</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div>
+                          <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Button"
+                                     OnClick="@AnnounceUpdate">
+                              <ChildContent>Announce update</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <GupScreenReaderText Role="status"
-                                         AriaLive="polite"
-                                         Text="@_announcement" />
+                      <GupScreenReaderText Role="status"
+                                           AriaLive="polite"
+                                           Text="@_announcement" />
 
-                    <p data-testid="announcement-output" style="margin:0;">
-                        <strong>Visible mirror (for the demo):</strong>
-                        "<span data-testid="announcement-value">@_announcement</span>"
-                        &nbsp;·&nbsp; announced
-                        <strong><span data-testid="announce-count">@_announceCount</span></strong> times
-                    </p>
-                </div>
+                      <p data-testid="announcement-output" style="margin:0;">
+                          <strong>Visible mirror (for the demo):</strong>
+                          "<span data-testid="announcement-value">@_announcement</span>"
+                          &nbsp;·&nbsp; announced
+                          <strong><span data-testid="announce-count">@_announceCount</span></strong> times
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -146,18 +146,18 @@
                 whole point of <code>GupScreenReaderText</code> is that it stays invisible.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="inspection-helper-temporarily-reveal-sr-text" File="ScreenReaderText.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupCheckbox Name="sr-reveal"
-                                 @bind-Checked="_reveal">Reveal screenreader text (demo only)</GupCheckbox>
+                      <GupCheckbox Name="sr-reveal"
+                                   @bind-Checked="_reveal">Reveal screenreader text (demo only)</GupCheckbox>
 
-                    <div class="@(_reveal ? "sr-reveal" : "")">
-                        <p style="margin:0;">
-                            Submit
-                            <GupScreenReaderText Text="(this will permanently delete your draft)" />
-                        </p>
-                    </div>
-                </div>
+                      <div class="@(_reveal ? "sr-reveal" : "")">
+                          <p style="margin:0;">
+                              Submit
+                              <GupScreenReaderText Text="(this will permanently delete your draft)" />
+                          </p>
+                      </div>
+                </DemoExample>
             </div>
         </section>
 

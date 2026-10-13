@@ -1,0 +1,106 @@
+@page "/demo/design-tokens"
+@inject DesignTokenCatalogue Catalogue
+
+<PageTitle>Design tokens — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Design tokens">
+    <PageSummary>
+      Every CSS custom property the library exports, read straight out of
+      <code>gup.css</code> at run time.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    @if (Catalogue.TotalCount == 0)
+    {
+      <GupBanner Type="GupBannerType.Error">
+        Could not read <code>gup.css</code>. The token reference is generated from the
+        stylesheet, so it is empty when the file cannot be found.
+      </GupBanner>
+    }
+    else
+    {
+      <section class="demo-section">
+        <p class="tokens-lede">
+          Use these instead of literal values. @Catalogue.TotalCount tokens in
+          @Catalogue.Groups.Length groups — click any name to copy it.
+        </p>
+
+        <nav class="tokens-jump" aria-label="Token groups">
+          @foreach (var group in Catalogue.Groups)
+          {
+            <a href="#@Slug(group.Title)">@group.Title <span>@group.Tokens.Length</span></a>
+          }
+        </nav>
+      </section>
+
+      @foreach (var group in Catalogue.Groups)
+      {
+        <section class="demo-section" id="@Slug(group.Title)">
+          <h2 class="demo-section-title">@group.Title</h2>
+          <p class="tokens-group-intro">@group.Intro</p>
+
+          <div class="demo-surface">
+            <table class="tokens-table">
+              <thead>
+                <tr>
+                  <th scope="col">Property name</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var token in group.Tokens)
+                {
+                  <tr>
+                    <th scope="row">
+                      <button type="button" class="token-name" title="Copy @token.Name"
+                              @onclick="() => Copy(token.Name)">
+                        @token.Name
+                      </button>
+                    </th>
+                    <td>
+                      <span class="token-value">
+                        @if (IsColor(token.Value))
+                        {
+                          <span class="token-swatch" style="background:@token.Value"></span>
+                        }
+                        <code>@token.Value</code>
+                      </span>
+                    </td>
+                    <td class="token-note">@token.Comment</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+      }
+    }
+  </div>
+</div>
+
+@code {
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    private static string Slug(string title) =>
+        new string(title.ToLowerInvariant().Select(c => char.IsLetterOrDigit(c) ? c : '-').ToArray()).Trim('-');
+
+    private static bool IsColor(string value) =>
+        value.StartsWith('#') || value.StartsWith("rgb", StringComparison.OrdinalIgnoreCase);
+
+    private async Task Copy(string name)
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", $"var({name})");
+        }
+        catch (JSException)
+        {
+            // Clipboard is unavailable over plain HTTP on some browsers; nothing to recover.
+        }
+    }
+}

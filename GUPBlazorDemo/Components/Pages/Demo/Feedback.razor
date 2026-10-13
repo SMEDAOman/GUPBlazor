@@ -1,6 +1,7 @@
 @page "/demo/feedback"
 
-<PageTitle>Feedback — Component Demo</PageTitle>
+@rendermode InteractiveServer
+<PageTitle>Feedback — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -69,56 +70,56 @@
       <div class="demo-row">
         <div class="demo-card">
           <span class="demo-card-label">Static mode — all step types</span>
-          <div class="demo-surface">
-            <GupStepper StaticMode="true">
-              <GupStepperItem StepNumber="1" StepType="done">
-                <LabelContent>Personal details</LabelContent>
-              </GupStepperItem>
-              <GupStepperItem StepNumber="2" StepType="done">
-                <LabelContent>Contact information</LabelContent>
-              </GupStepperItem>
-              <GupStepperItem StepNumber="3" StepType="selected">
-                <LabelContent>Document upload</LabelContent>
-              </GupStepperItem>
-              <GupStepperItem StepNumber="4" StepType="default">
-                <LabelContent>Review &amp; submit</LabelContent>
-              </GupStepperItem>
-              <GupStepperItem StepNumber="5" StepType="default">
-                <LabelContent>Confirmation</LabelContent>
-              </GupStepperItem>
-            </GupStepper>
-          </div>
+          <DemoExample Id="static-mode-all-step-types" File="Feedback.razor">
+              <GupStepper StaticMode="true">
+                <GupStepperItem StepNumber="1" StepType="done">
+                  <LabelContent>Personal details</LabelContent>
+                </GupStepperItem>
+                <GupStepperItem StepNumber="2" StepType="done">
+                  <LabelContent>Contact information</LabelContent>
+                </GupStepperItem>
+                <GupStepperItem StepNumber="3" StepType="selected">
+                  <LabelContent>Document upload</LabelContent>
+                </GupStepperItem>
+                <GupStepperItem StepNumber="4" StepType="default">
+                  <LabelContent>Review &amp; submit</LabelContent>
+                </GupStepperItem>
+                <GupStepperItem StepNumber="5" StepType="default">
+                  <LabelContent>Confirmation</LabelContent>
+                </GupStepperItem>
+              </GupStepper>
+          </DemoExample>
         </div>
         <div class="demo-card">
           <span class="demo-card-label">Step types close-up</span>
-          <div class="demo-surface">
-            <GupTrack Direction="vertical" Gap="5">
-              <div>
-                <div class="demo-card-label" style="margin-bottom:8px;">done</div>
-                <GupStepper StaticMode="true">
-                  <GupStepperItem StepNumber="1" StepType="done">
-                    <LabelContent>Completed step</LabelContent>
-                  </GupStepperItem>
-                </GupStepper>
-              </div>
-              <div>
-                <div class="demo-card-label" style="margin-bottom:8px;">selected</div>
-                <GupStepper StaticMode="true">
-                  <GupStepperItem StepNumber="2" StepType="selected">
-                    <LabelContent>Current step</LabelContent>
-                  </GupStepperItem>
-                </GupStepper>
-              </div>
-              <div>
-                <div class="demo-card-label" style="margin-bottom:8px;">default</div>
-                <GupStepper StaticMode="true">
-                  <GupStepperItem StepNumber="3" StepType="default">
-                    <LabelContent>Upcoming step</LabelContent>
-                  </GupStepperItem>
-                </GupStepper>
-              </div>
-            </GupTrack>
-          </div>
+          <DemoExample Id="step-types-close-up" File="Feedback.razor">
+              <GupTrack Direction="vertical" Gap="5">
+                <div>
+                  <div class="demo-card-label" style="margin-bottom:8px;">done</div>
+                  <GupStepper StaticMode="true">
+                    <GupStepperItem StepNumber="1" StepType="done">
+                      <LabelContent>Completed step</LabelContent>
+                    </GupStepperItem>
+                  </GupStepper>
+                </div>
+                <div>
+                  <div class="demo-card-label" style="margin-bottom:8px;">selected</div>
+                  <GupStepper StaticMode="true">
+                    <GupStepperItem StepNumber="2" StepType="selected">
+                      <LabelContent>Current step</LabelContent>
+                    </GupStepperItem>
+                  </GupStepper>
+                </div>
+                <div>
+                  <div class="demo-card-label" style="margin-bottom:8px;">default</div>
+                  <GupStepper StaticMode="true">
+                    <GupStepperItem StepNumber="3" StepType="default">
+                      <LabelContent>Upcoming step</LabelContent>
+                    </GupStepperItem>
+                  </GupStepper>
+                </div>
+              </GupTrack>
+          </DemoExample>
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 @page "/demo/filter-chip"
 @rendermode InteractiveServer
 
-<PageTitle>Filter Chip — Component Demo</PageTitle>
+<PageTitle>Filter Chip — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -21,9 +21,9 @@
                 <code>OnClick</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupFilterChip>I am a button</GupFilterChip>
-                </div>
+                <DemoExample Id="default-button" File="FilterChip.razor">
+                      <GupFilterChip>I am a button</GupFilterChip>
+                </DemoExample>
             </div>
         </section>
 
@@ -34,9 +34,9 @@
                 <code>Disabled="true"</code> applies the muted disabled tokens and prevents pointer events.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupFilterChip Disabled="true">I am disabled</GupFilterChip>
-                </div>
+                <DemoExample Id="disabled" File="FilterChip.razor">
+                      <GupFilterChip Disabled="true">I am disabled</GupFilterChip>
+                </DemoExample>
             </div>
         </section>
 
@@ -48,9 +48,9 @@
                 an anchor — the close icon is omitted.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupFilterChip Kind="@GupFilterChipKind.Link" Href="#">I am a link</GupFilterChip>
-                </div>
+                <DemoExample Id="link" File="FilterChip.razor">
+                      <GupFilterChip Kind="@GupFilterChipKind.Link" Href="#">I am a link</GupFilterChip>
+                </DemoExample>
             </div>
         </section>
 
@@ -62,9 +62,9 @@
                 action.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupFilterChip HideCloseIcon="true">No close icon</GupFilterChip>
-                </div>
+                <DemoExample Id="without-close-icon" File="FilterChip.razor">
+                      <GupFilterChip HideCloseIcon="true">No close icon</GupFilterChip>
+                </DemoExample>
             </div>
         </section>
 
@@ -76,17 +76,17 @@
                 label and a trailing "clear all" button.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupFilterChipWrapper ClearLabel="Clear all">
-                        <Label>Search in:</Label>
-                        <ChildContent>
-                            <GupFilterChip>Filter 1</GupFilterChip>
-                            <GupFilterChip>Filter 2</GupFilterChip>
-                            <GupFilterChip>Filter 3</GupFilterChip>
-                            <GupFilterChip>Filter 4</GupFilterChip>
-                        </ChildContent>
-                    </GupFilterChipWrapper>
-                </div>
+                <DemoExample Id="wrapper-basic" File="FilterChip.razor">
+                      <GupFilterChipWrapper ClearLabel="Clear all">
+                          <Label>Search in:</Label>
+                          <ChildContent>
+                              <GupFilterChip>Filter 1</GupFilterChip>
+                              <GupFilterChip>Filter 2</GupFilterChip>
+                              <GupFilterChip>Filter 3</GupFilterChip>
+                              <GupFilterChip>Filter 4</GupFilterChip>
+                          </ChildContent>
+                      </GupFilterChipWrapper>
+                </DemoExample>
             </div>
         </section>
 
@@ -148,17 +148,17 @@
                 Wrappers can mix button and link chips freely.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupFilterChipWrapper ClearLabel="Clear all">
-                        <Label>Mixed:</Label>
-                        <ChildContent>
-                            <GupFilterChip>Button chip</GupFilterChip>
-                            <GupFilterChip Kind="@GupFilterChipKind.Link" Href="#">Link chip</GupFilterChip>
-                            <GupFilterChip HideCloseIcon="true">No icon</GupFilterChip>
-                            <GupFilterChip Disabled="true">Disabled</GupFilterChip>
-                        </ChildContent>
-                    </GupFilterChipWrapper>
-                </div>
+                <DemoExample Id="mixed-kinds-inside-a-wrapper" File="FilterChip.razor">
+                      <GupFilterChipWrapper ClearLabel="Clear all">
+                          <Label>Mixed:</Label>
+                          <ChildContent>
+                              <GupFilterChip>Button chip</GupFilterChip>
+                              <GupFilterChip Kind="@GupFilterChipKind.Link" Href="#">Link chip</GupFilterChip>
+                              <GupFilterChip HideCloseIcon="true">No icon</GupFilterChip>
+                              <GupFilterChip Disabled="true">Disabled</GupFilterChip>
+                          </ChildContent>
+                      </GupFilterChipWrapper>
+                </DemoExample>
             </div>
         </section>
 
@@ -167,17 +167,17 @@
             <h2 class="demo-section-title">RTL (Arabic)</h2>
             <p class="demo-section-description">The chips and wrapper use logical layout, so RTL is automatic.</p>
             <div class="demo-card--full" dir="rtl">
-                <div class="demo-surface">
-                    <GupFilterChipWrapper ClearLabel="مسح الكل">
-                        <Label>البحث في:</Label>
-                        <ChildContent>
-                            <GupFilterChip>الفرز الأول</GupFilterChip>
-                            <GupFilterChip>الفرز الثاني</GupFilterChip>
-                            <GupFilterChip>الفرز الثالث</GupFilterChip>
-                            <GupFilterChip>الفرز الرابع</GupFilterChip>
-                        </ChildContent>
-                    </GupFilterChipWrapper>
-                </div>
+                <DemoExample Id="rtl-arabic" File="FilterChip.razor">
+                      <GupFilterChipWrapper ClearLabel="مسح الكل">
+                          <Label>البحث في:</Label>
+                          <ChildContent>
+                              <GupFilterChip>الفرز الأول</GupFilterChip>
+                              <GupFilterChip>الفرز الثاني</GupFilterChip>
+                              <GupFilterChip>الفرز الثالث</GupFilterChip>
+                              <GupFilterChip>الفرز الرابع</GupFilterChip>
+                          </ChildContent>
+                      </GupFilterChipWrapper>
+                </DemoExample>
             </div>
         </section>
 

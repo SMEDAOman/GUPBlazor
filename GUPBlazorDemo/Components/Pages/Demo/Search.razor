@@ -1,7 +1,7 @@
 @page "/demo/search"
 @rendermode InteractiveServer
 
-<PageTitle>Search — Component Demo</PageTitle>
+<PageTitle>Search — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -27,9 +27,9 @@
                 the search-icon button is always visible.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupSearch Name="default" Label="Search" />
-                </div>
+                <DemoExample Id="default" File="Search.razor" style="padding:32px;">
+                      <GupSearch Name="default" Label="Search" />
+                </DemoExample>
             </div>
         </section>
 
@@ -40,11 +40,11 @@
                 Use <code>Placeholder</code> to give the user a hint about what they can search for.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupSearch Name="placeholder"
-                               Label="Search services"
-                               Placeholder="Search for something…" />
-                </div>
+                <DemoExample Id="with-placeholder" File="Search.razor" style="padding:32px;">
+                      <GupSearch Name="placeholder"
+                                 Label="Search services"
+                                 Placeholder="Search for something…" />
+                </DemoExample>
             </div>
         </section>
 
@@ -56,11 +56,11 @@
                 immediately because there's content to clear.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupSearch Name="prefilled"
-                               Label="Search"
-                               Value="what is the real meaning of life?" />
-                </div>
+                <DemoExample Id="with-initial-value" File="Search.razor" style="padding:32px;">
+                      <GupSearch Name="prefilled"
+                                 Label="Search"
+                                 Value="what is the real meaning of life?" />
+                </DemoExample>
             </div>
         </section>
 
@@ -72,12 +72,12 @@
                 rejects keystrokes.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupSearch Name="disabled"
-                               Label="Search"
-                               Placeholder="Search for something…"
-                               Disabled="true" />
-                </div>
+                <DemoExample Id="disabled" File="Search.razor" style="padding:32px;">
+                      <GupSearch Name="disabled"
+                                 Label="Search"
+                                 Placeholder="Search for something…"
+                                 Disabled="true" />
+                </DemoExample>
             </div>
         </section>
 
@@ -91,52 +91,52 @@
                 the × button is pressed.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-value-events" File="Search.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupSearch Name="bound"
-                               Label="Search"
-                               Placeholder="Type something then press Enter or click 🔍"
-                               @bind-Value="_boundValue"
-                               OnValueChange="HandleValueChange"
-                               OnSearch="HandleSearch"
-                               OnClear="HandleClear"
-                               OnClick="HandleClick" />
+                      <GupSearch Name="bound"
+                                 Label="Search"
+                                 Placeholder="Type something then press Enter or click 🔍"
+                                 @bind-Value="_boundValue"
+                                 OnValueChange="HandleValueChange"
+                                 OnSearch="HandleSearch"
+                                 OnClear="HandleClear"
+                                 OnClick="HandleClick" />
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundValue = "Hello world")">
-                            <ChildContent>Set to "Hello world"</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundValue = string.Empty)">
-                            <ChildContent>Clear externally</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundValue = "Hello world")">
+                              <ChildContent>Set to "Hello world"</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundValue = string.Empty)">
+                              <ChildContent>Clear externally</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <div data-testid="bind-output" style="display:flex; flex-direction:column; gap:4px; margin:0;">
-                        <p style="margin:0;">
-                            <strong>Bound value:</strong>
-                            "<span data-testid="bind-value">@_boundValue</span>"
-                        </p>
-                        <p style="margin:0;">
-                            <strong>OnValueChange:</strong>
-                            <span data-testid="value-change-count">@_valueChangeCount</span> times
-                            &nbsp;·&nbsp;
-                            <strong>OnSearch:</strong>
-                            <span data-testid="search-count">@_searchCount</span> times
-                            &nbsp;·&nbsp;
-                            <strong>OnClear:</strong>
-                            <span data-testid="clear-count">@_clearCount</span> times
-                            &nbsp;·&nbsp;
-                            <strong>OnClick:</strong>
-                            <span data-testid="click-count">@_clickCount</span> times
-                        </p>
-                        <p style="margin:0;">
-                            <strong>Last submitted query:</strong>
-                            "<span data-testid="last-search">@_lastSearch</span>"
-                        </p>
-                    </div>
-                </div>
+                      <div data-testid="bind-output" style="display:flex; flex-direction:column; gap:4px; margin:0;">
+                          <p style="margin:0;">
+                              <strong>Bound value:</strong>
+                              "<span data-testid="bind-value">@_boundValue</span>"
+                          </p>
+                          <p style="margin:0;">
+                              <strong>OnValueChange:</strong>
+                              <span data-testid="value-change-count">@_valueChangeCount</span> times
+                              &nbsp;·&nbsp;
+                              <strong>OnSearch:</strong>
+                              <span data-testid="search-count">@_searchCount</span> times
+                              &nbsp;·&nbsp;
+                              <strong>OnClear:</strong>
+                              <span data-testid="clear-count">@_clearCount</span> times
+                              &nbsp;·&nbsp;
+                              <strong>OnClick:</strong>
+                              <span data-testid="click-count">@_clickCount</span> times
+                          </p>
+                          <p style="margin:0;">
+                              <strong>Last submitted query:</strong>
+                              "<span data-testid="last-search">@_lastSearch</span>"
+                          </p>
+                      </div>
+                </DemoExample>
             </div>
         </section>
 
@@ -148,21 +148,21 @@
                 during read-only periods.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-disabled" File="Search.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <GupSearch Name="bind-disabled"
-                               Label="Search"
-                               Placeholder="Search…"
-                               @bind-Disabled="_isDisabled"
-                               Value="Some preset query" />
+                      <GupSearch Name="bind-disabled"
+                                 Label="Search"
+                                 Placeholder="Search…"
+                                 @bind-Disabled="_isDisabled"
+                                 Value="Some preset query" />
 
-                    <GupCheckbox Name="toggle-disabled"
-                                 @bind-Checked="_isDisabled">Disable the search field</GupCheckbox>
+                      <GupCheckbox Name="toggle-disabled"
+                                   @bind-Checked="_isDisabled">Disable the search field</GupCheckbox>
 
-                    <p style="margin:0;">
-                        Bound disabled state: <strong>@_isDisabled</strong>
-                    </p>
-                </div>
+                      <p style="margin:0;">
+                          Bound disabled state: <strong>@_isDisabled</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -211,13 +211,13 @@
                 to the inline-start edge and the magnifier glyph mirrors visually.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" dir="rtl" style="padding:32px;">
-                    <GupSearch Name="rtl"
-                               Label="بحث"
-                               Placeholder="ابحث عن شيء…"
-                               SearchLabel="بحث"
-                               ResetLabel="مسح" />
-                </div>
+                <DemoExample Id="rtl-arabic" File="Search.razor" dir="rtl" style="padding:32px;">
+                      <GupSearch Name="rtl"
+                                 Label="بحث"
+                                 Placeholder="ابحث عن شيء…"
+                                 SearchLabel="بحث"
+                                 ResetLabel="مسح" />
+                </DemoExample>
             </div>
         </section>
 

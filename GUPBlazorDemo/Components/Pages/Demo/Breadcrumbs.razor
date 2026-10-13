@@ -1,7 +1,7 @@
 @page "/demo/breadcrumbs"
 @rendermode InteractiveServer
 
-<PageTitle>Breadcrumbs — Component Demo</PageTitle>
+<PageTitle>Breadcrumbs — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,15 +16,15 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Default</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupBreadcrumbs>
-                        <GupBreadcrumbsItem Href="#">Home</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="#">Store</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="#">Category</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="#">Phone</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="#" Current="true">Phone specs</GupBreadcrumbsItem>
-                    </GupBreadcrumbs>
-                </div>
+                <DemoExample Id="default" File="Breadcrumbs.razor">
+                      <GupBreadcrumbs>
+                          <GupBreadcrumbsItem Href="#">Home</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="#">Store</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="#">Category</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="#">Phone</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="#" Current="true">Phone specs</GupBreadcrumbsItem>
+                      </GupBreadcrumbs>
+                </DemoExample>
             </div>
         </section>
 
@@ -32,12 +32,12 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Two items</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupBreadcrumbs>
-                        <GupBreadcrumbsItem Href="#">Representative of an Overseas Business visa</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="#" Current="true">Settling in Oman</GupBreadcrumbsItem>
-                    </GupBreadcrumbs>
-                </div>
+                <DemoExample Id="two-items" File="Breadcrumbs.razor">
+                      <GupBreadcrumbs>
+                          <GupBreadcrumbsItem Href="#">Representative of an Overseas Business visa</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="#" Current="true">Settling in Oman</GupBreadcrumbsItem>
+                      </GupBreadcrumbs>
+                </DemoExample>
             </div>
         </section>
 
@@ -45,38 +45,38 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Two-way binding (@@bind-Current)</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    @* IsMultiline: three fixed-width buttons overflow a 360px viewport otherwise. *@
-                    <GupTrack Direction="horizontal" Gap="2" IsMultiline="true">
-                        <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                   Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _currentIndex = 0)">
-                            <ChildContent>Mark Home as current</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                   Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _currentIndex = 1)">
-                            <ChildContent>Mark Store as current</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                   Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _currentIndex = 2)">
-                            <ChildContent>Mark Category as current</ChildContent>
-                        </GupButton>
-                    </GupTrack>
+                <DemoExample Id="two-way-binding-bind-current" File="Breadcrumbs.razor">
+                      @* IsMultiline: three fixed-width buttons overflow a 360px viewport otherwise. *@
+                      <GupTrack Direction="horizontal" Gap="2" IsMultiline="true">
+                          <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                     Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _currentIndex = 0)">
+                              <ChildContent>Mark Home as current</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                     Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _currentIndex = 1)">
+                              <ChildContent>Mark Store as current</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                     Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _currentIndex = 2)">
+                              <ChildContent>Mark Category as current</ChildContent>
+                          </GupButton>
+                      </GupTrack>
 
-                    <div style="margin-top:16px;">
-                        <GupBreadcrumbs>
-                            <GupBreadcrumbsItem Href="#" @bind-Current="_isHomeCurrent">Home</GupBreadcrumbsItem>
-                            <GupBreadcrumbsItem Href="#" @bind-Current="_isStoreCurrent">Store</GupBreadcrumbsItem>
-                            <GupBreadcrumbsItem Href="#" @bind-Current="_isCategoryCurrent">Category</GupBreadcrumbsItem>
-                        </GupBreadcrumbs>
-                    </div>
+                      <div style="margin-top:16px;">
+                          <GupBreadcrumbs>
+                              <GupBreadcrumbsItem Href="#" @bind-Current="_isHomeCurrent">Home</GupBreadcrumbsItem>
+                              <GupBreadcrumbsItem Href="#" @bind-Current="_isStoreCurrent">Store</GupBreadcrumbsItem>
+                              <GupBreadcrumbsItem Href="#" @bind-Current="_isCategoryCurrent">Category</GupBreadcrumbsItem>
+                          </GupBreadcrumbs>
+                      </div>
 
-                    <p data-testid="bind-output" style="margin-top:12px;">
-                        Current item: <strong>@CurrentLabel</strong>
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin-top:12px;">
+                          Current item: <strong>@CurrentLabel</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -84,18 +84,18 @@
         <section class="demo-section">
             <h2 class="demo-section-title">OnClick event</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupBreadcrumbs>
-                        <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Home"))">Home</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Store"))">Store</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Category"))">Category</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="javascript:void(0)" Current="true" OnClick="@(e => Log("Phone specs"))">Phone specs</GupBreadcrumbsItem>
-                    </GupBreadcrumbs>
+                <DemoExample Id="onclick-event" File="Breadcrumbs.razor">
+                      <GupBreadcrumbs>
+                          <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Home"))">Home</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Store"))">Store</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="javascript:void(0)" OnClick="@(e => Log("Category"))">Category</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="javascript:void(0)" Current="true" OnClick="@(e => Log("Phone specs"))">Phone specs</GupBreadcrumbsItem>
+                      </GupBreadcrumbs>
 
-                    <p data-testid="event-log" style="margin-top:12px;">
-                        Last clicked: <strong>@_lastClicked</strong> (count: @_clickCount)
-                    </p>
-                </div>
+                      <p data-testid="event-log" style="margin-top:12px;">
+                          Last clicked: <strong>@_lastClicked</strong> (count: @_clickCount)
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -103,12 +103,12 @@
         <section class="demo-section">
             <h2 class="demo-section-title">RTL (Arabic)</h2>
             <div class="demo-card--full">
-                <div class="demo-surface" dir="rtl">
-                    <GupBreadcrumbs AriaLabel="مسار التنقل">
-                        <GupBreadcrumbsItem Href="#">الصفحة الرئيسية</GupBreadcrumbsItem>
-                        <GupBreadcrumbsItem Href="#" Current="true">هذه الصفحة</GupBreadcrumbsItem>
-                    </GupBreadcrumbs>
-                </div>
+                <DemoExample Id="rtl-arabic" File="Breadcrumbs.razor" dir="rtl">
+                      <GupBreadcrumbs AriaLabel="مسار التنقل">
+                          <GupBreadcrumbsItem Href="#">الصفحة الرئيسية</GupBreadcrumbsItem>
+                          <GupBreadcrumbsItem Href="#" Current="true">هذه الصفحة</GupBreadcrumbsItem>
+                      </GupBreadcrumbs>
+                </DemoExample>
             </div>
         </section>
 

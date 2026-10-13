@@ -1,0 +1,58 @@
+@page "/demo/wizard"
+
+@rendermode InteractiveServer
+<PageTitle>Wizard main &amp; footer — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Wizard main & footer">
+    <PageSummary>
+      The two halves of the wizard shell: the content region, and the footer pinned beneath
+      it carrying Back and Continue.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Wizard main</h2>
+      <p class="demo-note">Constrains step content to a readable measure.</p>
+      <DemoExample Id="wizard-main" File="Wizard.razor">
+          <GupWizardMain>
+            <h3>Business details</h3>
+            <p>Tell us about the business you are applying for.</p>
+          </GupWizardMain>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Wizard footer</h2>
+      <p class="demo-note">Back at the start, the primary action at the end.</p>
+      <DemoExample Id="wizard-footer" File="Wizard.razor">
+          <GupWizardFooter>
+            <Start>
+              <GupButton Appearance="GupButtonAppearance.Secondary">
+                <IconStart><GupIcon IconName="arrow-back" Width="20" Height="20" /></IconStart>
+                <ChildContent>Back</ChildContent>
+              </GupButton>
+            </Start>
+            <End>
+              <GupButton Appearance="GupButtonAppearance.Primary">
+                <ChildContent>Continue</ChildContent>
+                <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
+              </GupButton>
+            </End>
+          </GupWizardFooter>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Together</h2>
+      <p class="demo-note">
+        <a href="/service-start">Service Start</a> shows the full shell — header, stepper,
+        wizard main and the pinned footer.
+      </p>
+    </section>
+
+  </div>
+</div>

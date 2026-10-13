@@ -1,0 +1,47 @@
+@page "/demo/labelled-item"
+
+@rendermode InteractiveServer
+<PageTitle>Labelled item — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Labelled item">
+    <PageSummary>A label and value pair — the building block for read-only summaries.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Basic</h2>
+      <DemoExample Id="basic" File="LabelledItem.razor" SurfaceClass="demo-stack">
+          <GupLabelledItem Label="Full name">Ahmed Al Balushi</GupLabelledItem>
+          <GupLabelledItem Label="Civil ID">1234567</GupLabelledItem>
+          <GupLabelledItem Label="Application date">12 October 2026</GupLabelledItem>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With an icon</h2>
+      <DemoExample Id="with-an-icon" File="LabelledItem.razor">
+          <GupLabelledItem Label="Phone number">
+            <IconContent><GupIcon IconName="call" Width="20" Height="20" /></IconContent>
+            <ChildContent>+968 9000 0000</ChildContent>
+          </GupLabelledItem>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">In a summary layout</h2>
+      <p class="demo-note">Several items together form the check-your-answers pattern.</p>
+      <DemoExample Id="in-a-summary-layout" File="LabelledItem.razor" SurfaceClass="demo-stack">
+          <GupLabelledItem Label="Service">Commercial licence renewal</GupLabelledItem>
+          <GupLabelledItem Label="Reference">OM-2026-4471</GupLabelledItem>
+          <GupLabelledItem Label="Status">
+            <GupBadge Type="GupBadgeType.Positive" />
+            Approved
+          </GupLabelledItem>
+      </DemoExample>
+    </section>
+
+  </div>
+</div>

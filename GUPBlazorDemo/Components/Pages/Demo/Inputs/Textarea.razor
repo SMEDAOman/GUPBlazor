@@ -1,7 +1,7 @@
 @page "/demo/inputs/textarea"
 @rendermode InteractiveServer
 
-<PageTitle>Textarea — Component Demo</PageTitle>
+<PageTitle>Textarea — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,20 +16,18 @@
             <h2 class="demo-section-title">Default</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Default</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-default">Your message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="default" File="Textarea.razor" Label="Default">
+                          <GupFormList>
+                              <GupTextarea Name="msg-default">Your message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With placeholder</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-placeholder" Placeholder="Type your message here...">Your message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-placeholder" File="Textarea.razor" Label="With placeholder">
+                          <GupFormList>
+                              <GupTextarea Name="msg-placeholder" Placeholder="Type your message here...">Your message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -38,28 +36,25 @@
             <h2 class="demo-section-title">States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Pre-filled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-value" Value="This is some pre-filled message text.">Your message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="pre-filled" File="Textarea.razor" Label="Pre-filled">
+                          <GupFormList>
+                              <GupTextarea Name="msg-value" Value="This is some pre-filled message text.">Your message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Read-only</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-readonly" Value="This message cannot be edited." Readonly="true">Read-only message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="read-only" File="Textarea.razor" Label="Read-only">
+                          <GupFormList>
+                              <GupTextarea Name="msg-readonly" Value="This message cannot be edited." Readonly="true">Read-only message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Disabled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-disabled" Disabled="true">Disabled message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="disabled" File="Textarea.razor" Label="Disabled">
+                          <GupFormList>
+                              <GupTextarea Name="msg-disabled" Disabled="true">Disabled message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -68,28 +63,25 @@
             <h2 class="demo-section-title">Rows</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">2 rows</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-rows-2" Rows="2">Short message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="2-rows" File="Textarea.razor" Label="2 rows">
+                          <GupFormList>
+                              <GupTextarea Name="msg-rows-2" Rows="2">Short message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">4 rows (default)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-rows-4" Rows="4">Standard message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="4-rows-default" File="Textarea.razor" Label="4 rows (default)">
+                          <GupFormList>
+                              <GupTextarea Name="msg-rows-4" Rows="4">Standard message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">10 rows</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupTextarea Name="msg-rows-10" Rows="10">Long message</GupTextarea>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="10-rows" File="Textarea.razor" Label="10 rows">
+                          <GupFormList>
+                              <GupTextarea Name="msg-rows-10" Rows="10">Long message</GupTextarea>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>

@@ -1,7 +1,7 @@
 @page "/demo/inputs/date"
 @rendermode InteractiveServer
 
-<PageTitle>Date Input — Component Demo</PageTitle>
+<PageTitle>Date Input — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,20 +16,18 @@
             <h2 class="demo-section-title">Date</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Default</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="date-default" Type="date">Date of birth</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="default" File="DateInput.razor" Label="Default">
+                          <GupFormList>
+                              <GupInputField Name="date-default" Type="date">Date of birth</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Pre-filled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="date-value" Type="date" Value="1990-06-15">Date of birth</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="pre-filled" File="DateInput.razor" Label="Pre-filled">
+                          <GupFormList>
+                              <GupInputField Name="date-value" Type="date" Value="1990-06-15">Date of birth</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -38,28 +36,25 @@
             <h2 class="demo-section-title">Time / Date-Time / Month</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Time</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="time-input" Type="time">Appointment time</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="time" File="DateInput.razor" Label="Time">
+                          <GupFormList>
+                              <GupInputField Name="time-input" Type="time">Appointment time</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Date-time</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="datetime-input" Type="datetime-local">Appointment slot</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="date-time" File="DateInput.razor" Label="Date-time">
+                          <GupFormList>
+                              <GupInputField Name="datetime-input" Type="datetime-local">Appointment slot</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Month</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="month-input" Type="month">Billing month</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="month" File="DateInput.razor" Label="Month">
+                          <GupFormList>
+                              <GupInputField Name="month-input" Type="month">Billing month</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -68,20 +63,18 @@
             <h2 class="demo-section-title">States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Read-only</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="date-readonly" Type="date" Value="2025-01-01" Readonly="true">Issue date</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="read-only" File="DateInput.razor" Label="Read-only">
+                          <GupFormList>
+                              <GupInputField Name="date-readonly" Type="date" Value="2025-01-01" Readonly="true">Issue date</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Disabled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="date-disabled" Type="date" Disabled="true">Unavailable</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="disabled" File="DateInput.razor" Label="Disabled">
+                          <GupFormList>
+                              <GupInputField Name="date-disabled" Type="date" Disabled="true">Unavailable</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>

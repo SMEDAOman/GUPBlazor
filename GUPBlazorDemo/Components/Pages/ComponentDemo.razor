@@ -1,7 +1,7 @@
 @page "/"
 @rendermode InteractiveServer
 
-<PageTitle>Component Demo — Gov.om Design System</PageTitle>
+<PageTitle>Gov.om Design System — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -17,7 +17,7 @@
         </End>
     </GupHeader>
 
-    <GupContentHeader PageTitle="Gov.om Design System">
+    <GupContentHeader PageTitle="Gov.om Design System — Blazor Reference">
         <PageSummary>
             Blazor implementation of the GUP web-component library — @TotalCount pages covering
             every component, form control, page template and layout foundation. All CSS and
@@ -89,11 +89,14 @@
     private int TotalCount => DemoNav.TotalCount;
     private int MatchCount => DemoNav.Sections.Sum(s => Visible(s).Count());
 
+    private static IEnumerable<DemoEntry> AllOf(DemoSection s) =>
+        s.Entries.Concat(s.Groups?.SelectMany(g => g.Entries) ?? []);
+
     private IEnumerable<DemoEntry> Visible(DemoSection s)
     {
-        if (string.IsNullOrWhiteSpace(Query)) return s.Entries;
+        if (string.IsNullOrWhiteSpace(Query)) return AllOf(s);
         var q = Query.Trim();
-        return s.Entries.Where(e =>
+        return AllOf(s).Where(e =>
             e.Title.Contains(q, StringComparison.OrdinalIgnoreCase) ||
             e.Description.Contains(q, StringComparison.OrdinalIgnoreCase) ||
             e.Href.Contains(q, StringComparison.OrdinalIgnoreCase) ||

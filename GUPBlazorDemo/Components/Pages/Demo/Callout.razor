@@ -1,7 +1,7 @@
 @page "/demo/callout"
 @rendermode InteractiveServer
 
-<PageTitle>Callout — Component Demo</PageTitle>
+<PageTitle>Callout — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -22,39 +22,36 @@
             </p>
 
             <div class="demo-card--full">
-                <span class="demo-card-label">Default (left border)</span>
-                <div class="demo-surface">
-                    <GupCallout Appearance="@GupCalloutAppearance.Default">
-                        <TitleContent>Quote title</TitleContent>
-                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
-                            content of a page when looking at its layout.</ChildContent>
-                        <FooterContent>- Author</FooterContent>
-                    </GupCallout>
-                </div>
+                <DemoExample Id="default-left-border" File="Callout.razor" Label="Default (left border)">
+                      <GupCallout Appearance="@GupCalloutAppearance.Default">
+                          <TitleContent>Quote title</TitleContent>
+                          <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                              content of a page when looking at its layout.</ChildContent>
+                          <FooterContent>- Author</FooterContent>
+                      </GupCallout>
+                </DemoExample>
             </div>
 
             <div class="demo-card--full">
-                <span class="demo-card-label">Background (filled)</span>
-                <div class="demo-surface">
-                    <GupCallout Appearance="@GupCalloutAppearance.Background">
-                        <TitleContent>Quote title</TitleContent>
-                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
-                            content of a page when looking at its layout.</ChildContent>
-                        <FooterContent>- Author</FooterContent>
-                    </GupCallout>
-                </div>
+                <DemoExample Id="background-filled" File="Callout.razor" Label="Background (filled)">
+                      <GupCallout Appearance="@GupCalloutAppearance.Background">
+                          <TitleContent>Quote title</TitleContent>
+                          <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                              content of a page when looking at its layout.</ChildContent>
+                          <FooterContent>- Author</FooterContent>
+                      </GupCallout>
+                </DemoExample>
             </div>
 
             <div class="demo-card--full">
-                <span class="demo-card-label">Border (outlined)</span>
-                <div class="demo-surface">
-                    <GupCallout Appearance="@GupCalloutAppearance.Border">
-                        <TitleContent>Quote title</TitleContent>
-                        <ChildContent>It is a long established fact that a reader will be distracted by the readable
-                            content of a page when looking at its layout.</ChildContent>
-                        <FooterContent>- Author</FooterContent>
-                    </GupCallout>
-                </div>
+                <DemoExample Id="border-outlined" File="Callout.razor" Label="Border (outlined)">
+                      <GupCallout Appearance="@GupCalloutAppearance.Border">
+                          <TitleContent>Quote title</TitleContent>
+                          <ChildContent>It is a long established fact that a reader will be distracted by the readable
+                              content of a page when looking at its layout.</ChildContent>
+                          <FooterContent>- Author</FooterContent>
+                      </GupCallout>
+                </DemoExample>
             </div>
         </section>
 

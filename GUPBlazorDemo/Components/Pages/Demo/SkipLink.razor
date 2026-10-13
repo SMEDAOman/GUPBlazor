@@ -1,7 +1,7 @@
 @page "/demo/skip-link"
 @rendermode InteractiveServer
 
-<PageTitle>Skip Link — Component Demo</PageTitle>
+<PageTitle>Skip Link — Blazor Reference</PageTitle>
 
 <GupSkipLink Href="#main-content">Skip to content</GupSkipLink>
 
@@ -29,12 +29,12 @@
                 and focus jumps past the navigation to the main content below.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <p style="margin:0;">
-                        Rendered markup — a single anchor, hidden until <code>:focus</code>:
-                    </p>
-                    <pre style="margin:16px 0 0;"><code>&lt;GupSkipLink Href="#main-content"&gt;Skip to content&lt;/GupSkipLink&gt;</code></pre>
-                </div>
+                <DemoExample Id="try-it" File="SkipLink.razor" style="padding:32px;">
+                      <p style="margin:0;">
+                          Rendered markup — a single anchor, hidden until <code>:focus</code>:
+                      </p>
+                      <pre style="margin:16px 0 0;"><code>&lt;GupSkipLink Href="#main-content"&gt;Skip to content&lt;/GupSkipLink&gt;</code></pre>
+                </DemoExample>
             </div>
         </section>
 
@@ -48,17 +48,17 @@
                 the jump moves focus and not just the scroll position.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <pre style="margin:0;"><code>&lt;GupSkipLink Href="#main-content"&gt;Skip to content&lt;/GupSkipLink&gt;
+                <DemoExample Id="usage" File="SkipLink.razor" style="padding:32px;">
+                      <pre style="margin:0;"><code>&lt;GupSkipLink Href="#main-content"&gt;Skip to content&lt;/GupSkipLink&gt;
 
-&lt;GupHeader NavAriaLabel="Main navigation"&gt;
-    ...
-&lt;/GupHeader&gt;
+  &lt;GupHeader NavAriaLabel="Main navigation"&gt;
+      ...
+  &lt;/GupHeader&gt;
 
-&lt;main id="main-content" tabindex="-1"&gt;
-    ...
-&lt;/main&gt;</code></pre>
-                </div>
+  &lt;main id="main-content" tabindex="-1"&gt;
+      ...
+  &lt;/main&gt;</code></pre>
+                </DemoExample>
             </div>
         </section>
 
@@ -71,11 +71,11 @@
                 example a localized string.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <pre style="margin:0;"><code>&lt;GupSkipLink Href="#search-results"&gt;Skip to results&lt;/GupSkipLink&gt;
+                <DemoExample Id="custom-target-and-label" File="SkipLink.razor" style="padding:32px;">
+                      <pre style="margin:0;"><code>&lt;GupSkipLink Href="#search-results"&gt;Skip to results&lt;/GupSkipLink&gt;
 
-&lt;GupSkipLink Href="#main-content"&gt;تخطي إلى المحتوى&lt;/GupSkipLink&gt;</code></pre>
-                </div>
+  &lt;GupSkipLink Href="#main-content"&gt;تخطي إلى المحتوى&lt;/GupSkipLink&gt;</code></pre>
+                </DemoExample>
             </div>
         </section>
 
@@ -89,14 +89,14 @@
                 reaching the content.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:32px;">
-                    <GupCallout>
-                        The link is hidden with the <code>screenreader-text</code> clip pattern
-                        rather than <code>display:none</code>, so it stays in the focus order and
-                        in the accessibility tree. Never hide it in a way that removes it from
-                        the tab sequence.
-                    </GupCallout>
-                </div>
+                <DemoExample Id="accessibility" File="SkipLink.razor" style="padding:32px;">
+                      <GupCallout>
+                          The link is hidden with the <code>screenreader-text</code> clip pattern
+                          rather than <code>display:none</code>, so it stays in the focus order and
+                          in the accessibility tree. Never hide it in a way that removes it from
+                          the tab sequence.
+                      </GupCallout>
+                </DemoExample>
             </div>
         </section>
 

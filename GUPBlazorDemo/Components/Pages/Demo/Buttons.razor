@@ -4,7 +4,7 @@
 @using System.Diagnostics
 @inject IJSRuntime JS
 
-<PageTitle>Buttons — Component Demo</PageTitle>
+<PageTitle>Buttons — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -20,57 +20,53 @@
       <h2 class="demo-section-title">Button (GupButton)</h2>
 
       <div class="demo-card--full">
-        <span class="demo-card-label">Appearances</span>
-        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
-          <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">Primary</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">Secondary</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">Text</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Danger" OnClick="ButtonClicked">Danger</GupButton>
-        </div>
+        <DemoExample Id="appearances" File="Buttons.razor" Label="Appearances" SurfaceClass="demo-row" style="gap: 12px; flex-wrap: wrap;">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">Primary</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">Secondary</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">Text</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Danger" OnClick="ButtonClicked">Danger</GupButton>
+        </DemoExample>
       </div>
 
       <div class="demo-card--full">
-        <span class="demo-card-label">With icons</span>
-        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
-          <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">
-            <IconStart><GupIcon IconName="arrow-back" Width="20" Height="20" /></IconStart>
-            <ChildContent>Icon Start</ChildContent>
-          </GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">
-            <ChildContent>Icon End</ChildContent>
-            <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
-          </GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">
-            <IconStart><GupIcon IconName="close" Width="20" Height="20" /></IconStart>
-            <ChildContent>Cancel</ChildContent>
-          </GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">
-            <IconStart><GupIcon IconName="live-help" Width="20" Height="20" /></IconStart>
-            <ChildContent>Need help?</ChildContent>
-          </GupButton>
-        </div>
+        <DemoExample Id="with-icons" File="Buttons.razor" Label="With icons" SurfaceClass="demo-row" style="gap: 12px; flex-wrap: wrap;">
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">
+              <IconStart><GupIcon IconName="arrow-back" Width="20" Height="20" /></IconStart>
+              <ChildContent>Icon Start</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="ButtonClicked">
+              <ChildContent>Icon End</ChildContent>
+              <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" OnClick="ButtonClicked">
+              <IconStart><GupIcon IconName="close" Width="20" Height="20" /></IconStart>
+              <ChildContent>Cancel</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Text" OnClick="ButtonClicked">
+              <IconStart><GupIcon IconName="live-help" Width="20" Height="20" /></IconStart>
+              <ChildContent>Need help?</ChildContent>
+            </GupButton>
+        </DemoExample>
       </div>
 
       <div class="demo-card--full">
-        <span class="demo-card-label">Disabled state</span>
-        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
-          <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true" OnClick="ButtonClicked">Primary disabled</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Secondary" Disabled="true" OnClick="ButtonClicked">Secondary disabled</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Text" Disabled="true" OnClick="ButtonClicked">Text disabled</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true" OnClick="ButtonClicked">
-            <ChildContent>Disabled with icon</ChildContent>
-            <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
-          </GupButton>
-        </div>
+        <DemoExample Id="disabled-state" File="Buttons.razor" Label="Disabled state" SurfaceClass="demo-row" style="gap: 12px; flex-wrap: wrap;">
+            <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true" OnClick="ButtonClicked">Primary disabled</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" Disabled="true" OnClick="ButtonClicked">Secondary disabled</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Text" Disabled="true" OnClick="ButtonClicked">Text disabled</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Primary" Disabled="true" OnClick="ButtonClicked">
+              <ChildContent>Disabled with icon</ChildContent>
+              <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
+            </GupButton>
+        </DemoExample>
       </div>
 
       <div class="demo-card--full">
-        <span class="demo-card-label">Kind=link (renders as &lt;a&gt;)</span>
-        <div class="demo-surface demo-row" style="gap: 12px; flex-wrap: wrap;">
-          <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Link" Href="#" OnClick="ButtonClicked">Link Primary</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Link" Href="#" OnClick="ButtonClicked">Link Secondary</GupButton>
-          <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link"  OnClick="ButtonClicked">Link Text</GupButton>
-        </div>
+        <DemoExample Id="kind-link-renders-as-a" File="Buttons.razor" Label="Kind=link (renders as &lt;a&gt;)" SurfaceClass="demo-row" style="gap: 12px; flex-wrap: wrap;">
+            <GupButton Appearance="@GupButtonAppearance.Primary" Kind="@GupButtonKind.Link" Href="#" OnClick="ButtonClicked">Link Primary</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Link" Href="#" OnClick="ButtonClicked">Link Secondary</GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Text" Kind="@GupButtonKind.Link"  OnClick="ButtonClicked">Link Text</GupButton>
+        </DemoExample>
       </div>
     </section>
 

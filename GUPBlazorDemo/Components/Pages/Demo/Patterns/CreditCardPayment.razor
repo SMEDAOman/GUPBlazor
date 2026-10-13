@@ -1,0 +1,55 @@
+@page "/demo/patterns/credit-card-payment"
+@rendermode InteractiveServer
+
+<PageTitle>Credit card payment — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Credit card payment">
+    <PageSummary>Card entry — the field set, the order, and the grouping that keeps expiry and security code on one row.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">The pattern</h2>
+      <DemoExample Id="the-pattern" File="CreditCardPayment.razor">
+          <GupFormSection Heading="Payment details">
+            <GupFormList>
+              <GupInputField Name="name-on-card" Type="text">Name on card</GupInputField>
+
+              <GupInputField Name="card-number" Type="text">
+                <ChildContent>Card number</ChildContent>
+                <Hint>The 16 digits on the front of the card.</Hint>
+              </GupInputField>
+
+              <GupTrack Gap="3" IsMultiline="true">
+                <GupInputField Name="expiry-month" Type="text">
+                  <ChildContent>Expiry month</ChildContent>
+                  <Hint>MM</Hint>
+                </GupInputField>
+                <GupInputField Name="expiry-year" Type="text">
+                  <ChildContent>Expiry year</ChildContent>
+                  <Hint>YY</Hint>
+                </GupInputField>
+                <GupInputField Name="card-security-code" Type="text">
+                  <ChildContent>Security code</ChildContent>
+                  <Hint>3 digits on the back.</Hint>
+                </GupInputField>
+              </GupTrack>
+            </GupFormList>
+          </GupFormSection>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Notes</h2>
+      <ul class="doc-list">
+        <li>Expiry month, year and security code share a row via <a href="/demo/track">Track</a>, and wrap on a narrow screen rather than overflowing.</li>
+        <li>GupInputField does not expose <code>autocomplete</code> or <code>inputmode</code> today, so the browser cannot autofill a card here — worth adding to the component before this pattern ships in a real service.</li>
+        <li>Never log or echo the security code; it is entry-only.</li>
+      </ul>
+    </section>
+
+  </div>
+</div>

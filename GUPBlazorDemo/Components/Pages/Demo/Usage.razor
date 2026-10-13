@@ -1,0 +1,96 @@
+@page "/demo/usage"
+
+<PageTitle>Usage — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Usage">
+    <PageSummary>Utility components and the conventions worth knowing before you build a page.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Utility components</h2>
+      <p>
+        Utility components carry little styling of their own but solve the small everyday
+        problems consistently.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Managing spacing</h2>
+      <p>
+        Use <code>GupTrack</code> to space things out instead of ad-hoc margins. It sets the
+        gap from the design tokens, so spacing stays on the scale.
+      </p>
+      <pre class="doc-code"><code>&lt;GupTrack Gap="3" Direction="vertical"&gt;
+    &lt;GupButton&gt;First&lt;/GupButton&gt;
+    &lt;GupButton&gt;Second&lt;/GupButton&gt;
+&lt;/GupTrack&gt;</code></pre>
+      <p><a href="/demo/layout">See GupTrack on the Layout page</a>.</p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Screen-reader-only text</h2>
+      <p>
+        <code>GupScreenReaderText</code> hides its content visually while keeping it
+        available to assistive technology — for labelling an icon-only control, or giving
+        context that is obvious on screen but not in a screen reader.
+      </p>
+      <pre class="doc-code"><code>&lt;GupButton&gt;
+    &lt;GupIcon IconName="close" /&gt;
+    &lt;GupScreenReaderText&gt;Close dialog&lt;/GupScreenReaderText&gt;
+&lt;/GupButton&gt;</code></pre>
+      <p><a href="/demo/screenreader-text">See the Screenreader Text page</a>.</p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Icons</h2>
+      <p>
+        The design system uses
+        <a href="https://fonts.google.com/icons" target="_blank" rel="noopener">Material Symbols Outlined</a>.
+        Use <code>GupIcon</code> with <code>IconName</code> — the font is loaded by
+        <code>GUPHTMLHeader</code>, so there is nothing else to import.
+      </p>
+      <pre class="doc-code"><code>&lt;GupIcon IconName="arrow_forward" /&gt;</code></pre>
+      <p><a href="/demo/icons">Browse the icons used across the library</a>.</p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Design tokens over literal values</h2>
+      <p>
+        When you need a colour, a gap or a radius in your own CSS, reach for the token
+        rather than the hex or pixel value. Tokens track the upstream design system, so
+        anything built on them stays aligned when the palette moves.
+      </p>
+      <pre class="doc-code"><code>.my-panel {
+  background: var(--gup-color-background-base);
+  border: 1px solid var(--gup-color-border-low);
+  border-radius: var(--gup-radius-card);
+  padding: var(--gup-padding-md);
+}</code></pre>
+      <p><a href="/demo/design-tokens">Browse all design tokens</a>.</p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">RTL and Arabic</h2>
+      <p>
+        The components mirror for right-to-left automatically — set <code>dir="rtl"</code>
+        on a container and the layout, icons and directional spacing follow. Use logical
+        CSS properties (<code>margin-inline-start</code> rather than
+        <code>margin-left</code>) in your own styles so they mirror too.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Checking a page before it ships</h2>
+      <p>
+        <a href="/demo/device-preview">Device Preview</a> renders any page in this demo at a
+        real phone or tablet viewport and shows which breakpoints are active — the quickest
+        way to catch a layout that breaks at 360px.
+      </p>
+    </section>
+
+  </div>
+</div>

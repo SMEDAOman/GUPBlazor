@@ -1,6 +1,7 @@
 @page "/demo/inputs/number"
 
-<PageTitle>Number Input — Component Demo</PageTitle>
+@rendermode InteractiveServer
+<PageTitle>Number Input — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -15,20 +16,18 @@
             <h2 class="demo-section-title">Basic</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Default</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="num-default" Type="number">Quantity</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="default" File="NumberInput.razor" Label="Default">
+                          <GupFormList>
+                              <GupInputField Name="num-default" Type="number">Quantity</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With placeholder</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="num-placeholder" Type="number" Placeholder="0">Dependants</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-placeholder" File="NumberInput.razor" Label="With placeholder">
+                          <GupFormList>
+                              <GupInputField Name="num-placeholder" Type="number" Placeholder="0">Dependants</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -37,20 +36,18 @@
             <h2 class="demo-section-title">Pre-filled values</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Integer</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="num-integer" Type="number" Value="42">Age</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="integer" File="NumberInput.razor" Label="Integer">
+                          <GupFormList>
+                              <GupInputField Name="num-integer" Type="number" Value="42">Age</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Decimal</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="num-decimal" Type="number" Value="1250.75">Fee amount (OMR)</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="decimal" File="NumberInput.razor" Label="Decimal">
+                          <GupFormList>
+                              <GupInputField Name="num-decimal" Type="number" Value="1250.75">Fee amount (OMR)</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -59,20 +56,18 @@
             <h2 class="demo-section-title">States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Read-only</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="num-readonly" Type="number" Value="100" Readonly="true">Calculated amount</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="read-only" File="NumberInput.razor" Label="Read-only">
+                          <GupFormList>
+                              <GupInputField Name="num-readonly" Type="number" Value="100" Readonly="true">Calculated amount</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Disabled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="num-disabled" Type="number" Disabled="true">Unavailable</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="disabled" File="NumberInput.razor" Label="Disabled">
+                          <GupFormList>
+                              <GupInputField Name="num-disabled" Type="number" Disabled="true">Unavailable</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>

@@ -1,7 +1,7 @@
 @page "/demo/image"
 @rendermode InteractiveServer
 
-<PageTitle>Image — Component Demo</PageTitle>
+<PageTitle>Image — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -20,12 +20,12 @@
                 A basic image with explicit <code>Width</code>, <code>Height</code>, and <code>Alt</code>.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupImage Src="@_unsplashSrc"
-                              Alt="A scenic landscape"
-                              Width="300"
-                              Height="300" />
-                </div>
+                <DemoExample Id="default" File="Image.razor">
+                      <GupImage Src="@_unsplashSrc"
+                                Alt="A scenic landscape"
+                                Width="300"
+                                Height="300" />
+                </DemoExample>
             </div>
         </section>
 
@@ -36,14 +36,14 @@
                 Provide <code>CaptionContent</code> to render a <code>&lt;figcaption&gt;</code> beneath the image.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupImage Src="@_unsplashSrc"
-                              Alt="A scenic landscape"
-                              Width="300"
-                              Height="300">
-                        <CaptionContent>Caption</CaptionContent>
-                    </GupImage>
-                </div>
+                <DemoExample Id="with-caption" File="Image.razor">
+                      <GupImage Src="@_unsplashSrc"
+                                Alt="A scenic landscape"
+                                Width="300"
+                                Height="300">
+                          <CaptionContent>Caption</CaptionContent>
+                      </GupImage>
+                </DemoExample>
             </div>
         </section>
 
@@ -54,16 +54,16 @@
                 The caption fragment accepts arbitrary content — for example an <code>&lt;strong&gt;</code> accent.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupImage Src="@_unsplashSrc"
-                              Alt="A scenic landscape"
-                              Width="300"
-                              Height="300">
-                        <CaptionContent>
-                            Caption with some HTML, eg. an <strong>accent</strong>
-                        </CaptionContent>
-                    </GupImage>
-                </div>
+                <DemoExample Id="caption-with-custom-html" File="Image.razor">
+                      <GupImage Src="@_unsplashSrc"
+                                Alt="A scenic landscape"
+                                Width="300"
+                                Height="300">
+                          <CaptionContent>
+                              Caption with some HTML, eg. an <strong>accent</strong>
+                          </CaptionContent>
+                      </GupImage>
+                </DemoExample>
             </div>
         </section>
 
@@ -74,13 +74,13 @@
                 When the image fails to load, the default <code>ErrorMessage</code> is rendered.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupImage Src="invalid-url"
-                              Alt="Won't load"
-                              Width="300"
-                              Height="300"
-                              ErrorMessage="Error loading image" />
-                </div>
+                <DemoExample Id="error-message-default-fallback" File="Image.razor">
+                      <GupImage Src="invalid-url"
+                                Alt="Won't load"
+                                Width="300"
+                                Height="300"
+                                ErrorMessage="Error loading image" />
+                </DemoExample>
             </div>
         </section>
 
@@ -91,20 +91,20 @@
                 Provide <code>ErrorContent</code> to replace the default error UI with your own markup.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupImage Src="another-invalid-url"
-                              Alt="Won't load either"
-                              Width="300"
-                              Height="300">
-                        <ErrorContent>
-                            <div style="width:300px; height:300px; border:1px solid #e2e2e2;
-                                        border-radius:12px; display:flex; justify-content:center;
-                                        align-items:center; background:#f8f8f8;">
-                                Image failed to load 🤕
-                            </div>
-                        </ErrorContent>
-                    </GupImage>
-                </div>
+                <DemoExample Id="custom-error-content" File="Image.razor">
+                      <GupImage Src="another-invalid-url"
+                                Alt="Won't load either"
+                                Width="300"
+                                Height="300">
+                          <ErrorContent>
+                              <div style="width:300px; height:300px; border:1px solid #e2e2e2;
+                                          border-radius:12px; display:flex; justify-content:center;
+                                          align-items:center; background:#f8f8f8;">
+                                  Image failed to load 🤕
+                              </div>
+                          </ErrorContent>
+                      </GupImage>
+                </DemoExample>
             </div>
         </section>
 
@@ -115,15 +115,15 @@
                 Set <code>Loading="GupImageLoading.Lazy"</code> to defer load until the image enters the viewport.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupImage Src="@_unsplashSrc"
-                              Alt="Lazy-loaded landscape"
-                              Width="300"
-                              Height="300"
-                              Loading="GupImageLoading.Lazy">
-                        <CaptionContent>This image uses <code>loading="lazy"</code>.</CaptionContent>
-                    </GupImage>
-                </div>
+                <DemoExample Id="lazy-loading" File="Image.razor">
+                      <GupImage Src="@_unsplashSrc"
+                                Alt="Lazy-loaded landscape"
+                                Width="300"
+                                Height="300"
+                                Loading="GupImageLoading.Lazy">
+                          <CaptionContent>This image uses <code>loading="lazy"</code>.</CaptionContent>
+                      </GupImage>
+                </DemoExample>
             </div>
         </section>
 
@@ -134,71 +134,71 @@
                 Switch sources, sizes, and loading strategy at runtime — the image reflects the bound values.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+                <DemoExample Id="two-way-binding-bind-src-bind-alt-bind-width-bind-height-bind-loading" File="Image.razor" style="display:flex; flex-direction:column; gap:16px;">
 
-                    <GupImage @bind-Src="_boundSrc"
-                              @bind-Alt="_boundAlt"
-                              @bind-Width="_boundWidth"
-                              @bind-Height="_boundHeight"
-                              @bind-Loading="_boundLoading">
-                        <CaptionContent>Bound image — change the controls below.</CaptionContent>
-                    </GupImage>
+                      <GupImage @bind-Src="_boundSrc"
+                                @bind-Alt="_boundAlt"
+                                @bind-Width="_boundWidth"
+                                @bind-Height="_boundHeight"
+                                @bind-Loading="_boundLoading">
+                          <CaptionContent>Bound image — change the controls below.</CaptionContent>
+                      </GupImage>
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                        <strong>Source:</strong>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundSrc = _unsplashSrc; _boundAlt = "A scenic landscape"; })">
-                            <ChildContent>Landscape</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundSrc = _picsumSrc; _boundAlt = "Random Picsum photo"; })">
-                            <ChildContent>Picsum</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundSrc = "invalid"; _boundAlt = "Broken"; })">
-                            <ChildContent>Broken</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                          <strong>Source:</strong>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundSrc = _unsplashSrc; _boundAlt = "A scenic landscape"; })">
+                              <ChildContent>Landscape</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundSrc = _picsumSrc; _boundAlt = "Random Picsum photo"; })">
+                              <ChildContent>Picsum</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundSrc = "invalid"; _boundAlt = "Broken"; })">
+                              <ChildContent>Broken</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                        <strong>Size:</strong>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundWidth = 200; _boundHeight = 200; })">
-                            <ChildContent>200 × 200</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundWidth = 300; _boundHeight = 300; })">
-                            <ChildContent>300 × 300</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => { _boundWidth = 400; _boundHeight = 250; })">
-                            <ChildContent>400 × 250</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                          <strong>Size:</strong>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundWidth = 200; _boundHeight = 200; })">
+                              <ChildContent>200 × 200</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundWidth = 300; _boundHeight = 300; })">
+                              <ChildContent>300 × 300</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => { _boundWidth = 400; _boundHeight = 250; })">
+                              <ChildContent>400 × 250</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                        <strong>Loading:</strong>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundLoading = null)">
-                            <ChildContent>(none)</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundLoading = GupImageLoading.Lazy)">
-                            <ChildContent>Lazy</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _boundLoading = GupImageLoading.Eager)">
-                            <ChildContent>Eager</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                          <strong>Loading:</strong>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundLoading = null)">
+                              <ChildContent>(none)</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundLoading = GupImageLoading.Lazy)">
+                              <ChildContent>Lazy</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _boundLoading = GupImageLoading.Eager)">
+                              <ChildContent>Eager</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <p data-testid="bind-output" style="margin:0;">
-                        Bound state: src = <strong>@(_boundSrc.Length > 40 ? _boundSrc.Substring(0, 40) + "…" : _boundSrc)</strong>,
-                        alt = <strong>@_boundAlt</strong>,
-                        size = <strong>@_boundWidth × @_boundHeight</strong>,
-                        loading = <strong>@(_boundLoading?.ToString() ?? "(none)")</strong>
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin:0;">
+                          Bound state: src = <strong>@(_boundSrc.Length > 40 ? _boundSrc.Substring(0, 40) + "…" : _boundSrc)</strong>,
+                          alt = <strong>@_boundAlt</strong>,
+                          size = <strong>@_boundWidth × @_boundHeight</strong>,
+                          loading = <strong>@(_boundLoading?.ToString() ?? "(none)")</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -210,30 +210,30 @@
                 when it fails. Click the buttons to swap between a valid and broken source.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px;">
+                <DemoExample Id="onload-and-onerror-events" File="Image.razor" style="display:flex; flex-direction:column; gap:16px;">
 
-                    <GupImage Src="@_eventSrc"
-                              Alt="Event demo image"
-                              Width="200"
-                              Height="200"
-                              OnLoad="HandleImageLoad"
-                              OnError="HandleImageError" />
+                      <GupImage Src="@_eventSrc"
+                                Alt="Event demo image"
+                                Width="200"
+                                Height="200"
+                                OnLoad="HandleImageLoad"
+                                OnError="HandleImageError" />
 
-                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _eventSrc = _picsumSrc + "?v=" + DateTime.UtcNow.Ticks)">
-                            <ChildContent>Load valid image</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _eventSrc = "broken-" + DateTime.UtcNow.Ticks)">
-                            <ChildContent>Load broken image</ChildContent>
-                        </GupButton>
-                    </div>
+                      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _eventSrc = _picsumSrc + "?v=" + DateTime.UtcNow.Ticks)">
+                              <ChildContent>Load valid image</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _eventSrc = "broken-" + DateTime.UtcNow.Ticks)">
+                              <ChildContent>Load broken image</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <p data-testid="event-log" style="margin:0;">
-                        Loads: <strong>@_loadCount</strong> · Errors: <strong>@_errorCount</strong>
-                    </p>
-                </div>
+                      <p data-testid="event-log" style="margin:0;">
+                          Loads: <strong>@_loadCount</strong> · Errors: <strong>@_errorCount</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 

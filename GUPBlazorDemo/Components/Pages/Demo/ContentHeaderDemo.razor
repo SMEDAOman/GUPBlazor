@@ -1,0 +1,59 @@
+@page "/demo/content-header"
+
+@rendermode InteractiveServer
+<PageTitle>Content header — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Content header">
+    <PageSummary>
+      The title block at the top of a page — every page in this demo uses one, including
+      this one.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Title only</h2>
+      <DemoExample Id="title-only" File="ContentHeaderDemo.razor">
+          <GupContentHeader PageTitle="Apply for a licence" />
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With a summary</h2>
+      <DemoExample Id="with-a-summary" File="ContentHeaderDemo.razor">
+          <GupContentHeader PageTitle="Apply for a licence">
+            <PageSummary>
+              Complete all sections before submitting. You can save a draft and return later.
+            </PageSummary>
+          </GupContentHeader>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With a subtitle</h2>
+      <DemoExample Id="with-a-subtitle" File="ContentHeaderDemo.razor">
+          <GupContentHeader PageTitle="Apply for a licence" PageSubtitle="Step 2 of 4" />
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With breadcrumbs</h2>
+      <DemoExample Id="with-breadcrumbs" File="ContentHeaderDemo.razor">
+          <GupContentHeader PageTitle="Apply for a licence">
+            <Breadcrumbs>
+              <GupBreadcrumbs>
+                <GupBreadcrumbsItem Href="/">Home</GupBreadcrumbsItem>
+                <GupBreadcrumbsItem Href="/demo/forms">Services</GupBreadcrumbsItem>
+                <GupBreadcrumbsItem Current="true">Apply</GupBreadcrumbsItem>
+              </GupBreadcrumbs>
+            </Breadcrumbs>
+            <PageSummary>Breadcrumbs sit above the title.</PageSummary>
+          </GupContentHeader>
+      </DemoExample>
+    </section>
+
+  </div>
+</div>

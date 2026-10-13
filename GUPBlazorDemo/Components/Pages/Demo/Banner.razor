@@ -1,0 +1,96 @@
+@page "/demo/banner"
+@rendermode InteractiveServer
+
+<PageTitle>Banner — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Banner">
+    <PageSummary>Page-level messages in four severities, in outline and filled appearances.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Severities</h2>
+      <DemoExample Id="severities" File="Banner.razor" SurfaceClass="demo-stack">
+          <GupBanner Type="GupBannerType.Neutral">
+            <TitleContent>Neutral</TitleContent>
+            <ChildContent>Your application has been saved as a draft.</ChildContent>
+          </GupBanner>
+          <GupBanner Type="GupBannerType.Success">
+            <TitleContent>Success</TitleContent>
+            <ChildContent>Your changes have been saved.</ChildContent>
+          </GupBanner>
+          <GupBanner Type="GupBannerType.Warning">
+            <TitleContent>Warning</TitleContent>
+            <ChildContent>Your session will expire in five minutes.</ChildContent>
+          </GupBanner>
+          <GupBanner Type="GupBannerType.Error">
+            <TitleContent>Error</TitleContent>
+            <ChildContent>We could not process your request. Please try again.</ChildContent>
+          </GupBanner>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Filled appearance</h2>
+      <DemoExample Id="filled-appearance" File="Banner.razor" SurfaceClass="demo-stack">
+          <GupBanner Type="GupBannerType.Success" Appearance="GupBannerAppearance.Filled">
+            <TitleContent>Submitted</TitleContent>
+            <ChildContent>Reference number OM-2026-4471.</ChildContent>
+          </GupBanner>
+          <GupBanner Type="GupBannerType.Error" Appearance="GupBannerAppearance.Filled">
+            <TitleContent>Payment failed</TitleContent>
+            <ChildContent>The card was declined by the issuing bank.</ChildContent>
+          </GupBanner>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Without an icon</h2>
+      <DemoExample Id="without-an-icon" File="Banner.razor">
+          <GupBanner Type="GupBannerType.Neutral" HideIcon="true">
+            <ChildContent>A plain message with no leading icon.</ChildContent>
+          </GupBanner>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With actions</h2>
+      <DemoExample Id="with-actions" File="Banner.razor">
+          <GupBanner Type="GupBannerType.Warning">
+            <TitleContent>Unsaved changes</TitleContent>
+            <ChildContent>You have changes that have not been submitted yet.</ChildContent>
+            <ActionButtons>
+              <GupButton Appearance="GupButtonAppearance.Primary">Save now</GupButton>
+              <GupButton Appearance="GupButtonAppearance.Text">Discard</GupButton>
+            </ActionButtons>
+          </GupBanner>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Dismissible</h2>
+      <div class="demo-surface">
+        @if (!_dismissed)
+        {
+          <GupBanner Type="GupBannerType.Neutral" ShowCloseButton="true" OnClose="() => _dismissed = true">
+            <ChildContent>Close this banner to dismiss it.</ChildContent>
+          </GupBanner>
+        }
+        else
+        {
+          <GupButton Appearance="GupButtonAppearance.Secondary" OnClick="() => _dismissed = false">
+            Bring it back
+          </GupButton>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private bool _dismissed;
+}

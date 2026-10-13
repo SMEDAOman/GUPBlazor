@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -9,6 +9,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GUPBlazor\GUPBlazor.csproj" />
+  </ItemGroup>
+
+  <!-- The demo pages' own source, so "Show code" can quote the real markup instead of
+       a hand-copied snippet that drifts. -->
+  <ItemGroup>
+    <EmbeddedResource Include="Components\Pages\**\*.razor" LogicalName="src/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

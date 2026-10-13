@@ -1,0 +1,38 @@
+@page "/demo/file-item"
+
+@rendermode InteractiveServer
+<PageTitle>File item — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="File item">
+    <PageSummary>A single uploaded file row — name, size and the actions that belong to it.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Basic</h2>
+      <DemoExample Id="basic" File="FileItem.razor" SurfaceClass="demo-stack">
+          <GupFileItem FileName="lease-agreement.pdf" Subtitle="12.10.2026, 2 MB" />
+          <GupFileItem FileName="commercial-registration.pdf" Subtitle="12.10.2026, 840 KB" />
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">As a link</h2>
+      <p class="demo-note">Give it a Url and the file name becomes a download link.</p>
+      <DemoExample Id="as-a-link" File="FileItem.razor">
+          <GupFileItem FileName="receipt.pdf" Subtitle="12.10.2026, 310 KB" Url="/demo/file-item" />
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">In an upload list</h2>
+      <p class="demo-note">
+        This is what <a href="/demo/file-upload">File upload</a> renders for each accepted file.
+      </p>
+    </section>
+
+  </div>
+</div>

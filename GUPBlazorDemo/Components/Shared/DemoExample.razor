@@ -1,0 +1,55 @@
+@* Upstream's story block: an optional label, the live example, and a "Show code"
+   toggle that quotes this component's own markup from the embedded page source. *@
+@inject ExampleSourceProvider Source
+
+<div class="demo-example">
+  @if (!string.IsNullOrWhiteSpace(Label))
+  {
+    <span class="demo-card-label">@Label</span>
+  }
+
+  <div class="demo-surface @SurfaceClass" @attributes="Extra">
+    @ChildContent
+  </div>
+
+  @if (_code is not null)
+  {
+    <div class="demo-example-code">
+      <button type="button" class="demo-code-toggle" @onclick="Toggle"
+              aria-expanded="@(_open ? "true" : "false")">
+        <GupIcon IconName="@(_open ? "code_off" : "code")" Width="16" Height="16" />
+        <span>@(_open ? "Hide code" : "Show code")</span>
+      </button>
+      @if (_open)
+      {
+        <pre class="doc-code"><code>@_code</code></pre>
+      }
+    </div>
+  }
+</div>
+
+@code {
+    /// <summary>Unique within the page; identifies this block in the page source.</summary>
+    [Parameter, EditorRequired] public string Id { get; set; } = "";
+
+    /// <summary>File name of the page holding this example, e.g. <c>Buttons.razor</c>.</summary>
+    [Parameter, EditorRequired] public string File { get; set; } = "";
+
+    [Parameter] public string? Label { get; set; }
+
+    /// <summary>Extra classes for the preview surface, e.g. <c>demo-row</c>.</summary>
+    [Parameter] public string? SurfaceClass { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Anything else lands on the preview surface, e.g. the original inline style.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? Extra { get; set; }
+
+    private bool _open;
+    private string? _code;
+
+    protected override void OnParametersSet() => _code = Source.Get(File, Id);
+
+    private void Toggle() => _open = !_open;
+}

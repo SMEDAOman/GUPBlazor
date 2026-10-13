@@ -1,7 +1,7 @@
 @page "/demo/tooltip"
 @rendermode InteractiveServer
 
-<PageTitle>Tooltip — Component Demo</PageTitle>
+<PageTitle>Tooltip — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -30,16 +30,16 @@
                 outside, or press <kbd>ESC</kbd> to close it.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:64px; display:flex; justify-content:center;">
-                    <GupTooltip Title="Tooltip title">
-                        <Trigger>
-                            <GupButton Appearance="@GupButtonAppearance.Primary"
-                                       Kind="@GupButtonKind.Button">
-                                <ChildContent>Click to open the tooltip</ChildContent>
-                            </GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="default-click-to-open" File="Tooltip.razor" style="padding:64px; display:flex; justify-content:center;">
+                      <GupTooltip Title="Tooltip title">
+                          <Trigger>
+                              <GupButton Appearance="@GupButtonAppearance.Primary"
+                                         Kind="@GupButtonKind.Button">
+                                  <ChildContent>Click to open the tooltip</ChildContent>
+                              </GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -51,16 +51,16 @@
                 context.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:64px; display:flex; justify-content:center;">
-                    <GupTooltip Title="Tooltip title" Hint="Hint text">
-                        <Trigger>
-                            <GupButton Appearance="@GupButtonAppearance.Primary"
-                                       Kind="@GupButtonKind.Button">
-                                <ChildContent>Click to open</ChildContent>
-                            </GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="with-hint" File="Tooltip.razor" style="padding:64px; display:flex; justify-content:center;">
+                      <GupTooltip Title="Tooltip title" Hint="Hint text">
+                          <Trigger>
+                              <GupButton Appearance="@GupButtonAppearance.Primary"
+                                         Kind="@GupButtonKind.Button">
+                                  <ChildContent>Click to open</ChildContent>
+                              </GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -73,32 +73,32 @@
                 <code>Right</code> edge of the trigger.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:80px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
+                <DemoExample Id="placements" File="Tooltip.razor" style="padding:80px; display:flex; gap:32px; justify-content:center; flex-wrap:wrap;">
 
-                    <GupTooltip Title="Top" Placement="GupTooltipPlacement.Top">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>Top</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
+                      <GupTooltip Title="Top" Placement="GupTooltipPlacement.Top">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>Top</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
 
-                    <GupTooltip Title="Bottom" Placement="GupTooltipPlacement.Bottom">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>Bottom</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
+                      <GupTooltip Title="Bottom" Placement="GupTooltipPlacement.Bottom">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>Bottom</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
 
-                    <GupTooltip Title="Left" Placement="GupTooltipPlacement.Left">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>Left</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
+                      <GupTooltip Title="Left" Placement="GupTooltipPlacement.Left">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>Left</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
 
-                    <GupTooltip Title="Right" Placement="GupTooltipPlacement.Right">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>Right</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                      <GupTooltip Title="Right" Placement="GupTooltipPlacement.Right">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>Right</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -111,18 +111,18 @@
                 mouse-leave / blur. Useful for icon-button hints.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:64px; display:flex; justify-content:center;">
-                    <GupTooltip Title="I appear on hover"
-                                Hint="…and on keyboard focus too."
-                                TriggerOn="GupTooltipTrigger.Hover">
-                        <Trigger>
-                            <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                       Kind="@GupButtonKind.Button">
-                                <ChildContent>Hover or focus me</ChildContent>
-                            </GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="open-on-hover-focus" File="Tooltip.razor" style="padding:64px; display:flex; justify-content:center;">
+                      <GupTooltip Title="I appear on hover"
+                                  Hint="…and on keyboard focus too."
+                                  TriggerOn="GupTooltipTrigger.Hover">
+                          <Trigger>
+                              <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                         Kind="@GupButtonKind.Button">
+                                  <ChildContent>Hover or focus me</ChildContent>
+                              </GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -134,19 +134,19 @@
                 popup, after the title and hint — typically an action link.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:64px; display:flex; justify-content:center;">
-                    <GupTooltip Title="Did you know?"
-                                Hint="You can put any content here.">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button">
-                                <ChildContent>Click for details</ChildContent>
-                            </GupButton>
-                        </Trigger>
-                        <ChildContent>
-                            <GupLink Href="https://www.gov.om" Target="_blank">Learn more →</GupLink>
-                        </ChildContent>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="with-action-slot-childcontent" File="Tooltip.razor" style="padding:64px; display:flex; justify-content:center;">
+                      <GupTooltip Title="Did you know?"
+                                  Hint="You can put any content here.">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button">
+                                  <ChildContent>Click for details</ChildContent>
+                              </GupButton>
+                          </Trigger>
+                          <ChildContent>
+                              <GupLink Href="https://www.gov.om" Target="_blank">Learn more →</GupLink>
+                          </ChildContent>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -158,16 +158,16 @@
                 and <code>MaxHeight</code> cap the popup; overflow scrolls.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:64px; display:flex; justify-content:center;">
-                    <GupTooltip Title="A long title that wraps over multiple lines because we set a small max-width"
-                                Hint="Use the MaxWidth and MaxHeight parameters (or the matching CSS custom properties) to bound the popup."
-                                MaxWidth="240"
-                                MaxHeight="120">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>Long content</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="long-content-max-size" File="Tooltip.razor" style="padding:64px; display:flex; justify-content:center;">
+                      <GupTooltip Title="A long title that wraps over multiple lines because we set a small max-width"
+                                  Hint="Use the MaxWidth and MaxHeight parameters (or the matching CSS custom properties) to bound the popup."
+                                  MaxWidth="240"
+                                  MaxHeight="120">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>Long content</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -182,46 +182,46 @@
                 events on the source component.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
+                <DemoExample Id="two-way-binding-bind-isopen-events" File="Tooltip.razor" style="display:flex; flex-direction:column; gap:16px; padding:32px;">
 
-                    <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
-                        <GupTooltip @bind-IsOpen="_isBoundOpen"
-                                    Title="Bound tooltip"
-                                    Hint="Open / close me from anywhere."
-                                    OnShow="HandleShow"
-                                    OnHide="HandleHide">
-                            <Trigger>
-                                <GupButton Appearance="@GupButtonAppearance.Primary"
-                                           Kind="@GupButtonKind.Button">
-                                    <ChildContent>Bound trigger</ChildContent>
-                                </GupButton>
-                            </Trigger>
-                        </GupTooltip>
+                      <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+                          <GupTooltip @bind-IsOpen="_isBoundOpen"
+                                      Title="Bound tooltip"
+                                      Hint="Open / close me from anywhere."
+                                      OnShow="HandleShow"
+                                      OnHide="HandleHide">
+                              <Trigger>
+                                  <GupButton Appearance="@GupButtonAppearance.Primary"
+                                             Kind="@GupButtonKind.Button">
+                                      <ChildContent>Bound trigger</ChildContent>
+                                  </GupButton>
+                              </Trigger>
+                          </GupTooltip>
 
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _isBoundOpen = true)">
-                            <ChildContent>Open externally</ChildContent>
-                        </GupButton>
-                        <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _isBoundOpen = false)">
-                            <ChildContent>Close externally</ChildContent>
-                        </GupButton>
-                    </div>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _isBoundOpen = true)">
+                              <ChildContent>Open externally</ChildContent>
+                          </GupButton>
+                          <GupButton Appearance="@GupButtonAppearance.Secondary" Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _isBoundOpen = false)">
+                              <ChildContent>Close externally</ChildContent>
+                          </GupButton>
+                      </div>
 
-                    <div data-testid="bind-output" style="display:flex; flex-direction:column; gap:4px; margin:0;">
-                        <p style="margin:0;">
-                            <strong>IsOpen:</strong>
-                            <span data-testid="bind-isopen">@_isBoundOpen</span>
-                        </p>
-                        <p style="margin:0;">
-                            <strong>OnShow:</strong>
-                            <span data-testid="show-count">@_showCount</span> times
-                            &nbsp;·&nbsp;
-                            <strong>OnHide:</strong>
-                            <span data-testid="hide-count">@_hideCount</span> times
-                        </p>
-                    </div>
-                </div>
+                      <div data-testid="bind-output" style="display:flex; flex-direction:column; gap:4px; margin:0;">
+                          <p style="margin:0;">
+                              <strong>IsOpen:</strong>
+                              <span data-testid="bind-isopen">@_isBoundOpen</span>
+                          </p>
+                          <p style="margin:0;">
+                              <strong>OnShow:</strong>
+                              <span data-testid="show-count">@_showCount</span> times
+                              &nbsp;·&nbsp;
+                              <strong>OnHide:</strong>
+                              <span data-testid="hide-count">@_hideCount</span> times
+                          </p>
+                      </div>
+                </DemoExample>
             </div>
         </section>
 
@@ -272,13 +272,13 @@
                 pointer.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" style="padding:64px; display:flex; justify-content:center;">
-                    <GupTooltip Title="No arrow here" ShowArrow="false">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>Click me</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="without-arrow" File="Tooltip.razor" style="padding:64px; display:flex; justify-content:center;">
+                      <GupTooltip Title="No arrow here" ShowArrow="false">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>Click me</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 
@@ -291,18 +291,18 @@
                 sides because the underlying CSS uses logical inline directions.
             </p>
             <div class="demo-card--full">
-                <div class="demo-surface" dir="rtl" style="padding:64px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap;">
-                    <GupTooltip Title="معلومة" Hint="نص توضيحي" Placement="GupTooltipPlacement.Left">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>يسار</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                    <GupTooltip Title="معلومة" Hint="نص توضيحي" Placement="GupTooltipPlacement.Right">
-                        <Trigger>
-                            <GupButton Kind="@GupButtonKind.Button"><ChildContent>يمين</ChildContent></GupButton>
-                        </Trigger>
-                    </GupTooltip>
-                </div>
+                <DemoExample Id="rtl-arabic" File="Tooltip.razor" dir="rtl" style="padding:64px; display:flex; justify-content:center; gap:32px; flex-wrap:wrap;">
+                      <GupTooltip Title="معلومة" Hint="نص توضيحي" Placement="GupTooltipPlacement.Left">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>يسار</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                      <GupTooltip Title="معلومة" Hint="نص توضيحي" Placement="GupTooltipPlacement.Right">
+                          <Trigger>
+                              <GupButton Kind="@GupButtonKind.Button"><ChildContent>يمين</ChildContent></GupButton>
+                          </Trigger>
+                      </GupTooltip>
+                </DemoExample>
             </div>
         </section>
 

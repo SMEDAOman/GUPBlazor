@@ -1,0 +1,83 @@
+@page "/demo/patterns/address-form"
+@rendermode InteractiveServer
+
+<PageTitle>Address form — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Address form">
+    <PageSummary>
+      The standard Omani address field set, in the order and grouping services use:
+      governorate, wilayat, area, then the street detail.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">The pattern</h2>
+      <div class="demo-surface">
+        <GupFormSection Heading="Address">
+          <GupFormList>
+            <GupDropdownField Name="governorate" Placeholder="Select governorate">
+              <Label>Governorate</Label>
+              <ChildContent>
+                <GupDropdownMenu>
+                  @foreach (var g in Governorates)
+                  {
+                    <GupDropdownMenuItem Label="@g" Value="@g.ToLowerInvariant().Replace(' ', '-')" />
+                  }
+                </GupDropdownMenu>
+              </ChildContent>
+            </GupDropdownField>
+
+            <GupDropdownField Name="wilayat" Placeholder="Select wilayat">
+              <Label>Wilayat</Label>
+              <ChildContent>
+                <GupDropdownMenu>
+                  @foreach (var w in Wilayats)
+                  {
+                    <GupDropdownMenuItem Label="@w" Value="@w.ToLowerInvariant().Replace(' ', '-')" />
+                  }
+                </GupDropdownMenu>
+              </ChildContent>
+            </GupDropdownField>
+
+            <GupInputField Name="area" Type="text">Area</GupInputField>
+            <GupInputField Name="way-number" Type="text">Way number</GupInputField>
+            <GupInputField Name="house-number" Type="text">House number</GupInputField>
+
+            <GupTextarea Name="additional-directions" Rows="3">
+              <ChildContent>Additional directions</ChildContent>
+              <HintContent>Landmarks or directions that help a courier find the address.</HintContent>
+            </GupTextarea>
+          </GupFormList>
+        </GupFormSection>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Notes</h2>
+      <ul class="doc-list">
+        <li>Governorate comes before wilayat — selecting the governorate narrows the wilayat list in a real service.</li>
+        <li>Way and house number are separate fields, not a single street line.</li>
+        <li>Additional directions is optional and free text; it is where landmark-based directions go.</li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+
+@code {
+    private static readonly string[] Governorates =
+    [
+        "Muscat", "Dhofar", "Musandam", "Al Buraimi", "Ad Dakhiliyah",
+        "Al Batinah North", "Al Batinah South", "Ash Sharqiyah North",
+        "Ash Sharqiyah South", "Ad Dhahirah", "Al Wusta",
+    ];
+
+    private static readonly string[] Wilayats =
+    [
+        "Muscat", "Muttrah", "Bawshar", "Seeb", "Al Amarat", "Quriyat",
+    ];
+}

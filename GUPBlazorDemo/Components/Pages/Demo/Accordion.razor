@@ -1,7 +1,7 @@
 @page "/demo/accordion"
 @rendermode InteractiveServer
 
-<PageTitle>Accordion — Component Demo</PageTitle>
+<PageTitle>Accordion — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,26 +16,26 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Default</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupAccordion>
-                        <GupAccordionItem>
-                            <LabelContent>Click me</LabelContent>
-                            <ChildContent>Some hidden content</ChildContent>
-                        </GupAccordionItem>
-                        <GupAccordionItem>
-                            <LabelContent>Click me too</LabelContent>
-                            <ChildContent>Some other hidden content</ChildContent>
-                        </GupAccordionItem>
-                        <GupAccordionItem>
-                            <LabelContent>Slip merely pocket large no copy</LabelContent>
-                            <ChildContent>Some hidden content</ChildContent>
-                        </GupAccordionItem>
-                        <GupAccordionItem>
-                            <LabelContent>Crop copy ate accept anything leather fifty</LabelContent>
-                            <ChildContent>Some hidden content</ChildContent>
-                        </GupAccordionItem>
-                    </GupAccordion>
-                </div>
+                <DemoExample Id="default" File="Accordion.razor">
+                      <GupAccordion>
+                          <GupAccordionItem>
+                              <LabelContent>Click me</LabelContent>
+                              <ChildContent>Some hidden content</ChildContent>
+                          </GupAccordionItem>
+                          <GupAccordionItem>
+                              <LabelContent>Click me too</LabelContent>
+                              <ChildContent>Some other hidden content</ChildContent>
+                          </GupAccordionItem>
+                          <GupAccordionItem>
+                              <LabelContent>Slip merely pocket large no copy</LabelContent>
+                              <ChildContent>Some hidden content</ChildContent>
+                          </GupAccordionItem>
+                          <GupAccordionItem>
+                              <LabelContent>Crop copy ate accept anything leather fifty</LabelContent>
+                              <ChildContent>Some hidden content</ChildContent>
+                          </GupAccordionItem>
+                      </GupAccordion>
+                </DemoExample>
             </div>
         </section>
 
@@ -43,18 +43,18 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Open by default</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupAccordion>
-                        <GupAccordionItem Open="true">
-                            <LabelContent>I am open by default</LabelContent>
-                            <ChildContent>I am an accordion item</ChildContent>
-                        </GupAccordionItem>
-                        <GupAccordionItem>
-                            <LabelContent>I am closed by default</LabelContent>
-                            <ChildContent>I am an accordion item</ChildContent>
-                        </GupAccordionItem>
-                    </GupAccordion>
-                </div>
+                <DemoExample Id="open-by-default" File="Accordion.razor">
+                      <GupAccordion>
+                          <GupAccordionItem Open="true">
+                              <LabelContent>I am open by default</LabelContent>
+                              <ChildContent>I am an accordion item</ChildContent>
+                          </GupAccordionItem>
+                          <GupAccordionItem>
+                              <LabelContent>I am closed by default</LabelContent>
+                              <ChildContent>I am an accordion item</ChildContent>
+                          </GupAccordionItem>
+                      </GupAccordion>
+                </DemoExample>
             </div>
         </section>
 
@@ -62,28 +62,28 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Two-way Binding (@@bind-Open)</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupTrack Direction="horizontal" Gap="2">
-                        <GupButton Appearance="@GupButtonAppearance.Secondary"
-                                   Kind="@GupButtonKind.Button"
-                                   OnClick="@(() => _bindOpen = !_bindOpen)">
-                            <ChildContent>Toggle externally</ChildContent>
-                        </GupButton>
-                    </GupTrack>
+                <DemoExample Id="two-way-binding-bind-open" File="Accordion.razor">
+                      <GupTrack Direction="horizontal" Gap="2">
+                          <GupButton Appearance="@GupButtonAppearance.Secondary"
+                                     Kind="@GupButtonKind.Button"
+                                     OnClick="@(() => _bindOpen = !_bindOpen)">
+                              <ChildContent>Toggle externally</ChildContent>
+                          </GupButton>
+                      </GupTrack>
 
-                    <div style="margin-top: 16px;">
-                        <GupAccordion>
-                            <GupAccordionItem @bind-Open="_bindOpen">
-                                <LabelContent>Bound accordion item</LabelContent>
-                                <ChildContent>The Open state is bound to a parent property — the button above can toggle it too.</ChildContent>
-                            </GupAccordionItem>
-                        </GupAccordion>
-                    </div>
+                      <div style="margin-top: 16px;">
+                          <GupAccordion>
+                              <GupAccordionItem @bind-Open="_bindOpen">
+                                  <LabelContent>Bound accordion item</LabelContent>
+                                  <ChildContent>The Open state is bound to a parent property — the button above can toggle it too.</ChildContent>
+                              </GupAccordionItem>
+                          </GupAccordion>
+                      </div>
 
-                    <p data-testid="bind-output" style="margin-top: 12px;">
-                        Bound value: <strong>@(_bindOpen ? "open" : "closed")</strong>
-                    </p>
-                </div>
+                      <p data-testid="bind-output" style="margin-top: 12px;">
+                          Bound value: <strong>@(_bindOpen ? "open" : "closed")</strong>
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -91,17 +91,17 @@
         <section class="demo-section">
             <h2 class="demo-section-title">OnToggle Event</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupAccordion>
-                        <GupAccordionItem OnToggle="HandleAccordionToggled">
-                            <LabelContent>Watch the event log</LabelContent>
-                            <ChildContent>Each open/close emits an OnToggle event with the new open state.</ChildContent>
-                        </GupAccordionItem>
-                    </GupAccordion>
-                    <p data-testid="event-log" style="margin-top: 12px;">
-                        Last event: <strong>@_lastEvent</strong> (count: @_eventCount)
-                    </p>
-                </div>
+                <DemoExample Id="ontoggle-event" File="Accordion.razor">
+                      <GupAccordion>
+                          <GupAccordionItem OnToggle="HandleAccordionToggled">
+                              <LabelContent>Watch the event log</LabelContent>
+                              <ChildContent>Each open/close emits an OnToggle event with the new open state.</ChildContent>
+                          </GupAccordionItem>
+                      </GupAccordion>
+                      <p data-testid="event-log" style="margin-top: 12px;">
+                          Last event: <strong>@_lastEvent</strong> (count: @_eventCount)
+                      </p>
+                </DemoExample>
             </div>
         </section>
 
@@ -109,18 +109,18 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Hide Show/Hide Controls</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupAccordion>
-                        <GupAccordionItem HideControls="true">
-                            <LabelContent>No controls — click anywhere on the label</LabelContent>
-                            <ChildContent>The Show / Hide indicator is suppressed.</ChildContent>
-                        </GupAccordionItem>
-                        <GupAccordionItem HideControls="true">
-                            <LabelContent>Another bare item</LabelContent>
-                            <ChildContent>Useful for very dense layouts.</ChildContent>
-                        </GupAccordionItem>
-                    </GupAccordion>
-                </div>
+                <DemoExample Id="hide-show-hide-controls" File="Accordion.razor">
+                      <GupAccordion>
+                          <GupAccordionItem HideControls="true">
+                              <LabelContent>No controls — click anywhere on the label</LabelContent>
+                              <ChildContent>The Show / Hide indicator is suppressed.</ChildContent>
+                          </GupAccordionItem>
+                          <GupAccordionItem HideControls="true">
+                              <LabelContent>Another bare item</LabelContent>
+                              <ChildContent>Useful for very dense layouts.</ChildContent>
+                          </GupAccordionItem>
+                      </GupAccordion>
+                </DemoExample>
             </div>
         </section>
 
@@ -128,18 +128,18 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Custom Show / Hide Labels (i18n)</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupAccordion>
-                        <GupAccordionItem LabelShow="عرض" LabelHide="اخفاء">
-                            <LabelContent>اضغط</LabelContent>
-                            <ChildContent>محتوى مخفي</ChildContent>
-                        </GupAccordionItem>
-                        <GupAccordionItem LabelShow="Open" LabelHide="Close">
-                            <LabelContent>English with custom labels</LabelContent>
-                            <ChildContent>The action labels can be localized.</ChildContent>
-                        </GupAccordionItem>
-                    </GupAccordion>
-                </div>
+                <DemoExample Id="custom-show-hide-labels-i18n" File="Accordion.razor">
+                      <GupAccordion>
+                          <GupAccordionItem LabelShow="عرض" LabelHide="اخفاء">
+                              <LabelContent>اضغط</LabelContent>
+                              <ChildContent>محتوى مخفي</ChildContent>
+                          </GupAccordionItem>
+                          <GupAccordionItem LabelShow="Open" LabelHide="Close">
+                              <LabelContent>English with custom labels</LabelContent>
+                              <ChildContent>The action labels can be localized.</ChildContent>
+                          </GupAccordionItem>
+                      </GupAccordion>
+                </DemoExample>
             </div>
         </section>
 
@@ -147,12 +147,12 @@
         <section class="demo-section">
             <h2 class="demo-section-title">Standalone item (no wrapper)</h2>
             <div class="demo-card--full">
-                <div class="demo-surface">
-                    <GupAccordionItem>
-                        <LabelContent>I am alone</LabelContent>
-                        <ChildContent>An accordion item can be used outside a GupAccordion wrapper.</ChildContent>
-                    </GupAccordionItem>
-                </div>
+                <DemoExample Id="standalone-item-no-wrapper" File="Accordion.razor">
+                      <GupAccordionItem>
+                          <LabelContent>I am alone</LabelContent>
+                          <ChildContent>An accordion item can be used outside a GupAccordion wrapper.</ChildContent>
+                      </GupAccordionItem>
+                </DemoExample>
             </div>
         </section>
 

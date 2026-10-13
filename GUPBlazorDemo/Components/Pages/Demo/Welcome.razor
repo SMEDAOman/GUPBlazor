@@ -1,0 +1,92 @@
+@page "/demo/welcome"
+
+<PageTitle>Welcome — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Welcome to the Gov.om Blazor component library">
+    <PageSummary>
+      A Blazor-native implementation of the Gov.om (Government Unified Platform) design
+      system, published as the <code>GUPBlazor</code> NuGet package.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <p class="doc-lede">
+        These pages document how to install and use the library. Pick a component from the
+        sidebar to see it rendered, with the markup that produced it.
+      </p>
+      <p>
+        The components are native Razor components — not wrappers around the upstream web
+        components — so they work in Blazor Server, WebAssembly and Hybrid without any
+        JavaScript interop beyond the small amount the library ships itself.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">What's included</h2>
+      <ul class="doc-list">
+        <li><strong>Razor components</strong> — @DemoNav.TotalCount reference pages covering the component set, each with live examples.</li>
+        <li><strong>Design tokens</strong> — the full CSS custom property set for colour, typography and spacing. <a href="/demo/design-tokens">Browse the tokens</a>.</li>
+        <li><strong>Icons</strong> — Material Symbols Outlined, exposed through <code>GupIcon</code>. <a href="/demo/icons">See the icon set</a>.</li>
+        <li><strong>Accessibility</strong> — semantic markup, focus management and screen-reader affordances built into the components.</li>
+        <li><strong>RTL and Arabic</strong> — every component is mirrored for right-to-left layouts.</li>
+        <li><strong>Page templates</strong> — whole-page compositions for the shapes a service actually ships.</li>
+      </ul>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Getting started</h2>
+      <ul class="doc-list">
+        <li><a href="/demo/installation">Installation</a> — add the package and wire up the styles and scripts.</li>
+        <li><a href="/demo/usage">Usage</a> — utility components, spacing and icons.</li>
+        <li><a href="/demo/design-tokens">Design tokens</a> — the variables behind every component.</li>
+      </ul>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Browser support</h2>
+      <p>
+        All modern desktop and mobile browsers — Chrome, Firefox, Safari and Edge. The
+        components rely on Blazor's own baseline, so anything that runs Blazor runs these.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Hosting models</h2>
+      <p>The same components work across every Blazor hosting model:</p>
+      <ul class="doc-list">
+        <li><strong>Blazor Server</strong> — interactive components over a SignalR circuit.</li>
+        <li><strong>Blazor WebAssembly</strong> — the whole app in the browser.</li>
+        <li><strong>Blazor Web App</strong> — per-component render modes, including static SSR.</li>
+        <li><strong>Blazor Hybrid</strong> — MAUI, WPF and WinForms hosts.</li>
+      </ul>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Relationship to the upstream design system</h2>
+      <p>
+        This library is a port of the
+        <a href="https://github.com/Gov-om/design-system" target="_blank" rel="noopener">gov.om design system</a>,
+        which ships web components for Angular, React and vanilla JavaScript. Component
+        behaviour, markup and design tokens track upstream; the API is idiomatic Blazor
+        rather than a one-to-one copy of the custom-element attributes.
+      </p>
+      <p>
+        The upstream Storybook is the reference for visual and behavioural parity:
+        <a href="https://storybook.service.gov.om/" target="_blank" rel="noopener">storybook.service.gov.om</a>.
+      </p>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Feedback</h2>
+      <p>
+        The library is under active development and welcomes feedback — see the
+        <a href="/demo/feedback-contact">Feedback</a> page for how to reach the team.
+      </p>
+    </section>
+
+  </div>
+</div>

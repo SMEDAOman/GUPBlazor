@@ -1,0 +1,61 @@
+@page "/demo/button-group"
+@rendermode InteractiveServer
+
+<PageTitle>Button group — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Button group">
+    <PageSummary>Groups related buttons so they share spacing and stack predictably on narrow screens.</PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Horizontal (default)</h2>
+      <DemoExample Id="horizontal-default" File="ButtonGroup.razor">
+          <GupButtonGroup>
+            <GupButton Appearance="GupButtonAppearance.Primary">Continue</GupButton>
+            <GupButton Appearance="GupButtonAppearance.Secondary">Save as draft</GupButton>
+            <GupButton Appearance="GupButtonAppearance.Text">Cancel</GupButton>
+          </GupButtonGroup>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Vertical</h2>
+      <DemoExample Id="vertical" File="ButtonGroup.razor">
+          <GupButtonGroup Direction="vertical">
+            <GupButton Appearance="GupButtonAppearance.Primary">Continue</GupButton>
+            <GupButton Appearance="GupButtonAppearance.Secondary">Save as draft</GupButton>
+            <GupButton Appearance="GupButtonAppearance.Text">Cancel</GupButton>
+          </GupButtonGroup>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">With icons</h2>
+      <DemoExample Id="with-icons" File="ButtonGroup.razor">
+          <GupButtonGroup>
+            <GupButton Appearance="GupButtonAppearance.Secondary">
+              <IconStart><GupIcon IconName="arrow-back" Width="20" Height="20" /></IconStart>
+              <ChildContent>Back</ChildContent>
+            </GupButton>
+            <GupButton Appearance="GupButtonAppearance.Primary">
+              <ChildContent>Continue</ChildContent>
+              <IconEnd><GupIcon IconName="arrow-forward" Width="20" Height="20" /></IconEnd>
+            </GupButton>
+          </GupButtonGroup>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Stacking on mobile</h2>
+      <p class="demo-note">
+        Check this at 360px in <a href="/demo/device-preview">Device Preview</a> — the group
+        stacks so each button gets a full-width touch target.
+      </p>
+    </section>
+
+  </div>
+</div>

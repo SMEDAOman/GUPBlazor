@@ -1,7 +1,7 @@
 @page "/demo/inputs/tel"
 @rendermode InteractiveServer
 
-<PageTitle>Phone Input — Component Demo</PageTitle>
+<PageTitle>Phone Input — Blazor Reference</PageTitle>
 
 <div class="demo-page">
 
@@ -16,20 +16,18 @@
             <h2 class="demo-section-title">Basic</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Default</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-default" Type="tel">Mobile number</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="default" File="TelInput.razor" Label="Default">
+                          <GupFormList>
+                              <GupInputField Name="tel-default" Type="tel">Mobile number</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">With placeholder</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-placeholder" Type="tel" Placeholder="+968 9XXX XXXX">Mobile number</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="with-placeholder" File="TelInput.razor" Label="With placeholder">
+                          <GupFormList>
+                              <GupInputField Name="tel-placeholder" Type="tel" Placeholder="+968 9XXX XXXX">Mobile number</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -38,28 +36,25 @@
             <h2 class="demo-section-title">States</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Pre-filled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-value" Type="tel" Value="+96899123456">Primary phone</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="pre-filled" File="TelInput.razor" Label="Pre-filled">
+                          <GupFormList>
+                              <GupInputField Name="tel-value" Type="tel" Value="+96899123456">Primary phone</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Read-only</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-readonly" Type="tel" Value="+96899123456" Readonly="true">Verified number</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="read-only" File="TelInput.razor" Label="Read-only">
+                          <GupFormList>
+                              <GupInputField Name="tel-readonly" Type="tel" Value="+96899123456" Readonly="true">Verified number</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Disabled</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-disabled" Type="tel" Disabled="true">Disabled phone</GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="disabled" File="TelInput.razor" Label="Disabled">
+                          <GupFormList>
+                              <GupInputField Name="tel-disabled" Type="tel" Disabled="true">Disabled phone</GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>
@@ -68,52 +63,49 @@
             <h2 class="demo-section-title">Validation</h2>
             <div class="demo-row">
                 <div class="demo-card">
-                    <span class="demo-card-label">Oman mobile (8 digits, digits-only)</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-oman"
-                                           Type="tel"
-                                           StrictNumeric="true"
-                                           Pattern="\d{8,8}"
-                                           MaxLength="8"
-                                           Placeholder="9XXXXXXX">
-                                <ChildContent>Mobile number</ChildContent>
-                                <Hint>Try typing letters or symbols — only digits will go through.</Hint>
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="oman-mobile-8-digits-digits-only" File="TelInput.razor" Label="Oman mobile (8 digits, digits-only)">
+                          <GupFormList>
+                              <GupInputField Name="tel-oman"
+                                             Type="tel"
+                                             StrictNumeric="true"
+                                             Pattern="\d{8,8}"
+                                             MaxLength="8"
+                                             Placeholder="9XXXXXXX">
+                                  <ChildContent>Mobile number</ChildContent>
+                                  <Hint>Try typing letters or symbols — only digits will go through.</Hint>
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Required</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-required"
-                                           Type="tel"
-                                           StrictNumeric="true"
-                                           Pattern="\d{8,8}"
-                                           MaxLength="8"
-                                           Required="true"
-                                           Placeholder="9XXXXXXX">
-                                Mobile number
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="required" File="TelInput.razor" Label="Required">
+                          <GupFormList>
+                              <GupInputField Name="tel-required"
+                                             Type="tel"
+                                             StrictNumeric="true"
+                                             Pattern="\d{8,8}"
+                                             MaxLength="8"
+                                             Required="true"
+                                             Placeholder="9XXXXXXX">
+                                  Mobile number
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
                 <div class="demo-card">
-                    <span class="demo-card-label">Custom error message</span>
-                    <div class="demo-surface">
-                        <GupFormList>
-                            <GupInputField Name="tel-custom-error"
-                                           Type="tel"
-                                           StrictNumeric="true"
-                                           Pattern="\d{8,8}"
-                                           MaxLength="8"
-                                           ErrorMessage="Please enter an 8-digit Oman mobile number."
-                                           Placeholder="9XXXXXXX">
-                                Mobile number
-                            </GupInputField>
-                        </GupFormList>
-                    </div>
+                    <DemoExample Id="custom-error-message" File="TelInput.razor" Label="Custom error message">
+                          <GupFormList>
+                              <GupInputField Name="tel-custom-error"
+                                             Type="tel"
+                                             StrictNumeric="true"
+                                             Pattern="\d{8,8}"
+                                             MaxLength="8"
+                                             ErrorMessage="Please enter an 8-digit Oman mobile number."
+                                             Placeholder="9XXXXXXX">
+                                  Mobile number
+                              </GupInputField>
+                          </GupFormList>
+                    </DemoExample>
                 </div>
             </div>
         </section>

@@ -1,0 +1,76 @@
+@page "/demo/hint-validation"
+
+@rendermode InteractiveServer
+<PageTitle>Hint &amp; validation message — Blazor Reference</PageTitle>
+
+<div class="demo-page">
+
+  <GupContentHeader PageTitle="Hint & validation message">
+    <PageSummary>
+      Upstream ships these as separate components. In Blazor they are slots on the field
+      components, so they stay tied to the input they describe.
+    </PageSummary>
+  </GupContentHeader>
+
+  <div class="demo-body">
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Hint</h2>
+      <p class="demo-note">
+        Guidance shown before the user makes a mistake. It is wired to the input with
+        aria-describedby, so a screen reader reads it with the label.
+      </p>
+      <DemoExample Id="hint" File="HintValidation.razor">
+          <GupInputField Name="hv-id" Type="text">
+            <ChildContent>Civil ID</ChildContent>
+            <Hint>Eight digits, printed on the front of your card.</Hint>
+          </GupInputField>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Validation message</h2>
+      <p class="demo-note">Set ErrorMessage and IsInvalid together to put a field in its error state.</p>
+      <DemoExample Id="validation-message" File="HintValidation.razor">
+          <GupInputField Name="hv-email" Type="email" IsInvalid="true"
+                         ErrorMessage="Enter an email address in the format name@example.com">
+            Email address
+          </GupInputField>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Both together</h2>
+      <p class="demo-note">When a field is invalid the error replaces the hint, so the two never compete.</p>
+      <DemoExample Id="both-together" File="HintValidation.razor">
+          <GupInputField Name="hv-both" Type="text" IsInvalid="true"
+                         ErrorMessage="Enter your Civil ID">
+            <ChildContent>Civil ID</ChildContent>
+            <Hint>Eight digits, printed on the front of your card.</Hint>
+          </GupInputField>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Rich error content</h2>
+      <p class="demo-note">ErrorMessageContent takes markup when the message needs a link.</p>
+      <DemoExample Id="rich-error-content" File="HintValidation.razor">
+          <GupInputField Name="hv-rich" Type="text" IsInvalid="true">
+            <ChildContent>Commercial registration number</ChildContent>
+            <ErrorMessageContent>
+              We could not find that number. <a href="/help">Check the format</a>.
+            </ErrorMessageContent>
+          </GupInputField>
+      </DemoExample>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Summarising errors</h2>
+      <p class="demo-note">
+        For a whole form, pair these with an <a href="/demo/error-summary">error summary</a>
+        at the top of the page.
+      </p>
+    </section>
+
+  </div>
+</div>
