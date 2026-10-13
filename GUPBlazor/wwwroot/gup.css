@@ -26,36 +26,37 @@
      colors (#0b5fff etc.), exposed also via the flat --primary/--success/--danger/
      --warning/--info aliases below. Figma shade values are preserved separately as
      --gup-color-*-fig-* tokens for design-file mapping. */
-  --gup-color-brand-xhigh: #132450;      /* deep navy — header/secondary text, borders (matches mockup) */
+  --gup-color-brand-xhigh: #132459;      /* deep navy — header/secondary text, borders (matches mockup) */
+  --gup-color-accent-2xhigh: #132459;
   --gup-color-brand-high: #243d89;       /* Foundations §2.1 brand-high */
   --gup-color-brand-medium: #2f57cd;     /* Foundations §2.1 brand-medium (distinct from --primary) */
-  --gup-color-brand-medium-low: #4078ff; /* Figma brand 600 */
+  --gup-color-brand-medium-low: #4d78ff; /* Figma brand 600 */
   --gup-color-brand-low: #bfd8ff;
-  --gup-color-brand-xlow: #d0e6ff;
+  --gup-color-brand-xlow: #dde9ff;
   --gup-color-brand-contrast: #ffffff;
-  --gup-color-neutral-xhigh: #272833;    /* live gray-900 — primary text */
-  --gup-color-neutral-high: #393a4a;     /* live gray-800 */
-  --gup-color-neutral-medium: #545465;   /* live gray-700 */
-  --gup-color-neutral-low: #cdced9;      /* live gray-400 — disabled bg */
-  --gup-color-neutral-xlow: #f7f8f9;     /* live gray-100 — lightest bg */
+  --gup-color-neutral-xhigh: #202024;    /* live gray-900 — primary text */
+  --gup-color-neutral-high: #27272a;     /* live gray-800 */
+  --gup-color-neutral-medium: #3f3f46;   /* live gray-700 */
+  --gup-color-neutral-low: #d0d0d4;      /* live gray-400 — disabled bg */
+  --gup-color-neutral-xlow: #fcfcfc;     /* live gray-100 — lightest bg */
   --gup-color-neutral-contrast: #ffffff;
-  --gup-color-positive-xhigh: #134029;
-  --gup-color-positive-high: #1b7f3c;
-  --gup-color-positive-medium: #287d3c;  /* live --success */
-  --gup-color-positive-low: #80efac;
-  --gup-color-positive-xlow: #e6fae3;    /* live green-100 */
+  --gup-color-positive-xhigh: #114c29;
+  --gup-color-positive-high: #157f3c;
+  --gup-color-positive-medium: #16a249;  /* live --success */
+  --gup-color-positive-low: #85efac;
+  --gup-color-positive-xlow: #f2fdf5;    /* live green-100 */
   --gup-color-positive-contrast: #ffffff;
-  --gup-color-warning-xhigh: #733f52;
-  --gup-color-warning-high: #a26507;
-  --gup-color-warning-medium: #b95000;   /* live --warning */
+  --gup-color-warning-xhigh: #733f12;
+  --gup-color-warning-high: #a26107;
+  --gup-color-warning-medium: #ca8511;   /* live --warning */
   --gup-color-warning-low: #ffe771;
   --gup-color-warning-xlow: #fefce7;
   --gup-color-warning-contrast: #ffffff;
-  --gup-color-negative-xhigh: #b11d1d;
+  --gup-color-negative-xhigh: #811d1d;
   --gup-color-negative-high: #ba1c1c;
-  --gup-color-negative-medium: #da1414;  /* live --danger */
-  --gup-color-negative-low: #f7ada0;
-  --gup-color-negative-xlow: #fef2f2;    /* live red-100 */
+  --gup-color-negative-medium: #dc2828;  /* live --danger */
+  --gup-color-negative-low: #ffa0a0;
+  --gup-color-negative-xlow: #fef1f1;    /* live red-100 */
   --gup-color-negative-contrast: #ffffff;
 
   /* --- Flat semantic aliases (live @govom token names) --- */
@@ -111,8 +112,8 @@
   --red-500: #ef6b6b;
   --red-1000: #320d0d;
 
-  --gup-color-brand-accent-xhigh: #111111; /* accent 900 */
-  --gup-color-brand-accent-high: #0a3dac;  /* accent 700 — deep accent blue */
+  --gup-color-brand-accent-xhigh: #11111e; /* accent 900 */
+  --gup-color-brand-accent-high: #2a324c;  /* accent 700 — deep accent blue */
   --gup-color-brand-accent-medium: #414e77;/* accent 600 — muted accent */
   --gup-color-brand-accent-low: #c9ccdd;   /* upstream tokens/src/variables/color.css */
   --gup-color-brand-accent-xlow: #eceef4;  /* accent 200 */
@@ -163,6 +164,7 @@
 
   /* --- Semantic Colors --- */
   --gup-color-states-base-border: #7a7a83;
+  --gup-color-icon-inverse: #ffffff;
   --gup-color-states-primary-hover: rgba(26 26 26 / 26%);
   --gup-color-states-secondary-hover: rgba(26 26 26 / 8%);
   --gup-color-states-secondary-active: rgba(26 26 26 / 18%);
@@ -175,6 +177,10 @@
   --gup-color-states-base-focus-ring: #9747ff;
   --gup-color-states-inverted-primary-hover: rgba(255 255 255 / 80%);
   --gup-color-states-inverted-primary-active: rgba(255 255 255 / 60%);
+  --gup-color-states-inverted-secondary-hover: rgba(26 26 26 / 26%);
+  --gup-color-states-inverted-secondary-active: rgba(26 26 26 / 70%);
+  --gup-color-states-inverted-disabled-medium: rgba(255 255 255 / 18%);
+  --gup-color-states-inverted-disabled-low: rgba(255 255 255 / 18%);
 
   /* --- Content Colors --- */
   --gup-color-content-primary: #27272a;
@@ -183,6 +189,8 @@
   --gup-color-content-on-fill: #ffffff;
   --gup-color-content-inverted-primary: #ffffff;
   --gup-color-content-inverted-secondary: rgba(255 255 255 / 70%);
+  --gup-color-content-inverted-tertiary: rgba(255 255 255 / 60%);
+  --gup-color-content-inverted-link: #bfd8ff;
   --gup-color-content-link: #132459;
   /* Semantic content-status text colors (for validation/status messages).
      Point at the semantic feedback palette. */
@@ -196,6 +204,8 @@
   --gup-color-border-low: #e1e1e2;
   --gup-color-border-xlow: #f4f4f5;
   --gup-color-border-inverted-medium: rgba(255 255 255 / 26%);
+  --gup-color-border-inverted-low: rgba(255 255 255 / 18%);
+  --gup-color-border-inverted-xlow: rgba(255 255 255 / 12%);
 
   /* --- Background Colors --- */
   --gup-color-background-base: #ffffff;
@@ -209,6 +219,8 @@
   --gup-color-background-wizard-bar: #eceef4;
   --gup-color-background-gradient-1-start: #eff5ff;
   --gup-color-background-gradient-1-end: #f7f5f1;
+  --gup-color-background-gradient-2-start: #eff5ff;
+  --gup-color-background-gradient-2-end: #fafbff;
 
   /* --- Legacy color aliases used in components --- */
   --color-blue-700: #2c64b9;
@@ -751,6 +763,11 @@ body {
   fill: var(--gup-logo--color, var(--gup-color-neutral-contrast));
   width: var(--gup-logo--size, 45px);
   height: auto;
+}
+
+/* The horizontal lockup is sized by height; a fixed width would distort it. */
+.gup-logo--horizontal svg {
+  width: auto;
 }
 
 /* ------------------------------------------------------------
