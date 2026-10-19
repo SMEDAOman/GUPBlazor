@@ -22,3 +22,4 @@
 
 # Served by the app; the blanket *.png rule above would drop it.
 !GUPBlazorDemo/wwwroot/favicon.png
+!GUPBlazorDemo/wwwroot/images/*.png

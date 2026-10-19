@@ -32,7 +32,10 @@
         <nav class="tokens-jump" aria-label="Token groups">
           @foreach (var group in Catalogue.Groups)
           {
-            <a href="#@Slug(group.Title)">@group.Title <span>@group.Tokens.Length</span></a>
+            @* Hash-only hrefs resolve against <base href="/" > and jump to the home
+               page. Qualify with this page's path so the router treats the click as a
+               same-page fragment scroll. *@
+            <a href="@($"/demo/design-tokens#{Slug(group.Title)}")">@group.Title <span>@group.Tokens.Length</span></a>
           }
         </nav>
       </section>

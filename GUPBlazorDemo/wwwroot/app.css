@@ -317,6 +317,48 @@
   gap: 8px;
 }
 
+.demo-nav__logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* Slim scrollbar, invisible until the nav is hovered — Windows paints a
+   chunky classic track by default the moment the list overflows. */
+.demo-nav__scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.demo-nav__scroll:hover {
+  scrollbar-color: var(--gup-color-border-high, #c8c8c8) transparent;
+}
+
+.demo-nav__scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.demo-nav__scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.demo-nav__scroll:hover::-webkit-scrollbar-thumb {
+  background: var(--gup-color-border-high, #c8c8c8);
+}
+
+.demo-nav__brand-text {
+  min-width: 0;
+}
+
+.demo-nav__brand-text strong,
+.demo-nav__brand-text em {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .demo-nav__search {
   position: relative;

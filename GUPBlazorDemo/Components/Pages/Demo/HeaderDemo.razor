@@ -14,10 +14,8 @@
     <section class="demo-section">
       <h2 class="demo-section-title">Standard</h2>
       <DemoExample Id="standard" File="HeaderDemo.razor">
+          @* The header renders its own logo in the blue box; Start is for buttons. *@
           <GupHeader>
-            <Start>
-              <GupLogo Appearance="horizontal" Size="32" />
-            </Start>
             <End>
               <GupButton Appearance="GupButtonAppearance.Text">
                 <IconStart><GupIcon IconName="language" Width="20" Height="20" /></IconStart>
@@ -32,9 +30,6 @@
       <h2 class="demo-section-title">With an account area</h2>
       <DemoExample Id="with-an-account-area" File="HeaderDemo.razor">
           <GupHeader>
-            <Start>
-              <GupLogo Appearance="horizontal" Size="32" />
-            </Start>
             <End>
               <GupTrack Gap="3" VerticalAlignment="center">
                 <GupButton Appearance="GupButtonAppearance.Text">
