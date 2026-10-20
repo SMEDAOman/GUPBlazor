@@ -20,9 +20,9 @@
             {
                 <span class="btn-icon-start">@IconStart</span>
             }
-            @if (!WithIconOnly)
+            @if (!WithIconOnly && ChildContent != null)
             {
-                @ChildContent
+                <span class="btn-label">@ChildContent</span>
             }
             @if (IconEnd != null)
             {
@@ -41,9 +41,9 @@
             {
                 <span class="btn-icon-start">@IconStart</span>
             }
-            @if (!WithIconOnly)
+            @if (!WithIconOnly && ChildContent != null)
             {
-                @ChildContent
+                <span class="btn-label">@ChildContent</span>
             }
             @if (IconEnd != null)
             {

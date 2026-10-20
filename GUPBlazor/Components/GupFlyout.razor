@@ -19,11 +19,13 @@
 @if (IsOpen)
 {
     <div class="gup-flyout-backdrop @(Backdrop ? "" : "gup-flyout-backdrop--transparent")"
+         dir="@EffectiveDir"
          @ref="_backdropRef"
          @onclick="HandleBackdropClick"
          @onkeydown="HandleKeyDown"
          tabindex="-1">
         <div class="gup-flyout-panel gup-flyout-panel--@PositionString()"
+             dir="@EffectiveDir"
              role="dialog"
              aria-modal="true"
              aria-labelledby="@_headingId"
@@ -57,6 +59,21 @@
 }
 
 @code {
+    [CascadingParameter] public GUPWizardStack? WizardStack { get; set; }
+    [CascadingParameter(Name = "GupLangId")] public int? CascadedLangId { get; set; }
+
+    /// <summary>Explicit text direction ('rtl' or 'ltr'). If omitted, auto-detects from IsRTL or active page context.</summary>
+    [Parameter] public string? Dir { get; set; }
+
+    /// <summary>Whether the flyout is rendered in Right-To-Left direction.</summary>
+    [Parameter] public bool? IsRTL { get; set; }
+
+    private string? EffectiveDir =>
+        Dir ??
+        (IsRTL.HasValue ? (IsRTL.Value ? "rtl" : "ltr") : null) ??
+        (WizardStack?.IsRTL == true ? "rtl" : null) ??
+        (CascadedLangId.HasValue ? (CascadedLangId.Value == 1 ? "rtl" : "ltr") : null);
+
     /// <summary>Heading text shown in the flyout header.</summary>
     [Parameter] public string Heading { get; set; } = "";
 

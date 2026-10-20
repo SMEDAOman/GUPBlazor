@@ -809,7 +809,6 @@ body {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--gup-color-border-low);
-  padding-inline: var(--gup-gutter);
 }
 
 .gup-header .navigation {
@@ -870,29 +869,41 @@ body {
   text-decoration: none;
 }
 
-/* Mobile: shrink the header help/exit label + icon so the single-line label
-   fits the narrow slot without wrapping, clipping, or crowding the centred logo.
-   The icon shrinks with it so the button stays visually balanced. */
-@media (max-width: 749px) {
-  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *),
-  .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) {
-    font-size: 12px;
-    gap: 4px;
-    padding-inline: 4px;
-  }
-  /* GupIcon renders as a material-symbols span sized by font-size (set inline
-     from its Width param), so shrink via font-size + !important to beat the
-     inline style. */
-  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) .gup-icon,
-  .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) .gup-icon {
-    font-size: 18px !important;
-  }
+/* Header action labels (upstream helper) */
+.header-action-label {
+  display: inline;
 }
 
-@media (max-width: 380px) {
-  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *),
+/* Mobile: below 750px, collapse the help action in slot-end to just its icon
+   (hiding "Do you need help?" / "هل تحتاج إلى مساعدة؟") and hide any .header-action-label.
+   This gives Cancel / Save & exit in slot-start plenty of space without squashing. */
+@media (max-width: 749px) {
+  .header-action-label,
+  .gup-hide-below-mobile {
+    display: none !important;
+  }
+
+  .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) .btn-label {
+    display: none;
+  }
+
   .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) {
-    font-size: 11px;
+    font-size: 0 !important;
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 8px;
+    justify-content: center;
+  }
+
+  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) {
+    font-size: 14px;
+    gap: 6px;
+    padding-inline: 8px;
+    min-height: 44px;
+  }
+
+  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) .gup-icon {
+    font-size: 22px !important;
   }
 }
 
@@ -1439,6 +1450,28 @@ body {
   outline: var(--gup-stroke-focus-ring) solid var(--gup-color-states-base-focus-ring);
   outline-offset: 2px;
   border-radius: var(--gup-radius-component-default);
+}
+/* Input-start affix button (date/time picker icon) stays locked to the 24x24 icon size
+   to align with static text/tel/email icons. Hit area expands via ::after under pointer: coarse. */
+.gup-input-field .input-start .input-affix-btn {
+  min-width: 24px;
+  min-height: 24px;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+@media (pointer: coarse) {
+  .gup-input-field .input-start .input-affix-btn {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .gup-input-field .input-start .input-affix-btn::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+  }
 }
 
 /* Hint text */
@@ -2554,9 +2587,12 @@ body {
 }
 
 .gup-dropdown-field .arrow-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  padding-inline-end: var(--gup-component-4);
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transform-origin: center center;
   --gup-icon--fill-color: var(--gup-color-content-secondary);
   transition: transform 0.2s ease;
 }
@@ -4087,7 +4123,8 @@ body {
 
 .gup-flyout-panel--right {
   top: 0;
-  inset-inline-end: 0;
+  right: 0;
+  left: auto;
   bottom: 0;
   width: var(--gup-flyout--width, 460px);
   max-width: 100%;
@@ -4096,11 +4133,41 @@ body {
 
 .gup-flyout-panel--left {
   top: 0;
-  inset-inline-start: 0;
+  left: 0;
+  right: auto;
   bottom: 0;
   width: var(--gup-flyout--width, 460px);
   max-width: 100%;
   animation-name: gup-flyout-slide-in-left;
+}
+
+/* Flyout text direction */
+[dir="rtl"] .gup-flyout-backdrop,
+[dir="rtl"] .gup-flyout-panel,
+.gup-flyout-backdrop[dir="rtl"],
+.gup-flyout-panel[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .gup-flyout-panel .gup-flyout-content,
+.gup-flyout-panel[dir="rtl"] .gup-flyout-content {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="ltr"] .gup-flyout-backdrop,
+[dir="ltr"] .gup-flyout-panel,
+.gup-flyout-backdrop[dir="ltr"],
+.gup-flyout-panel[dir="ltr"] {
+  direction: ltr;
+  text-align: start;
+}
+
+[dir="ltr"] .gup-flyout-panel .gup-flyout-content,
+.gup-flyout-panel[dir="ltr"] .gup-flyout-content {
+  text-align: start;
+  direction: ltr;
 }
 
 .gup-flyout-panel--top {
@@ -5486,7 +5553,7 @@ body {
   .gup-flyout-close-button,
   .gup-toast .close-button,
   .gup-dropdown-clear-btn,
-  .gup-input-field .input-affix-btn {
+  .gup-input-field .input-end .input-affix-btn {
     min-width: 44px;
     min-height: 44px;
   }

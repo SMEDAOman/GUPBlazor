@@ -436,7 +436,7 @@
   border-bottom: 1px solid var(--gup-color-border-low, #e2e8f0);
   position: sticky;
   top: 0;
-  z-index: 900;
+  z-index: 20;
 }
 
 .demo-canvas-top-bar:not(:has(.storybook-toolbar)) {

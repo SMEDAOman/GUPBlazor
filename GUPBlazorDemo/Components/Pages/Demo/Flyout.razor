@@ -170,16 +170,19 @@
     <section class="demo-section">
       <h2 class="demo-section-title">RTL (Arabic)</h2>
       <p class="demo-section-description">
-        The right/left panels use <code>inset-inline-start/end</code>, so they automatically swap edges
-        in right-to-left content.
+        RTL flyouts support both Left (standard drawer/filter pattern in Gov.om services) and Right positions with full Arabic text direction.
       </p>
       <div class="demo-row">
         <div class="demo-card demo-card--full" dir="rtl">
-          <span class="demo-card-label">Position="Right" inside dir="rtl" — visually anchored to the left edge</span>
+          <span class="demo-card-label">عرض اللوحات المنزلقة باللغة العربية (RTL)</span>
           <GupTrack Direction="horizontal" Gap="2">
             <GupButton Appearance="@GupButtonAppearance.Primary"
+                       OnClick="@(() => _rtlLeftOpen = true)">
+              <ChildContent>افتح لوحة من اليسار (Left)</ChildContent>
+            </GupButton>
+            <GupButton Appearance="@GupButtonAppearance.Secondary"
                        OnClick="@(() => _rtlOpen = true)">
-              <ChildContent>افتح اللوحة المنزلقة</ChildContent>
+              <ChildContent>افتح لوحة من اليمين (Right)</ChildContent>
             </GupButton>
           </GupTrack>
         </div>
@@ -351,12 +354,41 @@
 </GupFlyout>
 
 <div dir="rtl">
-  <GupFlyout Heading="لوحة جانبية"
+  <GupFlyout Heading="إضافة بيانات جديدة (يسار)"
+             @bind-IsOpen="_rtlLeftOpen"
+             Position="@GupFlyoutPosition.Left"
+             IsRTL="true"
+             OnClose="@(() => LogEvent("rtl-left-close"))">
+    <ChildContent>
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <p>لوحة جانبية تفتح من جهة اليسار مع محاذاة النص واتجاه القراءة من اليمين إلى اليسار (RTL).</p>
+        <GupFormList>
+          <GupInputField Name="machine-name" Type="text">اسم المعدة / الجهاز</GupInputField>
+          <GupInputField Name="machine-qty" Type="number">الكمية المطلوبة</GupInputField>
+        </GupFormList>
+      </div>
+    </ChildContent>
+    <FooterContent>
+      <GupButtonGroup>
+        <GupButton Appearance="@GupButtonAppearance.Secondary"
+                   OnClick="@(() => CloseFlyout("rtl-left-cancel"))">
+          <ChildContent>إلغاء</ChildContent>
+        </GupButton>
+        <GupButton Appearance="@GupButtonAppearance.Primary"
+                   OnClick="@(() => CloseFlyout("rtl-left-apply"))">
+          <ChildContent>حفظ البيانات</ChildContent>
+        </GupButton>
+      </GupButtonGroup>
+    </FooterContent>
+  </GupFlyout>
+
+  <GupFlyout Heading="لوحة جانبية (يمين)"
              @bind-IsOpen="_rtlOpen"
              Position="@GupFlyoutPosition.Right"
+             IsRTL="true"
              OnClose="@(() => LogEvent("rtl-close"))">
     <ChildContent>
-      <p>هذا هو محتوى اللوحة الجانبية. يمكنك وضع أي محتوى تريده هنا.</p>
+      <p>هذا هو محتوى اللوحة الجانبية من اليمين مع محاذاة النص واتجاه القراءة RTL.</p>
     </ChildContent>
     <FooterContent>
       <GupButtonGroup>
@@ -382,6 +414,7 @@
     private bool _noCloseOpen;
     private bool _boundOpen;
     private bool _rtlOpen;
+    private bool _rtlLeftOpen;
 
     private GupFlyoutPosition _boundPosition = GupFlyoutPosition.Right;
     private string? _lastEvent;
@@ -396,6 +429,7 @@
         _noCloseOpen = false;
         _boundOpen = false;
         _rtlOpen = false;
+        _rtlLeftOpen = false;
         LogEvent(source);
     }
 
