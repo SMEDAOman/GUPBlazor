@@ -1,29 +1,58 @@
 @* Upstream's story block: an optional label, the live example, and a "Show code"
    toggle that quotes this component's own markup from the embedded page source. *@
+@implements IDisposable
 @inject ExampleSourceProvider Source
+@inject DemoDirectionService DirectionService
+@inject IJSRuntime JS
 
 <div class="demo-example">
-  @if (!string.IsNullOrWhiteSpace(Label))
-  {
-    <span class="demo-card-label">@Label</span>
-  }
+  <div class="demo-example__bar">
+    <div class="demo-example__label-wrap">
+      @if (!string.IsNullOrWhiteSpace(EffectiveLabel))
+      {
+        <span class="demo-card-label">@EffectiveLabel</span>
+      }
+    </div>
 
-  <div class="demo-surface @SurfaceClass" @attributes="Extra">
-    @ChildContent
+    <div class="demo-example__tools">
+      <button type="button"
+              class="demo-example-tool-btn @(EffectiveIsRtl ? "is-rtl" : "is-ltr")"
+              @onclick="ToggleDirection"
+              title="Toggle direction for this component preview (like Storybook)">
+        <GupIcon IconName="@(EffectiveIsRtl ? "format_textdirection_r_to_l" : "format_textdirection_l_to_r")" Width="14" Height="14" />
+        <span class="demo-example-tool-btn__text">@(EffectiveIsRtl ? "RTL عربي" : "LTR")</span>
+      </button>
+
+      @if (_code is not null)
+      {
+        <button type="button" class="demo-code-toggle" @onclick="Toggle"
+                aria-expanded="@(_open ? "true" : "false")"
+                title="View Razor code">
+          <GupIcon IconName="@(_open ? "code_off" : "code")" Width="14" Height="14" />
+          <span>@(_open ? "Hide code" : "Code")</span>
+        </button>
+      }
+    </div>
   </div>
 
-  @if (_code is not null)
+  <div @ref="_surfaceRef"
+       class="demo-surface @SurfaceClass @(EffectiveIsRtl ? "demo-surface--rtl" : "")"
+       dir="@(EffectiveIsRtl ? "rtl" : "ltr")"
+       @attributes="Extra">
+    @if (EffectiveIsRtl && RtlChildContent is not null)
+    {
+      @RtlChildContent
+    }
+    else
+    {
+      @ChildContent
+    }
+  </div>
+
+  @if (_code is not null && _open)
   {
     <div class="demo-example-code">
-      <button type="button" class="demo-code-toggle" @onclick="Toggle"
-              aria-expanded="@(_open ? "true" : "false")">
-        <GupIcon IconName="@(_open ? "code_off" : "code")" Width="16" Height="16" />
-        <span>@(_open ? "Hide code" : "Show code")</span>
-      </button>
-      @if (_open)
-      {
-        <pre class="doc-code"><code>@_code</code></pre>
-      }
+      <pre class="doc-code"><code>@_code</code></pre>
     </div>
   }
 </div>
@@ -36,20 +65,57 @@
     [Parameter, EditorRequired] public string File { get; set; } = "";
 
     [Parameter] public string? Label { get; set; }
+    [Parameter] public string? RtlLabel { get; set; }
 
     /// <summary>Extra classes for the preview surface, e.g. <c>demo-row</c>.</summary>
     [Parameter] public string? SurfaceClass { get; set; }
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? RtlChildContent { get; set; }
 
     /// <summary>Anything else lands on the preview surface, e.g. the original inline style.</summary>
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? Extra { get; set; }
 
+    private ElementReference _surfaceRef;
     private bool _open;
     private string? _code;
+    private bool? _localRtlOverride;
+
+    private bool EffectiveIsRtl => _localRtlOverride ?? DirectionService.IsRtl;
+    private string? EffectiveLabel => (EffectiveIsRtl && !string.IsNullOrWhiteSpace(RtlLabel)) ? RtlLabel : Label;
+
+    protected override void OnInitialized()
+    {
+        DirectionService.OnDirectionChanged += HandleDirectionChanged;
+    }
 
     protected override void OnParametersSet() => _code = Source.Get(File, Id);
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("gupDemoDirection.syncSurface", _surfaceRef, EffectiveIsRtl ? "rtl" : "ltr");
+        }
+        catch { }
+    }
+
     private void Toggle() => _open = !_open;
+
+    private void ToggleDirection()
+    {
+        _localRtlOverride = !EffectiveIsRtl;
+    }
+
+    private void HandleDirectionChanged()
+    {
+        _localRtlOverride = null;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        DirectionService.OnDirectionChanged -= HandleDirectionChanged;
+    }
 }

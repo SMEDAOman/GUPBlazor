@@ -420,3 +420,216 @@
 .demo-logo-surface {
   --gup-logo--color: var(--gup-color-brand-medium);
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   Storybook-Style Component Direction Controls (LTR / RTL)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Top Canvas Toolbar ── */
+.demo-canvas-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background: var(--gup-color-background-elevated-container, #ffffff);
+  border-bottom: 1px solid var(--gup-color-border-low, #e2e8f0);
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+.demo-canvas-top-bar:not(:has(.storybook-toolbar)) {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .demo-canvas-top-bar {
+    padding: 8px 16px;
+  }
+
+  .demo-canvas-top-bar:not(:has(.storybook-toolbar)) {
+    display: flex;
+    background: transparent;
+    border-bottom: none;
+    padding: 0;
+  }
+}
+
+/* ── Storybook Top Toolbar ── */
+.storybook-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-inline-start: auto;
+  font-family: var(--font-base, 'Readex Pro', sans-serif);
+}
+
+.storybook-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.storybook-toolbar__tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gup-color-content-tertiary, #64748b);
+  font-size: 12px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.storybook-toolbar__segmented {
+  display: inline-flex;
+  align-items: center;
+  background: var(--gup-color-background-overcanvas, #f1f5f9);
+  border: 1px solid var(--gup-color-border-low, #e2e8f0);
+  border-radius: var(--gup-radius-button, 999px);
+  padding: 2px;
+  gap: 2px;
+}
+
+.storybook-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  min-height: 28px;
+  border: 0;
+  border-radius: var(--gup-radius-button, 999px);
+  background: transparent;
+  color: var(--gup-color-content-secondary, #475569);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+
+.storybook-toolbar__btn:hover:not(.is-active) {
+  background: var(--gup-color-states-secondary-hover, rgba(0, 0, 0, 0.05));
+  color: var(--gup-color-content-primary, #0f172a);
+}
+
+.storybook-toolbar__btn.is-active {
+  background: var(--gup-color-brand-medium, #005a9c);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 90, 156, 0.3);
+}
+
+.storybook-toolbar__btn.is-active .gup-icon {
+  color: #ffffff;
+}
+
+.storybook-toolbar__arabic {
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  line-height: 1.2;
+}
+
+.storybook-toolbar__btn:not(.is-active) .storybook-toolbar__arabic {
+  background: var(--gup-color-background-elevated-container, #ffffff);
+  color: var(--gup-color-content-tertiary, #64748b);
+  border: 1px solid var(--gup-color-border-low, #e2e8f0);
+}
+
+.storybook-toolbar__hint {
+  font-size: 10px;
+  color: var(--gup-color-content-tertiary, #94a3b8);
+  font-family: ui-monospace, monospace;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: var(--gup-color-background-overcanvas, #f1f5f9);
+  border: 1px solid var(--gup-color-border-xlow, #e2e8f0);
+}
+
+@media (max-width: 639px) {
+  .storybook-toolbar__label,
+  .storybook-toolbar__hint {
+    display: none;
+  }
+}
+
+/* ── Storybook-Style Story Card Bar (Above Component) ── */
+.demo-example__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.demo-example__label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.demo-example__tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-inline-start: auto;
+}
+
+.demo-example-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  min-height: 26px;
+  border: 1px solid var(--gup-color-border-low, #e2e8f0);
+  border-radius: var(--gup-radius-button, 999px);
+  background: var(--gup-color-background-elevated-container, #ffffff);
+  color: var(--gup-color-content-secondary, #475569);
+  font-family: var(--font-base, 'Readex Pro', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+
+.demo-example-tool-btn:hover {
+  border-color: var(--gup-color-brand-medium, #005a9c);
+  color: var(--gup-color-brand-medium, #005a9c);
+  background: var(--gup-color-states-secondary-hover, rgba(0, 0, 0, 0.04));
+}
+
+.demo-example-tool-btn.is-rtl {
+  background: var(--gup-color-brand-medium, #005a9c);
+  color: #ffffff;
+  border-color: var(--gup-color-brand-medium, #005a9c);
+  box-shadow: 0 1px 3px rgba(0, 90, 156, 0.3);
+}
+
+.demo-example-tool-btn.is-rtl .gup-icon {
+  color: #ffffff;
+}
+
+/* ── Component Preview Surface RTL Scope ── */
+/* When .demo-surface has dir="rtl", apply RTL layout strictly to the component inside */
+.demo-surface[dir="rtl"],
+.demo-surface--rtl {
+  direction: rtl;
+  text-align: right;
+  --gup--is-ltr: -1;
+}
+
+.demo-surface[dir="rtl"] .gup-track,
+.demo-surface--rtl .gup-track {
+  direction: rtl;
+}
+
+/* Maintain LTR on doc code snippets so code syntax is never inverted */
+.doc-code {
+  direction: ltr !important;
+  text-align: left !important;
+}

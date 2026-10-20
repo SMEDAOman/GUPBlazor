@@ -1,0 +1,160 @@
+@implements IDisposable
+@inject IJSRuntime JS
+@inject DemoDirectionService DirectionService
+@inject ToastService Toast
+@inject NavigationManager Nav
+
+@if (IsApplicable())
+{
+    <div class="storybook-toolbar" role="toolbar" aria-label="Component direction switcher">
+        <div class="storybook-toolbar__group">
+            <div class="storybook-toolbar__tag" title="Storybook-style component direction preview">
+                <GupIcon IconName="tune" Width="16" Height="16" />
+                <span class="storybook-toolbar__label">Component Direction</span>
+            </div>
+
+            <div class="storybook-toolbar__segmented" role="radiogroup" aria-label="Component layout direction">
+                <button type="button"
+                        role="radio"
+                        aria-checked="@(!DirectionService.IsRtl)"
+                        class="storybook-toolbar__btn @(!DirectionService.IsRtl ? "is-active" : "")"
+                        @onclick="@(() => ChangeDirection("ltr"))"
+                        title="Preview components in Left-to-Right (English) [Alt+R]">
+                    <GupIcon IconName="format_textdirection_l_to_r" Width="14" Height="14" />
+                    <span class="storybook-toolbar__btn-text">LTR</span>
+                </button>
+
+                <button type="button"
+                        role="radio"
+                        aria-checked="@DirectionService.IsRtl"
+                        class="storybook-toolbar__btn @(DirectionService.IsRtl ? "is-active" : "")"
+                        @onclick="@(() => ChangeDirection("rtl"))"
+                        title="Preview components in Right-to-Left (العربية) [Alt+R]">
+                    <GupIcon IconName="format_textdirection_r_to_l" Width="14" Height="14" />
+                    <span class="storybook-toolbar__btn-text">RTL</span>
+                    <span class="storybook-toolbar__arabic" dir="rtl">عربي</span>
+                </button>
+            </div>
+        </div>
+
+        <span class="storybook-toolbar__hint" title="Keyboard shortcut: Alt + R">Alt+R</span>
+    </div>
+}
+
+@code {
+    private static readonly HashSet<string> NonApplicableRoutes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "/",
+        "/demo/welcome",
+        "/demo/installation",
+        "/demo/usage",
+        "/demo/design-tokens",
+        "/demo/versions",
+        "/demo/feedback-contact",
+        "/demo/device-preview",
+        "/templates",
+        "/not-found",
+        "/error"
+    };
+
+    private DotNetObjectReference<DemoDirectionControl>? _dotNetRef;
+
+    private bool IsApplicable()
+    {
+        var rel = "/" + Nav.ToBaseRelativePath(Nav.Uri);
+        var cut = rel.IndexOfAny(['?', '#']);
+        if (cut >= 0) { rel = rel[..cut]; }
+        if (rel.Length > 1) { rel = rel.TrimEnd('/'); }
+
+        return !NonApplicableRoutes.Contains(rel);
+    }
+
+    protected override void OnInitialized()
+    {
+        if (Nav.Uri.Contains("dir=rtl", StringComparison.OrdinalIgnoreCase))
+        {
+            DirectionService.SetDirection("rtl", notify: false);
+        }
+        DirectionService.OnDirectionChanged += HandleDirectionChanged;
+        Nav.LocationChanged += HandleLocationChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                var dir = await JS.InvokeAsync<string>("gupDemoDirection.get");
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    DirectionService.SetDirection(dir, notify: false);
+                    StateHasChanged();
+                }
+
+                _dotNetRef = DotNetObjectReference.Create(this);
+                await JS.InvokeVoidAsync("gupDemoDirection.initKeyboard", _dotNetRef);
+            }
+            catch
+            {
+                // In SSR or if JS not yet connected, ignore
+            }
+        }
+    }
+
+    private async Task ChangeDirection(string dir, bool showToast = true)
+    {
+        if (string.Equals(DirectionService.CurrentDirection, dir, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        try
+        {
+            await JS.InvokeVoidAsync("gupDemoDirection.set", dir);
+        }
+        catch
+        {
+            // fallback
+        }
+
+        DirectionService.SetDirection(dir);
+
+        if (showToast)
+        {
+            if (DirectionService.IsRtl)
+            {
+                Toast.Show("Components preview set to RTL (Right-to-Left / العربية)", "positive", 2500);
+            }
+            else
+            {
+                Toast.Show("Components preview set to LTR (Left-to-Right)", "neutral", 2500);
+            }
+        }
+    }
+
+    [JSInvokable]
+    public async Task ToggleFromKeyboard()
+    {
+        if (!IsApplicable()) return;
+        var target = DirectionService.IsRtl ? "ltr" : "rtl";
+        await ChangeDirection(target, showToast: true);
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleDirectionChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        DirectionService.OnDirectionChanged -= HandleDirectionChanged;
+        Nav.LocationChanged -= HandleLocationChanged;
+        _dotNetRef?.Dispose();
+    }
+}

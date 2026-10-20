@@ -477,6 +477,7 @@
   --gup--is-ltr: 1;
 }
 
+:dir(rtl),
 [dir="rtl"] {
   --gup--is-ltr: -1;
   --font-base: var(--font-base-rtl);
@@ -790,6 +791,7 @@ body {
   user-select: none;
 }
 
+:dir(rtl) .gup-icon--rtl-flip,
 [dir="rtl"] .gup-icon--rtl-flip {
   transform: scaleX(-1);
 }
@@ -807,6 +809,7 @@ body {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--gup-color-border-low);
+  padding-inline: var(--gup-gutter);
 }
 
 .gup-header .navigation {
@@ -853,15 +856,17 @@ body {
 
 /* Keep the header help/exit labels on a SINGLE line (no wrap). To stop a long
    one-line label from pushing the centred logo or getting clipped, the labels
-   shrink their font-size on narrow screens (see the mobile override below). */
-.gup-header .slot-start .button,
-.gup-header .slot-end .button {
+   shrink their font-size on narrow screens (see the mobile override below).
+   Exclude dialog/modal buttons so a dialog hosted inside a header slot (e.g.
+   CancelConfirm) does not have its action buttons squashed or altered. */
+.gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *),
+.gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) {
   white-space: nowrap;
   text-align: start;
 }
 
-/* Override button underline inside header */
-.gup-header .gup-button--text .button {
+/* Override button underline inside header (exclude dialogs) */
+.gup-header .gup-button--text:not(.gup-dialog *):not(.gup-dialog-backdrop *) .button {
   text-decoration: none;
 }
 
@@ -869,8 +874,8 @@ body {
    fits the narrow slot without wrapping, clipping, or crowding the centred logo.
    The icon shrinks with it so the button stays visually balanced. */
 @media (max-width: 749px) {
-  .gup-header .slot-start .button,
-  .gup-header .slot-end .button {
+  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *),
+  .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) {
     font-size: 12px;
     gap: 4px;
     padding-inline: 4px;
@@ -878,15 +883,15 @@ body {
   /* GupIcon renders as a material-symbols span sized by font-size (set inline
      from its Width param), so shrink via font-size + !important to beat the
      inline style. */
-  .gup-header .slot-start .button .gup-icon,
-  .gup-header .slot-end .button .gup-icon {
+  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) .gup-icon,
+  .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) .gup-icon {
     font-size: 18px !important;
   }
 }
 
 @media (max-width: 380px) {
-  .gup-header .slot-start .button,
-  .gup-header .slot-end .button {
+  .gup-header .slot-start .button:not(.gup-dialog *):not(.gup-dialog-backdrop *),
+  .gup-header .slot-end .button:not(.gup-dialog *):not(.gup-dialog-backdrop *) {
     font-size: 11px;
   }
 }
@@ -913,7 +918,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   gap: var(--gup-component-6);
-  padding: 32px;
+  padding-block: 32px;
 }
 
 .gup-content-header .header {
@@ -1044,6 +1049,7 @@ body {
 /* RTL: mirror the Back/Continue arrow icons so they point along the reading
    flow (same pattern as .gup-pagination__arrow-icon). Without this the
    Continue arrow keeps pointing right in Arabic. */
+:dir(rtl) .gup-wizard-footer .gup-button .gup-icon,
 [dir="rtl"] .gup-wizard-footer .gup-button .gup-icon {
   transform: scaleX(-1);
 }
@@ -1357,6 +1363,8 @@ body {
   font-family: inherit;
   width: 100%;
   text-align: start;
+  text-align: -webkit-match-parent;
+  text-align: match-parent;
 }
 
 .gup-input-field .input::placeholder {
@@ -1460,8 +1468,11 @@ body {
 }
 
 /* Live character counter ("42 / 100"). Sits at the end of the field footer;
-   when there is no hint it still stays end-aligned. */
+   when there is no hint it still stays end-aligned. Pinned LTR — the digits
+   and slash are directionless, so an RTL page would flip it to "100 / 42". */
 .gup-char-counter {
+  direction: ltr;
+  unicode-bidi: isolate;
   margin-inline-start: auto;
   color: var(--gup-color-content-secondary);
   font-size: var(--font-size-300);
@@ -1568,25 +1579,39 @@ body {
   color: var(--gup-color-states-disabled-medium);
 }
 
-/* RTL support: date, time, tel and email hold LTR content (digits and addresses
-   never mirror), but stay right-aligned so the field still reads as part of an
-   RTL form. Mirrors input-field.css upstream. */
-.gup-input-field[data-type="date"] .field-inner-wrapper,
-.gup-input-field[data-type="time"] .field-inner-wrapper,
-.gup-input-field[data-type="tel"] .field-inner-wrapper,
-.gup-input-field[data-type="email"] .field-inner-wrapper {
-  direction: ltr;
-}
-
+/* RTL support: digits, addresses, dates never mirror, so these inputs stay LTR
+   (upstream forces tel/email; the rest complete the family). The wrapper keeps
+   the page direction, so the start icon (phone, mail, calendar) lands on the
+   right in an RTL form. */
 .gup-input-field[data-type="tel"] .input,
-.gup-input-field[data-type="email"] .input {
+.gup-input-field[data-type="email"] .input,
+.gup-input-field[data-type="date"] .input,
+.gup-input-field[data-type="time"] .input,
+.gup-input-field[data-type="numeric"] .input,
+.gup-input-field[data-type="url"] .input,
+.gup-input-field[data-type="password"] .input {
   direction: ltr;
 }
 
+/* An LTR input inside an RTL form keeps its value on the RIGHT edge so the
+   field still reads as part of the form. Direction is inherited from the
+   ancestor (via [dir="rtl"], :dir(rtl), or CSS direction: rtl). */
+[dir="rtl"] .gup-input-field[data-type="tel"] .input,
+[dir="rtl"] .gup-input-field[data-type="email"] .input,
+[dir="rtl"] .gup-input-field[data-type="date"] .input,
+[dir="rtl"] .gup-input-field[data-type="time"] .input,
+[dir="rtl"] .gup-input-field[data-type="numeric"] .input,
+[dir="rtl"] .gup-input-field[data-type="url"] .input,
+[dir="rtl"] .gup-input-field[data-type="password"] .input,
+.gup-input-field[data-type="tel"] .input:dir(rtl),
+.gup-input-field[data-type="email"] .input:dir(rtl),
 .gup-input-field[data-type="date"] .input:dir(rtl),
 .gup-input-field[data-type="time"] .input:dir(rtl),
-.gup-input-field[data-type="tel"] .input:dir(rtl),
-.gup-input-field[data-type="email"] .input:dir(rtl) {
+.gup-input-field[data-type="numeric"] .input:dir(rtl),
+.gup-input-field[data-type="url"] .input:dir(rtl),
+.gup-input-field[data-type="password"] .input:dir(rtl),
+[dir="rtl"] .gup-input-field .input,
+.gup-input-field:dir(rtl) .input {
   text-align: right;
 }
 
@@ -1962,6 +1987,47 @@ body {
 
 .gup-banner .close-button .gup-icon {
   color: var(--gup-color-brand-xhigh);
+}
+
+/* ------------------------------------------------------------
+   22a. UTILITY: form-error-summary (wizard validation summary)
+   ------------------------------------------------------------ */
+.form-error-summary {
+  margin-bottom: 24px;
+}
+
+.form-error-summary__intro {
+  margin: 0 0 12px;
+}
+
+.form-error-summary ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--gup-color-content-primary);
+}
+
+.form-error-summary li + li {
+  margin-block-start: 4px;
+}
+
+.form-error-summary__link {
+  display: inline;
+  text-align: start;
+  font: inherit;
+  font-weight: 700;
+  color: var(--gup-color-negative-high, #ba1c1c);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.form-error-summary__link:hover,
+.form-error-summary__link:focus-visible {
+  text-decoration: none;
 }
 
 /* ------------------------------------------------------------
@@ -3205,6 +3271,26 @@ body {
   padding-inline-start: var(--gup-spacing-text-to-component);
 }
 
+/* Ensure dialog action buttons keep standard button metrics even when the dialog
+   is rendered inside a header slot (e.g. CancelConfirm modal). */
+.gup-dialog .gup-button .button,
+.gup-dialog .button:not(.gup-dialog__close-button) {
+  font-size: var(--font-size-400);
+  padding-block: 8px;
+  padding-inline: var(--gup-component-5);
+  gap: var(--gup-component-4);
+  line-height: var(--line-height-500);
+}
+
+.gup-dialog .gup-button .button .gup-icon,
+.gup-dialog .button:not(.gup-dialog__close-button) .gup-icon {
+  font-size: inherit;
+}
+
+.gup-dialog .gup-button--text .button {
+  text-decoration: underline;
+}
+
 .gup-dialog--small {
   max-width: 320px;
 }
@@ -4315,6 +4401,7 @@ body {
 }
 
 /* RTL: flip the arrow horizontally so it still points "back/forward" along the reading flow. */
+:dir(rtl) .gup-pagination__arrow-icon,
 [dir="rtl"] .gup-pagination__arrow-icon {
   transform: scaleX(-1);
 }
@@ -4560,6 +4647,7 @@ body {
 
 /* RTL — flip the search-icon (the magnifier handle reads natural in either direction
    but we mirror it for visual symmetry with prev/next arrows elsewhere in the system). */
+:dir(rtl) .gup-search__icon-button--submit .gup-icon,
 [dir="rtl"] .gup-search__icon-button--submit .gup-icon {
   transform: scaleX(-1);
 }

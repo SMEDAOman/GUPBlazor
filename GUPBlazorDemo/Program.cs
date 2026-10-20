@@ -1,4 +1,5 @@
 using GUPBlazorDemo.Components;
+using GUPBlazorDemo.Services;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace GUPBlazorDemo
@@ -14,6 +15,7 @@ namespace GUPBlazorDemo
                 .AddInteractiveServerComponents();
 
             builder.Services.AddGUPBlazor();
+            builder.Services.AddScoped<DemoDirectionService>();
             builder.Services.AddSingleton<DesignTokenCatalogue>();
             builder.Services.AddSingleton<ExampleSourceProvider>();
 

@@ -125,13 +125,10 @@
     .form-error-summary__intro {
         margin: 0 0 12px;
     }
-
-    /* gup.css resets ol/ul to list-style:none globally, so the markers are
-       restored here the same way .gup-rich-text does it. */
     .form-error-summary ul {
         margin: 0;
-        padding-inline-start: 1.5em;
-        list-style: revert;
+        padding: 0;
+        list-style: none;
         color: var(--gup-color-content-primary, #202024);
     }
 

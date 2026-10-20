@@ -20,10 +20,13 @@
     <label for="demo-nav-toggle" class="demo-shell__scrim" aria-hidden="true"></label>
 
     <div class="demo-shell__canvas">
-        <label for="demo-nav-toggle" class="demo-shell__burger" aria-label="Open navigation">
-            <GupIcon IconName="menu" Width="24" Height="24" />
-            <span>Catalogue</span>
-        </label>
+        <header class="demo-canvas-top-bar">
+            <label for="demo-nav-toggle" class="demo-shell__burger" aria-label="Open navigation">
+                <GupIcon IconName="menu" Width="24" Height="24" />
+                <span>Catalogue</span>
+            </label>
+            <DemoDirectionControl @rendermode="InteractiveServer" />
+        </header>
         @Body
     </div>
 
