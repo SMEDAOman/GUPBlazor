@@ -426,35 +426,6 @@
    Storybook-Style Component Direction Controls (LTR / RTL)
    ════════════════════════════════════════════════════════════════ */
 
-/* ── Top Canvas Toolbar ── */
-.demo-canvas-top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 24px;
-  background: var(--gup-color-background-elevated-container, #ffffff);
-  border-bottom: 1px solid var(--gup-color-border-low, #e2e8f0);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
-
-.demo-canvas-top-bar:not(:has(.storybook-toolbar)) {
-  display: none;
-}
-
-@media (max-width: 1023px) {
-  .demo-canvas-top-bar {
-    padding: 8px 16px;
-  }
-
-  .demo-canvas-top-bar:not(:has(.storybook-toolbar)) {
-    display: flex;
-    background: transparent;
-    border-bottom: none;
-    padding: 0;
-  }
-}
 
 /* ── Storybook Top Toolbar ── */
 .storybook-toolbar {

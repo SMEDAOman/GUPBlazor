@@ -809,6 +809,7 @@ body {
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--gup-color-border-low);
+  padding-inline: var(--gup-gutter);
 }
 
 .gup-header .navigation {
