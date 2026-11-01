@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# This is a Blazor interactive-server app: the HTML you get from a plain fetch
+# carries no code examples. Fetch the plain-markdown reference instead — one
+# request gives the conventions, a worked example, and the full component list.
+#
+#   /docs            the entry point (same file as /reference and /llms.txt)
+#   /llms-full.txt   every component in one file
+#   /ai/index.md     component index
+#   /ai/conventions.md   slots vs attributes, binding, RTL
+#   /ai/patterns.md  compositions with no component of their own
+#   /ai/types.md     services, event payloads, static lookups
+#   /ai/components/<name>.md
+
+Sitemap: /sitemap.xml

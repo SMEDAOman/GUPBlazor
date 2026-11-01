@@ -113,5 +113,7 @@ builder.Services.AddGUPBlazor();</code></pre>
 </div>
 
 @code {
-    private const string CurrentVersion = "0.3.1";
+    // Read off the referenced assembly so the install snippet cannot drift from
+    // the version actually shipped.
+    private static readonly string CurrentVersion = GupVersion.Current;
 }

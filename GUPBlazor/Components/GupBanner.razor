@@ -1,10 +1,10 @@
 @* Equivalent of <gup-banner type="neutral|success|warning|error" appearance="outline|filled" hide-icon show-close-button>
-   Named slots: Title, ChildContent (body), ActionButtons (a GupButtonGroup with two buttons)
+   Named slots: TitleContent (upstream's Title), ChildContent (body), ActionButtons (typically two GupButtons)
    Events: OnClose (fires when the close button is clicked — matches gup-close)
 *@
 @using Microsoft.AspNetCore.Components.Web
 
-<div class="gup-banner gup-banner--@TypeString() gup-banner--@Appearance @(HideIcon ? "hide-icon" : "")">
+<div class="gup-banner gup-banner--@TypeString() gup-banner--@Appearance.ToString().ToLowerInvariant() @(HideIcon ? "hide-icon" : "")">
     <div class="inner">
         <div class="track">
             @if (!HideIcon)
@@ -56,7 +56,7 @@
     [Parameter] public RenderFragment? TitleContent { get; set; }
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    /// <summary>Slot for a GupButtonGroup with (typically two) action buttons — matches the action-buttons slot.</summary>
+    /// <summary>Slot for (typically two) <c>GupButton</c> action buttons — matches the action-buttons slot.</summary>
     [Parameter] public RenderFragment? ActionButtons { get; set; }
 
     /// <summary>Fires when the close button is clicked (matches the <c>gup-close</c> event).</summary>

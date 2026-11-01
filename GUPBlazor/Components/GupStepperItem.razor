@@ -1,5 +1,5 @@
 @* Equivalent of <gup-stepper-item step-number="1" step-type="default|done|selected|and" open wizard-mode static-mode>
-   Named slot: Label (also settable via the Label attribute)
+   Named slot: LabelContent (or the plain-text Label attribute)
    Default slot: ChildContent (collapsible content of the step)
 *@
 <div class="gup-stepper-item gup-stepper-item--@StepType @(Open ? "is-open" : "") @(StaticMode ? "is-static" : "") @(WizardMode ? "is-wizard" : "")"

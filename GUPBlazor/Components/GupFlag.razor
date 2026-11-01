@@ -2,7 +2,8 @@
    Renders a country flag from the SVG set bundled under wwwroot/flags.
 
    CountryName accepts either an English country name ("Oman") or an ISO 3166-1
-   alpha-2 code ("om"), matched case-insensitively. Unknown values render nothing.
+   alpha-2 code ("om"), matched case-insensitively. An unknown value renders an
+   empty placeholder of the same size.
 
    The browser fetches each SVG on demand and caches it, so a page only downloads
    the flags it actually shows.
@@ -39,7 +40,9 @@
     /// </summary>
     [Parameter] public string? Alt { get; set; }
 
-    /// <summary>Base path the bundled flag SVGs are served from.</summary>
+    /// <summary>Base path the bundled flag SVGs are served from. A shape subfolder
+    /// (<c>4x3</c> or <c>1x1</c>) and <c>&lt;code&gt;.svg</c> are appended, so an override must
+    /// point at a directory containing those subfolders.</summary>
     [Parameter] public string BasePath { get; set; } = "_content/GUPBlazor/flags";
 
     private string? Code => GupFlagCountries.ResolveCode(CountryName);

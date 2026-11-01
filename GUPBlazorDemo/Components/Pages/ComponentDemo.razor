@@ -1,5 +1,6 @@
 @page "/"
 @rendermode InteractiveServer
+@inject NavigationManager Nav
 
 <PageTitle>Gov.om Design System — Blazor Reference</PageTitle>
 
@@ -23,6 +24,26 @@
             every component, form control, page template and layout foundation. All CSS and
             assets ship with the package; nothing requires npm.
         </PageSummary>
+        <ChildContent>
+            <div class="ref-ai-note">
+                <p class="ref-ai-note__lead">
+                    <GupIcon IconName="smart_toy" Width="20" Height="20" />
+                    <strong>Building with an AI assistant?</strong>
+                    Point it at this site and it can read the whole component reference —
+                    every parameter, slot, enum and example as plain markdown.
+                </p>
+                <p class="ref-ai-note__paths">
+                    Start at <code>@DocsUrl</code> — it carries the conventions and a worked
+                    example inline. Also <code>/ai/index.md</code> ·
+                    <code>/ai/conventions.md</code> · <code>/ai/patterns.md</code>
+                </p>
+
+                 <figure class="ref-ai-note__sample">
+                    <figcaption>Example prompt — copy this into your assistant:</figcaption>
+                    <blockquote><code>Read @DocsUrl and use GUPBlazor to build an SME licence application form.</code></blockquote>
+                </figure>
+            </div>
+        </ChildContent>
     </GupContentHeader>
 
     <div class="demo-body">
@@ -85,6 +106,16 @@
 
 @code {
     private string Query { get; set; } = "";
+    private string DocsUrl
+    {
+        get
+        {
+            var uri = new Uri(Nav.BaseUri);
+            var host = uri.IsLoopback ? uri.Authority : $"{uri.Host}{(uri.IsDefaultPort ? "" : ":" + uri.Port)}";
+            var scheme = uri.IsLoopback ? "http" : "https";
+            return $"{scheme}://{host}/docs";
+        }
+    }
 
     private int TotalCount => DemoNav.TotalCount;
     private int MatchCount => DemoNav.Sections.Sum(s => Visible(s).Count());

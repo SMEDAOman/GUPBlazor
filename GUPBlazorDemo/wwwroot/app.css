@@ -604,3 +604,56 @@
   direction: ltr !important;
   text-align: left !important;
 }
+
+.ref-ai-note {
+    margin-block-start: var(--gup-space-5);
+    padding: var(--gup-space-4);
+    border: 1px solid var(--gup-color-border-low);
+    border-radius: 8px;
+    background: var(--gup-color-background-accent-container);
+}
+
+.ref-ai-note__lead {
+    display: flex;
+    gap: var(--gup-space-2);
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin: 0;
+    font-size: var(--gup-body-sm-size);
+    line-height: 1.5;
+}
+
+.ref-ai-note__paths {
+    margin: var(--gup-space-3) 0 0;
+    padding: var(--gup-space-3);
+    border-inline-start: 3px solid var(--gup-color-border-low);
+    background: var(--gup-color-background-base);
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--gup-color-content-secondary);
+}
+
+.ref-ai-note__sample {
+    margin: var(--gup-space-3) 0 0;
+}
+
+.ref-ai-note__sample figcaption {
+    color: var(--gup-color-content-secondary);
+    font-size: var(--gup-body-sm-size);
+    margin-bottom: var(--gup-space-2);
+}
+
+.ref-ai-note__sample blockquote {
+    margin: 0;
+    padding: var(--gup-space-3);
+    border-inline-start: 3px solid var(--gup-color-border-low);
+    background: var(--gup-color-background-base);
+}
+
+.ref-ai-note__sample code {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    word-break: break-word;
+}

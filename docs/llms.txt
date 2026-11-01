@@ -1,0 +1,271 @@
+# GUPBlazor
+
+> Blazor component library implementing the gov.om (Government Unified Platform) design system for Oman government services. Version 0.3.4, targets net10.0. 69 components with WCAG 2.2 AA accessibility, full RTL support and Arabic localization. Maintained by the SMEs Development Authority (Oman).
+
+Install with `dotnet add package GUPBlazor`. Register with `builder.Services.AddGUPBlazor()`, then put `<GUPHTMLHeader />` in `<head>` and `<GUPHTMLFooter />` before `</body>` in App.razor.
+
+All component names are prefixed `Gup` (a few legacy ones use `GUP`). Component docs below are plain markdown and contain the full parameter list, slots, enums and real examples.
+
+## Rules that prevent invented parameters
+
+Read these even if you fetch nothing else. Each one is a mistake AI assistants make repeatedly.
+
+> **Do not guess a parameter, slot or enum name.** Everything you need is either in
+> the rules below or in the table further down. If something genuinely is not here,
+> fetch the component's own page (absolute URLs below). If you still cannot confirm
+> it, leave that part out and say so — a page that omits a feature compiles; a page
+> with an invented parameter name does not.
+
+**Before writing any component, check its row in *Every component at a glance* below.**
+That table lists the slots and bindable properties of all components in this file, so you
+never need to guess them — and never need to fetch another page to find them.
+
+**If your fetcher cannot open the relative links in this file**, every page here is also
+served from GitHub at absolute URLs, which need no link-following:
+
+- `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/llms.txt` — this file
+- `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/<name>.md` — one per component, e.g. `gup-input-field.md`
+- `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/conventions.md`, `/ai/types.md`, `/ai/patterns.md`
+
+Component file names are the component name in kebab-case: `GupInputField` →
+`gup-input-field.md`, `GUPWizardStack` → `gup-wizard-stack.md`. **Never guess a
+parameter name — fetch the component's page instead.**
+
+1. **There is no `Label` parameter on fields.** The label is a slot, and which slot
+   it is depends on the component: if the table below shows a `<Label>` slot, use it
+   (`GupDropdownField` does); otherwise the label goes in `<ChildContent>`
+   (`GupInputField`, `GupTextarea`, `GupCheckbox`, `GupFileUpload` and the rest).
+   Check the component's row — do not assume one field behaves like another.
+2. **Hints and errors are slots, not attributes.** `<Hint>…</Hint>` on most fields, but
+   `<HintContent>` on `GupTextarea`. `Hint="..."` as an attribute does not compile.
+3. **Using any named slot forces an explicit `<ChildContent>`** around the default
+   content. Bare text beside a named slot does not compile.
+4. **`Required` defaults to `true`** on `GupInputField`, `GupTextarea` and
+   `GupDropdownField` — the opposite of HTML. It defaults to `false` on `GupFileUpload`.
+5. **Variants are enums, passed with `@`**: `Appearance="@GupButtonAppearance.Primary"`.
+   But `GupDialog.Size` and `ToastService` severity are **strings**, not enums.
+6. **There is no `GupErrorSummary`.** The error summary is a pattern: a `GupBanner`
+   with `Type="GupBannerType.Error"` wrapping a list of link buttons.
+7. **`GupFileUpload.OnChange`** receives `IReadOnlyList<GupFileUploadFile>`, whose
+   members are `Name` (string), `Size` (long), `Type` (string), `LastModified` (long).
+   It carries metadata only — no stream or `IBrowserFile`.
+8. **Interactive components need a render mode**: put `@rendermode InteractiveServer`
+   on the page for clicks, binding, dialogs and toasts to work.
+9. **`GupCheckbox` and `GupToggle` bind `@bind-Checked`, not `@bind-Value`.**
+   Text fields, textareas and dropdowns use `@bind-Value`.
+10. **`GupContentHeader` has no `Title` slot.** The title is the `PageTitle`
+    *attribute*; its slots are `<PageSummary>`, `<Breadcrumbs>`,
+    `<PageTitleContent>`, `<PageSubtitleContent>` and `<ChildContent>`.
+11. **`IsInvalid` and `ErrorMessage` work the same on every field component**
+    — `GupInputField`, `GupTextarea`, `GupDropdownField`, `GupFileUpload`.
+12. **`GupBannerType` is `Neutral`, `Success`, `Warning`, `Error`.**
+    Appearance is a separate enum: `GupBannerAppearance.Outline` or `.Filled`.
+13. **Where a name appears both as an attribute and as a `…Content` slot**
+    (e.g. `ErrorMessage` and `<ErrorMessageContent>`), the attribute takes plain
+    text and the slot takes markup. Use one; the slot wins if both are set.
+
+### A correct field, end to end
+
+```razor
+@rendermode InteractiveServer
+@using GUPBlazor.Components
+
+<GupFormSection>
+    <Title>Business details</Title>
+    <ChildContent>
+        <GupFormList>
+            <GupInputField Name="company" Type="text" @bind-Value="_company"
+                           IsInvalid="_companyInvalid"
+                           ErrorMessage="Enter your company name">
+                <ChildContent>Company name</ChildContent>
+                <Hint>As registered on your commercial registration.</Hint>
+            </GupInputField>
+
+            <GupDropdownField Name="sector" Placeholder="Select a sector"
+                              @bind-Value="_sector">
+                <Label>Sector</Label>
+                <ChildContent>
+                    <GupDropdownMenu>
+                        <GupDropdownMenuItem Label="Manufacturing" Value="mfg" />
+                        <GupDropdownMenuItem Label="Logistics" Value="log" />
+                    </GupDropdownMenu>
+                </ChildContent>
+            </GupDropdownField>
+        </GupFormList>
+    </ChildContent>
+    <FooterContent>
+        <GupButton Appearance="@GupButtonAppearance.Primary" OnClick="Submit">
+            <ChildContent>Submit</ChildContent>
+        </GupButton>
+    </FooterContent>
+</GupFormSection>
+```
+
+## Docs
+
+- [Getting started](/ai/getting-started.md): install, register services, wire up styles and scripts, first page.
+- [Component index](/ai/index.md): every component with its summary and demo link.
+- [Conventions](/ai/conventions.md): slots vs attributes, binding, RTL, icons, read-only cascade.
+- [Design tokens](/ai/design-tokens.md): the CSS custom properties the library exports.
+- [Types, services and helpers](/ai/types.md): injectable services called from C# (`ToastService`), event payloads and config objects (`GupFileUploadFile`, `GupDataTableColumn`), and static lookups (`GupFlagCountries`).
+- [Patterns](/ai/patterns.md): compositions with no component of their own, e.g. the error summary.
+
+## Every component at a glance
+
+Slots are **child elements**, never attributes. A `@bind-` column entry means that
+property is two-way bindable. Follow the per-component link for parameters, enums
+and examples — but if you cannot, this table plus the rules above is enough to
+write correct markup without guessing.
+
+Every name below is complete and exact. If an attribute you want is not listed for a
+component, that component does not have it — do not invent one.
+
+| Component | Slots (child elements) | Attributes | Two-way bind |
+|---|---|---|---|
+| `GUPHTMLFooter` | — | — | — |
+| `GUPHTMLHeader` | — | — | — |
+| `GUPWizardStack` | `<ChildContent>` `<HeaderStart>` `<HeaderEnd>` `<PageSummary>` `<ErrorSummary>` | `ShowHeader` `NavAriaLabel` `ShowContentHeader` `PageTitle` `PageSubtitle` `ShowStepper` `StepperOpen` `ShowAllSteps` `StepLabelFormat` `StepperAppearance` `StepperClosedIcon` `StepperOpenIcon` `ShowFooter` `BackButtonText` `ContinueButtonText` `CompleteButtonText` `ShowBackIcon` `ShowContinueIcon` `ShowCompleteIcon` `ContinueIconName` `CompleteIconName` `IsLoading` `CurrentStepIndex` `IsRTL` `OnNext` `OnBack` `OnComplete` | `@bind-CurrentStepIndex` |
+| `GUPWizardStackStep` | `<ChildContent>` | `Title` `Description` `StepLabel` `HideDefaultTitle` `Locked` `SoftLockNext` `NextButtonText` `HideNextIcon` `NextIconName` `BackButtonText` `OnNext` | — |
+| `GupAccordion` | `<ChildContent>` | — | — |
+| `GupAccordionItem` | `<LabelContent>` `<ChildContent>` | `LabelShow` `LabelHide` `Open` `HideControls` `OnToggle` | `@bind-Open` |
+| `GupAccordionItemAction` | `<ChildContent>` | `IconName` | — |
+| `GupAvatar` | — | `Size` `Src` `Alt` `Label` `Status` `StatusAriaLabel` `AriaLabel` `OnClick` | `@bind-Src` `@bind-Label` `@bind-Status` |
+| `GupBadge` | — | `Type` `AriaLabel` | — |
+| `GupBadgeChip` | `<ChildContent>` `<Prefix>` `<Suffix>` `<Thumbnail>` | `Appearance` `IsFilled` `HasThumbnail` `IconOnly` `Role` `AriaLabel` | — |
+| `GupBanner` | `<TitleContent>` `<ChildContent>` `<ActionButtons>` | `Type` `Appearance` `HideIcon` `ShowCloseButton` `CloseLabel` `OnClose` | — |
+| `GupBreadcrumbs` | `<ChildContent>` | `AriaLabel` | — |
+| `GupBreadcrumbsItem` | `<ChildContent>` | `Href` `Current` `OnClick` | `@bind-Href` `@bind-Current` |
+| `GupButton` | `<ChildContent>` `<IconStart>` `<IconEnd>` | `Appearance` `Kind` `Type` `Href` `Disabled` `SoftDisabled` `WithIconOnly` `Inverted` `Label` `OpenInNewTab` `OnClick` | — |
+| `GupButtonGroup` | `<ChildContent>` | `Direction` | — |
+| `GupCallout` | `<TitleContent>` `<ChildContent>` `<FooterContent>` | `Appearance` `AriaLabel` `OnClick` | `@bind-Appearance` |
+| `GupCheckbox` | `<ChildContent>` `<Hint>` | `Name` `Value` `Checked` `Indeterminate` `Disabled` `Required` `ErrorMessage` `Size` `Appearance` `Id` `OnChange` `OnInvalid` | `@bind-Checked` `@bind-Indeterminate` |
+| `GupContentHeader` | `<Breadcrumbs>` `<PageTitleContent>` `<PageSubtitleContent>` `<PageSummary>` `<ChildContent>` | `PageTitle` `PageSubtitle` | — |
+| `GupDataSheet` | `<ChildContent>` | `AriaLabel` `OnClick` | — |
+| `GupDataTable` | `<RowTemplate>` `<ChildContent>` `<FiltersContent>` `<PaginationContent>` | `TableTitle` `Description` `SearchPlaceholder` `SearchValue` `ResultsCount` `TotalItems` `CurrentPage` `ItemsPerPage` `ShowSearch` `ShowFilters` `Filters` `AppliedFilters` `Columns` `FiltersButtonText` `ClearAllText` `ViewButtonText` `ViewButtonIcon` `ShowViewButton` `MobileActionButtons` `EmptyTitle` `EmptyDescription` `FilterPanelOpen` `Responsive` `Items` `SearchTextSelector` `OnSearch` `OnPageChange` `OnClearFilters` `OnViewClick` `OnFilterApply` `OnMobileActionClick` | `@bind-SearchValue` `@bind-ResultsCount` `@bind-CurrentPage` `@bind-AppliedFilters` `@bind-FilterPanelOpen` |
+| `GupDetails` | `<LabelContent>` `<ChildContent>` | `Open` `ContentAppearance` `ClosedIcon` `OpenIcon` `ToggleButtonTitle` `IconHidden` `CloseButtonLabel` `OnToggle` | `@bind-Open` |
+| `GupDialog` | `<ChildContent>` `<ActionButtons>` | `IsOpen` `Heading` `HideCloseButton` `CloseLabel` `CloseOnBackdropClick` `Size` `OnClose` | — |
+| `GupDivider` | `<ChildContent>` | `Appearance` `Location` `Gap` `AriaLabel` `OnClick` | `@bind-Appearance` `@bind-Location` `@bind-Gap` |
+| `GupDropdownField` | `<Label>` `<Hint>` `<ChildContent>` | `Name` `Placeholder` `Disabled` `Required` `IsInvalid` `Loading` `Clearable` `ErrorMessage` `DisplayValue` `ClearLabel` `LoadingLabel` `MultipleValuesLabel` `LabelHidden` `Attachment` `Value` `OnChange` `OnMultiChange` `OnMultiApplied` `OnOpen` `OnClose` `OnClear` `OnInvalid` | `@bind-Value` |
+| `GupDropdownMenu` | `<ChildContent>` | `SearchEnabled` `Multiple` `AriaLabel` `NoItemsLabel` `SearchNoResultsLabel` `SearchPlaceholder` `ItemsSelectedButtonLabel` `NoSelectionButtonLabel` `DoneButtonText` | — |
+| `GupDropdownMenuItem` | `<ChildContent>` | `Label` `Value` `Selected` `Disabled` | — |
+| `GupFileItem` | `<ChildContent>` | `FileName` `Subtitle` `Url` `ThumbnailSrc` `ThumbnailAlt` | — |
+| `GupFileUpload` | `<ChildContent>` `<Hint>` `<ExtraAction>` | `Name` `FileInputLabel` `ItemDeleteLabel` `Accept` `Multiple` `Required` `IsFullWidth` `ErrorMessage` `IsInvalid` `AllowThumbnails` `SizeValidationMessage` `MaxFileSize` `OnChange` | — |
+| `GupFilterChip` | `<ChildContent>` | `Kind` `Disabled` `Href` `HideCloseIcon` `AriaLabel` `OnClick` | `@bind-Kind` `@bind-Disabled` `@bind-Href` `@bind-HideCloseIcon` |
+| `GupFilterChipWrapper` | `<Label>` `<ChildContent>` | `ClearLabel` `AriaLabel` `OnClearAll` | `@bind-ClearLabel` |
+| `GupFlag` | — | `CountryName` `Shape` `Size` `Alt` `BasePath` | — |
+| `GupFlyout` | `<ChildContent>` `<FooterContent>` | `Dir` `IsRTL` `Heading` `Position` `IsOpen` `HideCloseButton` `CloseLabel` `Backdrop` `CloseOnBackdropClick` `CloseOnEscape` `OnOpen` `OnClose` | `@bind-Position` `@bind-IsOpen` |
+| `GupFormList` | `<ChildContent>` | — | — |
+| `GupFormSection` | `<Title>` `<ChildContent>` `<FooterContent>` | `Heading` `OnFooterClick` | `@bind-Heading` |
+| `GupHeader` | `<Start>` `<End>` | `NavAriaLabel` | — |
+| `GupIcon` | — | `IconName` `Width` `Height` `Filled` `Weight` `Grade` `RtlFlipEnabled` `FillColor` | — |
+| `GupImage` | `<CaptionContent>` `<ErrorContent>` | `Src` `Alt` `ErrorMessage` `Loading` `Width` `Height` `OnError` `OnLoad` | `@bind-Src` `@bind-Alt` `@bind-ErrorMessage` `@bind-Loading` `@bind-Width` `@bind-Height` |
+| `GupInputField` | `<ChildContent>` `<Prefix>` `<Suffix>` `<InputStart>` `<InputEnd>` `<Hint>` `<ErrorMessageContent>` `<Popup>` | `Name` `Type` `Placeholder` `Value` `Disabled` `Readonly` `Required` `MinLength` `MaxLength` `Min` `Max` `Pattern` `Step` `LabelHidden` `ErrorMessage` `IsInvalid` `StrictNumeric` `InputRole` `AriaControlsId` `AriaExpandedState` `AriaHasPopupType` `AriaActiveDescendantId` `OnValueChange` `OnChange` `OnKeyDown` `OnFocus` `OnInvalid` | `@bind-Value` |
+| `GupLabelledItem` | `<LabelContent>` `<IconContent>` `<ChildContent>` | `Label` `AriaLabel` `OnClick` | `@bind-Label` |
+| `GupLink` | `<ChildContent>` | `Kind` `Size` `Severity` `Href` `Target` `OpenInNewTab` `Disabled` `OnClick` | — |
+| `GupLogo` | — | `Appearance` `Title` `Inverted` `Href` `Size` | — |
+| `GupPageStatus` | `<TitleContent>` `<ChildContent>` `<ActionContent>` | `Type` `PageTitle` `OnActionClick` | `@bind-Type` `@bind-PageTitle` |
+| `GupPagination` | — | `TotalPages` `CurrentPage` `Kind` `PrevLabel` `PrevTitle` `PrevLink` `NextLabel` `NextTitle` `NextLink` `AriaLabel` `OnPageChange` `OnPrevClick` `OnNextClick` | `@bind-TotalPages` `@bind-CurrentPage` `@bind-Kind` |
+| `GupRadioButton` | `<ChildContent>` `<Hint>` | `Name` `Value` `Selected` `Disabled` `Size` `Required` `OnChange` `OnFocus` `OnBlur` | — |
+| `GupRadioButtonGroup` | `<Hint>` `<ChildContent>` | `Label` `Name` `Value` `Required` `ErrorMessage` `IsInvalid` `OnChange` `OnInvalid` | `@bind-Value` |
+| `GupReadOnlyRegion` | `<ChildContent>` | `ReadOnly` | — |
+| `GupRichText` | `<ChildContent>` | — | — |
+| `GupScreenReaderText` | `<ChildContent>` | `Text` `As` `Role` `AriaLive` `OnRendered` | `@bind-Text` `@bind-As` `@bind-Role` `@bind-AriaLive` |
+| `GupSearch` | — | `Name` `Label` `Placeholder` `Value` `Disabled` `SearchLabel` `ResetLabel` `OnValueChange` `OnSearch` `OnClear` `OnClick` | `@bind-Value` `@bind-Disabled` |
+| `GupSkipLink` | `<ChildContent>` | `Href` | — |
+| `GupSpinner` | — | `Size` `Pixels` `Label` `Text` `LabelHidden` | — |
+| `GupStepper` | `<ChildContent>` | `ToggleAllDisplayed` `ShowAllLabel` `HideAllLabel` `WizardMode` `StaticMode` `Continued` | — |
+| `GupStepperItem` | `<LabelContent>` `<ChildContent>` | `Label` `StepNumber` `StepType` `LabelAnd` `WizardMode` `StaticMode` `Open` `LabelShow` `LabelHide` | — |
+| `GupTab` | `<ChildContent>` `<IconStart>` `<IconEnd>` | `Disabled` `Selected` `Label` `OnClick` | — |
+| `GupTabPanel` | `<ChildContent>` | — | — |
+| `GupTable` | `<ChildContent>` | `Responsive` | — |
+| `GupTableCell` | `<ChildContent>` | `Type` `Label` `AdditionalAttributes` | — |
+| `GupTableRow` | `<ChildContent>` | — | — |
+| `GupTabs` | `<ChildContent>` | `Appearance` `IsFullWidth` `SelectedIndex` `OnSelectedIndexChange` | `@bind-SelectedIndex` |
+| `GupTabsNavigation` | `<ChildContent>` | — | — |
+| `GupTextarea` | `<ChildContent>` `<HintContent>` | `Name` `Placeholder` `Value` `Disabled` `Readonly` `Required` `Rows` `Minlength` `Maxlength` `ErrorMessage` `IsInvalid` `OnValueChange` `OnChange` `OnKeyPress` `OnInvalid` | `@bind-Value` |
+| `GupToast` | `<ChildContent>` | `Severity` `CloseLabel` `OnRemove` | — |
+| `GupToastContainer` | `<ChildContent>` | — | — |
+| `GupToggle` | `<ChildContent>` `<Hint>` | `Name` `Checked` `Disabled` `Readonly` `KnobLocation` `Id` `OnChange` | `@bind-Checked` |
+| `GupTooltip` | `<Trigger>` `<ChildContent>` | `Title` `Hint` `Target` `Offset` `Placement` `TriggerOn` `IsOpen` `ShowArrow` `MaxWidth` `MaxHeight` `CloseOnOutsideClick` `CloseOnEscape` `OnShow` `OnHide` | `@bind-Placement` `@bind-IsOpen` |
+| `GupTrack` | `<ChildContent>` | `Gap` `Direction` `HorizontalAlignment` `VerticalAlignment` `ItemsEqual` `IsMultiline` | — |
+| `GupWizard` | — | — | — |
+| `GupWizardFooter` | `<Start>` `<End>` | `NavAriaLabel` | — |
+| `GupWizardMain` | `<ChildContent>` | — | — |
+
+## Components, with summaries
+
+- [GUPHTMLFooter](/ai/components/gup-html-footer.md): Emits the scripts GUPBlazor needs. Place just before </body>.
+- [GUPHTMLHeader](/ai/components/gup-html-header.md): Emits the stylesheet, font and design-token links GUPBlazor needs. Place inside <head>.
+- [GUPWizardStack](/ai/components/gup-wizard-stack.md): Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
+- [GUPWizardStackStep](/ai/components/gup-wizard-stack-step.md): Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
+- [GupAccordion](/ai/components/gup-accordion.md): Collapsible sections, single or multiple open, including item actions.
+- [GupAccordionItem](/ai/components/gup-accordion-item.md): Part of the Accordion component set — see the Accordion page for how it composes.
+- [GupAccordionItemAction](/ai/components/gup-accordion-item-action.md): Part of the Accordion component set — see the Accordion page for how it composes.
+- [GupAvatar](/ai/components/gup-avatar.md): User avatar from initials or an image.
+- [GupBadge](/ai/components/gup-badge.md): Status badges in the full colour range.
+- [GupBadgeChip](/ai/components/gup-badge-chip.md): Compact status chips with optional icon.
+- [GupBanner](/ai/components/gup-banner.md): Page-level messages in four severities, outline and filled appearances.
+- [GupBreadcrumbs](/ai/components/gup-breadcrumbs.md): Trail with current-item state; collapses to first and last below 599px.
+- [GupBreadcrumbsItem](/ai/components/gup-breadcrumbs-item.md): Part of the Breadcrumbs component set — see the Breadcrumbs page for how it composes.
+- [GupButton](/ai/components/gup-button.md): Button appearances, icons, disabled states, and button groups.
+- [GupButtonGroup](/ai/components/gup-button-group.md): Groups of related buttons, with the stacking behaviour used on mobile.
+- [GupCallout](/ai/components/gup-callout.md): Block quote with optional author, in three appearances.
+- [GupCheckbox](/ai/components/gup-checkbox.md): Single, grouped and indeterminate states.
+- [GupContentHeader](/ai/components/gup-content-header.md): Page title, summary and optional actions at the top of a page.
+- [GupDataSheet](/ai/components/gup-data-sheet.md): Bordered card grouping labelled items — order summaries and similar.
+- [GupDataTable](/ai/components/gup-data-table.md): Table chrome around GupTable — search, filter panel with removable chips, empty state, pagination footer.
+- [GupDetails](/ai/components/gup-details.md): Single disclosure with quote, sink and none appearances.
+- [GupDialog](/ai/components/gup-dialog.md): Modal in five sizes including fullscreen, with action buttons.
+- [GupDivider](/ai/components/gup-divider.md): Horizontal and vertical rules with spacing options.
+- [GupDropdownField](/ai/components/gup-dropdown-field.md): Part of the Dropdown component set — see the Dropdown page for how it composes.
+- [GupDropdownMenu](/ai/components/gup-dropdown-menu.md): Part of the Dropdown component set — see the Dropdown page for how it composes.
+- [GupDropdownMenuItem](/ai/components/gup-dropdown-menu-item.md): Part of the Dropdown component set — see the Dropdown page for how it composes.
+- [GupFileItem](/ai/components/gup-file-item.md): A single uploaded file row with size, link and remove action.
+- [GupFileUpload](/ai/components/gup-file-upload.md): Drag-and-drop or browse, with file list and remove actions.
+- [GupFilterChip](/ai/components/gup-filter-chip.md): Removable chips for active filters.
+- [GupFilterChipWrapper](/ai/components/gup-filter-chip-wrapper.md): Part of the Filter chip component set — see the Filter chip page for how it composes.
+- [GupFlag](/ai/components/gup-flag.md): Country flags in rectangle and circle shapes.
+- [GupFlyout](/ai/components/gup-flyout.md): Side panel from any edge — the mobile-friendly home for add-row forms.
+- [GupFormList](/ai/components/gup-form-list.md): Part of the Form list component set — see the Form list page for how it composes.
+- [GupFormSection](/ai/components/gup-form-section.md): Titled section with optional footer for action buttons.
+- [GupHeader](/ai/components/gup-header.md): The service header — brand, service name, language toggle and account area.
+- [GupIcon](/ai/components/gup-icon.md): Part of the Icons component set — see the Icons page for how it composes.
+- [GupImage](/ai/components/gup-image.md): Responsive image with aspect-ratio and object-fit control.
+- [GupInputField](/ai/components/gup-input-field.md): Single-line text with label, hint, error and read-only states.
+- [GupLabelledItem](/ai/components/gup-labelled-item.md): Part of the Labelled item component set — see the Labelled item page for how it composes.
+- [GupLink](/ai/components/gup-link.md): Part of the Button component set — see the Button page for how it composes.
+- [GupLogo](/ai/components/gup-logo.md): GupLogo in icon and horizontal lockups, with inversion for dark surfaces.
+- [GupPageStatus](/ai/components/gup-page-status.md): Empty, error and loading states for a whole page.
+- [GupPagination](/ai/components/gup-pagination.md): Page controls with previous/next and page-number buttons.
+- [GupRadioButton](/ai/components/gup-radio-button.md): Radio groups, horizontal and vertical.
+- [GupRadioButtonGroup](/ai/components/gup-radio-button-group.md): Part of the Radio button component set — see the Radio button page for how it composes.
+- [GupReadOnlyRegion](/ai/components/gup-read-only-region.md): Part of the Read-only cascade component set — see the Read-only cascade page for how it composes.
+- [GupRichText](/ai/components/gup-rich-text.md): Prose block that styles headings, lists and links coming from a CMS or editor.
+- [GupScreenReaderText](/ai/components/gup-screen-reader-text.md): Part of the Screenreader text component set — see the Screenreader text page for how it composes.
+- [GupSearch](/ai/components/gup-search.md): Search field with submit and clear affordances.
+- [GupSkipLink](/ai/components/gup-skip-link.md): Keyboard-only link that jumps past the header to main content.
+- [GupSpinner](/ai/components/gup-spinner.md): Indeterminate loading indicator in several sizes.
+- [GupStepper](/ai/components/gup-stepper.md): The wizard progress indicator, with stepper items in complete, current and upcoming states.
+- [GupStepperItem](/ai/components/gup-stepper-item.md): Part of the Stepper component set — see the Stepper page for how it composes.
+- [GupTab](/ai/components/gup-tab.md): Part of the Tabs component set — see the Tabs page for how it composes.
+- [GupTabPanel](/ai/components/gup-tab-panel.md): Part of the Tabs component set — see the Tabs page for how it composes.
+- [GupTable](/ai/components/gup-table.md): Part of the Table & table cell component set — see the Table & table cell page for how it composes.
+- [GupTableCell](/ai/components/gup-table-cell.md): Part of the Table & table cell component set — see the Table & table cell page for how it composes.
+- [GupTableRow](/ai/components/gup-table-row.md): Part of the Table & table cell component set — see the Table & table cell page for how it composes.
+- [GupTabs](/ai/components/gup-tabs.md): Default, toggle and vertical appearances, with tab panels and tabs navigation.
+- [GupTabsNavigation](/ai/components/gup-tabs-navigation.md): Part of the Tabs component set — see the Tabs page for how it composes.
+- [GupTextarea](/ai/components/gup-textarea.md): Part of the Textarea field component set — see the Textarea field page for how it composes.
+- [GupToast](/ai/components/gup-toast.md): Part of the Toast & toast container component set — see the Toast & toast container page for how it composes.
+- [GupToastContainer](/ai/components/gup-toast-container.md): Part of the Toast & toast container component set — see the Toast & toast container page for how it composes.
+- [GupToggle](/ai/components/gup-toggle.md): On/off switch with label and hint.
+- [GupTooltip](/ai/components/gup-tooltip.md): Hover and focus tooltip with placement options.
+- [GupTrack](/ai/components/gup-track.md): GupTrack — the spacing primitive used to lay out rows and columns on the design system scale.
+- [GupWizard](/ai/components/gup-wizard.md): Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
+- [GupWizardFooter](/ai/components/gup-wizard-footer.md): Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
+- [GupWizardMain](/ai/components/gup-wizard-main.md): Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
+
+## Optional
+
+- [Everything in one file](/llms-full.txt): all component docs concatenated. **~350 KB** — many fetchers truncate or refuse it; prefer the per-component pages.
+- [Repository](https://github.com/SMEDAOman/GUPBlazor): source, issues, pull requests.
+- [NuGet package](https://www.nuget.org/packages/GUPBlazor): release history.

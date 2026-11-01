@@ -36,9 +36,14 @@ namespace GUPBlazorDemo
             }
 
             app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+            app.UseAiDocLinks();
             app.UseAntiforgery();
 
             app.MapStaticAssets();
+
+            // Before the Blazor catch-all, so /llms.txt and /ai/** are not swallowed by it.
+            app.MapAiDocs();
+
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 

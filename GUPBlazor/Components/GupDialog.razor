@@ -58,6 +58,8 @@
     [Parameter] public bool HideCloseButton { get; set; }
     [Parameter] public string CloseLabel { get; set; } = "Close";
     [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+    /// <summary>Dialog width: <c>small</c>, <c>medium</c> (default), <c>large</c>, <c>xl</c>
+    /// or <c>fullscreen</c>. An unrecognised value falls back to medium.</summary>
     [Parameter] public string Size { get; set; } = "medium";
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public RenderFragment? ActionButtons { get; set; }

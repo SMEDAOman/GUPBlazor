@@ -1,7 +1,9 @@
 @* Equivalent of <gup-table-cell type="header|rowheader|data">
-   type="rowheader" renders as <th scope="row">, "header" as <th scope="col">, default as <td>
+   type="rowheader" renders as <th scope="row">, "header" (alias "head") as <th scope="col">, default as <td>
 *@
-@if (Type == "header")
+@* "head" is accepted as an alias: it silently fell through to <td>, losing the
+   column header from the accessibility tree. *@
+@if (Type is "header" or "head")
 {
     <th class="gup-table-cell gup-table-cell--header" scope="col" @attributes="AdditionalAttributes">
         <div class="wrapper">@ChildContent</div>

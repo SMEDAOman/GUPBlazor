@@ -135,6 +135,99 @@ dotnet run --project GUPBlazorDemo/GUPBlazorDemo.csproj
 
 ---
 
+## 🤖 AI / LLM-friendly reference
+
+The demo is a Blazor **interactive server** app, so a plain web fetch of a demo page returns
+the prerender — sidebar chrome and rendered components, but **no code**, because "Show code"
+only appears once the SignalR circuit connects. Agents never get that far.
+
+So the same sources are also published as plain markdown, which any AI can fetch directly:
+
+| URL | What it is |
+|---|---|
+| `/docs` | **The entry point.** What the library is, the rules that stop an AI inventing parameter names, a worked example, and a link per component. `/reference` and `/llms.txt` serve the same file; `/llms.txt` exists because crawlers look for it by [convention](https://llmstxt.org). |
+| `/llms-full.txt` | Every component in one file — one fetch for the whole API surface. |
+| `/ai/index.md` | Component index with summaries and demo links. |
+| `/ai/components/<name>.md` | Per component: parameters, defaults, bindable props, slots, events, enums, cascading values, and real examples. |
+| `/ai/getting-started.md` | Install, register, wire up, first page. |
+| `/ai/conventions.md` | The rules a signature doesn't show — slots vs attributes, binding, RTL, read-only cascade. |
+| `/ai/design-tokens.md` | Every CSS custom property, read from `gup.css`. |
+
+The same files are committed under [`docs/`](docs/), so they are fetchable from GitHub
+without anything running:
+
+```
+https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/llms.txt
+https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-button.md
+```
+
+### Point an AI at it
+
+Name `/docs` explicitly. Discovery hints exist — a `<link rel="alternate">` in every
+page's `<head>`, a `Link` response header naming that page's own component doc, and
+`robots.txt` — but fetchers are not obliged to follow them, and in testing most did not.
+One word in the prompt is what works reliably:
+
+> Read gupdesign.sme.gov.om/docs and use GUPBlazor to build an SME licence application
+> form: company name, sector, contact email and a file upload for the trade licence.
+
+> Read gupdesign.sme.gov.om/docs, then build a three-step wizard for a grant application
+> using GUPBlazor.
+
+A single fetch of `/docs` is enough: it carries the conventions and a worked form inline,
+so an assistant that cannot follow links still gets the rules rather than guessing.
+
+Working in a repo that already references the package, no URL needed:
+
+> This project uses GUPBlazor. Add a review step to the application form, matching how the
+> other pages compose their fields.
+
+If an AI starts guessing parameter names or writing `Hint="..."` as an attribute, it has not
+read the reference — tell it to fetch `/docs` from the site and try again.
+
+### Running it locally
+
+The endpoints work against a local run with no extra setup:
+
+```bash
+dotnet run --project GUPBlazorDemo
+# then: http://localhost:5043/docs
+#       http://localhost:5043/ai/index.md
+#       http://localhost:5043/ai/components/gup-button.md
+```
+
+Internal links are **root-relative** (`/ai/index.md`), so the same committed files resolve
+correctly on `localhost`, in a container, and on `raw.githubusercontent.com` — no host is
+baked in. Point an AI at your local run the same way you would at production:
+
+> Use the GUPBlazor design system at http://localhost:5043 to build an SME licence form.
+
+This only works for an AI running on your machine (Claude Code, Copilot, an IDE agent).
+Browser chats fetch from their own servers and cannot reach `localhost`.
+
+### Regenerating
+
+The docs are generated from the component sources, the compiler's XML docs, `DemoNav.cs` and
+the demo pages' own `<DemoExample>` markup — so the examples are the markup that really
+renders, and nothing is hand-maintained:
+
+```bash
+dotnet build GUPBlazor -c Release    # generates GUPBlazor.xml
+dotnet run --project tools/AiDocsGen
+```
+
+Build the library first: the generator reads its XML docs for the enum and type summaries,
+and warns if they are missing rather than quietly dropping them.
+
+Run it after adding a component or changing a parameter. The Docker build runs it
+automatically, so a container image always serves a matching reference.
+
+Pass `--base-url https://your-host` only if you need absolute links (for a published site
+where something will rewrite or syndicate the markdown). Don't commit the result — absolute
+URLs pin the files to one host, which is what the relative default avoids.
+
+---
+
 ## 🧩 Available Components (66)
 
 - **Layout & Structure** — `GupHeader`, `GupContentHeader`, `GupFormSection`, `GupTrack`, `GupDivider`, `GupSkipLink`
