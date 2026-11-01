@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToggle.razor`
-> Live demo: /demo/inputs/toggle
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/toggle
 
 On/off switch with label and hint.
 
@@ -124,6 +124,4 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-toggle.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

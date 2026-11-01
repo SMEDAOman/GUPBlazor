@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GUPWizardStack.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -69,7 +69,7 @@ High-level wizard layout: wires GupHeader, GupContentHeader, GupWizardMain (with
 | `OnBack` | `EventCallback<GupWizardNavArgs>` |  |
 | `OnComplete` | `EventCallback<int>` |  |
 
-> Members of `GupWizardNavArgs` are documented in [support types](/ai/types.md).
+> Members of `GupWizardNavArgs` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Examples
 
@@ -190,6 +190,4 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard-stack.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

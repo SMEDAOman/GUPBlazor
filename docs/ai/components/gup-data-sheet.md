@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDataSheet.razor`
-> Live demo: /demo/data-sheet
+> Live demo: https://gupdesign.sme.gov.om/demo/data-sheet
 
 Bordered card grouping labelled items — order summaries and similar.
 
@@ -167,6 +167,4 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-data-sheet.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

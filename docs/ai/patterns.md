@@ -7,7 +7,7 @@
 
 A validation summary that lists every invalid field and links to each one. There is no `GupErrorSummary` component — it is a `GupBanner` with `Type=Error` wrapping a list of buttons, plus `role="alert"` on the wrapper so assistive tech announces it.
 
-Live demo: /demo/error-summary
+Live demo: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/demo/error-summary
 
 <!-- from GUPBlazorDemo/Components/Pages/Demo/ErrorSummary.razor -->
 ```razor
@@ -32,7 +32,7 @@ Live demo: /demo/error-summary
 
 Adding rows to a table from a flyout form, rather than editing in place.
 
-Live demo: /demo/add-row
+Live demo: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/demo/add-row
 
 <!-- from GUPBlazorDemo/Components/Pages/Demo/Patterns/AddRow.razor -->
 ```razor
@@ -60,7 +60,7 @@ Live demo: /demo/add-row
 
 The standard address field set, in the order and grouping services use.
 
-Live demo: /demo/address-form
+Live demo: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/demo/address-form
 
 <!-- from GUPBlazorDemo/Components/Pages/Demo/Patterns/AddressForm.razor -->
 ```razor
@@ -104,4 +104,4 @@ Live demo: /demo/address-form
 
 ---
 
-Full index: /ai/index.md
+Full index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md

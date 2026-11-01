@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizard.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -14,6 +14,4 @@ Part of the Wizard main & footer component set — see the Wizard main & footer 
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

@@ -17,6 +17,11 @@ public static class AiDocsEndpoints
     // them abandon the URL.
     private static readonly string[] Verbs = ["GET", "HEAD"];
 
+    /// Same files, served without this site's network constraints. Advertised only
+    /// in a Link header so it never appears in the documentation text.
+    private const string GitHubMirror =
+        "https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs";
+
     /// Advertises the markdown reference on every HTML response via Link headers, so a
     /// fetcher sees it without parsing <head>. Demo pages additionally point at their own
     /// component doc: landing on /demo/inputs/text otherwise gives no hint that
@@ -49,6 +54,24 @@ public static class AiDocsEndpoints
             ctx.Response.OnStarting(() =>
             {
                 var type = ctx.Response.ContentType;
+
+                // On the doc responses themselves, advertise the GitHub mirror as a
+                // canonical alternate. A fetcher that cannot follow this site's relative
+                // links can pick it up from the header; readers never see it.
+                if (type is not null && type.Contains("text/plain", StringComparison.OrdinalIgnoreCase))
+                {
+                    var p = ctx.Request.Path.Value ?? "";
+                    if (p.StartsWith("/ai/", StringComparison.OrdinalIgnoreCase)
+                        || p is "/docs" or "/reference" or "/llms.txt" or "/llms-full.txt")
+                    {
+                        var mirrored = p is "/docs" or "/reference" ? "/llms.txt" : p;
+                        ctx.Response.Headers["Link"] =
+                            $"<{GitHubMirror}{mirrored}>; rel=\"alternate\"; type=\"text/plain\"";
+                    }
+
+                    return Task.CompletedTask;
+                }
+
                 if (type is not null && type.Contains("text/html", StringComparison.OrdinalIgnoreCase))
                 {
                     var links = new List<string>

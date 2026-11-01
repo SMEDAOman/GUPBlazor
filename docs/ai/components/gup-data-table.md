@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDataTable.razor`
-> Live demo: /demo/data-table
+> Live demo: https://gupdesign.sme.gov.om/demo/data-table
 
 Table chrome around GupTable — search, filter panel with removable chips, empty state, pagination footer.
 
@@ -75,7 +75,7 @@ Equivalent of <gup-data-table title="..." description="..." show-search show-fil
 | `OnFilterApply` | `EventCallback<IReadOnlyList<GupAppliedFilter>>` | Fires when Apply is pressed in the filter panel, with the applied filters. |
 | `OnMobileActionClick` | `EventCallback<string>` | Fires when one of the `MobileActionButtons` is pressed, with its label. |
 
-> Members of `GupAppliedFilter` are documented in [support types](/ai/types.md).
+> Members of `GupAppliedFilter` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Enums
 
@@ -245,6 +245,4 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-data-table.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

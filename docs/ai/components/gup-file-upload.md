@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFileUpload.razor`
-> Live demo: /demo/file-upload
+> Live demo: https://gupdesign.sme.gov.om/demo/file-upload
 
 Drag-and-drop or browse, with file list and remove actions.
 
@@ -51,7 +51,7 @@ Equivalent of <gup-file-upload name="..." accept="..." multiple required full-wi
 |---|---|---|
 | `OnChange` | `EventCallback<IReadOnlyList<GupFileUploadFile>>` |  |
 
-> Members of `GupFileUploadFile` are documented in [support types](/ai/types.md).
+> Members of `GupFileUploadFile` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Cascading values consumed
 
@@ -139,6 +139,4 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-file-upload.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GUPWizardStackStep.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -47,7 +47,7 @@ A single step inside a <GUPWizardStack>. Registers itself with the parent so the
 |---|---|---|
 | `OnNext` | `EventCallback<GupWizardNavArgs>` | Step-level Next handler. Fires before the wizard-level `OnNext`; set `args.Cancel = true` to abort navigation. |
 
-> Members of `GupWizardNavArgs` are documented in [support types](/ai/types.md).
+> Members of `GupWizardNavArgs` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Cascading values consumed
 
@@ -108,6 +108,4 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard-stack-step.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

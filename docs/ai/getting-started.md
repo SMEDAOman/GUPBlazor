@@ -95,6 +95,6 @@ mode. Use `@rendermode InteractiveServer` on the page, or set it per component.
 
 ## Where to look next
 
-- [Conventions](/ai/conventions.md) — slots vs attributes, binding, RTL, icons.
-- [Component index](/ai/index.md) — all 69 components.
-- [Everything in one file](/llms-full.txt) — single fetch, full reference.
+- [Conventions](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/conventions.md) — slots vs attributes, binding, RTL, icons.
+- [Component index](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md) — all 69 components.
+- [Everything in one file](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/llms-full.txt) — single fetch, full reference.

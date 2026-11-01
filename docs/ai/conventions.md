@@ -142,4 +142,4 @@ Components are prefixed `Gup`. Four legacy ones use an uppercase `GUP` — `GUPH
 
 ---
 
-Full index: /ai/index.md
+Full index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md

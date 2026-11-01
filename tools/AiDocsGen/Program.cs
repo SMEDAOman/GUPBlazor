@@ -8,6 +8,10 @@ var outDir = Arg("--out") ?? Path.Combine(repoRoot, "docs", "ai");
 // Pass --base-url to absolutise them for a known public host.
 var baseUrl = (Arg("--base-url") ?? "").TrimEnd('/');
 
+// Live demo pages are on the site itself, never in the docs tree, so they keep their
+// own host even when --base-url points the doc links at a file mirror.
+var siteUrl = (Arg("--site-url") ?? "").TrimEnd('/');
+
 var libDir = Path.Combine(repoRoot, "GUPBlazor", "Components");
 var demoPagesDir = Path.Combine(repoRoot, "GUPBlazorDemo", "Components", "Pages");
 var navFile = Path.Combine(repoRoot, "GUPBlazorDemo", "Components", "DemoNav.cs");
@@ -200,7 +204,7 @@ foreach (var extra in new[] { "GUPHTMLHeader", "GUPHTMLFooter" })
 
 Console.WriteLine($"  parsed     : {components.Count} components, {components.Sum(c => c.Parameters.Count)} parameters");
 
-var writer = new MarkdownWriter(baseUrl, version);
+var writer = new MarkdownWriter(baseUrl, version, siteUrl);
 
 var componentsDir = Path.Combine(outDir, "components");
 Directory.CreateDirectory(componentsDir);

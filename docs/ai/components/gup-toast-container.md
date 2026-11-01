@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToastContainer.razor`
-> Live demo: /demo/toasts
+> Live demo: https://gupdesign.sme.gov.om/demo/toasts
 
 Part of the Toast & toast container component set — see the Toast & toast container page for how it composes.
 
@@ -28,6 +28,4 @@ Equivalent of <gup-toast-container>. Mount once (typically in MainLayout) and ca
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-toast-container.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

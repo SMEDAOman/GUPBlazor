@@ -131,4 +131,4 @@ ISO 3166-1 alpha-2 code to English country name, covering every flag bundled und
 
 ---
 
-Full index: /ai/index.md
+Full index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md

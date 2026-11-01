@@ -2,7 +2,7 @@
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordionItemAction.razor`
-> Live demo: /demo/accordion
+> Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
 Part of the Accordion component set — see the Accordion page for how it composes.
 
@@ -34,6 +34,4 @@ Equivalent of <gup-accordion-item-action icon-name="..."> An accordion item togg
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-accordion-item-action.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs

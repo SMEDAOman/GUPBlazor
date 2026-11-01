@@ -3,11 +3,8 @@ using System.Text;
 
 namespace AiDocsGen;
 
-public sealed class MarkdownWriter(string baseUrl, string version)
+public sealed class MarkdownWriter(string baseUrl, string version, string siteUrl = "")
 {
-    /// Absolute, link-free fallback: GitHub raw serves the same files, so an assistant
-    /// whose fetcher refuses relative or constructed URLs can still reach them.
-    private const string RawBase = "https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs";
 
     public string Component(ComponentDoc c)
     {
@@ -19,7 +16,7 @@ public sealed class MarkdownWriter(string baseUrl, string version)
         sb.AppendLine($"> Source: `GUPBlazor/Components/{c.File}`");
         if (c.DemoPage is not null)
         {
-            sb.AppendLine($"> Live demo: {baseUrl}{c.DemoPage.Route}");
+            sb.AppendLine($"> Live demo: {siteUrl}{c.DemoPage.Route}");
         }
 
         sb.AppendLine();
@@ -58,8 +55,7 @@ public sealed class MarkdownWriter(string baseUrl, string version)
         sb.AppendLine("---");
         sb.AppendLine();
         sb.AppendLine($"Full component index: {baseUrl}/ai/index.md · Start here: {baseUrl}/docs");
-        sb.AppendLine();
-        sb.AppendLine($"Absolute mirror, if relative links do not resolve for you: `{RawBase}/ai/components/{Slug(c.Name)}.md`");
+
 
         return sb.ToString();
     }
@@ -252,7 +248,7 @@ public sealed class MarkdownWriter(string baseUrl, string version)
 
         foreach (var c in components.OrderBy(c => c.Name, StringComparer.Ordinal))
         {
-            var demo = c.DemoPage is null ? "—" : $"[demo]({baseUrl}{c.DemoPage.Route})";
+            var demo = c.DemoPage is null ? "—" : $"[demo]({siteUrl}{c.DemoPage.Route})";
             var summary = Truncate(c.Summary ?? c.DemoPage?.Description ?? "", 110);
             sb.AppendLine($"| `{c.Name}` | [md]({baseUrl}/ai/components/{Slug(c.Name)}.md) | {demo} | {Escape(summary)} |");
         }
@@ -275,7 +271,7 @@ public sealed class MarkdownWriter(string baseUrl, string version)
 
                 foreach (var p in s.Pages)
                 {
-                    sb.AppendLine($"- [{p.Title}]({baseUrl}{p.Route}) — {p.Description}");
+                    sb.AppendLine($"- [{p.Title}]({siteUrl}{p.Route}) — {p.Description}");
                 }
 
                 sb.AppendLine();
@@ -314,16 +310,9 @@ public sealed class MarkdownWriter(string baseUrl, string version)
         sb.AppendLine("That table lists the slots and bindable properties of all components in this file, so you");
         sb.AppendLine("never need to guess them — and never need to fetch another page to find them.");
         sb.AppendLine();
-        sb.AppendLine("**If your fetcher cannot open the relative links in this file**, every page here is also");
-        sb.AppendLine("served from GitHub at absolute URLs, which need no link-following:");
-        sb.AppendLine();
-        sb.AppendLine($"- `{RawBase}/llms.txt` — this file");
-        sb.AppendLine($"- `{RawBase}/ai/components/<name>.md` — one per component, e.g. `gup-input-field.md`");
-        sb.AppendLine($"- `{RawBase}/ai/conventions.md`, `/ai/types.md`, `/ai/patterns.md`");
-        sb.AppendLine();
-        sb.AppendLine("Component file names are the component name in kebab-case: `GupInputField` →");
-        sb.AppendLine("`gup-input-field.md`, `GUPWizardStack` → `gup-wizard-stack.md`. **Never guess a");
-        sb.AppendLine("parameter name — fetch the component's page instead.**");
+        sb.AppendLine("Component page names are the component name in kebab-case: `GupInputField` →");
+        sb.AppendLine("`/ai/components/gup-input-field.md`, `GUPWizardStack` → `gup-wizard-stack.md`.");
+        sb.AppendLine("**Never guess a parameter name — fetch the component's page instead.**");
         sb.AppendLine();
         sb.AppendLine("1. **There is no `Label` parameter on fields.** The label is a slot, and which slot");
         sb.AppendLine("   it is depends on the component: if the table below shows a `<Label>` slot, use it");

@@ -350,4 +350,4 @@ Tokens that do not fall into the groups above.
 
 ---
 
-Full index: /ai/index.md · Live token browser: /demo/design-tokens
+Full index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Live token browser: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/demo/design-tokens

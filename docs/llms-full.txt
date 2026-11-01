@@ -1,7 +1,7 @@
 # GUPBlazor — complete reference
 
 Version 0.3.4. Every component in one file, for a single fetch.
-Generated from source. Canonical: /llms.txt
+Generated from source. Canonical: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/llms.txt
 
 # GUPHTMLFooter
 
@@ -18,9 +18,7 @@ Emits the scripts GUPBlazor needs. Place just before </body>.
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-html-footer.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GUPHTMLHeader
@@ -38,16 +36,14 @@ Emits the stylesheet, font and design-token links GUPBlazor needs. Place inside 
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-html-header.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GUPWizardStack
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GUPWizardStack.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -114,7 +110,7 @@ High-level wizard layout: wires GupHeader, GupContentHeader, GupWizardMain (with
 | `OnBack` | `EventCallback<GupWizardNavArgs>` |  |
 | `OnComplete` | `EventCallback<int>` |  |
 
-> Members of `GupWizardNavArgs` are documented in [support types](/ai/types.md).
+> Members of `GupWizardNavArgs` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Examples
 
@@ -235,16 +231,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard-stack.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GUPWizardStackStep
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GUPWizardStackStep.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -289,7 +283,7 @@ A single step inside a <GUPWizardStack>. Registers itself with the parent so the
 |---|---|---|
 | `OnNext` | `EventCallback<GupWizardNavArgs>` | Step-level Next handler. Fires before the wizard-level `OnNext`; set `args.Cancel = true` to abort navigation. |
 
-> Members of `GupWizardNavArgs` are documented in [support types](/ai/types.md).
+> Members of `GupWizardNavArgs` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Cascading values consumed
 
@@ -350,16 +344,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard-stack-step.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupAccordion
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordion.razor`
-> Live demo: /demo/accordion
+> Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
 Collapsible sections, single or multiple open, including item actions.
 
@@ -502,16 +494,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-accordion.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupAccordionItem
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordionItem.razor`
-> Live demo: /demo/accordion
+> Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
 Part of the Accordion component set — see the Accordion page for how it composes.
 
@@ -681,16 +671,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-accordion-item.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupAccordionItemAction
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordionItemAction.razor`
-> Live demo: /demo/accordion
+> Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
 Part of the Accordion component set — see the Accordion page for how it composes.
 
@@ -722,16 +710,14 @@ Equivalent of <gup-accordion-item-action icon-name="..."> An accordion item togg
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-accordion-item-action.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupAvatar
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAvatar.razor`
-> Live demo: /demo/avatar
+> Live demo: https://gupdesign.sme.gov.om/demo/avatar
 
 User avatar from initials or an image.
 
@@ -768,7 +754,7 @@ Equivalent of <gup-avatar size="s|m|l" src="..." alt="..." label="..." status=".
 | `StatusChanged` | `EventCallback<GupBadgeType?>` |  |
 | `OnClick` | `EventCallback<MouseEventArgs>` | Fires when the avatar is clicked or activated by keyboard (Enter/Space). |
 
-> Members of `GupBadgeType` are documented in [support types](/ai/types.md).
+> Members of `GupBadgeType` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Enums
 
@@ -844,16 +830,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-avatar.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupBadge
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBadge.razor`
-> Live demo: /demo/badges
+> Live demo: https://gupdesign.sme.gov.om/demo/badges
 
 Status badges in the full colour range.
 
@@ -957,16 +941,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-badge.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupBadgeChip
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBadgeChip.razor`
-> Live demo: /demo/badge-chips
+> Live demo: https://gupdesign.sme.gov.om/demo/badge-chips
 
 Compact status chips with optional icon.
 
@@ -1187,16 +1169,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-badge-chip.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupBanner
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBanner.razor`
-> Live demo: /demo/banner
+> Live demo: https://gupdesign.sme.gov.om/demo/banner
 
 Page-level messages in four severities, outline and filled appearances.
 
@@ -1321,16 +1301,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-banner.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupBreadcrumbs
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBreadcrumbs.razor`
-> Live demo: /demo/breadcrumbs
+> Live demo: https://gupdesign.sme.gov.om/demo/breadcrumbs
 
 Trail with current-item state; collapses to first and last below 599px.
 
@@ -1467,16 +1445,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-breadcrumbs.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupBreadcrumbsItem
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBreadcrumbsItem.razor`
-> Live demo: /demo/breadcrumbs
+> Live demo: https://gupdesign.sme.gov.om/demo/breadcrumbs
 
 Part of the Breadcrumbs component set — see the Breadcrumbs page for how it composes.
 
@@ -1622,16 +1598,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-breadcrumbs-item.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupButton
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupButton.razor`
-> Live demo: /demo/buttons
+> Live demo: https://gupdesign.sme.gov.om/demo/buttons
 
 Button appearances, icons, disabled states, and button groups.
 
@@ -1813,16 +1787,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-button.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupButtonGroup
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupButtonGroup.razor`
-> Live demo: /demo/button-group
+> Live demo: https://gupdesign.sme.gov.om/demo/button-group
 
 Groups of related buttons, with the stacking behaviour used on mobile.
 
@@ -2028,16 +2000,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-button-group.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupCallout
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupCallout.razor`
-> Live demo: /demo/callout
+> Live demo: https://gupdesign.sme.gov.om/demo/callout
 
 Block quote with optional author, in three appearances.
 
@@ -2151,16 +2121,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-callout.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupCheckbox
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupCheckbox.razor`
-> Live demo: /demo/inputs/checkbox
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/checkbox
 
 Single, grouped and indeterminate states.
 
@@ -2301,16 +2269,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-checkbox.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupContentHeader
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupContentHeader.razor`
-> Live demo: /demo/content-header
+> Live demo: https://gupdesign.sme.gov.om/demo/content-header
 
 Page title, summary and optional actions at the top of a page.
 
@@ -2392,16 +2358,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-content-header.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDataSheet
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDataSheet.razor`
-> Live demo: /demo/data-sheet
+> Live demo: https://gupdesign.sme.gov.om/demo/data-sheet
 
 Bordered card grouping labelled items — order summaries and similar.
 
@@ -2566,16 +2530,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-data-sheet.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDataTable
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDataTable.razor`
-> Live demo: /demo/data-table
+> Live demo: https://gupdesign.sme.gov.om/demo/data-table
 
 Table chrome around GupTable — search, filter panel with removable chips, empty state, pagination footer.
 
@@ -2648,7 +2610,7 @@ Equivalent of <gup-data-table title="..." description="..." show-search show-fil
 | `OnFilterApply` | `EventCallback<IReadOnlyList<GupAppliedFilter>>` | Fires when Apply is pressed in the filter panel, with the applied filters. |
 | `OnMobileActionClick` | `EventCallback<string>` | Fires when one of the `MobileActionButtons` is pressed, with its label. |
 
-> Members of `GupAppliedFilter` are documented in [support types](/ai/types.md).
+> Members of `GupAppliedFilter` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Enums
 
@@ -2818,16 +2780,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-data-table.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDetails
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDetails.razor`
-> Live demo: /demo/details
+> Live demo: https://gupdesign.sme.gov.om/demo/details
 
 Single disclosure with quote, sink and none appearances.
 
@@ -2918,16 +2878,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-details.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDialog
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDialog.razor`
-> Live demo: /demo/dialogs
+> Live demo: https://gupdesign.sme.gov.om/demo/dialogs
 
 Modal in five sizes including fullscreen, with action buttons.
 
@@ -3025,16 +2983,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-dialog.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDivider
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDivider.razor`
-> Live demo: /demo/divider
+> Live demo: https://gupdesign.sme.gov.om/demo/divider
 
 Horizontal and vertical rules with spacing options.
 
@@ -3249,16 +3205,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-divider.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDropdownField
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDropdownField.razor`
-> Live demo: /demo/inputs/dropdown
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/dropdown
 
 Part of the Dropdown component set — see the Dropdown page for how it composes.
 
@@ -3482,16 +3436,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-dropdown-field.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDropdownMenu
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDropdownMenu.razor`
-> Live demo: /demo/inputs/dropdown
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/dropdown
 
 Part of the Dropdown component set — see the Dropdown page for how it composes.
 
@@ -3689,16 +3641,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-dropdown-menu.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupDropdownMenuItem
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDropdownMenuItem.razor`
-> Live demo: /demo/inputs/dropdown
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/dropdown
 
 Part of the Dropdown component set — see the Dropdown page for how it composes.
 
@@ -3895,16 +3845,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-dropdown-menu-item.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFileItem
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFileItem.razor`
-> Live demo: /demo/file-item
+> Live demo: https://gupdesign.sme.gov.om/demo/file-item
 
 A single uploaded file row with size, link and remove action.
 
@@ -4032,16 +3980,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-file-item.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFileUpload
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFileUpload.razor`
-> Live demo: /demo/file-upload
+> Live demo: https://gupdesign.sme.gov.om/demo/file-upload
 
 Drag-and-drop or browse, with file list and remove actions.
 
@@ -4090,7 +4036,7 @@ Equivalent of <gup-file-upload name="..." accept="..." multiple required full-wi
 |---|---|---|
 | `OnChange` | `EventCallback<IReadOnlyList<GupFileUploadFile>>` |  |
 
-> Members of `GupFileUploadFile` are documented in [support types](/ai/types.md).
+> Members of `GupFileUploadFile` are documented in [support types](https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/types.md).
 
 ## Cascading values consumed
 
@@ -4178,16 +4124,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-file-upload.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFilterChip
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFilterChip.razor`
-> Live demo: /demo/filter-chip
+> Live demo: https://gupdesign.sme.gov.om/demo/filter-chip
 
 Removable chips for active filters.
 
@@ -4319,16 +4263,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-filter-chip.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFilterChipWrapper
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFilterChipWrapper.razor`
-> Live demo: /demo/filter-chip
+> Live demo: https://gupdesign.sme.gov.om/demo/filter-chip
 
 Part of the Filter chip component set — see the Filter chip page for how it composes.
 
@@ -4418,16 +4360,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-filter-chip-wrapper.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFlag
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFlag.razor`
-> Live demo: /demo/flag
+> Live demo: https://gupdesign.sme.gov.om/demo/flag
 
 Country flags in rectangle and circle shapes.
 
@@ -4531,16 +4471,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-flag.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFlyout
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFlyout.razor`
-> Live demo: /demo/flyout
+> Live demo: https://gupdesign.sme.gov.om/demo/flyout
 
 Side panel from any edge — the mobile-friendly home for add-row forms.
 
@@ -4690,16 +4628,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-flyout.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFormList
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFormList.razor`
-> Live demo: /demo/form-list
+> Live demo: https://gupdesign.sme.gov.om/demo/form-list
 
 Part of the Form list component set — see the Form list page for how it composes.
 
@@ -4819,16 +4755,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-form-list.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupFormSection
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFormSection.razor`
-> Live demo: /demo/form-section
+> Live demo: https://gupdesign.sme.gov.om/demo/form-section
 
 Titled section with optional footer for action buttons.
 
@@ -5081,16 +5015,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-form-section.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupHeader
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupHeader.razor`
-> Live demo: /demo/header
+> Live demo: https://gupdesign.sme.gov.om/demo/header
 
 The service header — brand, service name, language toggle and account area.
 
@@ -5159,16 +5091,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-header.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupIcon
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupIcon.razor`
-> Live demo: /demo/icons
+> Live demo: https://gupdesign.sme.gov.om/demo/icons
 
 Part of the Icons component set — see the Icons page for how it composes.
 
@@ -5357,16 +5287,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-icon.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupImage
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupImage.razor`
-> Live demo: /demo/image
+> Live demo: https://gupdesign.sme.gov.om/demo/image
 
 Responsive image with aspect-ratio and object-fit control.
 
@@ -5603,16 +5531,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-image.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupInputField
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupInputField.razor`
-> Live demo: /demo/inputs/text
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/text
 
 Single-line text with label, hint, error and read-only states.
 
@@ -5792,16 +5718,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-input-field.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupLabelledItem
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupLabelledItem.razor`
-> Live demo: /demo/labelled-item
+> Live demo: https://gupdesign.sme.gov.om/demo/labelled-item
 
 Part of the Labelled item component set — see the Labelled item page for how it composes.
 
@@ -5989,16 +5913,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-labelled-item.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupLink
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupLink.razor`
-> Live demo: /demo/buttons
+> Live demo: https://gupdesign.sme.gov.om/demo/buttons
 
 Part of the Button component set — see the Button page for how it composes.
 
@@ -6089,16 +6011,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-link.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupLogo
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupLogo.razor`
-> Live demo: /demo/logo
+> Live demo: https://gupdesign.sme.gov.om/demo/logo
 
 GupLogo in icon and horizontal lockups, with inversion for dark surfaces.
 
@@ -6172,16 +6092,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-logo.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupPageStatus
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupPageStatus.razor`
-> Live demo: /demo/page-status
+> Live demo: https://gupdesign.sme.gov.om/demo/page-status
 
 Empty, error and loading states for a whole page.
 
@@ -6366,16 +6284,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-page-status.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupPagination
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupPagination.razor`
-> Live demo: /demo/pagination
+> Live demo: https://gupdesign.sme.gov.om/demo/pagination
 
 Page controls with previous/next and page-number buttons.
 
@@ -6555,16 +6471,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-pagination.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupRadioButton
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupRadioButton.razor`
-> Live demo: /demo/inputs/radio
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/radio
 
 Radio groups, horizontal and vertical.
 
@@ -6675,16 +6589,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-radio-button.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupRadioButtonGroup
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupRadioButtonGroup.razor`
-> Live demo: /demo/inputs/radio
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/radio
 
 Part of the Radio button component set — see the Radio button page for how it composes.
 
@@ -6794,16 +6706,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-radio-button-group.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupReadOnlyRegion
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupReadOnlyRegion.razor`
-> Live demo: /demo/read-only-cascade
+> Live demo: https://gupdesign.sme.gov.om/demo/read-only-cascade
 
 Part of the Read-only cascade component set — see the Read-only cascade page for how it composes.
 
@@ -6860,16 +6770,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-read-only-region.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupRichText
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupRichText.razor`
-> Live demo: /demo/rich-text
+> Live demo: https://gupdesign.sme.gov.om/demo/rich-text
 
 Prose block that styles headings, lists and links coming from a CMS or editor.
 
@@ -6945,16 +6853,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-rich-text.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupScreenReaderText
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupScreenReaderText.razor`
-> Live demo: /demo/screenreader-text
+> Live demo: https://gupdesign.sme.gov.om/demo/screenreader-text
 
 Part of the Screenreader text component set — see the Screenreader text page for how it composes.
 
@@ -7096,16 +7002,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-screen-reader-text.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupSearch
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupSearch.razor`
-> Live demo: /demo/search
+> Live demo: https://gupdesign.sme.gov.om/demo/search
 
 Search field with submit and clear affordances.
 
@@ -7263,16 +7167,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-search.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupSkipLink
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupSkipLink.razor`
-> Live demo: /demo/skip-link
+> Live demo: https://gupdesign.sme.gov.om/demo/skip-link
 
 Keyboard-only link that jumps past the header to main content.
 
@@ -7315,16 +7217,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-skip-link.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupSpinner
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupSpinner.razor`
-> Live demo: /demo/spinner
+> Live demo: https://gupdesign.sme.gov.om/demo/spinner
 
 Indeterminate loading indicator in several sizes.
 
@@ -7421,16 +7321,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-spinner.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupStepper
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupStepper.razor`
-> Live demo: /demo/stepper
+> Live demo: https://gupdesign.sme.gov.om/demo/stepper
 
 The wizard progress indicator, with stepper items in complete, current and upcoming states.
 
@@ -7549,16 +7447,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-stepper.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupStepperItem
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupStepperItem.razor`
-> Live demo: /demo/stepper
+> Live demo: https://gupdesign.sme.gov.om/demo/stepper
 
 Part of the Stepper component set — see the Stepper page for how it composes.
 
@@ -7681,16 +7577,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-stepper-item.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTab
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTab.razor`
-> Live demo: /demo/tabs
+> Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
 Part of the Tabs component set — see the Tabs page for how it composes.
 
@@ -7908,16 +7802,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-tab.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTabPanel
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTabPanel.razor`
-> Live demo: /demo/tabs
+> Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
 Part of the Tabs component set — see the Tabs page for how it composes.
 
@@ -8110,16 +8002,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-tab-panel.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTable
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTable.razor`
-> Live demo: /demo/table-cell
+> Live demo: https://gupdesign.sme.gov.om/demo/table-cell
 
 Part of the Table & table cell component set — see the Table & table cell page for how it composes.
 
@@ -8302,16 +8192,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-table.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTableCell
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTableCell.razor`
-> Live demo: /demo/table-cell
+> Live demo: https://gupdesign.sme.gov.om/demo/table-cell
 
 Part of the Table & table cell component set — see the Table & table cell page for how it composes.
 
@@ -8554,16 +8442,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-table-cell.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTableRow
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTableRow.razor`
-> Live demo: /demo/table-cell
+> Live demo: https://gupdesign.sme.gov.om/demo/table-cell
 
 Part of the Table & table cell component set — see the Table & table cell page for how it composes.
 
@@ -8798,16 +8684,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-table-row.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTabs
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTabs.razor`
-> Live demo: /demo/tabs
+> Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
 Default, toggle and vertical appearances, with tab panels and tabs navigation.
 
@@ -9030,16 +8914,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-tabs.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTabsNavigation
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTabsNavigation.razor`
-> Live demo: /demo/tabs
+> Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
 Part of the Tabs component set — see the Tabs page for how it composes.
 
@@ -9210,16 +9092,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-tabs-navigation.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTextarea
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTextarea.razor`
-> Live demo: /demo/inputs/textarea
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/textarea
 
 Part of the Textarea field component set — see the Textarea field page for how it composes.
 
@@ -9353,16 +9233,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-textarea.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupToast
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToast.razor`
-> Live demo: /demo/toasts
+> Live demo: https://gupdesign.sme.gov.om/demo/toasts
 
 Part of the Toast & toast container component set — see the Toast & toast container page for how it composes.
 
@@ -9423,16 +9301,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-toast.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupToastContainer
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToastContainer.razor`
-> Live demo: /demo/toasts
+> Live demo: https://gupdesign.sme.gov.om/demo/toasts
 
 Part of the Toast & toast container component set — see the Toast & toast container page for how it composes.
 
@@ -9458,16 +9334,14 @@ Equivalent of <gup-toast-container>. Mount once (typically in MainLayout) and ca
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-toast-container.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupToggle
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToggle.razor`
-> Live demo: /demo/inputs/toggle
+> Live demo: https://gupdesign.sme.gov.om/demo/inputs/toggle
 
 On/off switch with label and hint.
 
@@ -9589,16 +9463,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-toggle.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTooltip
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTooltip.razor`
-> Live demo: /demo/tooltip
+> Live demo: https://gupdesign.sme.gov.om/demo/tooltip
 
 Hover and focus tooltip with placement options.
 
@@ -9813,16 +9685,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-tooltip.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupTrack
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTrack.razor`
-> Live demo: /demo/track
+> Live demo: https://gupdesign.sme.gov.om/demo/track
 
 GupTrack — the spacing primitive used to lay out rows and columns on the design system scale.
 
@@ -9962,16 +9832,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-track.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupWizard
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizard.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -9983,16 +9851,14 @@ Part of the Wizard main & footer component set — see the Wizard main & footer 
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupWizardFooter
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizardFooter.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -10049,16 +9915,14 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard-footer.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
 # GupWizardMain
 
 > GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizardMain.razor`
-> Live demo: /demo/wizard
+> Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
 Part of the Wizard main & footer component set — see the Wizard main & footer page for how it composes.
 
@@ -10098,8 +9962,6 @@ Verbatim from the demo pages — this is the markup that renders in the live dem
 
 ---
 
-Full component index: /ai/index.md · Start here: /docs
-
-Absolute mirror, if relative links do not resolve for you: `https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/components/gup-wizard-main.md`
+Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/ai/index.md · Start here: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/docs
 
 
