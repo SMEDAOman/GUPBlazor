@@ -92,5 +92,36 @@
       </p>
     </section>
 
+    <section class="demo-section">
+      <h2 class="demo-section-title">Building with an AI assistant</h2>
+      <p>
+        These demo pages need JavaScript to reveal their code, so an assistant that fetches
+        one gets the rendered output and no markup. The same reference is published as plain
+        markdown for that reason — one fetch carries the conventions, a worked form, and every
+        component's slots, attributes and bindable properties.
+      </p>
+      <p>Point the assistant at it:</p>
+      <pre class="doc-code"><code>Read https://gupdesign.sme.gov.om/docs and use GUPBlazor to
+build an SME licence application form.</code></pre>
+      <p>
+        The same files are on GitHub, which is the better target for an assistant whose
+        fetcher cannot resolve relative links:
+      </p>
+      <pre class="doc-code"><code>https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/llms.txt</code></pre>
+      <h3 class="doc-subheading">What lives where</h3>
+      <ul>
+        <li><code>/docs</code> — start here. Rules, a worked example, and all 69 components at a glance.</li>
+        <li><code>/ai/components/&lt;name&gt;.md</code> — one page per component, kebab-case: <code>GupInputField</code> → <code>gup-input-field.md</code>.</li>
+        <li><code>/ai/conventions.md</code> — slots versus attributes, binding, RTL, the read-only cascade.</li>
+        <li><code>/ai/types.md</code> — <code>ToastService</code>, event payloads, static lookups.</li>
+        <li><code>/ai/patterns.md</code> — compositions with no component of their own, such as the error summary.</li>
+      </ul>
+      <p>
+        If an assistant writes <code>Hint="..."</code> as an attribute or invents a parameter
+        name, it has not read the reference — tell it to fetch <code>/docs</code> and try again.
+        Avoid <code>/llms-full.txt</code>: it is around 350&nbsp;KB and most fetchers truncate it.
+      </p>
+    </section>
+
   </div>
 </div>
