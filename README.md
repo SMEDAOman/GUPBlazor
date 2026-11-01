@@ -137,9 +137,9 @@ dotnet run --project GUPBlazorDemo/GUPBlazorDemo.csproj
 
 ## 🤖 AI / LLM-friendly reference
 
-The demo is a Blazor **interactive server** app, so a plain web fetch of a demo page returns
-the prerender — sidebar chrome and rendered components, but **no code**, because "Show code"
-only appears once the SignalR circuit connects. Agents never get that far.
+Demo pages show their Razor source inline, so a plain fetch does carry the markup — but
+escaped, interleaved with sidebar chrome and icon ligatures, and with no parameter list,
+slot name or enum member anywhere on the page.
 
 So the same sources are also published as plain markdown, which any AI can fetch directly:
 

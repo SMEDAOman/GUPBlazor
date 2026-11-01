@@ -1,9 +1,10 @@
 User-agent: *
 Allow: /
 
-# This is a Blazor interactive-server app: the HTML you get from a plain fetch
-# carries no code examples. Fetch the plain-markdown reference instead — one
-# request gives the conventions, a worked example, and the full component list.
+# Demo pages render their Razor source inline, but as escaped HTML wrapped in
+# page chrome. The plain-markdown reference below is the same material without
+# the markup — one request gives the conventions, a worked example, and every
+# component's slots, attributes and bindable properties.
 #
 #   /docs            the entry point (same file as /reference and /llms.txt)
 #   /llms-full.txt   every component in one file
