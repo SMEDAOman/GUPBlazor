@@ -38,7 +38,7 @@ public static class PatternsPage
         var sb = new StringBuilder();
         sb.AppendLine("# GUPBlazor — patterns");
         sb.AppendLine();
-        sb.AppendLine($"> GUPBlazor {version}. Compositions built from the components, not components");
+        sb.AppendLine("> GUPBlazor. Compositions built from the components, not components");
         sb.AppendLine("> themselves. Each one below has **no** dedicated `Gup…` type — do not look for one.");
         sb.AppendLine();
 

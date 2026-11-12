@@ -1,6 +1,6 @@
 # GUPBlazor — AI reference index
 
-GUPBlazor 0.3.4: 69 documented Blazor components implementing the gov.om
+GUPBlazor 0.3.5: 69 documented Blazor components implementing the gov.om
 (Government Unified Platform) design system, by the SMEs Development Authority (Oman).
 WCAG 2.2 AA, full RTL, Arabic localization. Targets `net10.0`.
 

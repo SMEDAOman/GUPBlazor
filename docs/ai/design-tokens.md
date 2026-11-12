@@ -1,6 +1,6 @@
 # GUPBlazor — design tokens
 
-> GUPBlazor 0.3.4. 266 CSS custom properties, read from the shipped `gup.css`.
+> GUPBlazor. 266 CSS custom properties, read from the shipped `gup.css`.
 
 Use the token, not the literal value — the palette is re-themed per entity and raw hex
 will not follow. Tokens are available anywhere once `<GUPHTMLHeader />` is on the page.
@@ -231,8 +231,8 @@ Corner radii and shadows.
 | `--gup-radius-component-default` | `8px` |  |
 | `--gup-radius-component-full` | `999px` |  |
 | `--gup-radius-component-small` | `4px` |  |
-| `--gup-shadow-100` | `0 1px 2px 0 var(--gup-color-shadow-color-2),      0 3px 6px 0 var(--gup-color-shadow-color-3)` |  |
-| `--gup-shadow-200` | `0 16px 32px 0 var(--gup-color-shadow-color-5),      0 8px 16px 0 var(--gup-color-shadow-color-4),      0 3px 6px 0 var(--gup-color-shadow-color-3),      0 1px 2px 0 var(--gup-color-shadow-color-2)` |  |
+| `--gup-shadow-100` | `0 1px 2px 0 var(--gup-color-shadow-color-2),     0 3px 6px 0 var(--gup-color-shadow-color-3)` |  |
+| `--gup-shadow-200` | `0 16px 32px 0 var(--gup-color-shadow-color-5),     0 8px 16px 0 var(--gup-color-shadow-color-4),     0 3px 6px 0 var(--gup-color-shadow-color-3),     0 1px 2px 0 var(--gup-color-shadow-color-2)` |  |
 
 ## Sizing & layout
 

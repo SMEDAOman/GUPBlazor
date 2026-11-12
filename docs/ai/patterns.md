@@ -1,6 +1,6 @@
 # GUPBlazor — patterns
 
-> GUPBlazor 0.3.4. Compositions built from the components, not components
+> GUPBlazor. Compositions built from the components, not components
 > themselves. Each one below has **no** dedicated `Gup…` type — do not look for one.
 
 ## Error summary

@@ -1,6 +1,6 @@
 # GUPBlazor — getting started
 
-> GUPBlazor 0.3.4: 69 Blazor components implementing the gov.om (Government Unified
+> GUPBlazor: 69 Blazor components implementing the gov.om (Government Unified
 > Platform) design system. Targets `net10.0`. WCAG 2.2 AA, full RTL, Arabic localization.
 > Maintained by the SMEs Development Authority (Oman).
 

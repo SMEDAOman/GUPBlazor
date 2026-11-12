@@ -12,7 +12,7 @@ public sealed class MarkdownWriter(string baseUrl, string version, string siteUr
 
         sb.AppendLine($"# {c.Name}");
         sb.AppendLine();
-        sb.AppendLine($"> GUPBlazor {version} — Blazor implementation of the gov.om (Government Unified Platform) design system.");
+        sb.AppendLine($"> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.");
         sb.AppendLine($"> Source: `GUPBlazor/Components/{c.File}`");
         if (c.DemoPage is not null)
         {

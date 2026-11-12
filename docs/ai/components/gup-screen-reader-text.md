@@ -1,6 +1,6 @@
 # GupScreenReaderText
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupScreenReaderText.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/screenreader-text
 

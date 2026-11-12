@@ -22,7 +22,7 @@ public static class StaticPages
         $$"""
         # GUPBlazor — getting started
 
-        > GUPBlazor {{version}}: {{count}} Blazor components implementing the gov.om (Government Unified
+        > GUPBlazor: {{count}} Blazor components implementing the gov.om (Government Unified
         > Platform) design system. Targets `net10.0`. WCAG 2.2 AA, full RTL, Arabic localization.
         > Maintained by the SMEs Development Authority (Oman).
 

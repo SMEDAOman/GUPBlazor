@@ -194,7 +194,7 @@ public static partial class TypesPage
         var sb = new StringBuilder();
         sb.AppendLine("# GUPBlazor — support types");
         sb.AppendLine();
-        sb.AppendLine($"> GUPBlazor {version}. The public types you construct or receive when using the");
+        sb.AppendLine("> GUPBlazor. The public types you construct or receive when using the");
         sb.AppendLine("> components: event payloads and configuration objects.");
         sb.AppendLine();
         sb.AppendLine("A component's parameter table gives the type name; this page gives its members.");

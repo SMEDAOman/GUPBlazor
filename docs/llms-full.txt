@@ -1,11 +1,11 @@
 # GUPBlazor — complete reference
 
-Version 0.3.4. Every component in one file, for a single fetch.
+Version 0.3.5. Every component in one file, for a single fetch.
 Generated from source. Canonical: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main/docs/llms.txt
 
 # GUPHTMLFooter
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/../GUPHTMLFooter.razor`
 
 Emits the scripts GUPBlazor needs. Place just before </body>.
@@ -23,7 +23,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GUPHTMLHeader
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/../GUPHTMLHeader.razor`
 
 Emits the stylesheet, font and design-token links GUPBlazor needs. Place inside <head>.
@@ -41,7 +41,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GUPWizardStack
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GUPWizardStack.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
@@ -236,7 +236,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GUPWizardStackStep
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GUPWizardStackStep.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
@@ -349,7 +349,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupAccordion
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordion.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
@@ -499,7 +499,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupAccordionItem
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordionItem.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
@@ -676,7 +676,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupAccordionItemAction
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAccordionItemAction.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/accordion
 
@@ -715,7 +715,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupAvatar
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupAvatar.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/avatar
 
@@ -835,7 +835,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupBadge
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBadge.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/badges
 
@@ -946,7 +946,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupBadgeChip
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBadgeChip.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/badge-chips
 
@@ -1174,7 +1174,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupBanner
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBanner.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/banner
 
@@ -1306,7 +1306,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupBreadcrumbs
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBreadcrumbs.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/breadcrumbs
 
@@ -1450,7 +1450,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupBreadcrumbsItem
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupBreadcrumbsItem.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/breadcrumbs
 
@@ -1603,7 +1603,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupButton
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupButton.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/buttons
 
@@ -1792,7 +1792,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupButtonGroup
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupButtonGroup.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/button-group
 
@@ -2005,7 +2005,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupCallout
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupCallout.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/callout
 
@@ -2126,7 +2126,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupCheckbox
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupCheckbox.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/checkbox
 
@@ -2274,7 +2274,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupContentHeader
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupContentHeader.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/content-header
 
@@ -2363,7 +2363,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDataSheet
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDataSheet.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/data-sheet
 
@@ -2535,7 +2535,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDataTable
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDataTable.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/data-table
 
@@ -2785,7 +2785,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDetails
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDetails.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/details
 
@@ -2883,7 +2883,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDialog
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDialog.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/dialogs
 
@@ -2988,7 +2988,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDivider
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDivider.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/divider
 
@@ -3210,7 +3210,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDropdownField
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDropdownField.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/dropdown
 
@@ -3441,7 +3441,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDropdownMenu
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDropdownMenu.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/dropdown
 
@@ -3646,7 +3646,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupDropdownMenuItem
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupDropdownMenuItem.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/dropdown
 
@@ -3850,7 +3850,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFileItem
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFileItem.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/file-item
 
@@ -3985,7 +3985,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFileUpload
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFileUpload.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/file-upload
 
@@ -4129,7 +4129,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFilterChip
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFilterChip.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/filter-chip
 
@@ -4268,7 +4268,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFilterChipWrapper
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFilterChipWrapper.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/filter-chip
 
@@ -4365,7 +4365,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFlag
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFlag.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/flag
 
@@ -4476,7 +4476,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFlyout
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFlyout.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/flyout
 
@@ -4633,7 +4633,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFormList
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFormList.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/form-list
 
@@ -4760,7 +4760,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupFormSection
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupFormSection.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/form-section
 
@@ -5020,7 +5020,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupHeader
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupHeader.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/header
 
@@ -5096,7 +5096,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupIcon
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupIcon.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/icons
 
@@ -5292,7 +5292,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupImage
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupImage.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/image
 
@@ -5536,7 +5536,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupInputField
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupInputField.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/text
 
@@ -5723,7 +5723,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupLabelledItem
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupLabelledItem.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/labelled-item
 
@@ -5918,7 +5918,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupLink
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupLink.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/buttons
 
@@ -6016,7 +6016,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupLogo
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupLogo.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/logo
 
@@ -6097,7 +6097,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupPageStatus
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupPageStatus.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/page-status
 
@@ -6289,7 +6289,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupPagination
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupPagination.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/pagination
 
@@ -6476,7 +6476,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupRadioButton
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupRadioButton.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/radio
 
@@ -6594,7 +6594,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupRadioButtonGroup
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupRadioButtonGroup.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/radio
 
@@ -6711,7 +6711,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupReadOnlyRegion
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupReadOnlyRegion.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/read-only-cascade
 
@@ -6775,7 +6775,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupRichText
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupRichText.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/rich-text
 
@@ -6858,7 +6858,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupScreenReaderText
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupScreenReaderText.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/screenreader-text
 
@@ -7007,7 +7007,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupSearch
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupSearch.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/search
 
@@ -7172,7 +7172,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupSkipLink
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupSkipLink.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/skip-link
 
@@ -7222,7 +7222,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupSpinner
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupSpinner.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/spinner
 
@@ -7326,7 +7326,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupStepper
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupStepper.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/stepper
 
@@ -7452,7 +7452,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupStepperItem
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupStepperItem.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/stepper
 
@@ -7582,7 +7582,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTab
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTab.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
@@ -7807,7 +7807,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTabPanel
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTabPanel.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
@@ -8007,7 +8007,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTable
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTable.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/table-cell
 
@@ -8197,7 +8197,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTableCell
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTableCell.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/table-cell
 
@@ -8447,7 +8447,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTableRow
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTableRow.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/table-cell
 
@@ -8689,7 +8689,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTabs
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTabs.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
@@ -8919,7 +8919,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTabsNavigation
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTabsNavigation.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/tabs
 
@@ -9097,7 +9097,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTextarea
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTextarea.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/textarea
 
@@ -9238,7 +9238,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupToast
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToast.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/toasts
 
@@ -9306,7 +9306,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupToastContainer
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToastContainer.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/toasts
 
@@ -9339,7 +9339,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupToggle
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupToggle.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/inputs/toggle
 
@@ -9468,7 +9468,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTooltip
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTooltip.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/tooltip
 
@@ -9690,7 +9690,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupTrack
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupTrack.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/track
 
@@ -9837,7 +9837,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupWizard
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizard.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
@@ -9856,7 +9856,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupWizardFooter
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizardFooter.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/wizard
 
@@ -9920,7 +9920,7 @@ Full component index: https://raw.githubusercontent.com/SMEDAOman/GUPBlazor/main
 
 # GupWizardMain
 
-> GUPBlazor 0.3.4 — Blazor implementation of the gov.om (Government Unified Platform) design system.
+> GUPBlazor — Blazor implementation of the gov.om (Government Unified Platform) design system.
 > Source: `GUPBlazor/Components/GupWizardMain.razor`
 > Live demo: https://gupdesign.sme.gov.om/demo/wizard
 

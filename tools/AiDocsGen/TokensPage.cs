@@ -31,7 +31,7 @@ public static partial class TokensPage
         var sb = new StringBuilder();
         sb.AppendLine("# GUPBlazor — design tokens");
         sb.AppendLine();
-        sb.AppendLine($"> GUPBlazor {version}. {tokens.Count} CSS custom properties, read from the shipped `gup.css`.");
+        sb.AppendLine($"> GUPBlazor. {tokens.Count} CSS custom properties, read from the shipped `gup.css`.");
         sb.AppendLine();
         sb.AppendLine("Use the token, not the literal value — the palette is re-themed per entity and raw hex");
         sb.AppendLine("will not follow. Tokens are available anywhere once `<GUPHTMLHeader />` is on the page.");

@@ -1,6 +1,6 @@
 # GUPBlazor — support types
 
-> GUPBlazor 0.3.4. The public types you construct or receive when using the
+> GUPBlazor. The public types you construct or receive when using the
 > components: event payloads and configuration objects.
 
 A component's parameter table gives the type name; this page gives its members.
